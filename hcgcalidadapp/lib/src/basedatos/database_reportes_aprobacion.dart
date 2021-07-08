@@ -777,7 +777,9 @@ class DatabaseReportesAprobacion {
       listaTemperatura.add(RegistroTemperatura(
           temperaturaExterna: temperatura[temp].temperaturaExterna,
           temperaturaFecha: temperatura[temp].temperaturaFecha.toString(),
-          temperaturaInterna: temperatura[temp].temperaturaInterna,
+          temperaturaInterna1: temperatura[temp].temperaturaInterna1,
+          temperaturaInterna2: temperatura[temp].temperaturaInterna2,
+          temperaturaInterna3: temperatura[temp].temperaturaInterna3,
           temperaturaUsuarioControlId:
               temperatura[temp].temperaturaUsuarioControlId,
           postcosechaId: temperatura[temp].postcosechaId,

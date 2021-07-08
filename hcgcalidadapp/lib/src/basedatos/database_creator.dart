@@ -1,9 +1,10 @@
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
-Database db;
-class DatabaseCreator{
 
+Database db;
+
+class DatabaseCreator {
   static const controlBandaTable = 'controlBanda';
   static const falenciaBandaTable = 'falenciaBanda';
   static const falenciaBandaId = 'falenciaBandaId';
@@ -12,8 +13,10 @@ class DatabaseCreator{
   static const controlAlistamientoTable = 'controlAlistamiento';
   static const falenciaAlistamientoTable = 'falenciaAlistamiento';
   static const falenciaAlistamientoId = 'falenciaAlistamientoId';
-  static const falenciaAlistamientoTallosMuestra = 'falenciaAlistamientoTallosMuestra';
-  static const falenciaAlistamientoTallosAfectados = 'falenciaAlistamientoTallosAfectados';
+  static const falenciaAlistamientoTallosMuestra =
+      'falenciaAlistamientoTallosMuestra';
+  static const falenciaAlistamientoTallosAfectados =
+      'falenciaAlistamientoTallosAfectados';
   static const falenciaAlistamientoVariedad = 'falenciaAlistamientoVariedad';
 
   static const controlBoncheoTable = 'controlBoncheo';
@@ -52,7 +55,7 @@ class DatabaseCreator{
   static const controlRamosId = 'controlRamosId';
   static const ramosNumeroOrden = 'ramosNumeroOrden';
   static const ramosTotal = 'ramosTotal';
-  static const ramosFecha= 'ramosFecha';
+  static const ramosFecha = 'ramosFecha';
   static const ramosAprobado = 'ramosAprobado';
   static const ramosTallos = "ramosTallos";
   static const ramosDespachar = "ramosDespachar";
@@ -74,7 +77,7 @@ class DatabaseCreator{
   static const empaqueNumeroOrden = 'empaqueNumeroOrden';
   static const empaqueTotal = 'empaqueTotal';
   static const empaqueRamos = 'empaqueRamos';
-  static const empaqueFecha= 'empaqueFecha';
+  static const empaqueFecha = 'empaqueFecha';
   static const empaqueAprobado = 'empaqueAprobado';
   static const empaqueTallos = "empaqueTallos";
   static const empaqueDespachar = "empaqueDespachar";
@@ -115,13 +118,16 @@ class DatabaseCreator{
 
   static const falenciasReporteRamosTable = 'falenciasReporteRamos';
   static const falenciasReporteRamosCantidad = 'falenciasReporteRamosCantidad';
-  static const falenciasReporteRamosPorcentaje = 'falenciasReporteRamosPorcentaje';
+  static const falenciasReporteRamosPorcentaje =
+      'falenciasReporteRamosPorcentaje';
   static const falenciasReporteRamosId = 'falenciasReporteRamosId';
   static const total = 'total';
 
   static const falenciasReporteEmpaqueTable = 'falenciasReporteEmpaque';
-  static const falenciasReporteEmpaqueCantidad = 'falenciasReporteEmpaqueCantidad';
-  static const falenciasReporteEmpaquePorcentaje = 'falenciasReporteEmpaquePorcentaje';
+  static const falenciasReporteEmpaqueCantidad =
+      'falenciasReporteEmpaqueCantidad';
+  static const falenciasReporteEmpaquePorcentaje =
+      'falenciasReporteEmpaquePorcentaje';
   static const falenciasReporteEmpaqueId = 'falenciasReporteEmpaqueId';
 
   static const productoTable = 'producto';
@@ -131,7 +137,7 @@ class DatabaseCreator{
   static const clienteTable = 'cliente';
   static const clienteId = 'clienteId';
   static const clienteNombre = 'clienteNombre';
-  
+
   // TABLA ACTIVIDAD
   static const actividadTable = 'actividad';
   static const actividadId = 'actividadId';
@@ -152,33 +158,44 @@ class DatabaseCreator{
   // TABLA PROCESO HIDRATACION
   static const procesoHidratacionTable = 'procesoHidratacion';
   static const procesoHidratacionId = 'procesoHidratacionId';
-  static const procesoHidratacionUsuarioControlId = 'procesoHidratacionUsuarioControlId';
-  static const procesoHidratacionEstadoSoluciones = 'procesoHidratacionEstadoSoluciones';
-  static const procesoHidratacionTiemposHidratacion = 'procesoHidratacionTiemposHidratacion';
-  static const procesoHidratacionCantidadRamos = 'procesoHidratacionCantidadRamos';
+  static const procesoHidratacionUsuarioControlId =
+      'procesoHidratacionUsuarioControlId';
+  static const procesoHidratacionEstadoSoluciones =
+      'procesoHidratacionEstadoSoluciones';
+  static const procesoHidratacionTiemposHidratacion =
+      'procesoHidratacionTiemposHidratacion';
+  static const procesoHidratacionCantidadRamos =
+      'procesoHidratacionCantidadRamos';
   static const procesoHidratacionPhSolucion = 'procesoHidratacionPhSolucion';
-  static const procesoHidratacionNivelSolucion = 'procesoHidratacionNivelSolucion';
+  static const procesoHidratacionNivelSolucion =
+      'procesoHidratacionNivelSolucion';
   static const procesoHidratacionFecha = 'procesoHidratacionFecha';
 
   // TABLA TEMPERATURA
   static const temperaturaTable = 'temperatura';
   static const temperaturaId = 'temperaturaId';
   static const temperaturaUsuarioControlId = 'usuarioControlId';
-  static const temperaturaInterna = 'temperaturaInterna';
+  static const temperaturaInterna1 = 'temperaturaInterna1';
+  static const temperaturaInterna2 = 'temperaturaInterna2';
+  static const temperaturaInterna3 = 'temperaturaInterna3';
   static const temperaturaExterna = 'temperaturaExterna';
   static const temperaturaFecha = 'temperaturaFecha';
 
   // TABLA PROCESO EMPAQUE
   static const procesoEmpaqueTable = 'procesoEmpaqueTable';
   static const procesoEmpaqueId = 'procesoEmpaqueId';
-  static const procesoEmpaqueUsuarioControlId = 'procesoEmpaqueUsuarioControlId';
+  static const procesoEmpaqueUsuarioControlId =
+      'procesoEmpaqueUsuarioControlId';
   static const procesoEmpaqueAltura = 'procesoEmpaqueAltura';
   static const procesoEmpaqueCajas = 'procesoEmpaqueCajas';
   static const procesoEmpaqueSujeccion = 'procesoEmpaqueSujeccion';
   static const procesoEmpaqueMovimientos = 'procesoEmpaqueMovimientos';
-  static const procesoEmpaqueTemperaturaCuartoFrio = 'procesoEmpaqueTemperaturaCuartoFrio';
-  static const procesoEmpaqueTemperaturaCajas = 'procesoEmpaqueTemperaturaCajas';
-  static const procesoEmpaqueTemperaturaCamion = 'procesoEmpaqueTemperaturaCamion';
+  static const procesoEmpaqueTemperaturaCuartoFrio =
+      'procesoEmpaqueTemperaturaCuartoFrio';
+  static const procesoEmpaqueTemperaturaCajas =
+      'procesoEmpaqueTemperaturaCajas';
+  static const procesoEmpaqueTemperaturaCamion =
+      'procesoEmpaqueTemperaturaCamion';
   static const procesoEmpaqueApilamiento = 'procesoEmpaqueApilamiento';
   static const procesoEmpaqueFecha = 'procesoEmpaqueFecha';
 
@@ -209,6 +226,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createControlEcuadorTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlEcuadorTable
     (
@@ -234,6 +252,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciasReporteEcuadorTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciasReporteEcuadorTable
     (
@@ -246,6 +265,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createActividadesReporteEcuadorTable(Database db) async {
     final ramosSql = '''CREATE TABLE $alertaEcuadorTable
     (
@@ -260,6 +280,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createTipoControl(Database db) async {
     final ramosSql = '''CREATE TABLE $tipoControlTable
     (
@@ -270,6 +291,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createControlBandaTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlBandaTable
     (
@@ -296,6 +318,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createControlBoncheoTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlBoncheoTable
     (
@@ -321,6 +344,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $ramosTable
     (
@@ -330,6 +354,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciaBandaTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciaBandaTable
     (
@@ -341,6 +366,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciaBoncheoTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciaBoncheTable
     (
@@ -352,6 +378,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createControlEcommerceTable(Database db) async {
     final controlSql = '''CREATE TABLE $controlEcommerceTable
     (
@@ -364,6 +391,7 @@ class DatabaseCreator{
 
     await db.execute(controlSql);
   }
+
   Future<void> createCheckEcommerceTable(Database db) async {
     final controlSql = '''CREATE TABLE $checkEcommerceTable
     (
@@ -375,6 +403,7 @@ class DatabaseCreator{
 
     await db.execute(controlSql);
   }
+
   Future<void> createProblemasEcommerceTable(Database db) async {
     final controlSql = '''CREATE TABLE $problemasEcommerceTable
     (
@@ -386,6 +415,7 @@ class DatabaseCreator{
 
     await db.execute(controlSql);
   }
+
   Future<void> createFalenciaAlistamientoTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciaAlistamientoTable
     (
@@ -400,6 +430,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createControlEmpaqueTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlEmpaqueTable
     (
@@ -426,6 +457,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createControlAlistamientoTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlAlistamientoTable
     (
@@ -444,6 +476,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createEmpaqueTable(Database db) async {
     final ramosSql = '''CREATE TABLE $empaqueTable
     (
@@ -453,6 +486,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createClienteTable(Database db) async {
     final ramosSql = '''CREATE TABLE $clienteTable
     (
@@ -463,6 +497,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createActividadTable(Database db) async {
     final actividadSql = '''CREATE TABLE $actividadTable
     (
@@ -477,6 +512,7 @@ class DatabaseCreator{
 
     await db.execute(actividadSql);
   }
+
   Future<void> createErrorTable(Database db) async {
     final errorSql = '''CREATE TABLE $errorTable
     (
@@ -486,6 +522,7 @@ class DatabaseCreator{
 
     await db.execute(errorSql);
   }
+
   Future<void> createPostCosechaTable(Database db) async {
     final postcosechaSql = '''CREATE TABLE $postcosechaTable
     (
@@ -496,6 +533,7 @@ class DatabaseCreator{
 
     await db.execute(postcosechaSql);
   }
+
   Future<void> createHidratacionTable(Database db) async {
     final hidratacionSql = '''CREATE TABLE $hidratacionTable
     (
@@ -505,6 +543,7 @@ class DatabaseCreator{
 
     await db.execute(hidratacionSql);
   }
+
   Future<void> createCategoriaRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $categoriaRamosTable
     (
@@ -514,6 +553,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createCategoriaEmpaqueTable(Database db) async {
     final ramosSql = '''CREATE TABLE $categoriaEmpaqueTable
     (
@@ -523,6 +563,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciasRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciaRamosTable
     (
@@ -534,6 +575,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciasEmpaqueTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciaEmpaqueTable
     (
@@ -545,6 +587,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciasReporteRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciasReporteRamosTable
     (
@@ -556,6 +599,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createFalenciasReporteEmpaqueTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciasReporteEmpaqueTable
     (
@@ -566,8 +610,8 @@ class DatabaseCreator{
     )''';
 
     await db.execute(ramosSql);
-
   }
+
   Future<void> createFirmaReportesTable(Database db) async {
     final ramosSql = '''CREATE TABLE $firmaTable
     (
@@ -580,6 +624,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createDetalleFirmaReportesTable(Database db) async {
     final ramosSql = '''CREATE TABLE $detalleFirmaTable
     (
@@ -590,6 +635,7 @@ class DatabaseCreator{
 
     await db.execute(ramosSql);
   }
+
   Future<void> createProductoTable(Database db) async {
     final productoSql = '''CREATE TABLE $productoTable
     (
@@ -601,7 +647,7 @@ class DatabaseCreator{
     await db.execute(productoSql);
   }
 
-  // CREATE TABLE PROCESO HIDRATACION 
+  // CREATE TABLE PROCESO HIDRATACION
   Future<void> createProcesoHidratacionTable(Database db) async {
     final procesoHidratacionSql = '''CREATE TABLE $procesoHidratacionTable
       (
@@ -626,7 +672,9 @@ class DatabaseCreator{
     (
       $temperaturaId INTEGER PRIMARY KEY AUTOINCREMENT,
       $temperaturaUsuarioControlId INTEGER,
-      $temperaturaInterna NUMERIC,
+      $temperaturaInterna1 NUMERIC,
+      $temperaturaInterna2 NUMERIC,
+      $temperaturaInterna3 NUMERIC,
       $temperaturaExterna NUMERIC,
       $postcosechaId INTEGER,
       $temperaturaFecha DATE
@@ -658,19 +706,19 @@ class DatabaseCreator{
 
   Future<String> getDatabasePath(String dbName) async {
     final databasePath = await getDatabasesPath();
-    final path = p.join(databasePath,dbName);
-    if(await Directory(p.dirname(path)).exists()){
-
-    }else {
+    final path = p.join(databasePath, dbName);
+    if (await Directory(p.dirname(path)).exists()) {
+    } else {
       await Directory(p.dirname(path)).create(recursive: true);
     }
     return path;
   }
+
   Future<void> initDatabase() async {
     final path = await getDatabasePath('NewHcgCalidad3');
-    db = await openDatabase(path,version: 1,onCreate: onCreate);
-
+    db = await openDatabase(path, version: 1, onCreate: onCreate);
   }
+
   Future<void> onCreate(Database db, int version) async {
     await createControlRamosTable(db);
     await createControlEmpaqueTable(db);
