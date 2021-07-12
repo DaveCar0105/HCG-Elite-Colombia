@@ -1,0 +1,8 @@
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.csproj.AssemblyReference.cache
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.AssemblyInfoInputs.cache
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.AssemblyInfo.cs
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.csproj.CoreCompileInputs.cache
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.RazorAssemblyInfo.cache
+C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp3.1\HCGCALIDADSERVICES.RazorAssemblyInfo.cs

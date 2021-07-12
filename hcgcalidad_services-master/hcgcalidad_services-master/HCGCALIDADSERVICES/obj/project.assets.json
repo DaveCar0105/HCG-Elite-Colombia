@@ -13196,19 +13196,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Sergio\\.nuget\\packages\\": {}
+    "C:\\Users\\davjh\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Biblioteca\\Documentos\\GitHub\\hcgcalidad_services\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
+      "projectUniqueName": "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
       "projectName": "HCGCALIDADSERVICES",
-      "projectPath": "D:\\Biblioteca\\Documentos\\GitHub\\hcgcalidad_services\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
-      "packagesPath": "C:\\Users\\Sergio\\.nuget\\packages\\",
-      "outputPath": "D:\\Biblioteca\\Documentos\\GitHub\\hcgcalidad_services\\HCGCALIDADSERVICES\\obj\\",
+      "projectPath": "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
+      "packagesPath": "C:\\Users\\davjh\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Sergio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\davjh\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -13316,7 +13321,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }
