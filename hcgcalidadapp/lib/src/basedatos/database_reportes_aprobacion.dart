@@ -1092,8 +1092,8 @@ class DatabaseReportesAprobacion {
         itemRamo.ramosDerogado = listaRamos[0][DatabaseCreator.ramosDerogado];
         itemRamo.ramosMarca = listaRamos[0][DatabaseCreator.ramoMarca];
         itemRamo.ramosTiempo =
-            double.parse(listaRamos[0][DatabaseCreator.ramosDesde]) -
-                double.parse(listaRamos[0][DatabaseCreator.ramosHasta]);
+            double.parse(listaRamos[0][DatabaseCreator.ramosDesde].toString()) -
+                double.parse(listaRamos[0][DatabaseCreator.ramosHasta].toString());
         itemRamo.ramosFecha = listaRamos[0][DatabaseCreator.ramosFecha];
         itemRamo.ramosTallos = listaRamos[0][DatabaseCreator.ramosTallos];
         itemRamo.ramosDespachar = listaRamos[0][DatabaseCreator.ramosDespachar];

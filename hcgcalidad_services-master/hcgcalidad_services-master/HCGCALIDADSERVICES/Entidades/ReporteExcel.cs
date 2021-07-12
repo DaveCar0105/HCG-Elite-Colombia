@@ -48,11 +48,11 @@
 
     public partial class ActividadesQc
     {
-        [JsonProperty("semana")]
+        /*[JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }
+        public string Mes { get; set; }*/
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -71,12 +71,12 @@
     }
 
     public partial class BaseCaja
-    {
+    {/*
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }
+        public string Mes { get; set; }*/
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -125,12 +125,12 @@
     }
 
     public partial class BaseRamo
-    {
+    {/*
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }
+        public string Mes { get; set; }*/
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -200,12 +200,12 @@
     }
 
     public partial class BaseTotalRamo
-    {
+    {/*
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }
+        public string Mes { get; set; }*/
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -251,12 +251,12 @@
     }
 
     public partial class ChlEmpaque
-    {
+    {/*
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }
+        public string Mes { get; set; }*/
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
