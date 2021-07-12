@@ -308,7 +308,7 @@ class _HomePageState extends State<HomePage> {
             ? Container(
                 height: 30,
                 width: double.infinity,
-                alignment: Alignment.center,
+                alignment: Alignment.centerLeft,
                 child: Center(
                   child: Column(
                     children: [
@@ -333,7 +333,7 @@ class _HomePageState extends State<HomePage> {
             : Container(
                 alignment: Alignment.topCenter,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     RaisedButton(

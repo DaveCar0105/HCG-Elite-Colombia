@@ -839,32 +839,43 @@ class DatabaseReportesAprobacion {
 
     try {
       var listaRamos = listaRamosSQL.toList();
+
       while (listaRamos.length > 0) {
         ListaRamo itemRamo = ListaRamo();
         itemRamo.controlRamosId = listaRamos[0][DatabaseCreator.controlRamosId];
         itemRamo.ramosNumeroOrden =
             listaRamos[0][DatabaseCreator.ramosNumeroOrden];
+
         itemRamo.clienteId = listaRamos[0][DatabaseCreator.clienteId];
         itemRamo.ramosDerogado = listaRamos[0][DatabaseCreator.ramosDerogado];
+
         itemRamo.ramosMarca = listaRamos[0][DatabaseCreator.ramoMarca];
-        itemRamo.ramosTiempo =
-            double.parse(listaRamos[0][DatabaseCreator.ramosHasta]) -
-                double.parse(listaRamos[0][DatabaseCreator.ramosDesde]);
+
+        print(listaRamos[0][DatabaseCreator.ramosHasta]);
+        print(listaRamos[0][DatabaseCreator.ramosDesde]);
+        itemRamo.ramosTiempo = double.parse(
+                listaRamos[0][DatabaseCreator.ramosHasta].toString()) -
+            double.parse(listaRamos[0][DatabaseCreator.ramosDesde].toString());
+
         itemRamo.ramosFecha = listaRamos[0][DatabaseCreator.ramosFecha];
         itemRamo.ramosTallos = listaRamos[0][DatabaseCreator.ramosTallos];
         itemRamo.ramosDespachar = listaRamos[0][DatabaseCreator.ramosDespachar];
         itemRamo.ramosElaborados =
             listaRamos[0][DatabaseCreator.ramosElaborados];
+
         itemRamo.ramosTotal = listaRamos[0][DatabaseCreator.ramosTotal];
         itemRamo.productoId = listaRamos[0][DatabaseCreator.productoId];
         itemRamo.postcosechaId = listaRamos[0][DatabaseCreator.postcosechaId];
         itemRamo.detalleFirmaId = listaRamos[0][DatabaseCreator.detalleFirmaId];
+
         itemRamo.usuarioId = pref.userId;
         final sqlRamos = '''SELECT *
           FROM ${DatabaseCreator.ramosTable}
           WHERE ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId} = ${itemRamo.controlRamosId}
           ''';
+
         var ramosSQL = await db.rawQuery(sqlRamos);
+
         var ramos = ramosSQL.toList();
         itemRamo.ramos = [];
         while (ramos.length > 0) {
@@ -875,6 +886,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.falenciasReporteRamosTable} 
           WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${ramo.ramoId}
           ''';
+
           var falenciasSQL = await db.rawQuery(sqlFalencias);
           ramo.falencias = [];
           var falencias = falenciasSQL.toList();
@@ -917,6 +929,7 @@ class DatabaseReportesAprobacion {
     } catch (ex) {
       ErrorT error = ErrorT();
       error.errorDetalle = ex.toString();
+      print(ex.toString());
       await DatabaseError.addError(error);
       listaRamo.listaRamo = [];
     }
