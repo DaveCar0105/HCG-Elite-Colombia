@@ -12,8 +12,11 @@ namespace HCGCALIDADSERVICES.Models
         public DateTime? ActividadFecha { get; set; }
         public int? UsuarioControlId { get; set; }
         public int? PostcosechaId { get; set; }
+        public int? TipoActividadId { get; set; }
 
         public Postcosecha Postcosecha { get; set; }
         public Usuariocontrol UsuarioControl { get; set; }
+        public TipoActividad TipoActividad { get; set; }
+
     }
 }

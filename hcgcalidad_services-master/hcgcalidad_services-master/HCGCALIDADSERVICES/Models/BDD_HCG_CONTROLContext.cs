@@ -50,6 +50,8 @@ namespace HCGCALIDADSERVICES.Models
         public virtual DbSet<Ramo> Ramo { get; set; }
         public virtual DbSet<Temperatura> Temperatura { get; set; }
         public virtual DbSet<TipoControl> TipoControl { get; set; }
+        public virtual DbSet<TipoActividad> TipActividad { get; set; }
+        public virtual DbSet<TipoCliente> TipCliente { get; set; }
         public virtual DbSet<Usuariocontrol> Usuariocontrol { get; set; }
 
         // Unable to generate entity type for table 'dbo.NUMERO_ORDEN'. Please see the warning messages.
@@ -89,6 +91,8 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.Property(e => e.UsuarioControlId).HasColumnName("USUARIO_CONTROL_ID");
 
+                entity.Property(e => e.TipoActividadId).HasColumnName("TIPO_ACTIVIDAD_ID");
+
                 entity.HasOne(d => d.Postcosecha)
                     .WithMany(p => p.Actividad)
                     .HasForeignKey(d => d.PostcosechaId)
@@ -98,6 +102,22 @@ namespace HCGCALIDADSERVICES.Models
                     .WithMany(p => p.Actividad)
                     .HasForeignKey(d => d.UsuarioControlId)
                     .HasConstraintName("FK__ACTIVIDAD__USUAR__76619304");
+
+                entity.HasOne(d => d.TipoActividad)
+                    .WithMany(p => p.Actividad)
+                    .HasForeignKey(d => d.TipoActividadId)
+                    .HasConstraintName("FK__ACTIVIDAD__TIPAC__0697FACD");
+            });
+
+            modelBuilder.Entity<TipoActividad>(entity =>
+            {
+                entity.ToTable("TIPO_ACTIVIDAD");
+
+                entity.Property(e => e.TipoActividadId).HasColumnName("TIPO_ACTIVIDAD_ID");
+
+                entity.Property(e => e.TipoActividadDescripcion)
+                    .HasColumnName("TIPO_ACTIVIDAD_DESCRIPCION")
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Alertasecuador>(entity =>
@@ -273,6 +293,24 @@ namespace HCGCALIDADSERVICES.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.Elite).HasColumnName("ELITE");
+
+                entity.Property(e => e.TipoClienteId).HasColumnName("TIPO_CLIENTE_ID");
+
+                entity.HasOne(d => d.TipoCliente)
+                    .WithMany(p => p.Cliente)
+                    .HasForeignKey(d => d.TipoClienteId)
+                    .HasConstraintName("FK__CLIENTE__TIPCL__0697FACD");
+            });
+
+            modelBuilder.Entity<TipoCliente>(entity =>
+            {
+                entity.ToTable("TIPO_CLIENTE");
+
+                entity.Property(e => e.TipoClienteId).HasColumnName("TIPO_CLIENTE_ID");
+
+                entity.Property(e => e.TipoClienteNombre)
+                    .HasColumnName("TIPO_CLIENTE_NOMBRE")
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Controlalistamiento>(entity =>
@@ -1257,7 +1295,13 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.Property(e => e.TemperaturaInterna).HasColumnName("TEMPERATURA_INTERNA");
 
+                entity.Property(e => e.TemperaturaInterna2).HasColumnName("TEMPERATURA_INTERNA2");
+
+                entity.Property(e => e.TemperaturaInterna3).HasColumnName("TEMPERATURA_INTERNA3");
+
                 entity.Property(e => e.UsuarioControlId).HasColumnName("USUARIO_CONTROL_ID");
+
+                entity.Property(e => e.ClienteId).HasColumnName("CLIENTE_ID");
 
                 entity.HasOne(d => d.Postcosecha)
                     .WithMany(p => p.Temperatura)
@@ -1268,6 +1312,11 @@ namespace HCGCALIDADSERVICES.Models
                     .WithMany(p => p.Temperatura)
                     .HasForeignKey(d => d.UsuarioControlId)
                     .HasConstraintName("FK_TEMPERAT_RELATIONS_USUARIOC_1");
+
+                entity.HasOne(d => d.Cliente)
+                    .WithMany(p => p.Temperatura)
+                    .HasForeignKey(d => d.ClienteId)
+                    .HasConstraintName("FK_TEMPERAT_RELATIONS_CLIENTE_1");
             });
 
             modelBuilder.Entity<TipoControl>(entity =>
