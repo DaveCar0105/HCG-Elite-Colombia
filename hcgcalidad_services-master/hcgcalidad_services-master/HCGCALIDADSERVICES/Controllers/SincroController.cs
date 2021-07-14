@@ -1,4 +1,4 @@
-﻿using HCGCALIDADSERVICES.Entidades;
+using HCGCALIDADSERVICES.Entidades;
 using HCGCALIDADSERVICES.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +16,7 @@ namespace HCGCALIDADSERVICES.Controllers
     public class SincroController : ControllerBase
     {
         private readonly BDD_HCG_CONTROLContext _context;
+        private readonly String TAG = "SincroTag ";
         public SincroController(BDD_HCG_CONTROLContext context)
         {
             _context = context;
@@ -1254,7 +1255,7 @@ namespace HCGCALIDADSERVICES.Controllers
             lista[0] = fecha.Year.ToString() + cal.GetWeekOfYear(fecha, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday).ToString();
             lista[1] = fecha.ToString("MMMM", new CultureInfo("es-Es")).ToUpper();
             //lista[2] = fecha.ToString("dd-MMM", new CultureInfo("es-Es"));
-            lista[2] = fecha.ToString("dd-MMM-YYYY", new CultureInfo("es-Es"));
+            lista[2] = fecha.ToString("d", new CultureInfo("en-US"));
             return lista;
         }
         [HttpPost("temperatura")]
