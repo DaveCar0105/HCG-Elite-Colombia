@@ -27,6 +27,20 @@ namespace HCGCALIDADSERVICES.Controllers
             return _context.TipoControl;
         }
 
+        [HttpGet("Actividad")]
+        public IEnumerable<TipoActividad> GetTipoActividad()
+        {
+            return _context.TipActividad;
+        }
+
+        //
+        [HttpGet("Cliente")]
+        public IEnumerable<TipoCliente> GetTipoCliente()
+        {
+            return _context.TipCliente;
+        }
+
+
         // GET: api/TipoControles/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTipoControl([FromRoute] int id)

@@ -6,3 +6,6 @@ class Constantes {
     print("servidor conectado" + this.url);
   }
 }
+
+const int ID_TIPO_CLIENTE_COMMERCE = 1;
+const int ID_TIPO_CLINETE_ECOMMERCE = 2;

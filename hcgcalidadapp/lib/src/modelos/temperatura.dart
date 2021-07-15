@@ -12,16 +12,16 @@ String temperaturaToJson(Temperatura data) => json.encode(data.toJson());
 class Temperatura {
   var temperaturaInterna3;
 
-  Temperatura({
-    this.temperaturaId,
-    this.temperaturaUsuarioControlId,
-    this.temperaturaInterna1,
-    this.temperaturaInterna2,
-    this.temperatiraInterna3,
-    this.temperaturaExterna,
-    this.temperaturaFecha,
-    this.postcosechaId,
-  });
+  Temperatura(
+      {this.temperaturaId,
+      this.temperaturaUsuarioControlId,
+      this.temperaturaInterna1,
+      this.temperaturaInterna2,
+      this.temperatiraInterna3,
+      this.temperaturaExterna,
+      this.temperaturaFecha,
+      this.postcosechaId,
+      this.clienteId});
 
   int temperaturaId;
   int temperaturaUsuarioControlId;
@@ -31,6 +31,7 @@ class Temperatura {
   double temperaturaExterna;
   DateTime temperaturaFecha;
   int postcosechaId;
+  int clienteId;
 
   factory Temperatura.fromJson(Map<String, dynamic> json) => Temperatura(
         temperaturaId: json["temperaturaId"],
@@ -41,6 +42,7 @@ class Temperatura {
         temperaturaExterna: json["temperaturaExterna"].toDouble(),
         temperaturaFecha: DateTime.parse(json["temperaturaFecha"]),
         postcosechaId: json["postcosechaId"],
+        clienteId: json["clienteId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -51,6 +53,7 @@ class Temperatura {
         "temperaturaInterna3": temperaturaInterna3,
         "temperaturaExterna": temperaturaExterna,
         "postcosechaId": postcosechaId,
+        "clienteId": clienteId,
         "temperaturaFecha":
             "${temperaturaFecha.year.toString().padLeft(4, '0')}-${temperaturaFecha.month.toString().padLeft(2, '0')}-${temperaturaFecha.day.toString().padLeft(2, '0')}",
       };

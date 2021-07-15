@@ -201,6 +201,14 @@ class DatabaseCreator {
 
   static const usuarioId = 'usuarioId';
 
+  static const tipoActividadTable = 'tipoActividad';
+  static const tipoActividadId = 'tipoActividadId';
+  static const tipoActividadDescripcion = 'tipoActividadDescripcion';
+
+  static const tipoClienteTable = 'tipoCliente';
+  static const tipoClienteId = 'tipoClienteId';
+  static const tipoClienteNombre = 'tipoClienteNombre';
+
   Future<void> createControlRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlRamosTable
     (
@@ -287,6 +295,26 @@ class DatabaseCreator {
       $tipoControlId INTEGER PRIMARY KEY AUTOINCREMENT,
       $tipoControlNombre INTEGER,
       $claseId INTEGER
+    )''';
+
+    await db.execute(ramosSql);
+  }
+
+  Future<void> createTipoActividad(Database db) async {
+    final ramosSql = '''CREATE TABLE $tipoActividadTable
+    (
+      $tipoActividadId INTEGER PRIMARY KEY,
+      $tipoActividadDescripcion TEXT
+    )''';
+
+    await db.execute(ramosSql);
+  }
+
+  Future<void> createTipoCliente(Database db) async {
+    final ramosSql = '''CREATE TABLE $tipoClienteTable
+    (
+      $tipoClienteId INTEGER PRIMARY KEY,
+      $tipoClienteNombre TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -492,7 +520,8 @@ class DatabaseCreator {
     (
       $clienteId INTEGER PRIMARY KEY,
       $clienteNombre TEXT,
-      $elite INTEGER
+      $elite INTEGER,
+      $tipoClienteId INTEGER
     )''';
 
     await db.execute(ramosSql);
@@ -507,7 +536,8 @@ class DatabaseCreator {
       $actividadHoraInicio TEXT,
       $actividadHoraFin TEXT,
       $postcosechaId INTEGER,
-      $actividadFecha DATE
+      $actividadFecha DATE,
+      $tipoActividadId INTEGER
     )''';
 
     await db.execute(actividadSql);
@@ -677,7 +707,8 @@ class DatabaseCreator {
       $temperaturaInterna3 NUMERIC,
       $temperaturaExterna NUMERIC,
       $postcosechaId INTEGER,
-      $temperaturaFecha DATE
+      $temperaturaFecha DATE,
+      $clienteId INTEGER
     )''';
 
     await db.execute(temperaturaSql);
@@ -754,5 +785,7 @@ class DatabaseCreator {
     await createFalenciasReporteEcuadorTable(db);
     await createActividadesReporteEcuadorTable(db);
     await createTipoControl(db);
+    await createTipoActividad(db);
+    await createTipoCliente(db);
   }
 }

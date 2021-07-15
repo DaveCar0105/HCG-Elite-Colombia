@@ -21,6 +21,8 @@ import 'package:hcgcalidadapp/src/modelos/firma.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/problema_ecommerce.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
+import 'package:hcgcalidadapp/src/modelos/tipoActividad.dart';
+import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
 import 'package:hcgcalidadapp/src/paginas/actividades_page.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
@@ -76,10 +78,13 @@ void main() async {
     final responseCliente = await http.get(url1);
     var clientes = json.decode(responseCliente.body);
     for (int i = 0; i < clientes.length; i++) {
+      //print(jsonEncode(clientes));
+      //print("-----------------------------------------");
       var cliente = Cliente(
           clienteId: clientes[i]["clienteId"],
           clienteNombre: clientes[i]["clienteNombre"],
-          elite: clientes[i]["elite"]);
+          elite: clientes[i]["elite"],
+          tipoClienteId: clientes[i]["tipoClienteId"]);
       try {
         await DatabaseCliente.addCliente(cliente);
       } catch (DatabaseException) {
@@ -201,6 +206,31 @@ void main() async {
           claseId: tipoControl[i]["claseControl"]);
       try {
         await DatabaseEcuador.addTipoControl(tipo);
+      } catch (DatabaseException) {}
+    }
+
+    var url10 = Uri.http(co.url, '/api/TipoControles/Actividad');
+    final responseProblema11 = await http.get(url9);
+    var tipoActividad = json.decode(responseProblema11.body);
+    for (int i = 0; i < tipoActividad.length; i++) {
+      var tipo = TipoActividad(
+          tipoActividadId: tipoActividad[i]["tipoActividadId"],
+          tipoActividadDescripcion: tipoActividad[i]
+              ["tipoActividadDescripcion"]);
+      try {
+        await DatabaseEcuador.addTipoActividad(tipo);
+      } catch (DatabaseException) {}
+    }
+
+    var url11 = Uri.http(co.url, '/api/TipoControles/Cliente');
+    final responseProblema13 = await http.get(url11);
+    var tipoCliente = json.decode(responseProblema13.body);
+    for (int i = 0; i < tipoCliente.length; i++) {
+      var tipo = TipoCliente(
+          tipoClienteId: tipoCliente[i]["tipoClienteId"],
+          tipoClienteNombre: tipoCliente[i]["tipoClienteNombre"]);
+      try {
+        await DatabaseEcuador.addTipoCliente(tipo);
       } catch (DatabaseException) {}
     }
 
