@@ -54,6 +54,9 @@ namespace HCGCALIDADSERVICES.Models
         public virtual DbSet<TipoCliente> TipCliente { get; set; }
         public virtual DbSet<Usuariocontrol> Usuariocontrol { get; set; }
 
+        public virtual DbSet<CirculoCalidad> CirculoCalidad { get; set; }
+        public virtual DbSet<ProblemaCirculoCalidad> ProblemaCirculoCalidad { get; set; }
+
         // Unable to generate entity type for table 'dbo.NUMERO_ORDEN'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.FECHA'. Please see the warning messages.
 
@@ -1364,6 +1367,151 @@ namespace HCGCALIDADSERVICES.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
             });
+
+            modelBuilder.Entity<ProblemaCirculoCalidad>(entity =>
+            {
+                entity.ToTable("PROBLEMA_CIRCULO_CALIDAD");
+
+                entity.Property(e => e.ProblemaCirculoCalidadId).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID");
+
+                entity.Property(e => e.ProblemaCirculoCalidadIndicador)
+                    .HasColumnName("PROBLEMA_CIRCULO_CALIDAD_INDICADOR")
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProblemaCirculoCalidadCausaRelacional)
+                    .HasColumnName("PROBLEMA_CIRCULO_CALIDAD_CAUSA_RELACIONAL")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<CirculoCalidad>(entity =>
+            {
+                entity.ToTable("CIRCULO_CALIDAD");
+
+                entity.Property(e => e.CirculoCalidadId).HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.Property(e => e.RamosRevisados)
+                    .HasColumnName("CIRCULO_CALIDAD_RAMOS_REVISADOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RamosRechazados)
+                    .HasColumnName("CIRCULO_CALIDAD_RAMOS_RECHAZADOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ReunionCalidad)
+                    .HasColumnName("CIRCULO_CALIDAD_REUNION_CALIDAD")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProblemaCirculoCalidadId1).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID1");
+
+                entity.HasOne(d => d.ProblemaCirculoCalidad1)
+                    .WithMany(p => p.CirculoCalidad1)
+                    .HasForeignKey(d => d.ProblemaCirculoCalidadId1)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_1");
+
+                entity.Property(e => e.ProblemaCirculoCalidadId2).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID2");
+
+                entity.HasOne(d => d.ProblemaCirculoCalidad2)
+                    .WithMany(p => p.CirculoCalidad2)
+                    .HasForeignKey(d => d.ProblemaCirculoCalidadId2)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_2");
+
+                entity.Property(e => e.ProblemaCirculoCalidadId3).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID3");
+
+                entity.HasOne(d => d.ProblemaCirculoCalidad3)
+                    .WithMany(p => p.CirculoCalidad3)
+                    .HasForeignKey(d => d.ProblemaCirculoCalidadId3)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_3");
+
+                entity.Property(e => e.ProblemaCirculoCalidadId4).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID4");
+
+                entity.HasOne(d => d.ProblemaCirculoCalidad4)
+                    .WithMany(p => p.CirculoCalidad4)
+                    .HasForeignKey(d => d.ProblemaCirculoCalidadId4)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_4");
+
+                entity.Property(e => e.ProblemaCirculoCalidadId5).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID5");
+
+                entity.HasOne(d => d.ProblemaCirculoCalidad5)
+                    .WithMany(p => p.CirculoCalidad5)
+                    .HasForeignKey(d => d.ProblemaCirculoCalidadId5)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_5");
+
+                entity.Property(e => e.ClienteId1).HasColumnName("CLIENTE_ID1");
+
+                entity.HasOne(d => d.Cliente1)
+                    .WithMany(p => p.CirculoCalidad1)
+                    .HasForeignKey(d => d.ClienteId1)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_CLIENTE_1");
+
+                entity.Property(e => e.ClienteId2).HasColumnName("CLIENTE_ID2");
+
+                entity.HasOne(d => d.Cliente2)
+                    .WithMany(p => p.CirculoCalidad2)
+                    .HasForeignKey(d => d.ClienteId2)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_CLIENTE_2");
+
+                entity.Property(e => e.ProductoId1).HasColumnName("PRODUCTO_ID1");
+
+                entity.HasOne(d => d.Producto1)
+                    .WithMany(p => p.Circulocalidad1)
+                    .HasForeignKey(d => d.ProductoId1)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PRODUCTO_1");
+
+                entity.Property(e => e.ProductoId2).HasColumnName("PRODUCTO_ID2");
+
+                entity.HasOne(d => d.Producto2)
+                    .WithMany(p => p.Circulocalidad2)
+                    .HasForeignKey(d => d.ProductoId2)
+                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PRODUCTO_2");
+
+                entity.Property(e => e.Variedad1)
+                    .HasColumnName("CIRCULO_CALIDAD_VARIEDAD1")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.Variedad2)
+                    .HasColumnName("CIRCULO_CALIDAD_VARIEDAD2")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CodigoMesa)
+                    .HasColumnName("CIRCULO_CALIDAD_CODIGO_MESA")
+                    .HasMaxLength(64)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Linea)
+                    .HasColumnName("CIRCULO_CALIDAD_LINEA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Supervisor1)
+                    .HasColumnName("CIRCULO_CALIDAD_SUPERVISOR1")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Supervisor2)
+                    .HasColumnName("CIRCULO_CALIDAD_SUPERVISOR2")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EvaluacionSupervisor1)
+                    .HasColumnName("CIRCULO_CALIDAD_EVALUACION_SUPERVISOR1")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EvaluacionSupervisor2)
+                    .HasColumnName("CIRCULO_CALIDAD_EVALUACION_SUPERVISOR2")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Comentarios)
+                    .HasColumnName("CIRCULO_CALIDAD_COMENTARIOS")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+            });
+
         }
     }
 }

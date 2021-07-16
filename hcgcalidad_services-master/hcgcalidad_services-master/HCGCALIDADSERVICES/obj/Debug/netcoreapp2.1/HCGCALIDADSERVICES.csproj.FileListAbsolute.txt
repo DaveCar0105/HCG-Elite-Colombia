@@ -68,3 +68,20 @@ C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_service
 C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\HCGCALIDADSERVICES.pdb
 C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.RazorTargetAssemblyInfo.cache
 C:\Users\davjh\Documents\Proyecto HCGELite\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.genruntimeconfig.cache
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.csproj.AssemblyReference.cache
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.AssemblyInfoInputs.cache
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.AssemblyInfo.cs
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.csproj.CoreCompileInputs.cache
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.RazorAssemblyInfo.cache
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.RazorAssemblyInfo.cs
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.dll
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.pdb
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\appsettings.Development.json
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\appsettings.json
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\HCGCALIDADSERVICES.deps.json
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\HCGCALIDADSERVICES.runtimeconfig.json
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\HCGCALIDADSERVICES.runtimeconfig.dev.json
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\HCGCALIDADSERVICES.dll
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\bin\Debug\netcoreapp2.1\HCGCALIDADSERVICES.pdb
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.RazorTargetAssemblyInfo.cache
+D:\Trabajo\Empresa High control\app movil\HCG-Elite-Colombia\hcgcalidad_services-master\hcgcalidad_services-master\HCGCALIDADSERVICES\obj\Debug\netcoreapp2.1\HCGCALIDADSERVICES.genruntimeconfig.cache
