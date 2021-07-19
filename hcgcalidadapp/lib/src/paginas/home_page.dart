@@ -26,6 +26,7 @@ import 'package:hcgcalidadapp/src/paginas/alistamiento_page.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/banda_page.dart';
 import 'package:hcgcalidadapp/src/paginas/boncheo_page.dart';
+import 'package:hcgcalidadapp/src/paginas/circulo_calidad_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecommerce_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
 import 'package:hcgcalidadapp/src/paginas/empaque_elite_page.dart';
@@ -203,474 +204,460 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('HIGH CONTROL GROUP'),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: () {
-                  sincornizar();
-                })
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: Text('HIGH CONTROL GROUP'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              sincornizar();
+            },
+          )
+        ],
+      ),
+      drawer: new Drawer(
+        child: ListView(
+          children: <Widget>[
+            UserAccountsDrawerHeader(
+                accountName: Text('HIGH CONTROL GROUP'),
+                accountEmail: Text('https://highcontrolgroup.com/'),
+                currentAccountPicture: Container(
+                  height: 40,
+                  width: 40,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                  child: Image.asset(
+                    'assets/img/logo_app.jpg',
+                    height: 30,
+                    width: 30,
+                    fit: BoxFit.cover,
+                  ),
+                )),
+            ListTile(
+              title: Text('Errores'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'errores');
+              },
+            ),
+            ListTile(
+              title: Text('Reportes sincronizados'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'listaReportes');
+              },
+            ),
+            ListTile(
+              title: Text('Lista Reporte Detalle'),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushNamed(context, 'listaHistorial');
+              },
+            ),
+            ListTile(
+              title: Text('Salir'),
+              onTap: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    'login', (Route<dynamic> route) => false);
+              },
+            )
           ],
         ),
-        drawer: new Drawer(
-          child: ListView(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                  accountName: Text('HIGH CONTROL GROUP'),
-                  accountEmail: Text('https://highcontrolgroup.com/'),
-                  currentAccountPicture: Container(
-                    height: 40,
-                    width: 40,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                    child: Image.asset(
-                      'assets/img/logo_app.jpg',
-                      height: 30,
-                      width: 30,
-                      fit: BoxFit.cover,
+      ),
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: <Widget>[
+          Botones(
+            child: RaisedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            RamosElitePage(this._switchVal, 10)));
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              child: Container(
+                width: 120,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Hidratacion',
+                      style: TextStyle(fontSize: 15),
                     ),
-                  )),
-              // ListTile(
-              //   title: Text('Aprobacion'),
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.pushNamed(context, 'aprobacion');
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Sincronizar'),
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.pushNamed(context, 'sincronizar');
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Proceso de Hidratación'),
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.pushNamed(context, 'hidratacion');
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Proceso de empaque'),
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.pushNamed(context, 'empaque');
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Registro de Temperaturas'),
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.pushNamed(context, 'temperatura');
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Actividades'),
-              //   onTap: () {
-              //     Navigator.of(context).pop();
-              //     Navigator.pushNamed(context, 'actividades');
-              //   },
-              // ),
-              ListTile(
-                title: Text('Errores'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'errores');
-                },
+                    Icon(Icons.local_florist_outlined)
+                  ],
+                ),
               ),
-              ListTile(
-                title: Text('Reportes sincronizados'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'listaReportes');
-                },
+            ),
+
+            // text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            EmpaqueElitePage(this._switchVal, 0)));
+              },
+              child: Container(
+                width: 120,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Empaque',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.all_inbox)
+                  ],
+                ),
               ),
-              ListTile(
-                title: Text('Lista Reporte Detalle'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  Navigator.pushNamed(context, 'listaHistorial');
-                },
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => BandaPage(this._switchVal, 0)));
+              },
+              child: Container(
+                width: 120,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Final banda',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.set_meal)
+                  ],
+                ),
               ),
-              ListTile(
-                title: Text('Salir'),
-                onTap: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      'login', (Route<dynamic> route) => false);
-                },
-              )
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EcuadorPage(this._switchVal, 0)));
+              },
+              child: Container(
+                width: 120,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Ecuador',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.flag)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AprobacionPage()));
+              },
+              child: Container(
+                width: 120,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Aprobacion',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.check_circle)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SincronizarPage()));
+              },
+              child: Container(
+                width: 130,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Sincronizacion',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.autorenew_rounded)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProcesoHidratacionPage()));
+              },
+              child: Container(
+                width: 130,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Hidratacion',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.fact_check)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProcesoEmpaquePage()));
+              },
+              child: Container(
+                width: 130,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Empaque',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.fact_check_rounded)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RegistroTemperaturaPage()));
+              },
+              child: Container(
+                width: 130,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Temperaturas',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.pending_actions)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ActividadesPage()));
+              },
+              child: Container(
+                width: 130,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Actividades',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.engineering_outlined)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ReporteGeneralPage()));
+              },
+              child: Container(
+                width: 135,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Reporte general',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.assessment_outlined)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => circuloCalidadPage()));
+              },
+              child: Container(
+                width: 135,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Circulo Calidad',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.trip_origin_rounded)
+                  ],
+                ),
+              ),
+            ),
+            // text: 'raise botton',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Botones extends StatelessWidget {
+  final Widget child;
+  //final String text;
+  const Botones({
+    @required this.child,
+    // @required this.text,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              this.child,
+              SizedBox(
+                height: 10,
+              ),
+              //Text(this.text, textAlign: TextAlign.center),
             ],
           ),
         ),
-        body: sinc
-            ? Container(
-                height: 30,
-                width: double.infinity,
-                alignment: Alignment.centerLeft,
-                child: Center(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 200,
-                      ),
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 75,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200,
-                      ),
-                      Text("Esperar un par de  minutos...")
-                    ],
-                  ),
-                ),
-              )
-            : Container(
-                alignment: Alignment.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    RamosElitePage(this._switchVal, 10)));
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      child: Container(
-                        width: 120,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Hidratacion',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.local_florist_outlined)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EmpaqueElitePage(this._switchVal, 0)));
-                      },
-                      child: Container(
-                        width: 120,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Empaque',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.all_inbox)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    BandaPage(this._switchVal, 0)));
-                      },
-                      child: Container(
-                        width: 120,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Final banda',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.set_meal)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    EcuadorPage(this._switchVal, 0)));
-                      },
-                      child: Container(
-                        width: 120,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Ecuador',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.flag)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AprobacionPage()));
-                      },
-                      child: Container(
-                        width: 120,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Aprobacion',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.check_circle)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SincronizarPage()));
-                      },
-                      child: Container(
-                        width: 130,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Sincronizacion',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.autorenew_rounded)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ProcesoHidratacionPage()));
-                      },
-                      child: Container(
-                        width: 150,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'HidratacionCheck',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.fact_check)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProcesoEmpaquePage()));
-                      },
-                      child: Container(
-                        width: 130,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'EmpaqueCheck',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.fact_check_rounded)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    RegistroTemperaturaPage()));
-                      },
-                      child: Container(
-                        width: 130,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Temperaturas',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.pending_actions)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ActividadesPage()));
-                      },
-                      child: Container(
-                        width: 130,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Actividades',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.engineering_outlined)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ReporteGeneralPage()));
-                      },
-                      child: Container(
-                        width: 135,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Reporte general',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.assessment_outlined)
-                          ],
-                        ),
-                      ),
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      color: Colors.red,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ActividadesPage()));
-                      },
-                      child: Container(
-                        width: 135,
-                        height: 30,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Text(
-                              'Circulo Calidad',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            Icon(Icons.trip_origin_rounded)
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 70,
-                    )
-                  ],
-                ),
-              ));
+      ),
+    );
   }
 }

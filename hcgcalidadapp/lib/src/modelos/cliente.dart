@@ -9,6 +9,7 @@ class Cliente {
 
   int clienteId;
   String clienteNombre;
+  String clienteTipo;
   int elite;
   int tipoClienteId;
 

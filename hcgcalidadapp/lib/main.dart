@@ -33,6 +33,7 @@ import 'package:hcgcalidadapp/src/paginas/detalle_proceso_hidratacion_page.dart'
 import 'package:hcgcalidadapp/src/paginas/errores_page.dart';
 import 'package:hcgcalidadapp/src/paginas/falencias_ramos_page.dart';
 import 'package:hcgcalidadapp/src/paginas/firma_page.dart';
+//import 'package:hcgcalidadapp/src/paginas/home_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_page.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_firmas_page.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_reportes.dart';
@@ -247,7 +248,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'HCG CONTROL APP',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.red, primaryColor: Colors.red),
+      theme: ThemeData(primarySwatch: Colors.red, primaryColor: Colors.green),
       //darkTheme: ThemeData.dark(),
       initialRoute: pref.userId > 0 ? 'home' : 'login',
       routes: {

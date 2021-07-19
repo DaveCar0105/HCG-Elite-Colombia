@@ -209,6 +209,52 @@ class DatabaseCreator {
   static const tipoClienteId = 'tipoClienteId';
   static const tipoClienteNombre = 'tipoClienteNombre';
 
+  // TABLA CIRCULO DE CALIDAD
+  static const procesoCirculoCalidadTable = 'procesoCirculoCalidadTable';
+  static const procesoCirculoCalidadId = 'procesoCirculoCalidadId';
+  static const procesoCirculoCalidadPoscosecha =
+      'procesoCirculoCalidadPoscosecha';
+  static const procesoCirculoCalidadReunion = 'procesoCirculoCalidadReunion';
+  static const procesoCirculoCalidadClienteId1 =
+      'procesoCirculoCalidadClienteId1';
+  static const procesoCirculoCalidadClienteId2 =
+      'procesoCirculoCalidadClienteId2';
+  static const procesoCirculoCalidadProducto1 =
+      'procesoCirculoCalidadProducto1';
+  static const procesoCirculoCalidadProducto2 =
+      'procesoCirculoCalidadProducto2';
+  static const procesoCirculoCalidadRamosRevisados =
+      'procesoCirculoCalidadRamosRevisados';
+  static const procesoCirculoCalidadRamosRechazados =
+      'procesoCirculoCalidadRamosRechazados';
+  static const procesoCirculoCalidadProblemaId1 =
+      'procesoCirculoCalidadProblema1';
+  static const procesoCirculoCalidadProblemaId2 =
+      'procesoCirculoCalidadProblema2';
+  static const procesoCirculoCalidadProblemaId3 =
+      'procesoCirculoCalidadProblema3';
+  static const procesoCirculoCalidadProblemaId4 =
+      'procesoCirculoCalidadProblema4';
+  static const procesoCirculoCalidadProblemaId5 =
+      'procesoCirculoCalidadProblema5';
+  static const procesoCirculoCalidadVariedad1 =
+      'procesoCirculoCalidadVariedad1';
+  static const procesoCirculoCalidadVariedad2 =
+      'procesoCirculoCalidadVariedad2';
+  static const procesoCirculoCalidadCodigoMesa =
+      'procesoCirculoCalidadCodigoMesa';
+  static const procesoCirculoCalidadLinea = 'procesoCirculoCalidadLinea';
+  static const procesoCirculoCalidadSupervisor1 =
+      'procesoCirculoCalidadSupervisor1';
+  static const procesoCirculoCalidadSupervisor2 =
+      'procesoCirculoCalidadSupervisor2';
+  static const procesoCirculoCalidadComentarios =
+      'procesoCirculoCalidadComentarios';
+  static const procesoCirculoCalidadCheckSuperviso1 =
+      'procesoCirculoCalidadCheckSuperviso1';
+  static const procesoCirculoCalidadCheckSuperviso2 =
+      'procesoCirculoCalidadCheckSuperviso2';
+
   Future<void> createControlRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlRamosTable
     (
@@ -677,7 +723,7 @@ class DatabaseCreator {
     await db.execute(productoSql);
   }
 
-  // CREATE TABLE PROCESO HIDRATACION
+  // CREATE TABLE CHECK HIDRATACION
   Future<void> createProcesoHidratacionTable(Database db) async {
     final procesoHidratacionSql = '''CREATE TABLE $procesoHidratacionTable
       (
@@ -735,6 +781,37 @@ class DatabaseCreator {
     await db.execute(procesoEmpaqueSql);
   }
 
+  //CREATE TABLE CIRCULO DE CALIDAD
+  Future<void> createCirculoCalidad(Database db) async {
+    final procesoCirculoCalidadSql =
+        '''CREATE TABLE $procesoCirculoCalidadTable 
+    (
+        $procesoCirculoCalidadId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $procesoCirculoCalidadPoscosecha VARCHAR,
+        $procesoCirculoCalidadReunion INTEGER,
+        $procesoCirculoCalidadClienteId1 INTEGER,
+        $procesoCirculoCalidadClienteId2 INTEGER,
+        $procesoCirculoCalidadProducto1 VARCHAR,
+        $procesoCirculoCalidadProducto2 VARCHAR,
+        $procesoCirculoCalidadRamosRevisados INTEGER,
+        $procesoCirculoCalidadRamosRechazados INTEGER,
+        $procesoCirculoCalidadProblemaId1 VARCHAR,
+        $procesoCirculoCalidadProblemaId2 VARCHAR,
+        $procesoCirculoCalidadProblemaId3 VARCHAR,
+        $procesoCirculoCalidadProblemaId4 VARCHAR,
+        $procesoCirculoCalidadProblemaId5 VARCHAR,
+        $procesoCirculoCalidadVariedad1 VARCHAR,
+        $procesoCirculoCalidadVariedad2 VARCHAR,
+        $procesoCirculoCalidadCodigoMesa INTEGER,
+        $procesoCirculoCalidadLinea INTEGER,
+        $procesoCirculoCalidadCheckSuperviso1 VARCHAR,
+        $procesoCirculoCalidadCheckSuperviso2 VARCAHAR,
+        $procesoCirculoCalidadComentarios VARCAHAR,
+        $procesoCirculoCalidadSupervisor1 VARCAHAR,
+        $procesoCirculoCalidadSupervisor2 VARCHAR
+    )''';
+  }
+
   Future<String> getDatabasePath(String dbName) async {
     final databasePath = await getDatabasesPath();
     final path = p.join(databasePath, dbName);
@@ -787,5 +864,6 @@ class DatabaseCreator {
     await createTipoControl(db);
     await createTipoActividad(db);
     await createTipoCliente(db);
+    await createCirculoCalidad(db);
   }
 }
