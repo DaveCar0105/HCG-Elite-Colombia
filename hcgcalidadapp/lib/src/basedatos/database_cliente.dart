@@ -32,4 +32,6 @@ class DatabaseCliente {
 
     await db.rawUpdate(sql);
   }
+
+  
 }

@@ -49,7 +49,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
       postcosechaEnable = true;
     });
   }
-  Widget _postcosecha() {
+  Widget  _postcosecha() {
     return Container(
       width: 250,
       height: 80,
@@ -83,7 +83,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Proceso Hidratación'),
+        title: Text('Proceso Hidratación Check'),
         actions: <Widget>[
           StreamBuilder(
             stream: _procesoHidratacionBloc.registroProcesoHidratacionStream(),

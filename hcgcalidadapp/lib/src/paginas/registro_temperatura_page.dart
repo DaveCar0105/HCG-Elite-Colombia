@@ -1,9 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_actividad.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_temperatura.dart';
 import 'package:hcgcalidadapp/src/bloc/registro_temperatura_bloc.dart';
+import 'package:hcgcalidadapp/src/modelos/actividad.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
+import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/temperatura.dart';
 import 'package:hcgcalidadapp/src/preferencias.dart';
@@ -11,6 +15,8 @@ import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
 class RegistroTemperaturaPage extends StatefulWidget {
+
+  
   @override
   _RegistroTemperaturaPageState createState() =>
       _RegistroTemperaturaPageState();
@@ -34,10 +40,15 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
   GlobalKey<ListaBusquedaState> _keyPostcosecha = GlobalKey();
   List<AutoComplete> listaPostcosecha = new List<AutoComplete>();
   String postcosechaNombre = "";
-
   int postcosechaId = 0;
-
   bool postcosechaEnable = false;
+
+  GlobalKey<ListaBusquedaState> _keyClientes = GlobalKey();
+  List<AutoComplete> listaClientes = new List<AutoComplete>();
+  String clienteNombre = "";
+  int clienteId=0;
+  bool clientesEnable = false;
+
   _RegistroTemperaturaPageState() {
     cargarCombo();
   }
@@ -50,6 +61,18 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
     });
     setState(() {
       postcosechaEnable = true;
+    });
+
+    List<Cliente> clientes = List();
+    clientes = await DatabaseCliente.getAllCliente(1);
+    clientes.forEach((element) {
+      listaClientes.add(AutoComplete(
+          id: element.clienteId, nombre: element.clienteNombre));
+    });
+    setState(() {
+      postcosechaEnable = true;
+      clientesEnable = true;
+
     });
   }
 
@@ -74,6 +97,35 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                   return item.nombre == value;
                 });
                 postcosechaId = postcosecha.id;
+              },
+            )
+          : Container(
+              child: CircularProgressIndicator(),
+            ),
+    );
+  }
+
+  Widget _clientes() {
+    return Container(
+      width: 250,
+      height: 70,
+      child: clientesEnable
+          ? ListaBusqueda(
+              key: _keyClientes,
+              lista: listaClientes,
+              hintText: "Cliente",
+              valorDefecto: postcosechaNombre,
+              hintSearchText: "Elegir un cliente",
+              icon: Icon(Icons.move_to_inbox),
+              width: 200.0,
+              style: TextStyle(
+                fontSize: 15,
+              ),
+              parentAction: (value) {
+                AutoComplete cliente = listaClientes.firstWhere((item) {
+                  return item.nombre == value;
+                });
+                clienteId = cliente.id;
               },
             )
           : Container(
@@ -152,6 +204,8 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                         fontSize: height * 0.025,
                         padding: EdgeInsets.symmetric(horizontal: width * 0.2),
                         controller: temperaturaExterna),
+                    Divider(),
+                    _clientes(),
                     _InputTemperatura(
                         title: 'Temperatura Caja #1',
                         fontSize: height * 0.025,

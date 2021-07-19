@@ -255,6 +255,14 @@ class DatabaseCreator {
   static const procesoCirculoCalidadCheckSuperviso2 =
       'procesoCirculoCalidadCheckSuperviso2';
 
+
+  //CREATE TABLE MARITIMO
+  static const procesoMaritimoTable = 'procesoMaritimoTable';
+  static const procesoMaritimoId ='procesoMaritimoId';
+  //static const procesoMaritimo
+
+
+
   Future<void> createControlRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlRamosTable
     (
