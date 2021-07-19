@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
@@ -7,9 +8,12 @@ import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
+import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_ramos_page.dart';
+import 'package:hcgcalidadapp/src/providers/TipoClienteProvider.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
+import 'package:provider/provider.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:hcgcalidadapp/src/basedatos/database_ramos.dart';
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
@@ -45,6 +49,12 @@ class _RamosElitePageState extends State<RamosElitePage> {
   int productoId = 0;
   bool prodEnable = false;
 
+  GlobalKey<ListaBusquedaState> _keyTipoCliente = GlobalKey();
+  static List<AutoComplete> listaTipoCliente = new List<AutoComplete>();
+  String tipoClienteNombre = "";
+  int tipoClienteId = 0;
+  bool clientTipoEnable = false;
+
   GlobalKey<ListaBusquedaState> _keyCliente = GlobalKey();
   static List<AutoComplete> listaCliente = new List<AutoComplete>();
   String clienteNombre = "";
@@ -56,12 +66,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
   String postcosechaNombre = "";
   int postcosechaId = 0;
   bool postcosechaEnable = false;
-
-  /*GlobalKey<ListaBusquedaState> _keyTipoCliente = GlobalKey();
-  static List<AutoComplete> listaTipoCliente = new List<AutoComplete>();
-  String clienteTipo = "";
-  int clienteTipoID = 0;
-  bool clienteTipoEnable = false;*/
 
   bool elite = false;
   _RamosElitePageState(bool valor, int ramosId) {
@@ -109,6 +113,8 @@ class _RamosElitePageState extends State<RamosElitePage> {
     listaProducto = List<AutoComplete>();
     listaCliente = List<AutoComplete>();
     listaPostcosecha = List<AutoComplete>();
+    listaTipoCliente = List<AutoComplete>();
+
     int valor = 0;
     if (elite) {
       valor = 1;
@@ -127,6 +133,14 @@ class _RamosElitePageState extends State<RamosElitePage> {
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
 
+    List<TipoCliente> tipoClientes = List();
+    tipoClientes = await DatabaseEcuador.getAllTipoCliente();
+    print("tiupo cliente: " + tipoClientes.length.toString());
+    tipoClientes.forEach((element) {
+      listaTipoCliente.add(AutoComplete(
+          id: element.tipoClienteId, nombre: element.tipoClienteNombre));
+    });
+
     List<PostCosecha> postcosechas = List();
     postcosechas = await DatabasePostcosecha.getAllPostcosecha(valor);
     postcosechas.forEach((element) {
@@ -138,6 +152,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
       prodEnable = true;
       clientEnable = true;
       postcosechaEnable = true;
+      clientTipoEnable = true;
     });
   }
 
@@ -159,6 +174,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
                   children: <Widget>[
                     // _tipoCliente(),
                     _numeroOrden(),
+                    _tipoCliente(),
                     _cliente(),
                     _producto(),
                     _postcosecha(),
@@ -179,33 +195,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
           )),
     );
   }
-
-  /* Widget _tipoCliente() {
-    return Container(
-      width: 250,
-      height: 90,
-      child: clientEnable
-          ? ListaBusqueda(
-              key: _keyCliente,
-              lista: listaTipoCliente,
-              hintText: "Cliente",
-              valorDefecto: clienteTipo,
-              hintSearchText: "Seleccione el tipo del cliente",
-              icon: Icon(Icons.supervised_user_circle),
-              width: 200.0,
-              style: TextStyle(fontSize: 15),
-              parentAction: (value) {
-                AutoComplete clienteTipo = listaCliente.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                clienteId = clienteTipo.id;
-              },
-            )
-          : Container(
-              child: CircularProgressIndicator(),
-            ),
-    );
-  }*/
 
   Widget _numeroOrden() {
     return Container(
@@ -381,7 +370,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
               lista: listaProducto,
               hintText: "Producto",
               valorDefecto: productoNombre,
-              hintSearchText: "Selecione el nombre del producto",
+              hintSearchText: "Escriba el nombre del producto",
               icon: Icon(Icons.local_florist),
               width: 200.0,
               style: TextStyle(
@@ -400,22 +389,52 @@ class _RamosElitePageState extends State<RamosElitePage> {
     );
   }
 
+  Widget _tipoCliente() {
+    final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
+    return Container(
+      width: 250,
+      height: 90,
+      child: clientTipoEnable
+          ? ListaBusqueda(
+              key: _keyTipoCliente,
+              lista: listaTipoCliente,
+              hintText: "Tipo Cliente",
+              valorDefecto: tipoClienteNombre,
+              hintSearchText: "Seleccione el tipo de cliente",
+              icon: Icon(Icons.supervised_user_circle),
+              width: 200.0,
+              style: TextStyle(fontSize: 15),
+              parentAction: (value) {
+                AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
+                  return item.nombre == value;
+                });
+                listaClienteProvider.listaClientes = tipoCliente.id;
+              },
+            )
+          : Container(
+              child: CircularProgressIndicator(),
+            ),
+    );
+  }
+
   Widget _cliente() {
+    final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
       width: 250,
       height: 90,
       child: clientEnable
           ? ListaBusqueda(
               key: _keyCliente,
-              lista: listaCliente,
+              lista: listaClienteProvider.listaClientes,
               hintText: "Cliente",
               valorDefecto: clienteNombre,
-              hintSearchText: "Seleccione el nombre del cliente",
+              hintSearchText: "Escriba el nombre del cliente",
               icon: Icon(Icons.supervised_user_circle),
               width: 200.0,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                AutoComplete cliente = listaCliente.firstWhere((item) {
+                AutoComplete cliente =
+                    listaClienteProvider.listaClientes.firstWhere((item) {
                   return item.nombre == value;
                 });
                 clienteId = cliente.id;
