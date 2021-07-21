@@ -180,6 +180,50 @@ class DatabaseCreator {
   static const procesoHidratacionNivelSolucion =
       'procesoHidratacionNivelSolucion';
   static const procesoHidratacionFecha = 'procesoHidratacionFecha';
+  //TABLA MARITIMOS
+ static const procesoMaritimoTable = 'procesoMaritimoTable';
+ static const procesoMaritimoId ='procesoMaritimoId';
+ static const procesoMaritimoUsuarioControlId ='procesoMaritimoUsuarioControlId';
+ static const procesoMaritimoObservaciones ='procesoMaritimoObservaciones';
+ static const procesoMaritimoNumeroGuia ='procesoMaritimoNumeroGuia';
+ static const procesoMaritimoDestino ="procesoMaritimoDestino";
+ static const procesoMaritimoRealizadoPor = 'procesoMaritimoRealizadoPor';
+ static const procesomoMaritimoAcompanamiento ='procesomoMaritimoAcompanamiento';
+ static const procesoMaritimoNombreHidratante ='procesoMaritimoNombreHidratante';
+ static const procesoMaritimoPhSoluciones ='procesoMaritimoPhSoluciones';
+ static const procesoMaritimoNivelSolucionTinas='procesoMaritimoNivelSolucionTinas';
+ static const procesoMaritimoSolucionHidratacionSinVegetal = 'procesoMaritimmoSolucionHidratacionSinVegetal';
+ static const procesoMaritimoTemperaturaCuartoFrio = 'procesoMaritimoTemperaturaCuartoFrio';
+ static const procesoMaritimoTemperaturaSolucionesHidratacion ='procesoMaritimoTemperaturaSolucionesHidratacion';
+ static const procesoMaritimoEmpaqueAmbienteTemperatura = 'procesoMaritimoEmpaqueAmbienteTemperatura';
+ static const procesoMaritimoFlorEmpacada ='procesoMaritimoFlorEmpacada';
+ static const procesoMaritimoTransportCareEmpaque ='procesoMaritimoTransportCareEmpaque';
+ static const procesoMaritimoCajasVisualDeformes ='procesoMaritimoCajasVisualDeformes';
+ static const procesoMaritimoEtiquetasCajasUbicadas='procesoMaritimoEtiquetasCajasUbicadas';
+ static const procesoMaritimoTemperaturaCubiculoCamion ='procesoMaritimoTemperaturaCubiculoCamion';
+ static const procesoMaritimoTemperaturaCajasTransferencia ='procesoMaritimoTemperaturaCajasTransferencia';
+ static const procesoMaritimoAparenciaCajasTransferencia ='procesoMaritimoAparenciaCajasTransferencia';
+ static const procesoMaritimoEstibasDebidamenteSelladas ='procesoMaritimoEstibasDebidamenteSelladas';
+ static const procesoMaritimoPalletsEsquinerosCorrectamenteAjustados ='procesoMaritimoPalletsEsquinerosCorrectamenteAjustados';
+ static const procesoMaritimoPalletsAlturaContenedor = 'procesoMaritimoPalletsAlturaContenedor';
+ static const procesoMaritimoTemperaturaPalletContenedor='procesoMaritimoTemperaturaPalletContenedor';
+ static const procesoMaritimoPalletIdentificadoNumero ='procesoMaritimoPalletIdentificadoNumero';
+ static const procesoMaritimoTomaRegistroTemperaturas ='procesoMaritimoTomaRegistroTemperaturas';
+ static const procesoMaritimoGenset = 'procesoMaritimoGenset';
+ static const procesoMaritimoContenedorEdadFabricacion ='procesoMaritimoContenedorEdadFabricacion';
+ static const procesoMaritimoContenedorCumplimientoSeteo = 'procesoMaritimoContenedorCumplimientoSeteo';
+ static const procesoMaritimoContenedorPreEnfriado ='procesoMaritimoContenedorPreEnfriado';
+ static const procesoMaritimoContenedorlavadoDesinfectado ='procesoMaritimoContenedorlavadoDesinfectado';
+ static const procesoMaritimoCarguePreviamenteHumedecidos = 'procesoMaritimoCarguePreviamenteHumedecidos';
+ static const procesoMaritimoLlegandoCierreSellado ='procesoMaritimoLlegandoCierreSellado';
+
+ static const procesoMaritimoEstibasSelloICA = 'procesoMaritimoEstibasSelloICA';
+ static const procesoMaritimoPalletsTensionZunchos = 'procesoMaritimoPalletsTensionZunchos';
+ static const procesoMaritimoPalletIdentificadoEtiqueta ='procesoMaritimoPalletIdentificadoEtiqueta';
+ static const procesoMaritimoComponentePalletDestinosEtiquetas ='procesoMaritimoComponentePalletDestinosEtiquetas';
+ static const procesoMaritimoCamionSelloSeguridadContenedor ='procesoMaritimoCamionSelloSeguridadContenedor';
+
+ static const procesoMaritimoFecha = 'procesoMaritimoFecha';
 
   // TABLA TEMPERATURA
   static const temperaturaTable = 'temperatura';
@@ -263,10 +307,7 @@ class DatabaseCreator {
       'procesoCirculoCalidadCheckSuperviso2';
 
 
-  //CREATE TABLE MARITIMO
-  static const procesoMaritimoTable = 'procesoMaritimoTable';
-  static const procesoMaritimoId ='procesoMaritimoId';
-  //static const procesoMaritimo
+ 
 
 
 
@@ -755,6 +796,58 @@ class DatabaseCreator {
 
     await db.execute(procesoHidratacionSql);
   }
+  // CREATE TABLE MARITIMO
+  Future<void> createProcesoMaritimoTable(Database db) async {
+    final procesoMaritimoSql = '''CREATE TABLE $procesoMaritimoTable
+      (
+        $procesoMaritimoId INTEGER PRIMARY KEY,
+        $procesoMaritimoUsuarioControlId INTEGER,
+        $procesoMaritimoObservaciones TEXT,
+        $procesoMaritimoNumeroGuia INTEGER,
+        $procesoMaritimoDestino TEXT,
+        $procesoMaritimoRealizadoPor TEXT,
+        $procesomoMaritimoAcompanamiento TEXT,
+        $procesoMaritimoNombreHidratante INTEGER,
+        $procesoMaritimoPhSoluciones INTEGER,
+        $procesoMaritimoNivelSolucionTinas INTEGER,
+        $procesoMaritimoSolucionHidratacionSinVegetal INTEGER,
+        $procesoMaritimoTemperaturaCuartoFrio  INTEGER,
+        $procesoMaritimoTemperaturaSolucionesHidratacion INTEGER,
+        $procesoMaritimoEmpaqueAmbienteTemperatura INTEGER,
+        $procesoMaritimoFlorEmpacada INTEGER,
+        $procesoMaritimoTransportCareEmpaque INTEGER,
+        $procesoMaritimoCajasVisualDeformes INTEGER,
+        $procesoMaritimoEtiquetasCajasUbicadas INTEGER,
+        $procesoMaritimoTemperaturaCubiculoCamion INTEGER,
+        $procesoMaritimoTemperaturaCajasTransferencia INTEGER,
+        $procesoMaritimoAparenciaCajasTransferencia INTEGER,
+        $procesoMaritimoEstibasDebidamenteSelladas INTEGER,
+        $procesoMaritimoPalletsEsquinerosCorrectamenteAjustados INTEGER,
+        $procesoMaritimoPalletsAlturaContenedor INTEGER,
+        $procesoMaritimoTemperaturaPalletContenedor INTEGER,
+        $procesoMaritimoPalletIdentificadoNumero INTEGER,
+        $procesoMaritimoTomaRegistroTemperaturas INTEGER,
+        $procesoMaritimoGenset INTEGER,
+        $procesoMaritimoContenedorEdadFabricacion INTEGER,
+        $procesoMaritimoContenedorCumplimientoSeteo INTEGER,
+        $procesoMaritimoContenedorPreEnfriado INTEGER,
+        $procesoMaritimoContenedorlavadoDesinfectado INTEGER,
+        $procesoMaritimoCarguePreviamenteHumedecidos INTEGER,
+        $procesoMaritimoLlegandoCierreSellado INTEGER,
+        $procesoMaritimoEstibasSelloICA INTEGER,
+        $procesoMaritimoPalletsTensionZunchos INTEGER,
+        $procesoMaritimoPalletIdentificadoEtiqueta INTEGER,
+        $procesoMaritimoComponentePalletDestinosEtiquetas INTEGER,
+        $procesoMaritimoCamionSelloSeguridadContenedor INTEGER,
+
+        $procesoMaritimoFecha DATE,
+        $clienteId INTEGER,
+        $clienteNombre TEXT,
+        $postcosechaId INTEGER
+      )''';
+
+    await db.execute(procesoMaritimoSql);
+  }
 
   // CREATE TABLE TEMPERATURA
 
@@ -802,29 +895,30 @@ class DatabaseCreator {
         '''CREATE TABLE $procesoCirculoCalidadTable 
     (
         $procesoCirculoCalidadId INTEGER PRIMARY KEY AUTOINCREMENT,
-        $procesoCirculoCalidadPoscosecha VARCHAR,
+        $procesoCirculoCalidadPoscosecha TEXT,
         $procesoCirculoCalidadReunion INTEGER,
         $procesoCirculoCalidadClienteId1 INTEGER,
         $procesoCirculoCalidadClienteId2 INTEGER,
-        $procesoCirculoCalidadProducto1 VARCHAR,
-        $procesoCirculoCalidadProducto2 VARCHAR,
+        $procesoCirculoCalidadProducto1 TEXT,
+        $procesoCirculoCalidadProducto2 TEXT,
         $procesoCirculoCalidadRamosRevisados INTEGER,
         $procesoCirculoCalidadRamosRechazados INTEGER,
-        $procesoCirculoCalidadProblemaId1 VARCHAR,
-        $procesoCirculoCalidadProblemaId2 VARCHAR,
-        $procesoCirculoCalidadProblemaId3 VARCHAR,
-        $procesoCirculoCalidadProblemaId4 VARCHAR,
-        $procesoCirculoCalidadProblemaId5 VARCHAR,
-        $procesoCirculoCalidadVariedad1 VARCHAR,
-        $procesoCirculoCalidadVariedad2 VARCHAR,
+        $procesoCirculoCalidadProblemaId1 TEXT,
+        $procesoCirculoCalidadProblemaId2 TEXT,
+        $procesoCirculoCalidadProblemaId3 TEXT,
+        $procesoCirculoCalidadProblemaId4 TEXT,
+        $procesoCirculoCalidadProblemaId5 TEXT,
+        $procesoCirculoCalidadVariedad1 TEXT,
+        $procesoCirculoCalidadVariedad2 TEXT,
         $procesoCirculoCalidadCodigoMesa INTEGER,
         $procesoCirculoCalidadLinea INTEGER,
-        $procesoCirculoCalidadCheckSuperviso1 VARCHAR,
-        $procesoCirculoCalidadCheckSuperviso2 VARCAHAR,
-        $procesoCirculoCalidadComentarios VARCAHAR,
-        $procesoCirculoCalidadSupervisor1 VARCAHAR,
-        $procesoCirculoCalidadSupervisor2 VARCHAR
+        $procesoCirculoCalidadCheckSuperviso1 TEXT,
+        $procesoCirculoCalidadCheckSuperviso2 TEXT,
+        $procesoCirculoCalidadComentarios TEXT,
+        $procesoCirculoCalidadSupervisor1 TEXT,
+        $procesoCirculoCalidadSupervisor2 TEXT
     )''';
+    await db.execute(procesoCirculoCalidadSql);
   }
 
   Future<String> getDatabasePath(String dbName) async {
