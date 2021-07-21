@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_actividad.dart';
@@ -277,16 +279,18 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
           temperaturaInterna2: temperaturaInterna2.text == ''
               ? null
               : double.parse(temperaturaInterna2.text),
-          temperatiraInterna3: temperaturaInterna3.text == ''
+          temperaturaInterna3: temperaturaInterna3.text == ''
               ? null
               : double.parse(temperaturaInterna3.text),
           temperaturaExterna: temperaturaExterna.text == ''
               ? null
               : double.parse(temperaturaExterna.text),
           temperaturaFecha: DateTime.now(),
-          postcosechaId: postcosechaId);
+          postcosechaId: postcosechaId,
+          clienteId: clienteId);
+          print(jsonEncode(temperatura));
       final temperaturaId =
-          await DatabaseTemperatura.addTemperatura(temperatura);
+         await DatabaseTemperatura.addTemperatura(temperatura);
       if (temperaturaId != 0) {
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _temperaturaBloc.registroTemperaturaStream();
@@ -295,6 +299,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
         temperaturaInterna1.text = '';
         temperaturaInterna2.text = '';
         temperaturaInterna3.text = '';
+        
       } else {
         mostrarSnackbar(
             'No se pudo ingresar a la base de datos', Colors.red, _scaffoldKey);

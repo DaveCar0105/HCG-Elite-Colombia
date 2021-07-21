@@ -10,14 +10,13 @@ Temperatura temperaturaFromJson(String str) =>
 String temperaturaToJson(Temperatura data) => json.encode(data.toJson());
 
 class Temperatura {
-  var temperaturaInterna3;
 
   Temperatura(
       {this.temperaturaId,
       this.temperaturaUsuarioControlId,
       this.temperaturaInterna1,
       this.temperaturaInterna2,
-      this.temperatiraInterna3,
+      this.temperaturaInterna3,
       this.temperaturaExterna,
       this.temperaturaFecha,
       this.postcosechaId,
@@ -27,7 +26,7 @@ class Temperatura {
   int temperaturaUsuarioControlId;
   double temperaturaInterna1;
   double temperaturaInterna2;
-  double temperatiraInterna3;
+  double temperaturaInterna3;
   double temperaturaExterna;
   DateTime temperaturaFecha;
   int postcosechaId;
@@ -38,7 +37,7 @@ class Temperatura {
         temperaturaUsuarioControlId: json["temperaturaUsuarioControlId"],
         temperaturaInterna1: json["temperaturaInterna1"].toDouble(),
         temperaturaInterna2: json["temperaturaInterna2"].toDouble(),
-        temperatiraInterna3: json["temperaturaInterna3"].toDouble(),
+        temperaturaInterna3: json["temperaturaInterna3"].toDouble(),
         temperaturaExterna: json["temperaturaExterna"].toDouble(),
         temperaturaFecha: DateTime.parse(json["temperaturaFecha"]),
         postcosechaId: json["postcosechaId"],

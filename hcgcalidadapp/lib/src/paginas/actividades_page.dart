@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_actividad.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/bloc/registro_actividades_bloc.dart';
 import 'package:hcgcalidadapp/src/modelos/actividad.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
+import 'package:hcgcalidadapp/src/modelos/tipoActividad.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
@@ -24,7 +29,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();  
   final appBar = AppBar();
 
-  final _descripcionActividadController = new TextEditingController();
+  //final _descripcionActividadController = new TextEditingController();
 
   TimeOfDay _timeInicio = TimeOfDay.now();
   String horaInicio = '';
@@ -65,13 +70,24 @@ class _ActividadesPageState extends State<ActividadesPage> {
   GlobalKey<ListaBusquedaState> _keyPostcosecha = GlobalKey();
   List<AutoComplete> listaPostcosecha = new List<AutoComplete>();
   String postcosechaNombre = "";
-
   int postcosechaId=0;
-
   bool postcosechaEnable = false;
+
+GlobalKey<ListaBusquedaState> _keyListaActividades = GlobalKey();
+  List<AutoComplete> listaActividades = new List<AutoComplete>();
+  String listaActividadesNombre = "";
+  int listaActiviadesId=0;
+  bool listaActividadesEnable = false;
+
+
+
+
+
   _ActividadesPageState(){
     cargarCombo();
+    cargarComboActiviades();
   }
+
   cargarCombo()async{
     List<PostCosecha> postcosechas = List();
     postcosechas = await DatabasePostcosecha.getAllPostcosecha(1);
@@ -82,6 +98,21 @@ class _ActividadesPageState extends State<ActividadesPage> {
       postcosechaEnable = true;
     });
   }
+  cargarComboActiviades()async{
+    List<TipoActividad> activiades = List();
+    activiades = await DatabaseEcuador.getAllTipoActividad();
+    print("ACTIVIDADESSSSS");
+    print(jsonEncode(activiades));
+    activiades.forEach((element) {
+      listaActividades.add(AutoComplete(id:element.tipoActividadId,nombre: element.tipoActividadDescripcion));
+    });
+    setState(() {
+      listaActividadesEnable = true;
+    });
+  }
+
+
+
   Widget _postcosecha() {
     return Container(
       width: 250,
@@ -108,6 +139,32 @@ class _ActividadesPageState extends State<ActividadesPage> {
       ),
     );
   }
+  Widget _listaActividades() {
+    return Container(
+      width: 250,
+      height: 80,
+      child: listaActividadesEnable?ListaBusqueda(
+        key: _keyListaActividades,
+        lista: listaActividades,
+        hintText: "Lista de actividades",
+        valorDefecto: listaActividadesNombre,
+        hintSearchText: "Seleccione la actividad",
+        icon: Icon(Icons.move_to_inbox),
+        width: 200.0,
+        style: TextStyle(
+          fontSize: 15,
+        ),
+        parentAction: (value){
+          AutoComplete actividades= listaActividades.firstWhere((item){
+            return item.nombre == value;
+          });
+          listaActiviadesId = actividades.id;
+        },
+      ):Container(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height - appBar.preferredSize.height;
@@ -115,7 +172,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Actividades'),
+        title: Text('REGISTRO DE ACTIVIADES'),
         actions: <Widget>[
           StreamBuilder(
             stream: _actividadesBloc.registroActividadStream(),
@@ -174,18 +231,20 @@ class _ActividadesPageState extends State<ActividadesPage> {
                 child: Column(
                   children: <Widget>[
                     _postcosecha(),
-                    SizedBox(height: height * 0.15,),
+                    SizedBox(height: height * 0.10,),
                     Text(
-                      'Descripción Actividad',
+                      'ACTIVIDADES',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: height * 0.025
                       ),
                     ),
-                    TextField(
-                      controller: _descripcionActividadController,
-                      maxLines: 2,
-                    ),
+                    _listaActividades(),
+                    // TextField(
+                    //   controller: _descripcionActividadController,
+                    //   maxLines: 3,
+                      
+                    // ),
                     SizedBox(
                       height: height*0.06,
                     ),
@@ -251,15 +310,16 @@ class _ActividadesPageState extends State<ActividadesPage> {
       ),
     );
   }
-
+ //se movio del IF  //&& _descripcionActividadController.text != ''
   _validarForm() async {
-    if(postcosechaId != 0 && _descripcionActividadController.text != '' && horaInicio != '' && horaFin != ''){
+    if(postcosechaId != 0  && horaInicio != '' && horaFin != ''){
       Actividad actividad = new Actividad(
         actividadUsuarioControlId : 1,
         actividadHoraInicio: horaInicio,
         actividadHoraFin: horaFin,
-        actividadDetalle: _descripcionActividadController.text,
+        //actividadDetalle: _descripcionActividadController.text,
         actividadFecha: DateTime.now(),
+        tipoActividadDescripcion: listaActividadesNombre,
         postcosechaId: postcosechaId
       );
       int actividadId = await DatabaseActividad.addActividad(actividad);
@@ -279,7 +339,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
   _limpiarFormulario(){
     horaFin = '';
     horaInicio = '';
-    _descripcionActividadController.text = '';
+   // _descripcionActividadController.text = '';
     setState(() {});
   }
 }

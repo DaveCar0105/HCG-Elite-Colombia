@@ -324,7 +324,7 @@ class DatabaseEcuador {
 
   static Future<void> addTipoActividad(TipoActividad ramos) async {
     final sql =
-        '''INSERT INTO ${DatabaseCreator.tipoActividadTable}(${DatabaseCreator.tipoActividadId},${DatabaseCreator.tipoActividadDescripcion}
+        '''INSERT INTO ${DatabaseCreator.actividadTipoTable}(${DatabaseCreator.actividadTipoId},${DatabaseCreator.tipoActividadDescripcion}
     ) 
     VALUES(${ramos.tipoActividadId},'${ramos.tipoActividadDescripcion}')
     ''';
@@ -342,7 +342,7 @@ class DatabaseEcuador {
 
   static Future<List<TipoActividad>> getAllTipoActividad() async {
     final sql = '''SELECT * 
-    FROM ${DatabaseCreator.tipoActividadTable}
+    FROM ${DatabaseCreator.actividadTipoTable}
     ''';
     final data = await db.rawQuery(sql);
     List<TipoActividad> tipos = [];

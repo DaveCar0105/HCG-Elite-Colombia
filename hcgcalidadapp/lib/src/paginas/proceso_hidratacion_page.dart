@@ -256,8 +256,13 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 height: height * 0.01,
               ),
               Row(
+                
                 children: <Widget>[
+                  // CheckboxListTile(value: false, onChanged: (newValue){
+                    
+                  // }),
                   Container(
+                    
                     width: width * 0.5,
                     child: Text('Ph Solución'),
                   ),

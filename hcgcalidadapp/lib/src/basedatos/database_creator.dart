@@ -1,3 +1,4 @@
+import 'package:hcgcalidadapp/src/modelos/tipoActividad.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
@@ -140,7 +141,16 @@ class DatabaseCreator {
 
   // TABLA ACTIVIDAD
   static const actividadTable = 'actividad';
+  static const actividadTipoTable ='actividadTipoTable';
   static const actividadId = 'actividadId';
+  static const actividadTipoId ='actividadTipoId';
+  static const actividadTipoDescripcion ='actividadTipoDescripcion';
+  
+  static const tipoActividadTable = 'tipoActividadTable';
+  static const tipoActividadId = 'tipoActividadId';
+  static const tipoActividadDescripcion = 'tipoActividadDescripcion';
+
+
   static const actividadUsuarioControlId = 'actividadUsuarioControlId';
   static const actividadDetalle = 'actividadDetalle';
   static const actividadHoraInicio = 'actividadHoraInicio';
@@ -200,11 +210,8 @@ class DatabaseCreator {
   static const procesoEmpaqueFecha = 'procesoEmpaqueFecha';
 
   static const usuarioId = 'usuarioId';
-
-  static const tipoActividadTable = 'tipoActividad';
-  static const tipoActividadId = 'tipoActividadId';
-  static const tipoActividadDescripcion = 'tipoActividadDescripcion';
-
+  //TABLA TIPO DE ACTIVIADES
+  
   static const tipoClienteTable = 'tipoCliente';
   static const tipoClienteId = 'tipoClienteId';
   static const tipoClienteNombre = 'tipoClienteNombre';
@@ -355,10 +362,10 @@ class DatabaseCreator {
   }
 
   Future<void> createTipoActividad(Database db) async {
-    final ramosSql = '''CREATE TABLE $tipoActividadTable
+    final ramosSql = '''CREATE TABLE $actividadTipoTable
     (
-      $tipoActividadId INTEGER PRIMARY KEY,
-      $tipoActividadDescripcion TEXT
+      $actividadTipoId INTEGER PRIMARY KEY,
+      $actividadTipoDescripcion TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -591,7 +598,7 @@ class DatabaseCreator {
       $actividadHoraFin TEXT,
       $postcosechaId INTEGER,
       $actividadFecha DATE,
-      $tipoActividadId INTEGER
+      $TipoActividad INTEGER
     )''';
 
     await db.execute(actividadSql);

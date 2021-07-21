@@ -15,6 +15,7 @@ class _DetalleRegistroTemperaturaState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(),
       body: FutureBuilder(
         future: DatabaseTemperatura.getAllTemperaturas(),
@@ -26,7 +27,7 @@ class _DetalleRegistroTemperaturaState
                 itemBuilder: (context, i) {
                   return ListTile(
                     title: Text(
-                        'Temperatura Caja: ${data[i].temperaturaInterna1},${data[i].temperaturaInterna2},${data[i].temperaturaInterna3}\nTemperatura Cuarto Frío: ${data[i].temperaturaExterna}'),
+                        'Temperatura Cuarto Frío: ${data[i].temperaturaExterna}, \n ClienteID: ${data[i].clienteId}, \nTemperatura Caja#1: ${data[i].temperaturaInterna1},\n Temperatura Caja#2: ${data[i].temperaturaInterna2},\n Temperatura Caja#3: ${data[i].temperaturaInterna3}'),
                     subtitle: Text(
                         'Fecha: ${data[i].temperaturaFecha.toString().substring(0, 19)}'),
                     leading: Text((i + 1).toString()),

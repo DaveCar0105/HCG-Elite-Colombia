@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/temperatura.dart';
 
@@ -7,22 +9,29 @@ class DatabaseTemperatura {
     final data = await db.rawQuery(sql);
     List<Temperatura> productos = [];
     for (final node in data) {
-      print(node);
+      //print(node);
       productos.add(new Temperatura(
           temperaturaId: node[DatabaseCreator.temperaturaId],
           temperaturaUsuarioControlId:
               node[DatabaseCreator.temperaturaUsuarioControlId],
           temperaturaInterna1:
-              (node[DatabaseCreator.temperaturaInterna1] ?? 0.0),
+              (double.parse(node[DatabaseCreator.temperaturaInterna1].toString()) ?? 0.0),
           temperaturaInterna2:
-              (node[DatabaseCreator.temperaturaInterna2] ?? 0.0),
-          temperatiraInterna3:
-              (node[DatabaseCreator.temperaturaInterna3] ?? 0.0),
-          temperaturaExterna: (node[DatabaseCreator.temperaturaExterna] ?? 0.0),
+              (double.parse(node[DatabaseCreator.temperaturaInterna2].toString()) ?? 0.0),
+          temperaturaInterna3:node[DatabaseCreator.temperaturaInterna3]!=null?
+              double.parse(node[DatabaseCreator.temperaturaInterna3].toString()) : 0.0,
+          temperaturaExterna: (double.parse(node[DatabaseCreator.temperaturaExterna].toString()) ?? 0.0),
           temperaturaFecha:
               DateTime.parse(node[DatabaseCreator.temperaturaFecha]),
-          postcosechaId: node[DatabaseCreator.postcosechaId]));
+          postcosechaId: node[DatabaseCreator.postcosechaId],
+          clienteId: node[DatabaseCreator.clienteId])
+          
+          );
     }
+    var asd = jsonEncode(productos);
+    print("----------- TEMPERATURA ----------------");
+    print(asd);
+    print("----------- FIN TEMPERATURA ----------------");
     return productos;
   }
 
@@ -36,8 +45,9 @@ class DatabaseTemperatura {
 
   static Future<int> addTemperatura(Temperatura temperatura) async {
     final sql =
-        '''INSERT INTO ${DatabaseCreator.temperaturaTable}(${DatabaseCreator.temperaturaUsuarioControlId},${DatabaseCreator.temperaturaExterna},${DatabaseCreator.temperaturaInterna1},${DatabaseCreator.temperaturaInterna2},${DatabaseCreator.temperaturaInterna3},${DatabaseCreator.temperaturaFecha},${DatabaseCreator.postcosechaId})
-    VALUES(${temperatura.temperaturaUsuarioControlId},${temperatura.temperaturaExterna},${temperatura.temperaturaInterna1},${temperatura.temperaturaInterna2},${temperatura.temperaturaInterna3},'${temperatura.temperaturaFecha}',${temperatura.postcosechaId})''';
+        '''INSERT INTO ${DatabaseCreator.temperaturaTable}(${DatabaseCreator.temperaturaUsuarioControlId},${DatabaseCreator.temperaturaExterna},${DatabaseCreator.temperaturaInterna1},${DatabaseCreator.temperaturaInterna2},${DatabaseCreator.temperaturaInterna3},${DatabaseCreator.temperaturaFecha},${DatabaseCreator.postcosechaId},${DatabaseCreator.clienteId})
+    VALUES(${temperatura.temperaturaUsuarioControlId},${temperatura.temperaturaExterna},${temperatura.temperaturaInterna1},${temperatura.temperaturaInterna2},${temperatura.temperaturaInterna3},'${temperatura.temperaturaFecha}',${temperatura.postcosechaId},${temperatura.clienteId})''';
+    print(sql);
     return await db.rawInsert(sql);
   }
 }

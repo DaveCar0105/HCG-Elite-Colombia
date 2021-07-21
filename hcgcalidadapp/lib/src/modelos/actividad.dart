@@ -13,7 +13,10 @@ class Actividad {
       this.actividadHoraFin,
       this.actividadFecha,
       this.postcosechaId,
-      this.tipoActividadId});
+      this.tipoActividadId,
+      this.tipoActividadDescripcion
+      //this.
+      });
 
   int actividadId;
   int actividadUsuarioControlId;
@@ -23,6 +26,7 @@ class Actividad {
   DateTime actividadFecha;
   int postcosechaId;
   int tipoActividadId;
+  String tipoActividadDescripcion;
 
   factory Actividad.fromJson(Map<String, dynamic> json) => Actividad(
         actividadId: json["actividadId"],
@@ -32,6 +36,7 @@ class Actividad {
         actividadHoraFin: json["actividadHoraFin"],
         postcosechaId: json["postcosechaId"],
         tipoActividadId: json["tipoActividadId"],
+        tipoActividadDescripcion: json["tipoActividadDescripcion"],
         actividadFecha: DateTime.parse(json["actividadFecha"]),
       );
 
@@ -43,6 +48,7 @@ class Actividad {
         "actividadHoraFin": actividadHoraFin,
         "postcosechaId": postcosechaId,
         "tipoActividadId": tipoActividadId,
+        "tipoActividadDescripcion":tipoActividadDescripcion,
         "actividadFecha": actividadFecha.toIso8601String(),
       };
 }
