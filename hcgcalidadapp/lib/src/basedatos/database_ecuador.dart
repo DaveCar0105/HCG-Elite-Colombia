@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/alerta.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos.dart';
@@ -324,7 +326,7 @@ class DatabaseEcuador {
 
   static Future<void> addTipoActividad(TipoActividad ramos) async {
     final sql =
-        '''INSERT INTO ${DatabaseCreator.actividadTipoTable}(${DatabaseCreator.actividadTipoId},${DatabaseCreator.tipoActividadDescripcion}
+        '''INSERT INTO ${DatabaseCreator.tipoActividadTable}(${DatabaseCreator.tipoActividadId},${DatabaseCreator.tipoActividadDescripcion}
     ) 
     VALUES(${ramos.tipoActividadId},'${ramos.tipoActividadDescripcion}')
     ''';
@@ -342,10 +344,12 @@ class DatabaseEcuador {
 
   static Future<List<TipoActividad>> getAllTipoActividad() async {
     final sql = '''SELECT * 
-    FROM ${DatabaseCreator.actividadTipoTable}
+    FROM ${DatabaseCreator.tipoActividadTable}
     ''';
     final data = await db.rawQuery(sql);
     List<TipoActividad> tipos = [];
+    print("------------- LISTA TIPO ACTIVIDAD --------------");
+    print(jsonEncode(tipos));
     for (final node in data) {
       tipos.add(new TipoActividad(
           tipoActividadId: node[DatabaseCreator.tipoActividadId],

@@ -141,15 +141,14 @@ class DatabaseCreator {
 
   // TABLA ACTIVIDAD
   static const actividadTable = 'actividad';
-  static const actividadTipoTable ='actividadTipoTable';
+  static const actividadTipoTable = 'actividadTipoTable';
   static const actividadId = 'actividadId';
-  static const actividadTipoId ='actividadTipoId';
-  static const actividadTipoDescripcion ='actividadTipoDescripcion';
-  
-  static const tipoActividadTable = 'tipoActividadTable';
+  static const actividadTipoId = 'actividadTipoId';
+  static const actividadTipoDescripcion = 'actividadTipoDescripcion';
+
+  static const tipoActividadTable = 'tipoActividad';
   static const tipoActividadId = 'tipoActividadId';
   static const tipoActividadDescripcion = 'tipoActividadDescripcion';
-
 
   static const actividadUsuarioControlId = 'actividadUsuarioControlId';
   static const actividadDetalle = 'actividadDetalle';
@@ -255,7 +254,7 @@ class DatabaseCreator {
 
   static const usuarioId = 'usuarioId';
   //TABLA TIPO DE ACTIVIADES
-  
+
   static const tipoClienteTable = 'tipoCliente';
   static const tipoClienteId = 'tipoClienteId';
   static const tipoClienteNombre = 'tipoClienteNombre';
@@ -306,10 +305,10 @@ class DatabaseCreator {
   static const procesoCirculoCalidadCheckSuperviso2 =
       'procesoCirculoCalidadCheckSuperviso2';
 
-
- 
-
-
+  //CREATE TABLE MARITIMO
+  static const procesoMaritimoTable = 'procesoMaritimoTable';
+  static const procesoMaritimoId = 'procesoMaritimoId';
+  //static const procesoMaritimo
 
   Future<void> createControlRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlRamosTable
@@ -403,10 +402,10 @@ class DatabaseCreator {
   }
 
   Future<void> createTipoActividad(Database db) async {
-    final ramosSql = '''CREATE TABLE $actividadTipoTable
+    final ramosSql = '''CREATE TABLE $tipoActividadTable
     (
-      $actividadTipoId INTEGER PRIMARY KEY,
-      $actividadTipoDescripcion TEXT
+      $tipoActividadId INTEGER PRIMARY KEY,
+      $tipoActividadDescripcion TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -639,7 +638,7 @@ class DatabaseCreator {
       $actividadHoraFin TEXT,
       $postcosechaId INTEGER,
       $actividadFecha DATE,
-      $TipoActividad INTEGER
+      $tipoActividadId INTEGER
     )''';
 
     await db.execute(actividadSql);

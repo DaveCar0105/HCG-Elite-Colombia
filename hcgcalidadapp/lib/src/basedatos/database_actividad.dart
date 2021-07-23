@@ -1,43 +1,47 @@
+import 'dart:convert';
+
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/actividad.dart';
 
-class DatabaseActividad{
+class DatabaseActividad {
   static Future<List<Actividad>> getAllActividad() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.actividadTable} ''';
-    final data =  await  db.rawQuery(sql);
+    final data = await db.rawQuery(sql);
     List<Actividad> actividades = List();
-    for(final node in data){
+
+    for (final node in data) {
+      print("----------------------LISTA DE ACTIVDADES EN DATABS------");
+      print(jsonEncode(node));
       actividades.add(new Actividad(
           actividadId: node[DatabaseCreator.actividadId],
-          actividadUsuarioControlId: node[DatabaseCreator.actividadUsuarioControlId],
+          actividadUsuarioControlId:
+              node[DatabaseCreator.actividadUsuarioControlId],
           tipoActividadId: node[DatabaseCreator.actividadTipoId],
-          tipoActividadDescripcion: node[DatabaseCreator.tipoActividadDescripcion],
-          
+          tipoActividadDescripcion:
+              node[DatabaseCreator.tipoActividadDescripcion],
           actividadDetalle: node[DatabaseCreator.actividadDetalle],
           actividadHoraInicio: node[DatabaseCreator.actividadHoraInicio],
           actividadHoraFin: node[DatabaseCreator.actividadHoraFin],
           actividadFecha: DateTime.parse(node[DatabaseCreator.actividadFecha]),
-          postcosechaId: node[DatabaseCreator.postcosechaId]
-      ));
+          postcosechaId: node[DatabaseCreator.postcosechaId]));
     }
     return actividades;
   }
 
   static Future<int> getCountActividades() async {
-    final sql = 'SELECT COUNT(*) AS CANTIDAD FROM ${DatabaseCreator.actividadTable}';
-    final data =  await db.rawQuery(sql);
-    
+    final sql =
+        'SELECT COUNT(*) AS CANTIDAD FROM ${DatabaseCreator.actividadTable}';
+    final data = await db.rawQuery(sql);
+
     return data.isNotEmpty ? data.first['CANTIDAD'] : 0;
   }
 
   static Future<int> addActividad(Actividad actividad) async {
-
     final sql =
-    '''INSERT INTO ${DatabaseCreator.actividadTable}(${DatabaseCreator.actividadUsuarioControlId},${DatabaseCreator.actividadDetalle},${DatabaseCreator.actividadHoraInicio},${DatabaseCreator.actividadHoraFin},${DatabaseCreator.actividadFecha},${DatabaseCreator.postcosechaId}) 
-    VALUES(${actividad.actividadUsuarioControlId},'${actividad.actividadDetalle}','${actividad.actividadHoraInicio}','${actividad.actividadHoraFin}','${actividad.actividadFecha}',${actividad.postcosechaId})''';
+        '''INSERT INTO ${DatabaseCreator.actividadTable}(${DatabaseCreator.actividadUsuarioControlId},${DatabaseCreator.actividadDetalle},${DatabaseCreator.actividadHoraInicio},${DatabaseCreator.actividadHoraFin},${DatabaseCreator.actividadFecha},${DatabaseCreator.postcosechaId},${DatabaseCreator.tipoActividadId}) 
+    VALUES(${actividad.actividadUsuarioControlId},'${actividad.tipoActividadDescripcion}','${actividad.actividadHoraInicio}','${actividad.actividadHoraFin}','${actividad.actividadFecha}',${actividad.postcosechaId},${actividad.tipoActividadId})''';
     return await db.rawInsert(sql);
   }
-
 }
 
 //TIPO ACTIVIDAD

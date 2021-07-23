@@ -213,7 +213,7 @@ void main() async {
     }
 
     var url10 = Uri.http(co.url, '/api/TipoControles/Actividad');
-    final responseProblema11 = await http.get(url9);
+    final responseProblema11 = await http.get(url10);
     var tipoActividad = json.decode(responseProblema11.body);
     for (int i = 0; i < tipoActividad.length; i++) {
       var tipo = TipoActividad(
