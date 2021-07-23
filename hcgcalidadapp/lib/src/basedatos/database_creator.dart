@@ -180,49 +180,80 @@ class DatabaseCreator {
       'procesoHidratacionNivelSolucion';
   static const procesoHidratacionFecha = 'procesoHidratacionFecha';
   //TABLA MARITIMOS
- static const procesoMaritimoTable = 'procesoMaritimoTable';
- static const procesoMaritimoId ='procesoMaritimoId';
- static const procesoMaritimoUsuarioControlId ='procesoMaritimoUsuarioControlId';
- static const procesoMaritimoObservaciones ='procesoMaritimoObservaciones';
- static const procesoMaritimoNumeroGuia ='procesoMaritimoNumeroGuia';
- static const procesoMaritimoDestino ="procesoMaritimoDestino";
- static const procesoMaritimoRealizadoPor = 'procesoMaritimoRealizadoPor';
- static const procesomoMaritimoAcompanamiento ='procesomoMaritimoAcompanamiento';
- static const procesoMaritimoNombreHidratante ='procesoMaritimoNombreHidratante';
- static const procesoMaritimoPhSoluciones ='procesoMaritimoPhSoluciones';
- static const procesoMaritimoNivelSolucionTinas='procesoMaritimoNivelSolucionTinas';
- static const procesoMaritimoSolucionHidratacionSinVegetal = 'procesoMaritimmoSolucionHidratacionSinVegetal';
- static const procesoMaritimoTemperaturaCuartoFrio = 'procesoMaritimoTemperaturaCuartoFrio';
- static const procesoMaritimoTemperaturaSolucionesHidratacion ='procesoMaritimoTemperaturaSolucionesHidratacion';
- static const procesoMaritimoEmpaqueAmbienteTemperatura = 'procesoMaritimoEmpaqueAmbienteTemperatura';
- static const procesoMaritimoFlorEmpacada ='procesoMaritimoFlorEmpacada';
- static const procesoMaritimoTransportCareEmpaque ='procesoMaritimoTransportCareEmpaque';
- static const procesoMaritimoCajasVisualDeformes ='procesoMaritimoCajasVisualDeformes';
- static const procesoMaritimoEtiquetasCajasUbicadas='procesoMaritimoEtiquetasCajasUbicadas';
- static const procesoMaritimoTemperaturaCubiculoCamion ='procesoMaritimoTemperaturaCubiculoCamion';
- static const procesoMaritimoTemperaturaCajasTransferencia ='procesoMaritimoTemperaturaCajasTransferencia';
- static const procesoMaritimoAparenciaCajasTransferencia ='procesoMaritimoAparenciaCajasTransferencia';
- static const procesoMaritimoEstibasDebidamenteSelladas ='procesoMaritimoEstibasDebidamenteSelladas';
- static const procesoMaritimoPalletsEsquinerosCorrectamenteAjustados ='procesoMaritimoPalletsEsquinerosCorrectamenteAjustados';
- static const procesoMaritimoPalletsAlturaContenedor = 'procesoMaritimoPalletsAlturaContenedor';
- static const procesoMaritimoTemperaturaPalletContenedor='procesoMaritimoTemperaturaPalletContenedor';
- static const procesoMaritimoPalletIdentificadoNumero ='procesoMaritimoPalletIdentificadoNumero';
- static const procesoMaritimoTomaRegistroTemperaturas ='procesoMaritimoTomaRegistroTemperaturas';
- static const procesoMaritimoGenset = 'procesoMaritimoGenset';
- static const procesoMaritimoContenedorEdadFabricacion ='procesoMaritimoContenedorEdadFabricacion';
- static const procesoMaritimoContenedorCumplimientoSeteo = 'procesoMaritimoContenedorCumplimientoSeteo';
- static const procesoMaritimoContenedorPreEnfriado ='procesoMaritimoContenedorPreEnfriado';
- static const procesoMaritimoContenedorlavadoDesinfectado ='procesoMaritimoContenedorlavadoDesinfectado';
- static const procesoMaritimoCarguePreviamenteHumedecidos = 'procesoMaritimoCarguePreviamenteHumedecidos';
- static const procesoMaritimoLlegandoCierreSellado ='procesoMaritimoLlegandoCierreSellado';
+  static const procesoMaritimoTable = 'procesoMaritimoTable';
+  static const procesoMaritimoId = 'procesoMaritimoId';
+  static const procesoMaritimoUsuarioControlId =
+      'procesoMaritimoUsuarioControlId';
+  static const procesoMaritimoObservaciones = 'procesoMaritimoObservaciones';
+  static const procesoMaritimoNumeroGuia = 'procesoMaritimoNumeroGuia';
+  static const procesoMaritimoDestino = "procesoMaritimoDestino";
+  static const procesoMaritimoRealizadoPor = 'procesoMaritimoRealizadoPor';
+  static const procesomoMaritimoAcompanamiento =
+      'procesomoMaritimoAcompanamiento';
+  static const procesoMaritimoNombreHidratante =
+      'procesoMaritimoNombreHidratante';
+  static const procesoMaritimoPhSoluciones = 'procesoMaritimoPhSoluciones';
+  static const procesoMaritimoNivelSolucionTinas =
+      'procesoMaritimoNivelSolucionTinas';
+  static const procesoMaritimoSolucionHidratacionSinVegetal =
+      'procesoMaritimmoSolucionHidratacionSinVegetal';
+  static const procesoMaritimoTemperaturaCuartoFrio =
+      'procesoMaritimoTemperaturaCuartoFrio';
+  static const procesoMaritimoTemperaturaSolucionesHidratacion =
+      'procesoMaritimoTemperaturaSolucionesHidratacion';
+  static const procesoMaritimoEmpaqueAmbienteTemperatura =
+      'procesoMaritimoEmpaqueAmbienteTemperatura';
+  static const procesoMaritimoFlorEmpacada = 'procesoMaritimoFlorEmpacada';
+  static const procesoMaritimoTransportCareEmpaque =
+      'procesoMaritimoTransportCareEmpaque';
+  static const procesoMaritimoCajasVisualDeformes =
+      'procesoMaritimoCajasVisualDeformes';
+  static const procesoMaritimoEtiquetasCajasUbicadas =
+      'procesoMaritimoEtiquetasCajasUbicadas';
+  static const procesoMaritimoTemperaturaCubiculoCamion =
+      'procesoMaritimoTemperaturaCubiculoCamion';
+  static const procesoMaritimoTemperaturaCajasTransferencia =
+      'procesoMaritimoTemperaturaCajasTransferencia';
+  static const procesoMaritimoAparenciaCajasTransferencia =
+      'procesoMaritimoAparenciaCajasTransferencia';
+  static const procesoMaritimoEstibasDebidamenteSelladas =
+      'procesoMaritimoEstibasDebidamenteSelladas';
+  static const procesoMaritimoPalletsEsquinerosCorrectamenteAjustados =
+      'procesoMaritimoPalletsEsquinerosCorrectamenteAjustados';
+  static const procesoMaritimoPalletsAlturaContenedor =
+      'procesoMaritimoPalletsAlturaContenedor';
+  static const procesoMaritimoTemperaturaPalletContenedor =
+      'procesoMaritimoTemperaturaPalletContenedor';
+  static const procesoMaritimoPalletIdentificadoNumero =
+      'procesoMaritimoPalletIdentificadoNumero';
+  static const procesoMaritimoTomaRegistroTemperaturas =
+      'procesoMaritimoTomaRegistroTemperaturas';
+  static const procesoMaritimoGenset = 'procesoMaritimoGenset';
+  static const procesoMaritimoContenedorEdadFabricacion =
+      'procesoMaritimoContenedorEdadFabricacion';
+  static const procesoMaritimoContenedorCumplimientoSeteo =
+      'procesoMaritimoContenedorCumplimientoSeteo';
+  static const procesoMaritimoContenedorPreEnfriado =
+      'procesoMaritimoContenedorPreEnfriado';
+  static const procesoMaritimoContenedorlavadoDesinfectado =
+      'procesoMaritimoContenedorlavadoDesinfectado';
+  static const procesoMaritimoCarguePreviamenteHumedecidos =
+      'procesoMaritimoCarguePreviamenteHumedecidos';
+  static const procesoMaritimoLlegandoCierreSellado =
+      'procesoMaritimoLlegandoCierreSellado';
 
- static const procesoMaritimoEstibasSelloICA = 'procesoMaritimoEstibasSelloICA';
- static const procesoMaritimoPalletsTensionZunchos = 'procesoMaritimoPalletsTensionZunchos';
- static const procesoMaritimoPalletIdentificadoEtiqueta ='procesoMaritimoPalletIdentificadoEtiqueta';
- static const procesoMaritimoComponentePalletDestinosEtiquetas ='procesoMaritimoComponentePalletDestinosEtiquetas';
- static const procesoMaritimoCamionSelloSeguridadContenedor ='procesoMaritimoCamionSelloSeguridadContenedor';
+  static const procesoMaritimoEstibasSelloICA =
+      'procesoMaritimoEstibasSelloICA';
+  static const procesoMaritimoPalletsTensionZunchos =
+      'procesoMaritimoPalletsTensionZunchos';
+  static const procesoMaritimoPalletIdentificadoEtiqueta =
+      'procesoMaritimoPalletIdentificadoEtiqueta';
+  static const procesoMaritimoComponentePalletDestinosEtiquetas =
+      'procesoMaritimoComponentePalletDestinosEtiquetas';
+  static const procesoMaritimoCamionSelloSeguridadContenedor =
+      'procesoMaritimoCamionSelloSeguridadContenedor';
 
- static const procesoMaritimoFecha = 'procesoMaritimoFecha';
+  static const procesoMaritimoFecha = 'procesoMaritimoFecha';
 
   // TABLA TEMPERATURA
   static const temperaturaTable = 'temperatura';
@@ -305,9 +336,6 @@ class DatabaseCreator {
   static const procesoCirculoCalidadCheckSuperviso2 =
       'procesoCirculoCalidadCheckSuperviso2';
 
-  //CREATE TABLE MARITIMO
-  static const procesoMaritimoTable = 'procesoMaritimoTable';
-  static const procesoMaritimoId = 'procesoMaritimoId';
   //static const procesoMaritimo
 
   Future<void> createControlRamosTable(Database db) async {
@@ -795,6 +823,7 @@ class DatabaseCreator {
 
     await db.execute(procesoHidratacionSql);
   }
+
   // CREATE TABLE MARITIMO
   Future<void> createProcesoMaritimoTable(Database db) async {
     final procesoMaritimoSql = '''CREATE TABLE $procesoMaritimoTable
