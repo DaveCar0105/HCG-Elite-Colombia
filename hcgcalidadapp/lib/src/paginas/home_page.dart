@@ -32,6 +32,7 @@ import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
 import 'package:hcgcalidadapp/src/paginas/empaque_elite_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_empaque_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_hidratacion_page.dart';
+import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ramos_elite_page.dart';
 import 'package:hcgcalidadapp/src/paginas/registro_temperatura_page.dart';
 import 'package:hcgcalidadapp/src/paginas/reporte_general_page.dart';
@@ -619,6 +620,36 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(fontSize: 15),
                     ),
                     Icon(Icons.trip_origin_rounded)
+                  ],
+                ),
+              ),
+            ),
+            // text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProcesoMaritimoPage()));
+              },
+              child: Container(
+                width: 135,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Maritimo',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.fact_check)
                   ],
                 ),
               ),

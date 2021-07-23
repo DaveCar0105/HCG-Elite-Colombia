@@ -63,7 +63,7 @@ class DatabaseProcesoMaritimo {
     return maritimo;
   }
 
-  static Future<int> getCountProcesosHidratacion() async {
+  static Future<int> getCountProcesoMaritimo() async {
     final sql =
         'SELECT COUNT(*) AS CANTIDAD FROM ${DatabaseCreator.procesoMaritimoTable}';
     final data = await db.rawQuery(sql);
@@ -71,7 +71,7 @@ class DatabaseProcesoMaritimo {
     return data.isNotEmpty ? data.first['CANTIDAD'] : 0;
   }
 
-  static Future<int> addProcesosHidratacion(
+  static Future<int> addProcesoMaritimo(
       ProcesoMaritimo procesoMaritimo) async {
     final sql = '''INSERT INTO ${DatabaseCreator.procesoMaritimoTable}
     (${DatabaseCreator.procesoMaritimoUsuarioControlId},${DatabaseCreator.procesoMaritimoObservaciones},${DatabaseCreator.procesoMaritimoNumeroGuia},
