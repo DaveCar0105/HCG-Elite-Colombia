@@ -19,9 +19,9 @@ class ProcesoMaritimoPage extends StatefulWidget {
 }
 
 class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
-  int estadoSolucionesGroupValue = -1;
-  int tiemposDeHidratacionGroupValue = -1;
-  int cantidadRamosTinasGroupValue = -1;
+  //int estadoSolucionesGroupValue = -1;
+  //int tiemposDeHidratacionGroupValue = -1;
+  //int cantidadRamosTinasGroupValue = -1;
   //////// variables
 
   int procesoMaritimoNombreHidratanteValue = -1;
@@ -57,11 +57,11 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   int procesoMaritimoComponentePalletDestinosEtiquetasValue = -1;
   int procesoMaritimoCamionSelloSeguridadContenedorValue = -1;
 
-  final phSolucionController = new TextEditingController();
-  final nivelSolucionController = new TextEditingController();
-  final procesoMaritimoNumeroGuiateValue = new TextEditingController();
+  //final phSolucionController = new TextEditingController();
+  //final nivelSolucionController = new TextEditingController();
+  final procesoMaritimoNumeroGuiaValue = new TextEditingController();
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
-  final procesoMaritimoAcompanamiento = new TextEditingController();
+  final procesoMaritimoAcompanamientoValue = new TextEditingController();
 
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoHidratacionBloc();
@@ -135,7 +135,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
           hintText: 'Acompañamiento',
           labelText: 'Acompañamiento',
         ),
-        controller: procesoMaritimoAcompanamiento,
+        controller: procesoMaritimoAcompanamientoValue,
       ),
     );
   }
@@ -150,7 +150,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
           hintText: 'numero guia',
           labelText: 'numero guia',
         ),
-        controller: procesoMaritimoNumeroGuiateValue,
+        controller: procesoMaritimoNumeroGuiaValue,
       ),
     );
   }
@@ -1433,26 +1433,115 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   }
 
   _validarForm() async {
-    if (estadoSolucionesGroupValue >= 0 &&
-        tiemposDeHidratacionGroupValue >= 0 &&
-        cantidadRamosTinasGroupValue >= 0 &&
-        phSolucionController.text != '' &&
-        nivelSolucionController.text != '' &&
-        postcosechaId != 0) {
-      ProcesoHidratacion procesoHidratacion = new ProcesoHidratacion(
-          procesoHidratacionUsuarioControlId: 1,
-          procesoHidratacionEstadoSoluciones: estadoSolucionesGroupValue,
-          procesoHidratacionTiemposHidratacion: tiemposDeHidratacionGroupValue,
-          procesoHidratacionCantidadRamos: cantidadRamosTinasGroupValue,
-          procesoHidratacionPhSolucion: double.parse(phSolucionController.text),
-          procesoHidratacionNivelSolucion:
-              double.parse(nivelSolucionController.text),
-          procesoHidratacionFecha: DateTime.now(),
+    if (procesoMaritimoNombreHidratanteValue >= 0 &&
+        procesoMaritimoPhSolucionesvalue >= 0 &&
+        procesoMaritimoNivelSolucionTinasValue >= 0 &&
+        procesoMaritimoSolucionHidratacionSinVegetalValue >= 0 &&
+        procesoMaritimoTemperaturaCuartoFrioValue >= 0 &&
+        procesoMaritimoTemperaturaSolucionesHidratacionValue >= 0 &&
+        procesoMaritimoEmpaqueAmbienteTemperaturaValue >= 0 &&
+        procesoMaritimoFlorEmpacadaValue >= 0 &&
+        procesoMaritimoTransportCareEmpaquevalue >= 0 &&
+        procesoMaritimoCajasVisualDeformesValue >= 0 &&
+        procesoMaritimoEtiquetasCajasUbicadasValue >= 0 &&
+        procesoMaritimoTemperaturaCubiculoCamionValue >= 0 &&
+        procesoMaritimoTemperaturaCajasTransferenciaValue >= 0 &&
+        procesoMaritimoAparenciaCajasTransferenciaValue >= 0 &&
+        procesoMaritimoEstibasDebidamenteSelladasValue >= 0 &&
+        procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue >= 0 &&
+        procesoMaritimoPalletsAlturaContenedorValue >= 0 &&
+        procesoMaritimoTemperaturaPalletContenedorValue >= 0 &&
+        procesoMaritimoPalletIdentificadoNumeroValue >= 0 &&
+        procesoMaritimoTomaRegistroTemperaturasValue >= 0 &&
+        procesoMaritimoGensetValue >= 0 &&
+        procesoMaritimoContenedorEdadFabricacionValue >= 0 &&
+        procesoMaritimoContenedorCumplimientoSeteoValue >= 0 &&
+        procesoMaritimoContenedorPreEnfriadoValue >= 0 &&
+        procesoMaritimoContenedorlavadoDesinfectadoValue >= 0 &&
+        procesoMartimoCarguePreviamenteHumedecidosValue >= 0 &&
+        procesoMaritimoLlegandoCierreSelladoValue >= 0 &&
+        procesoMaritimoEstibasSelloICAValue >= 0 &&
+        procesoMaritimoPalletsTensionZunchosvalue >= 0 &&
+        procesoMaritimoPalletIdentificadoEtiquetaValue >= 0 &&
+        procesoMaritimoComponentePalletDestinosEtiquetasValue >= 0 &&
+        procesoMaritimoCamionSelloSeguridadContenedorValue >= 0 &&
+        procesoMaritimoNumeroGuiaValue.text != '' &&
+        procesoMaritimoRealizadoPorValue.text != '' &&
+        procesoMaritimoAcompanamientoValue.text != '' &&
+        postcosechaId != 0 &&
+        clientesId != 0) {
+      ProcesoMaritimo procesoMaritimo = new ProcesoMaritimo(
+          procesoMaritimoUsuarioControlId: 1,
+          procesoMaritimoNumeroGuia:
+              int.parse(procesoMaritimoNumeroGuiaValue.text),
+          //poner destino
+          procesoMaritimoRealizadoPor: procesoMaritimoRealizadoPorValue.text,
+          procesoMaritimoAcompanamiento:
+              procesoMaritimoAcompanamientoValue.text,
+          procesoMaritimoNombreHidratante: procesoMaritimoNombreHidratanteValue,
+          procesoMaritimoPhSoluciones: procesoMaritimoPhSolucionesvalue,
+          procesoMaritimoNivelSolucionTinas:
+              procesoMaritimoNivelSolucionTinasValue,
+          procesoMaritimoSolucionHidratacionSinVegetal:
+              procesoMaritimoSolucionHidratacionSinVegetalValue,
+          procesoMaritimoTemperaturaCuartoFrio:
+              procesoMaritimoTemperaturaCuartoFrioValue,
+          procesoMaritimoTemperaturaSolucionesHidratacion:
+              procesoMaritimoTemperaturaSolucionesHidratacionValue,
+          procesoMaritimoEmpaqueAmbienteTemperatura:
+              procesoMaritimoEmpaqueAmbienteTemperaturaValue,
+          procesoMaritimoFlorEmpacada: procesoMaritimoFlorEmpacadaValue,
+          procesoMaritimoTransportCareEmpaque:
+              procesoMaritimoTransportCareEmpaquevalue,
+          procesoMaritimoCajasVisualDeformes:
+              procesoMaritimoCajasVisualDeformesValue,
+          procesoMaritimoEtiquetasCajasUbicadas:
+              procesoMaritimoEtiquetasCajasUbicadasValue,
+          procesoMaritimoTemperaturaCubiculoCamion:
+              procesoMaritimoTemperaturaCubiculoCamionValue,
+          procesoMaritimoTemperaturaCajasTransferencia:
+              procesoMaritimoTemperaturaCajasTransferenciaValue,
+          procesoMaritimoAparenciaCajasTransferencia:
+              procesoMaritimoAparenciaCajasTransferenciaValue,
+          procesoMaritimoEstibasDebidamenteSelladas:
+              procesoMaritimoEstibasDebidamenteSelladasValue,
+          procesoMaritimoPalletsEsquinerosCorrectamenteAjustados:
+              procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue,
+          procesoMaritimoPalletsAlturaContenedor:
+              procesoMaritimoPalletsAlturaContenedorValue,
+          procesoMaritimoTemperaturaPalletContenedor:
+              procesoMaritimoTemperaturaPalletContenedorValue,
+          procesoMaritimoPalletIdentificadoNumero:
+              procesoMaritimoPalletIdentificadoNumeroValue,
+          procesoMaritimoTomaRegistroTemperaturas:
+              procesoMaritimoTomaRegistroTemperaturasValue,
+          procesoMaritimoGenset: procesoMaritimoGensetValue,
+          procesoMaritimoContenedorEdadFabricacion:
+              procesoMaritimoContenedorEdadFabricacionValue,
+          procesoMaritimoContenedorCumplimientoSeteo:
+              procesoMaritimoContenedorCumplimientoSeteoValue,
+          procesoMaritimoContenedorPreEnfriado:
+              procesoMaritimoContenedorPreEnfriadoValue,
+          procesoMaritimoContenedorlavadoDesinfectado:
+              procesoMaritimoContenedorlavadoDesinfectadoValue,
+          procesoMartimoCarguePreviamenteHumedecidos:
+              procesoMartimoCarguePreviamenteHumedecidosValue,
+          procesoMaritimoLlegandoCierreSellado:
+              procesoMaritimoLlegandoCierreSelladoValue,
+          procesoMaritimoEstibasSelloICA: procesoMaritimoEstibasSelloICAValue,
+          procesoMaritimoPalletsTensionZunchos:
+              procesoMaritimoPalletsTensionZunchosvalue,
+          procesoMaritimoPalletIdentificadoEtiqueta:
+              procesoMaritimoPalletIdentificadoEtiquetaValue,
+          procesoMaritimoComponentePalletDestinosEtiquetas:
+              procesoMaritimoComponentePalletDestinosEtiquetasValue,
+          procesoMaritimoCamionSelloSeguridadContenedor:
+              procesoMaritimoCamionSelloSeguridadContenedorValue,
+          procesoMaritimoFecha: DateTime.now(),
           postcosechaId: postcosechaId);
-      int procesoHidratacionId =
-          await DatabaseProcesoHidratacion.addProcesosHidratacion(
-              procesoHidratacion);
-      if (procesoHidratacionId != 0) {
+      int procesoMaritimoId =
+          await DatabaseProcesoMaritimo.addProcesoMaritimo(procesoMaritimo);
+      if (procesoMaritimoId != 0) {
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
         _procesoMaritimoBloc.registroProcesoHidratacionStream();
@@ -1468,11 +1557,41 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   }
 
   _limpiarForm() {
-    estadoSolucionesGroupValue = -1;
-    tiemposDeHidratacionGroupValue = -1;
-    cantidadRamosTinasGroupValue = -1;
-    phSolucionController.text = '';
-    nivelSolucionController.text = '';
+    procesoMaritimoNombreHidratanteValue = -1;
+    procesoMaritimoPhSolucionesvalue = -1;
+    procesoMaritimoNivelSolucionTinasValue = -1;
+    procesoMaritimoSolucionHidratacionSinVegetalValue = -1;
+    procesoMaritimoTemperaturaCuartoFrioValue = -1;
+    procesoMaritimoTemperaturaSolucionesHidratacionValue = -1;
+    procesoMaritimoFlorEmpacadaValue = -1;
+    procesoMaritimoTransportCareEmpaquevalue = -1;
+    procesoMaritimoCajasVisualDeformesValue = -1;
+    procesoMaritimoEtiquetasCajasUbicadasValue = -1;
+    procesoMaritimoTemperaturaCubiculoCamionValue = -1;
+    procesoMaritimoTemperaturaCajasTransferenciaValue = -1;
+    procesoMaritimoAparenciaCajasTransferenciaValue = -1;
+    procesoMaritimoEstibasDebidamenteSelladasValue = -1;
+    procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue = -1;
+    procesoMaritimoPalletsAlturaContenedorValue = -1;
+    procesoMaritimoTemperaturaPalletContenedorValue = -1;
+    procesoMaritimoPalletIdentificadoNumeroValue = -1;
+    procesoMaritimoTomaRegistroTemperaturasValue = -1;
+    procesoMaritimoGensetValue = -1;
+    procesoMaritimoContenedorEdadFabricacionValue = -1;
+    procesoMaritimoContenedorCumplimientoSeteoValue = -1;
+    procesoMaritimoContenedorPreEnfriadoValue = -1;
+    procesoMaritimoContenedorlavadoDesinfectadoValue = -1;
+    procesoMartimoCarguePreviamenteHumedecidosValue = -1;
+    procesoMaritimoLlegandoCierreSelladoValue = -1;
+    procesoMaritimoEstibasSelloICAValue = -1;
+    procesoMaritimoPalletsTensionZunchosvalue = -1;
+    procesoMaritimoPalletIdentificadoEtiquetaValue = -1;
+    procesoMaritimoComponentePalletDestinosEtiquetasValue = -1;
+    procesoMaritimoCamionSelloSeguridadContenedorValue = -1;
+
+    procesoMaritimoNumeroGuiaValue.text = '';
+    procesoMaritimoRealizadoPorValue.text = '';
+    procesoMaritimoAcompanamientoValue.text = '';
     setState(() {});
   }
 }
