@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_empaque.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
@@ -8,8 +9,11 @@ import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/empaque.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
+import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_empaques_page.dart';
+import 'package:hcgcalidadapp/src/providers/TipoClienteProvider.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
+import 'package:provider/provider.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
 
@@ -42,6 +46,12 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
   int productoId = 0;
   bool prodEnable = false;
 
+  GlobalKey<ListaBusquedaState> _keyTipoCliente = GlobalKey();
+  static List<AutoComplete> listaTipoCliente = new List<AutoComplete>();
+  String tipoClienteNombre = "";
+  int tipoClienteId = 0;
+  bool clientTipoEnable = false;
+
   GlobalKey<ListaBusquedaState> _keyCliente = GlobalKey();
   static List<AutoComplete> listaCliente = new List<AutoComplete>();
   String clienteNombre = "";
@@ -66,6 +76,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
     empaque.empaqueAprobado = 0;
     empaque.clienteId = clienteId;
     empaque.productoId = productoId;
+    empaque.tipoClienteId = tipoClienteId;
     empaque.empaqueDespachar = int.parse(cajasADespachar.text);
     empaque.empaqueRamos = int.parse(ramosCaja.text);
     empaque.empaqueTallos = int.parse(tallosRamo.text);
@@ -100,6 +111,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
     listaProducto = List<AutoComplete>();
     listaPostcosecha = List<AutoComplete>();
     listaCliente = List<AutoComplete>();
+    listaTipoCliente = List<AutoComplete>();
 
     int valor = 0;
     if (elite) {
@@ -120,6 +132,14 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
 
+    List<TipoCliente> tipoClientes = List();
+    tipoClientes = await DatabaseEcuador.getAllTipoCliente();
+    print("tiupo cliente: " + tipoClientes.length.toString());
+    tipoClientes.forEach((element) {
+      listaTipoCliente.add(AutoComplete(
+          id: element.tipoClienteId, nombre: element.tipoClienteNombre));
+    });
+
     List<PostCosecha> postcosechas = List();
     postcosechas = await DatabasePostcosecha.getAllPostcosecha(valor);
     postcosechas.forEach((element) {
@@ -130,6 +150,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
       prodEnable = true;
       clientEnable = true;
       postcosechaEnable = true;
+      clientTipoEnable = true;
     });
   }
 
@@ -150,6 +171,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     _numeroOrden(),
+                    _tipoCliente(),
                     _cliente(),
                     _producto(),
                     _postcosecha(),
@@ -315,6 +337,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
               util.isNumberEntero(cajasADespachar.text) &&
               util.isNumberEntero(tallosRamo.text) &&
               clienteId != 0 &&
+              tipoClienteId != 0 &&
               productoId != 0 &&
               util.isNumberEntero(ramosRevisarCaja.text) &&
               marca.text != '' &&
@@ -396,6 +419,34 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
                   return item.nombre == value;
                 });
                 clienteId = cliente.id;
+              },
+            )
+          : Container(
+              child: CircularProgressIndicator(),
+            ),
+    );
+  }
+
+  Widget _tipoCliente() {
+    final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
+    return Container(
+      width: 250,
+      height: 90,
+      child: clientTipoEnable
+          ? ListaBusqueda(
+              key: _keyTipoCliente,
+              lista: listaTipoCliente,
+              hintText: "Tipo Cliente",
+              valorDefecto: tipoClienteNombre,
+              hintSearchText: "Seleccione el tipo de cliente",
+              icon: Icon(Icons.supervised_user_circle),
+              width: 200.0,
+              style: TextStyle(fontSize: 15),
+              parentAction: (value) {
+                AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
+                  return item.nombre == value;
+                });
+                listaClienteProvider.listaClientes = tipoCliente.id;
               },
             )
           : Container(

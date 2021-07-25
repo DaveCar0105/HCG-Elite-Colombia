@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
-import 'package:hcgcalidadapp/src/bloc/registro_proceso_hidratacion_bloc.dart';
+//import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
+//import 'package:hcgcalidadapp/src/bloc/registro_proceso_hidratacion_bloc.dart';
+import 'package:hcgcalidadapp/src/bloc/registro_proceso_maritimo_bloc.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
-import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
+//import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
@@ -64,7 +67,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
 
   final appBar = AppBar();
-  final _procesoMaritimoBloc = new RegistroProcesoHidratacionBloc();
+  final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
   @override
   void initState() {
     cargarCombo();
@@ -250,7 +253,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       key: _scaffoldKey,
       appBar: AppBar(title: Text('Proceso Maritimo Check'), actions: <Widget>[
         StreamBuilder(
-            stream: _procesoMaritimoBloc.registroProcesoHidratacionStream(),
+            stream: _procesoMaritimoBloc.registroProcesoMaritimoStream(),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.hasData) {
                 final data = snapshot.data;
@@ -262,7 +265,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                         from: 20,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, 'detalleHidratacion');
+                            Navigator.pushNamed(context, 'detalleMaritimo');
                           },
                           child: Container(
                             width: width * 0.1,
@@ -1375,40 +1378,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
-              // Row(
-              //   children: <Widget>[
-              //     // CheckboxListTile(value: false, onChanged: (newValue){
-
-              //     // }),
-              //     Container(
-              //       width: width * 0.5,
-              //       child: Text('Ph Solución'),
-              //     ),
-              //     Expanded(
-              //         child: TextField(
-              //       controller: phSolucionController,
-              //       keyboardType: TextInputType.number,
-              //       textAlign: TextAlign.center,
-              //     ))
-              //   ],
-              // ),
-              // SizedBox(
-              //   height: height * 0.01,
-              // ),
-              // Row(
-              //   children: <Widget>[
-              //     Container(
-              //       width: width * 0.5,
-              //       child: Text('Nivel Solución'),
-              //     ),
-              //     Expanded(
-              //         child: TextField(
-              //       controller: nivelSolucionController,
-              //       keyboardType: TextInputType.number,
-              //       textAlign: TextAlign.center,
-              //     ))
-              //   ],
-              // ),
               SizedBox(
                 height: height * 0.1,
               ),
@@ -1544,7 +1513,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       if (procesoMaritimoId != 0) {
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
-        _procesoMaritimoBloc.registroProcesoHidratacionStream();
+        _procesoMaritimoBloc.registroProcesoMaritimoStream();
         _procesoMaritimoBloc.itemAgregado();
       } else {
         mostrarSnackbar('No se pudo ingresar en la base de datos', Colors.red,
