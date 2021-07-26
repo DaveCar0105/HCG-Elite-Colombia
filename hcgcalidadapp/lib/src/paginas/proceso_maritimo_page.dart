@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 //import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
@@ -65,7 +66,18 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final procesoMaritimoNumeroGuiaValue = new TextEditingController();
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
-  final comentarios = TextEditingController();
+
+  final procesoMaritimoObsevacionesHidratacionValue =
+      new TextEditingController();
+  final procesoMaritimoObservacionesEmpaqueValue = new TextEditingController();
+  final procesoMaritimoObservacionesTransferenciaValue =
+      new TextEditingController();
+  final procesoMaritimoObservacionesPalletizadoValue =
+      new TextEditingController();
+  final procesoMaritimoObservacionesLlenadoContenedorValue =
+      new TextEditingController();
+  final procesoMaritimoObservacionesRequerimientosCriticosValue =
+      new TextEditingController();
 
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
@@ -508,6 +520,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              _procesoMaritimoObsevacionesHidratacion(),
               Divider(),
               Column(children: [
                 Text('EMPAQUE', style: Theme.of(context).textTheme.subtitle1)
@@ -674,6 +687,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              _procesoMaritimoObsevacionesEmpaque(),
               Divider(),
               Column(children: [
                 Text('TRANSFERENCIAS',
@@ -789,6 +803,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              _procesoMaritimoObsevacionesTransferencia(),
               Divider(),
               Column(children: [
                 Text('PALLETIZADO',
@@ -986,6 +1001,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              _procesoMaritimoObsevacionesPalletizado(),
               Divider(),
               Column(children: [
                 Text('LLENADO CONTENEDOR',
@@ -1209,6 +1225,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              _procesoMaritimoObsevacionesllenadoContenedor(),
+              Divider(),
               Column(children: [
                 Text('REQUERIMIENTOS CRITICOS',
                     style: Theme.of(context).textTheme.subtitle1)
@@ -1379,6 +1397,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              _procesoMaritimoObsevacionesRequerimientosCriticos(),
               SizedBox(
                 height: height * 0.1,
               ),
@@ -1402,17 +1421,92 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     );
   }
 
-  Widget _comentarios() {
+  Widget _procesoMaritimoObsevacionesHidratacion() {
     return Container(
       width: 200,
       height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Comentarios',
-          labelText: 'Comentarios',
+          hintText: 'Observacion Hidratacion',
+          labelText: 'Observacion Hidratacion',
         ),
-        controller: comentarios,
+        controller: procesoMaritimoObsevacionesHidratacionValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesEmpaque() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observacion Empaque',
+          labelText: 'Observacion Empaque',
+        ),
+        controller: procesoMaritimoObservacionesEmpaqueValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesTransferencia() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observacion Transferencia',
+          labelText: 'Observacion Transferencia',
+        ),
+        controller: procesoMaritimoObservacionesTransferenciaValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesPalletizado() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observacion Palletizado',
+          labelText: 'Observacion Palletizado',
+        ),
+        controller: procesoMaritimoObservacionesPalletizadoValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesllenadoContenedor() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observacion Lleando Contenedor',
+          labelText: 'Observacion Lleando Contenedor',
+        ),
+        controller: procesoMaritimoObservacionesLlenadoContenedorValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesRequerimientosCriticos() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observacion Requerimiento Critico',
+          labelText: 'Observacion Requerimiento Critico',
+        ),
+        controller: procesoMaritimoObservacionesRequerimientosCriticosValue,
       ),
     );
   }
@@ -1453,6 +1547,12 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
+        procesoMaritimoObsevacionesHidratacionValue != '' &&
+        procesoMaritimoObservacionesEmpaqueValue != '' &&
+        procesoMaritimoObservacionesTransferenciaValue != '' &&
+        procesoMaritimoObservacionesPalletizadoValue != '' &&
+        procesoMaritimoObservacionesLlenadoContenedorValue != '' &&
+        procesoMaritimoObservacionesRequerimientosCriticosValue != '' &&
         postcosechaId != 0 &&
         clientesId != 0) {
       ProcesoMaritimo procesoMaritimo = new ProcesoMaritimo(
@@ -1522,6 +1622,18 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               procesoMaritimoComponentePalletDestinosEtiquetasValue,
           procesoMaritimoCamionSelloSeguridadContenedor:
               procesoMaritimoCamionSelloSeguridadContenedorValue,
+          procesoMaritimoObservacionesHidratacion:
+              procesoMaritimoObsevacionesHidratacionValue.text,
+          procesoMaritimoObservacionesEmpaque:
+              procesoMaritimoObservacionesEmpaqueValue.text,
+          procesoMaritimoObservacionesTransferencias:
+              procesoMaritimoObservacionesTransferenciaValue.text,
+          procesoMaritimoObservacionesPalletizado:
+              procesoMaritimoObservacionesPalletizadoValue.text,
+          procesoMaritimoObservacionesLlenadoContenedor:
+              procesoMaritimoObservacionesLlenadoContenedorValue.text,
+          procesoMaritimoObservacionesRequerimientosCriticos:
+              procesoMaritimoObservacionesRequerimientosCriticosValue.text,
           procesoMaritimoFecha: DateTime.now(),
           postcosechaId: postcosechaId);
       int procesoMaritimoId =
@@ -1573,6 +1685,13 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     procesoMaritimoPalletIdentificadoEtiquetaValue = -1;
     procesoMaritimoComponentePalletDestinosEtiquetasValue = -1;
     procesoMaritimoCamionSelloSeguridadContenedorValue = -1;
+
+    procesoMaritimoObsevacionesHidratacionValue.text = '';
+    procesoMaritimoObservacionesEmpaqueValue.text = '';
+    procesoMaritimoObservacionesTransferenciaValue.text = '';
+    procesoMaritimoObservacionesPalletizadoValue.text = '';
+    procesoMaritimoObservacionesLlenadoContenedorValue.text = '';
+    procesoMaritimoObservacionesRequerimientosCriticosValue.text = '';
 
     procesoMaritimoNumeroGuiaValue.text = '';
     procesoMaritimoRealizadoPorValue.text = '';
