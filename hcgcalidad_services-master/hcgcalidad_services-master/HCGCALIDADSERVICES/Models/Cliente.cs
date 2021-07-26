@@ -16,6 +16,7 @@ namespace HCGCALIDADSERVICES.Models
             Temperatura = new HashSet<Temperatura>();
             CirculoCalidad1 = new HashSet<CirculoCalidad>();
             CirculoCalidad2 = new HashSet<CirculoCalidad>();
+            ProcesoMaritimo = new HashSet<ProcesoMaritimo>();
         }
 
         public int ClienteId { get; set; }
@@ -36,5 +37,6 @@ namespace HCGCALIDADSERVICES.Models
 
         public ICollection<CirculoCalidad> CirculoCalidad1 { get; set; }
         public ICollection<CirculoCalidad> CirculoCalidad2 { get; set; }
+        public ICollection<ProcesoMaritimo> ProcesoMaritimo { get; set; }
     }
 }

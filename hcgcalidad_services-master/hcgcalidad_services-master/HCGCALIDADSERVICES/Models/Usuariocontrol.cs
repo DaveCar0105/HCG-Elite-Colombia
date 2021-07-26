@@ -18,6 +18,7 @@ namespace HCGCALIDADSERVICES.Models
             ProcesoEmpaque = new HashSet<ProcesoEmpaque>();
             ProcesoHidratacion = new HashSet<ProcesoHidratacion>();
             Temperatura = new HashSet<Temperatura>();
+            ProcesoMaritimo = new HashSet<ProcesoMaritimo>();
         }
 
         public int UsuarioControlId { get; set; }
@@ -38,5 +39,6 @@ namespace HCGCALIDADSERVICES.Models
         public ICollection<ProcesoEmpaque> ProcesoEmpaque { get; set; }
         public ICollection<ProcesoHidratacion> ProcesoHidratacion { get; set; }
         public ICollection<Temperatura> Temperatura { get; set; }
+        public ICollection<ProcesoMaritimo> ProcesoMaritimo { get; set; }
     }
 }

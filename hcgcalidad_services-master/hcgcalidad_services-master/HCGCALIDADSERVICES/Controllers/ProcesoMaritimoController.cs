@@ -10,54 +10,54 @@ namespace HCGCALIDADSERVICES.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CirculoCalidadController : Controller
+    public class ProcesoMaritimoController : Controller
     {
         private readonly BDD_HCG_CONTROLContext _context;
 
-        public CirculoCalidadController(BDD_HCG_CONTROLContext context)
+        public ProcesoMaritimoController(BDD_HCG_CONTROLContext context)
         {
             _context = context;
         }
 
-        // GET: api/CirculoCalidad
+        // GET: api/ProcesoMaritimo
         [HttpGet]
-        public IEnumerable<CirculoCalidad> GetAllCirculoCalidad()
+        public IEnumerable<ProcesoMaritimo> GetAllProcesoMaritimo()
         {
-            return _context.CirculoCalidad;
+            return _context.ProcesoMaritimo;
         }
 
-        // GET: api/CirculoCalidad/5
+        // GET: api/ProcesoMaritimo/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCirculoCalidad([FromRoute] int id)
+        public async Task<IActionResult> GetProcesoMaritimo([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var circuloCalidad = await _context.CirculoCalidad.FindAsync(id);
+            var procesoMaritimo = await _context.ProcesoMaritimo.FindAsync(id);
 
-            if (circuloCalidad == null)
+            if (procesoMaritimo == null)
             {
                 return NotFound();
             }
 
-            return Ok(circuloCalidad);
+            return Ok(procesoMaritimo);
         }
 
-        // POST: api/CirculoCalidad
+        // POST: api/ProcesoMaritimo
         [HttpPost]
-        public async Task<IActionResult> PostCirculoCalidad([FromBody] CirculoCalidad circuloCalidad)
+        public async Task<IActionResult> PostProcesoMaritimo([FromBody] ProcesoMaritimo procesoMaritimo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.CirculoCalidad.Add(circuloCalidad);
+            _context.ProcesoMaritimo.Add(procesoMaritimo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCirculoCalidad", new { id = circuloCalidad.CirculoCalidadId }, circuloCalidad);
+            return CreatedAtAction("GetProcesoMaritimo", new { id = procesoMaritimo.ProcesoMaritimoId }, procesoMaritimo);
         }
     }
 }
