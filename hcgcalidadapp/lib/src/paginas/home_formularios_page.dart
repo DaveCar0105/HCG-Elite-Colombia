@@ -214,6 +214,36 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
         children: <Widget>[
           Botones(
             child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => circuloCalidadPage()));
+              },
+              child: Container(
+                width: 135,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Circulo Calidad',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.trip_origin_rounded)
+                  ],
+                ),
+              ),
+            ),
+            // text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
               onPressed: () {
                 Navigator.push(
                     context,
