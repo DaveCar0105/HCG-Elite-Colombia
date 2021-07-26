@@ -10,54 +10,54 @@ namespace HCGCALIDADSERVICES.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CirculoCalidadController : Controller
+    public class DestinoMaritimoController : Controller
     {
         private readonly BDD_HCG_CONTROLContext _context;
 
-        public CirculoCalidadController(BDD_HCG_CONTROLContext context)
+        public DestinoMaritimoController(BDD_HCG_CONTROLContext context)
         {
             _context = context;
         }
 
-        // GET: api/CirculoCalidad
+        // GET: api/DestinoMaritimo
         [HttpGet]
-        public IEnumerable<CirculoCalidad> GetAllCirculoCalidad()
+        public IEnumerable<DestinoMaritimo> GetAllDestinoMaritimo()
         {
-            return _context.CirculoCalidad;
+            return _context.DestinoMaritimo;
         }
 
-        // GET: api/CirculoCalidad/5
+        // GET: api/DestinoMaritimo/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCirculoCalidad([FromRoute] int id)
+        public async Task<IActionResult> GetDestinoMaritimo([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var circuloCalidad = await _context.CirculoCalidad.FindAsync(id);
+            var destinoMaritimo = await _context.DestinoMaritimo.FindAsync(id);
 
-            if (circuloCalidad == null)
+            if (destinoMaritimo == null)
             {
                 return NotFound();
             }
 
-            return Ok(circuloCalidad);
+            return Ok(destinoMaritimo);
         }
 
-        // POST: api/CirculoCalidad
+        // POST: api/DestinoMaritimo
         [HttpPost]
-        public async Task<IActionResult> PostCirculoCalidad([FromBody] CirculoCalidad circuloCalidad)
+        public async Task<IActionResult> PostDestinoMaritimo([FromBody] DestinoMaritimo destinoMaritimo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.CirculoCalidad.Add(circuloCalidad);
+            _context.DestinoMaritimo.Add(destinoMaritimo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCirculoCalidad", new { id = circuloCalidad.CirculoCalidadId }, circuloCalidad);
+            return CreatedAtAction("GetDestinoMaritimo", new { id = destinoMaritimo.DestinoMaritimoId }, destinoMaritimo);
         }
     }
 }
