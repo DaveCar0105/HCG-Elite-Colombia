@@ -27,6 +27,7 @@ import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
 import 'package:hcgcalidadapp/src/paginas/actividades_page.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_proceso_empaque.dart';
+import 'package:hcgcalidadapp/src/paginas/detalle_proceso_maritimo_page.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_registro_actividades.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_registro_temperatura_page.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_proceso_hidratacion_page.dart';
@@ -274,6 +275,8 @@ class MyApp extends StatelessWidget {
             'empaque': (BuildContext context) => ProcesoEmpaquePage(),
             'detalleEmpaque': (BuildContext context) =>
                 DetalleRegistroProcesoEmpaquePage(),
+            'detalleMaritimo': (BuildContext context) =>
+                DetalleRegistroProcesoMaritimoPage(),
             'actividades': (BuildContext context) => ActividadesPage(),
             'detalleActividades': (BuildContext context) =>
                 DetalleRegistroActividadesPage(),

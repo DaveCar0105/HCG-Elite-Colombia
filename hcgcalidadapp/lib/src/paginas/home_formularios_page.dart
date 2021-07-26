@@ -30,9 +30,6 @@ import 'package:hcgcalidadapp/src/paginas/circulo_calidad_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecommerce_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
 import 'package:hcgcalidadapp/src/paginas/empaque_elite_page.dart';
-import 'package:hcgcalidadapp/src/paginas/home_checks_page.dart';
-import 'package:hcgcalidadapp/src/paginas/home_formularios_page.dart';
-import 'package:hcgcalidadapp/src/paginas/home_registros_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_empaque_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_hidratacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
@@ -43,12 +40,12 @@ import 'package:hcgcalidadapp/src/paginas/sincronizar_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class HomePage extends StatefulWidget {
+class HomeFormulariosPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeFormulariosPageState createState() => _HomeFormulariosPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
   bool _switchVal = true;
   bool sinc = false;
   sincornizar() async {
@@ -210,64 +207,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('HIGH CONTROL GROUP'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: () {
-              sincornizar();
-            },
-          )
-        ],
-      ),
-      drawer: new Drawer(
-        child: ListView(
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-                accountName: Text('HIGH CONTROL GROUP'),
-                accountEmail: Text('https://highcontrolgroup.com/'),
-                currentAccountPicture: Container(
-                  height: 40,
-                  width: 40,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                  child: Image.asset(
-                    'assets/img/logo_app.jpg',
-                    height: 30,
-                    width: 30,
-                    fit: BoxFit.cover,
-                  ),
-                )),
-            ListTile(
-              title: Text('Errores'),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, 'errores');
-              },
-            ),
-            ListTile(
-              title: Text('Reportes sincronizados'),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, 'listaReportes');
-              },
-            ),
-            ListTile(
-              title: Text('Lista Reporte Detalle'),
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.pushNamed(context, 'listaHistorial');
-              },
-            ),
-            ListTile(
-              title: Text('Salir'),
-              onTap: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    'login', (Route<dynamic> route) => false);
-              },
-            )
-          ],
-        ),
+        title: Text('FORMULARIOS HCG'),
       ),
       body: GridView.count(
         crossAxisCount: 2,
@@ -278,24 +218,25 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HomeFormulariosPage()));
+                        builder: (context) =>
+                            RamosElitePage(this._switchVal, 10)));
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
               color: Colors.red,
               textColor: Colors.white,
               child: Container(
-                width: 130,
+                width: 120,
                 height: 70,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'FORMULARIOS',
+                      'Hidratacion',
                       style: TextStyle(fontSize: 15),
                     ),
-                    Icon(Icons.library_books)
+                    Icon(Icons.local_florist_outlined)
                   ],
                 ),
               ),
@@ -310,8 +251,11 @@ class _HomePageState extends State<HomePage> {
               color: Colors.red,
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeChecksPage()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            EmpaqueElitePage(this._switchVal, 0)));
               },
               child: Container(
                 width: 120,
@@ -321,10 +265,10 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'CHECHKS',
+                      'Empaque',
                       style: TextStyle(fontSize: 15),
                     ),
-                    Icon(Icons.playlist_add_check)
+                    Icon(Icons.all_inbox)
                   ],
                 ),
               ),
@@ -341,7 +285,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HomeRegistrosPage()));
+                        builder: (context) => BandaPage(this._switchVal, 0)));
               },
               child: Container(
                 width: 120,
@@ -351,66 +295,10 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'REGISTROS',
+                      'Final banda',
                       style: TextStyle(fontSize: 15),
                     ),
-                    Icon(Icons.bar_chart)
-                  ],
-                ),
-              ),
-            ),
-            //text: 'raise botton',
-          ),
-          Botones(
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              color: Colors.red,
-              textColor: Colors.white,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AprobacionPage()));
-              },
-              child: Container(
-                width: 120,
-                height: 70,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text(
-                      'Aprobacion',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Icon(Icons.check_circle)
-                  ],
-                ),
-              ),
-            ),
-            //text: 'raise botton',
-          ),
-          Botones(
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              color: Colors.red,
-              textColor: Colors.white,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SincronizarPage()));
-              },
-              child: Container(
-                width: 130,
-                height: 70,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    Text(
-                      'Sincronizacion',
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    Icon(Icons.autorenew_rounded)
+                    Icon(Icons.set_meal)
                   ],
                 ),
               ),
@@ -427,20 +315,20 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ReporteGeneralPage()));
+                        builder: (context) => EcuadorPage(this._switchVal, 0)));
               },
               child: Container(
-                width: 135,
+                width: 120,
                 height: 70,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'Reporte general',
+                      'Ecuador',
                       style: TextStyle(fontSize: 15),
                     ),
-                    Icon(Icons.assessment_outlined)
+                    Icon(Icons.flag)
                   ],
                 ),
               ),

@@ -23,7 +23,7 @@ class circuloCalidadPage extends StatefulWidget {
   bool valor;
   int ramosId;
   //var supervisor1Check = ['Regular','Bueno','Excelente'];
-  
+
   circuloCalidadPage() {
     this.valor = valor;
     this.ramosId = ramosId;
@@ -34,10 +34,10 @@ class circuloCalidadPage extends StatefulWidget {
 
 class _circuloCalidadPageState extends State<circuloCalidadPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  var supervisor1Check = ['Regular','Bueno','Excelente'];
-  var supervisor2Check = ['Regular','Bueno','Excelente'];
-  Map<String, bool>supervisorListValues ={};
-  Map<String, bool>supervisorListValues2 ={};
+  var supervisor1Check = ['Regular', 'Bueno', 'Excelente'];
+  var supervisor2Check = ['Regular', 'Bueno', 'Excelente'];
+  Map<String, bool> supervisorListValues = {};
+  Map<String, bool> supervisorListValues2 = {};
   //final totalRamos = TextEditingController();
   //final tallosRamos = TextEditingController();
   final ramosRechazados = TextEditingController();
@@ -89,22 +89,22 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   int problema1Id = 0;
   bool problema1Enable = false;
 
-    GlobalKey<ListaBusquedaState> _keyProblema2 = GlobalKey();
+  GlobalKey<ListaBusquedaState> _keyProblema2 = GlobalKey();
   static List<AutoComplete> listaProblema2 = new List<AutoComplete>();
   String problema2Nombre = "";
   int problema2Id = 0;
   bool problema2Enable = false;
-    GlobalKey<ListaBusquedaState> _keyProblema3 = GlobalKey();
+  GlobalKey<ListaBusquedaState> _keyProblema3 = GlobalKey();
   static List<AutoComplete> listaProblema3 = new List<AutoComplete>();
   String problema3Nombre = "";
   int problema3Id = 0;
   bool problema3Enable = false;
-    GlobalKey<ListaBusquedaState> _keyProblema4 = GlobalKey();
+  GlobalKey<ListaBusquedaState> _keyProblema4 = GlobalKey();
   static List<AutoComplete> listaProblema4 = new List<AutoComplete>();
   String problema4Nombre = "";
   int problema4Id = 0;
   bool problema4Enable = false;
-    GlobalKey<ListaBusquedaState> _keyProblema5 = GlobalKey();
+  GlobalKey<ListaBusquedaState> _keyProblema5 = GlobalKey();
   static List<AutoComplete> listaProblema5 = new List<AutoComplete>();
   String problema5Nombre = "";
   int problema5Id = 0;
@@ -125,8 +125,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   }
 
   _guardarReporteCirculoCalidad() async {
-    
-    //ramos.ramosNumeroOrden = numeroOrden;
+    circulo.ramosNumeroOrden = numeroOrden;
     circulo.clienteId2 = int.parse(ramosRevisados.text);
     circulo.clienteId1 = int.parse(ramosRechazados.text);
     //circulo.productoId1= int.parse(source)
@@ -134,7 +133,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     circulo.calidadReunion = 0;
     circulo.problemaId2 = clienteId;
     circulo.problemaId3 = productoId;
-    
+
     //ramos.ramosTallos = int.parse(tallosRamos.text);
     circulo.ramosRechazados =
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
@@ -163,19 +162,16 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   // }
 
   // cargarProblemas(int problemasId) async{
-  //   listaProblema1 = List<AutoComplete>(); 
-  //   listaProblema2 = List<AutoComplete>(); 
-  //   listaProblema3 = List<AutoComplete>(); 
-  //   listaProblema4 = List<AutoComplete>(); 
-  //   listaProblema5 = List<AutoComplete>();  
-
+  //   listaProblema1 = List<AutoComplete>();
+  //   listaProblema2 = List<AutoComplete>();
+  //   listaProblema3 = List<AutoComplete>();
+  //   listaProblema4 = List<AutoComplete>();
+  //   listaProblema5 = List<AutoComplete>();
 
   //   int problema = 0;
   //   if (problemas) {
   //     problema = 1;
   //   }
-
-
 
   //   List<FalenciaRamos> problema1 = List();
   //   problema1 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
@@ -208,7 +204,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   //         AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
   //   });
 
-
   //   setState(() {
   //     print("ingreso ");
   //     problema1Enable = true;
@@ -227,50 +222,47 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     listaCliente = List<AutoComplete>();
     listaPostcosecha = List<AutoComplete>();
     listaCliente2 = List<AutoComplete>();
-    listaProblema1 = List<AutoComplete>(); 
-    listaProblema2 = List<AutoComplete>(); 
-    listaProblema3 = List<AutoComplete>(); 
-    listaProblema4 = List<AutoComplete>(); 
+    listaProblema1 = List<AutoComplete>();
+    listaProblema2 = List<AutoComplete>();
+    listaProblema3 = List<AutoComplete>();
+    listaProblema4 = List<AutoComplete>();
     listaProblema5 = List<AutoComplete>();
-    
 
     int valor = 0;
     if (elite) {
       valor = 1;
     }
-    //PROBLEMAS 
+    //PROBLEMAS
     List<FalenciaRamos> problema1 = List();
     problema1 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
     problema1.forEach((element) {
-      listaProblema1.add(
-          AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
+      listaProblema1.add(AutoComplete(
+          id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
     });
-     List<FalenciaRamos> problema2 = List();
+    List<FalenciaRamos> problema2 = List();
     problema2 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
     problema2.forEach((element) {
-      listaProblema2.add(
-          AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
+      listaProblema2.add(AutoComplete(
+          id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
     });
     List<FalenciaRamos> problema3 = List();
     problema3 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
     problema3.forEach((element) {
-      listaProblema3.add(
-          AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
+      listaProblema3.add(AutoComplete(
+          id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
     });
     List<FalenciaRamos> problema4 = List();
     problema4 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
     problema4.forEach((element) {
-      listaProblema4.add(
-          AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
+      listaProblema4.add(AutoComplete(
+          id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
     });
     List<FalenciaRamos> problema5 = List();
     problema5 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
     problema5.forEach((element) {
-      listaProblema5.add(
-          AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
+      listaProblema5.add(AutoComplete(
+          id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
     });
-
-
 
     ///
     print("va a cargar");
@@ -302,8 +294,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
       listaCliente2.add(
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
-    ////////////PROBLEMAS 
-      
+    ////////////PROBLEMAS
+
     //////
 
     List<PostCosecha> postcosechas = List();
@@ -317,7 +309,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     setState(() {
       print("ingreso ");
       prodEnable = true;
-      prodEnable2=true;
+      prodEnable2 = true;
       clientEnable = true;
       clientEnable2 = true;
       postcosechaEnable = true;
@@ -360,7 +352,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                     _cliente2(),
                     _producto1(),
                     _producto2(),
-                    
+
                     //problema2
 
                     //_cantidadRamos(), //ramos revisados
@@ -371,13 +363,19 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                     //_superVisor1Check(),
                     _supervisor2(),
                     // _derogacion(),
-                    
+
                     Divider(),
-                    Column(children:[Text('Evaluacion supervisor#1',style: Theme.of(context).textTheme.subtitle1)] ),
+                    Column(children: [
+                      Text('Evaluacion supervisor#1',
+                          style: Theme.of(context).textTheme.subtitle1)
+                    ]),
                     Column(children: _superVisor1Check()),
                     Divider(),
-                    Column(children:[Text('Evaluacion supervisor#2',style: Theme.of(context).textTheme.subtitle1)] ),
-                    Column(children:_superVisor2Check()),
+                    Column(children: [
+                      Text('Evaluacion supervisor#2',
+                          style: Theme.of(context).textTheme.subtitle1)
+                    ]),
+                    Column(children: _superVisor2Check()),
                     _comentarios(),
                     _botonGuardar(context),
 
@@ -386,10 +384,9 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                     )
                   ],
                 ),
-              
                 Column(
-                   //_botonGuardar(context),
-                )
+                    //_botonGuardar(context),
+                    )
               ],
             ),
           )),
@@ -496,7 +493,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   //   );
   // }
 
-
   Widget _cantidadRamosRechazados() {
     return Container(
       width: 200,
@@ -547,36 +543,35 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
       child: RaisedButton(
         onPressed: () async {
           //if (_validarRamos() ) {
-            //&&_validarTallos
-            final util = Utilidades();
-            if (//numeroOrden != '' &&
-                //util.isNumberEntero(totalRamos.text) &&
-                //util.isNumberEntero(tallosRamos.text) &&
-                //derogacion.text != '' &&
-                util.isNumberEntero(ramosRechazados.text) &&
-                util.isNumberEntero(ramosRevisados.text) &&
-                clienteId != 0 &&
-                clienteId2 != 0 &&
-                productoId != 0 &&
-                productoId2 != 0 &&
-                problema1Id!=0&&
-                problema2Id!=0&&
-                problema3Id!=0&&
-                problema4Id!=0&&
-                problema5Id!=0&&
-                numeroReunionCirculoCalidad.text != '' &&
-                codigoMesa.text != '' &&
-                linea.text != '' &&
-                supervisor1.text != '' &&
-                supervisor2.text != '' &&
-                comentarios.text != '' &&
-                postcosechaId != 0) {
-              await _guardarReporteCirculoCalidad()();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => circuloCalidadPage()));
-            
+          //&&_validarTallos
+          final util = Utilidades();
+          if ( //numeroOrden != '' &&
+              //util.isNumberEntero(totalRamos.text) &&
+              //util.isNumberEntero(tallosRamos.text) &&
+              //derogacion.text != '' &&
+              util.isNumberEntero(ramosRechazados.text) &&
+                  util.isNumberEntero(ramosRevisados.text) &&
+                  clienteId != 0 &&
+                  clienteId2 != 0 &&
+                  productoId != 0 &&
+                  productoId2 != 0 &&
+                  problema1Id != 0 &&
+                  problema2Id != 0 &&
+                  problema3Id != 0 &&
+                  problema4Id != 0 &&
+                  problema5Id != 0 &&
+                  numeroReunionCirculoCalidad.text != '' &&
+                  codigoMesa.text != '' &&
+                  linea.text != '' &&
+                  supervisor1.text != '' &&
+                  supervisor2.text != '' &&
+                  comentarios.text != '' &&
+                  postcosechaId != 0) {
+            await _guardarReporteCirculoCalidad()();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => circuloCalidadPage()));
           }
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -588,18 +583,14 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text('Guardar'),
-              Icon(Icons.save)
-            ],
+            children: <Widget>[Text('Guardar'), Icon(Icons.save)],
           ),
         ),
       ),
     );
   }
 
-
-  Widget _problema1(){
+  Widget _problema1() {
     return Container(
       width: 250,
       height: 90,
@@ -627,7 +618,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
             ),
     );
   }
-  Widget _problema2(){
+
+  Widget _problema2() {
     return Container(
       width: 250,
       height: 90,
@@ -655,7 +647,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
             ),
     );
   }
-  Widget _problema3(){
+
+  Widget _problema3() {
     return Container(
       width: 250,
       height: 90,
@@ -683,7 +676,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
             ),
     );
   }
-  Widget _problema4(){
+
+  Widget _problema4() {
     return Container(
       width: 250,
       height: 90,
@@ -711,7 +705,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
             ),
     );
   }
-  Widget _problema5(){
+
+  Widget _problema5() {
     return Container(
       width: 250,
       height: 90,
@@ -739,7 +734,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
             ),
     );
   }
-
 
   Widget _producto1() {
     return Container(
@@ -973,10 +967,9 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     );
   }
 
-  bool  _validarRamos() {
-    if (ramosRechazados.text == '' ||
-        ramosRevisados.text == '' 
-        ) {  //totalRamos.text == ''
+  bool _validarRamos() {
+    if (ramosRechazados.text == '' || ramosRevisados.text == '') {
+      //totalRamos.text == ''
       mostrarSnackbar('Llenar Ramos', null, scaffoldKey);
       return false;
     }
@@ -992,40 +985,40 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     return true;
   }
 
-  List <Widget>_superVisor2Check(){
-
-    return (
-      
-      supervisor2Check.map((label) => CheckboxListTile(title: Text(label),value: supervisorListValues2[label]??false, onChanged: (newValue){
-        setState(() {
-          if(supervisorListValues2[label] == null){
-            supervisorListValues2[label]=true;
-          }
-          else{
-            //supervisor1Check[label]==false;
-          }
-          supervisorListValues2[label] = !supervisorListValues2[label];
-        });
-      })).toList());
-    
+  List<Widget> _superVisor2Check() {
+    return (supervisor2Check
+        .map((label) => CheckboxListTile(
+            title: Text(label),
+            value: supervisorListValues2[label] ?? false,
+            onChanged: (newValue) {
+              setState(() {
+                if (supervisorListValues2[label] == null) {
+                  supervisorListValues2[label] = true;
+                } else {
+                  //supervisor1Check[label]==false;
+                }
+                supervisorListValues2[label] = !supervisorListValues2[label];
+              });
+            }))
+        .toList());
   }
 
-  List <Widget>_superVisor1Check(){
-
-    return (
-      
-      supervisor1Check.map((label) => CheckboxListTile(title: Text(label),value: supervisorListValues[label]??false, onChanged: (newValue){
-        setState(() {
-          if(supervisorListValues[label] == null){
-            supervisorListValues[label]=true;
-          }
-          else{
-            //supervisor1Check[label]==false;
-          }
-          supervisorListValues[label] = !supervisorListValues[label];
-        });
-      })).toList());
-    
+  List<Widget> _superVisor1Check() {
+    return (supervisor1Check
+        .map((label) => CheckboxListTile(
+            title: Text(label),
+            value: supervisorListValues[label] ?? false,
+            onChanged: (newValue) {
+              setState(() {
+                if (supervisorListValues[label] == null) {
+                  supervisorListValues[label] = true;
+                } else {
+                  //supervisor1Check[label]==false;
+                }
+                supervisorListValues[label] = !supervisorListValues[label];
+              });
+            }))
+        .toList());
   }
 
   // bool _validarTallos() {

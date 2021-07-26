@@ -186,7 +186,7 @@ class DatabaseCreator {
       'procesoMaritimoUsuarioControlId';
   static const procesoMaritimoObservaciones = 'procesoMaritimoObservaciones';
   static const procesoMaritimoNumeroGuia = 'procesoMaritimoNumeroGuia';
-  static const procesoMaritimoDestino = "procesoMaritimoDestino";
+  static const procesoMaritimoDestinoId = "procesoMaritimoDestino";
   static const procesoMaritimoRealizadoPor = 'procesoMaritimoRealizadoPor';
   static const procesomoMaritimoAcompanamiento =
       'procesomoMaritimoAcompanamiento';
@@ -252,6 +252,18 @@ class DatabaseCreator {
       'procesoMaritimoComponentePalletDestinosEtiquetas';
   static const procesoMaritimoCamionSelloSeguridadContenedor =
       'procesoMaritimoCamionSelloSeguridadContenedor';
+  static const procesoMaritimoObservacionesHidratacion =
+      'procesoMaritimoObservacionessHidratacion';
+  static const procesoMaritimoObservacionesEmpaque =
+      'procesoMaritimoObservacionesEmpaque';
+  static const procesoMaritimoObservacionesTransferencias =
+      'procesoMaritimoObservacionesTransferencias';
+  static const procesoMaritimoObservacionesPalletizado =
+      'procesoMaritimoObservacionesPalletizado';
+  static const procesoMaritimoObservacionesLlenadoContenedor =
+      'procesoMaritimoObservacionesLlenadoContenedor';
+  static const procesoMaritimoObservacionesRequerimientosCriticos =
+      'procesoMaritimoObservacionesRequerimientosCriticos';
 
   static const procesoMaritimoFecha = 'procesoMaritimoFecha';
 
@@ -832,7 +844,7 @@ class DatabaseCreator {
         $procesoMaritimoUsuarioControlId INTEGER,
         $procesoMaritimoObservaciones TEXT,
         $procesoMaritimoNumeroGuia INTEGER,
-        $procesoMaritimoDestino TEXT,
+        $procesoMaritimoDestinoId TEXT,
         $procesoMaritimoRealizadoPor TEXT,
         $procesomoMaritimoAcompanamiento TEXT,
         $procesoMaritimoNombreHidratante INTEGER,
@@ -867,6 +879,13 @@ class DatabaseCreator {
         $procesoMaritimoPalletIdentificadoEtiqueta INTEGER,
         $procesoMaritimoComponentePalletDestinosEtiquetas INTEGER,
         $procesoMaritimoCamionSelloSeguridadContenedor INTEGER,
+
+        $procesoMaritimoObservacionesHidratacion TEXT,
+        $procesoMaritimoObservacionesEmpaque TEXT,
+        $procesoMaritimoObservacionesTransferencias TEXT,
+        $procesoMaritimoObservacionesPalletizado TEXT,
+        $procesoMaritimoObservacionesLlenadoContenedor TEXT,
+        $procesoMaritimoObservacionesRequerimientosCriticos TEXT,
 
         $procesoMaritimoFecha DATE,
         $clienteId INTEGER,
@@ -1002,5 +1021,6 @@ class DatabaseCreator {
     await createTipoActividad(db);
     await createTipoCliente(db);
     await createCirculoCalidad(db);
+    await createProcesoMaritimoTable(db);
   }
 }

@@ -65,6 +65,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final procesoMaritimoNumeroGuiaValue = new TextEditingController();
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
+  final comentarios = TextEditingController();
 
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
@@ -1397,6 +1398,21 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _comentarios() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Comentarios',
+          labelText: 'Comentarios',
+        ),
+        controller: comentarios,
       ),
     );
   }
