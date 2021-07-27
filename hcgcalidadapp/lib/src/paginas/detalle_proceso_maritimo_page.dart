@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
-//import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
-//import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 
 class DetalleRegistroProcesoMaritimoPage extends StatelessWidget {
