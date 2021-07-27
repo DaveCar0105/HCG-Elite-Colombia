@@ -57,6 +57,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   int procesoMaritimoContenedorlavadoDesinfectadoValue = -1;
   int procesoMartimoCarguePreviamenteHumedecidosValue = -1;
   int procesoMaritimoLlegandoCierreSelladoValue = -1;
+
   int procesoMaritimoEstibasSelloICAValue = -1;
   int procesoMaritimoPalletsTensionZunchosvalue = -1;
   int procesoMaritimoPalletIdentificadoEtiquetaValue = -1;
@@ -1310,7 +1311,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   Container(
                     width: width * 0.5,
                     child: Text(
-                        'los pallets se enuentran con una adecuada tensión de zunchos .'),
+                        'Esquineros y laterales de pallets bien colocados formando una esctructura adecuada y con buen ajuste de zunchos .'),
                   ),
                   Radio(
                       value: 0,

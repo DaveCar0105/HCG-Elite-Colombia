@@ -15,6 +15,7 @@ class ReporteGeneralPage extends StatefulWidget {
 
 class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   bool sinc = false;
+  //int ramosRevisados = 0;
 
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Historial> lista = List();
@@ -108,36 +109,50 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                             style: Theme.of(context).textTheme.headline6),
                       ],
                     ),
+
                     Divider(),
-                    Column(
-                      children: [
-                        Text(
-                            'RAMOS REVISADOS:' +
-                                '                                ' +
-                                '${reporteGeneral.ramosRevisados}',
-                            style: Theme.of(context).textTheme.subtitle1),
-                      ],
-                    ),
+                    banderaList
+                        ? Row(
+                            children: [
+                              Text(
+                                  'RAMOS REVISADOS:' +
+                                      '                                ' +
+                                      '${reporteGeneral.ramosRevisados}',
+                                  style: Theme.of(context).textTheme.subtitle1),
+                            ],
+                          )
+                        : Container(
+                            child: CircularProgressIndicator(),
+                          ),
                     Divider(),
-                    Column(
-                      children: [
-                        Text(
-                            'RAMOS NO CONFORMES:' +
-                                '                           ' +
-                                '${reporteGeneral.ramosNoConformes}',
-                            style: Theme.of(context).textTheme.subtitle1),
-                      ],
-                    ),
+                    banderaList
+                        ? Row(
+                            children: [
+                              Text(
+                                  'RAMOS NO CONFORMES:' +
+                                      '                       ' +
+                                      '${reporteGeneral.ramosNoConformes}',
+                                  style: Theme.of(context).textTheme.subtitle1),
+                            ],
+                          )
+                        : Container(
+                            child: CircularProgressIndicator(),
+                          ),
                     Divider(),
-                    Column(
-                      children: [
-                        Text(
-                            '%RAMOS NO CONFORMES:' +
-                                ' ' +
-                                '${reporteGeneral.porRamosNoConformes}',
-                            style: Theme.of(context).textTheme.subtitle1),
-                      ],
-                    ),
+                    banderaList
+                        ? Row(
+                            children: [
+                              Text(
+                                  '%RAMOS NO CONFORMES:' +
+                                      '                    ' +
+                                      '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
+                                      '%',
+                                  style: Theme.of(context).textTheme.subtitle1),
+                            ],
+                          )
+                        : Container(
+                            child: CircularProgressIndicator(),
+                          ),
                     Divider(),
                     Column(
                       children: [
