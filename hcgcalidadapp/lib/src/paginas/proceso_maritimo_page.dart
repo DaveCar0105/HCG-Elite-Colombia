@@ -7,14 +7,11 @@ import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_destinos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
-//import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
-//import 'package:hcgcalidadapp/src/bloc/registro_proceso_hidratacion_bloc.dart';
 import 'package:hcgcalidadapp/src/bloc/registro_proceso_maritimo_bloc.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/destinos.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
-//import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
@@ -25,11 +22,6 @@ class ProcesoMaritimoPage extends StatefulWidget {
 }
 
 class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
-  //int estadoSolucionesGroupValue = -1;
-  //int tiemposDeHidratacionGroupValue = -1;
-  //int cantidadRamosTinasGroupValue = -1;
-  //////// variables
-
   int procesoMaritimoNombreHidratanteValue = -1;
   int procesoMaritimoPhSolucionesvalue = -1;
   int procesoMaritimoNivelSolucionTinasValue = -1;
@@ -63,8 +55,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   int procesoMaritimoComponentePalletDestinosEtiquetasValue = -1;
   int procesoMaritimoCamionSelloSeguridadContenedorValue = -1;
 
-  //final phSolucionController = new TextEditingController();
-  //final nivelSolucionController = new TextEditingController();
   final procesoMaritimoNumeroGuiaValue = new TextEditingController();
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
@@ -83,6 +73,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
+
   @override
   void initState() {
     cargarCombo();
@@ -98,7 +89,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   int postcosechaId = 0;
   bool postcosechaEnable = false;
 
-  //final _scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<ListaBusquedaState> _keyClientes = GlobalKey();
   List<AutoComplete> listaClientes = new List<AutoComplete>();
   String clientesNombre = "";
