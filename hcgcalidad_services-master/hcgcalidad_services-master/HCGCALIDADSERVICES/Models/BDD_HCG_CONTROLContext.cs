@@ -1728,7 +1728,7 @@ namespace HCGCALIDADSERVICES.Models
                 entity.Property(e => e.DestinoMaritimoId).HasColumnName("DESTINO_MARITIMO_ID");
 
                 entity.Property(e => e.DestinoMaritimoNombre)
-                    .HasColumnName("DESTINO_MARITIMO_NOMBRE")
+                    .HasColumnName("DestinoMaritimoNombre")
                     .IsUnicode(false);
             });
         }

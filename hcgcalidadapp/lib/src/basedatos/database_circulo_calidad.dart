@@ -1,7 +1,7 @@
+import 'dart:convert';
+
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/modelos/ramo.dart';
-import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 
 class DatabaseCirculoCalidad {
   static Future<List<circuloCalidad>> getAllcirculoCalidad() async {
@@ -14,6 +14,7 @@ class DatabaseCirculoCalidad {
           circuloCalidadId: node[DatabaseCreator.procesoCirculoCalidadId],
           ramosRevisados:
               node[DatabaseCreator.procesoCirculoCalidadRamosRevisados],
+          postcosechaId: node[DatabaseCreator.postcosechaId],
           ramosRechazados:
               node[DatabaseCreator.procesoCirculoCalidadRamosRechazados],
           calidadReunion: node[DatabaseCreator.procesoCirculoCalidadReunion],
@@ -43,8 +44,8 @@ class DatabaseCirculoCalidad {
 
   static Future<int> addcirculoCalidad(circuloCalidad circulo) async {
     final sql = '''INSERT INTO ${DatabaseCreator.procesoCirculoCalidadTable}
-        (${DatabaseCreator.procesoCirculoCalidadId},
-        ${DatabaseCreator.procesoCirculoCalidadPoscosecha},
+        (
+        ${DatabaseCreator.postcosechaId},
         ${DatabaseCreator.procesoCirculoCalidadClienteId1},
         ${DatabaseCreator.procesoCirculoCalidadClienteId2},
         ${DatabaseCreator.procesoCirculoCalidadProducto1},
@@ -59,17 +60,17 @@ class DatabaseCirculoCalidad {
         ${DatabaseCreator.procesoCirculoCalidadVariedad1},
         ${DatabaseCreator.procesoCirculoCalidadVariedad2},
         ${DatabaseCreator.procesoCirculoCalidadCodigoMesa},
+        ${DatabaseCreator.procesoCirculoCalidadReunion},
         ${DatabaseCreator.procesoCirculoCalidadLinea},
         ${DatabaseCreator.procesoCirculoCalidadSupervisor1},
         ${DatabaseCreator.procesoCirculoCalidadSupervisor2},
         ${DatabaseCreator.procesoCirculoCalidadComentarios},
         ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso1},
         ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso2}) 
-    VALUES(${circulo.calidadReunion},
-    ${circulo.circuloCalidadId},
+    VALUES(
     ${circulo.postcosechaId},
-    '${circulo.clienteId1}',
-    '${circulo.clienteId2}',
+    ${circulo.clienteId1},
+    ${circulo.clienteId2},
     ${circulo.productoId1},
     ${circulo.productoId2},
     ${circulo.ramosRevisados},
@@ -79,15 +80,16 @@ class DatabaseCirculoCalidad {
     ,${circulo.problemaId3},
     '${circulo.problemaId4}',
     ${circulo.problemaId5},
-    ${circulo.variedad1},
-    ${circulo.variedad2},
+    '${circulo.variedad1}',
+    '${circulo.variedad2}',
     ${circulo.codigoMesa},
+    ${circulo.calidadReunion},
     ${circulo.linea},
-    ${circulo.supervisor1},
-    ${circulo.supervisor2},
-    ${circulo.comentarios},
-    ${circulo.supervisorcheck1},
-    ${circulo.supervisorcheck2}
+    '${circulo.supervisor1}',
+    '${circulo.supervisor2}',
+    '${circulo.comentarios}',
+    '${circulo.supervisorcheck1}',
+    '${circulo.supervisorcheck2}'
     )''';
     return await db.rawInsert(sql);
   }
@@ -95,7 +97,7 @@ class DatabaseCirculoCalidad {
   static Future<void> updateCirculoCalidad(circuloCalidad circulo) async {
     final sql = '''UPDATE ${DatabaseCreator.procesoCirculoCalidadTable}
     SET ${DatabaseCreator.procesoCirculoCalidadReunion} = '${circulo.calidadReunion}',
-    ${DatabaseCreator.procesoCirculoCalidadPoscosecha} = '${circulo.postcosechaId}',
+    ${DatabaseCreator.postcosechaId} = '${circulo.postcosechaId}',
     ${DatabaseCreator.procesoCirculoCalidadClienteId1} = ${circulo.clienteId1},
     ${DatabaseCreator.procesoCirculoCalidadClienteId2} = ${circulo.clienteId2},
     ${DatabaseCreator.procesoCirculoCalidadProducto1} = ${circulo.productoId1},
@@ -118,7 +120,8 @@ class DatabaseCirculoCalidad {
     ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso2} ='${circulo.supervisorcheck2}'
     WHERE ${DatabaseCreator.procesoCirculoCalidadId} = ${circulo.circuloCalidadId}
     ''';
-    await db.rawInsert(sql);
+    print(jsonEncode(sql));
+    //await db.rawInsert(sql);
   }
 
   static Future<void> deleteCirculoCalidad(int circuloCaldiadId) async {
