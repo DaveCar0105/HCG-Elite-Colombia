@@ -409,8 +409,8 @@ class _RamosElitePageState extends State<RamosElitePage> {
                   return item.nombre == value;
                 });
                 listaClienteProvider.listaClientes = tipoCliente.id;
-              },
-            )
+                setState(() {});
+              })
           : Container(
               child: CircularProgressIndicator(),
             ),

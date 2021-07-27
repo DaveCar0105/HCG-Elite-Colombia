@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Trabajo\\Empresa High control\\app movil\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj": {}
+    "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj": {}
   },
   "projects": {
-    "D:\\Trabajo\\Empresa High control\\app movil\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj": {
+    "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Trabajo\\Empresa High control\\app movil\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
+        "projectUniqueName": "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
         "projectName": "HCGCALIDADSERVICES",
-        "projectPath": "D:\\Trabajo\\Empresa High control\\app movil\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
-        "packagesPath": "C:\\Users\\robert\\.nuget\\packages\\",
-        "outputPath": "D:\\Trabajo\\Empresa High control\\app movil\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\obj\\",
+        "projectPath": "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\HCGCALIDADSERVICES.csproj",
+        "packagesPath": "C:\\Users\\davjh\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\davjh\\Documents\\Proyecto HCGELite\\HCG-Elite-Colombia\\hcgcalidad_services-master\\hcgcalidad_services-master\\HCGCALIDADSERVICES\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\robert\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\davjh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.1"

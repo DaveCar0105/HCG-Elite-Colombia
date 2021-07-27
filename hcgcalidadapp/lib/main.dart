@@ -3,6 +3,7 @@ import 'package:hcgcalidadapp/src/basedatos/database_categoria_empaque.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_categoria_ramos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_destinos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecommerce.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_falencia_empaque.dart';
@@ -15,6 +16,7 @@ import 'package:hcgcalidadapp/src/constantes.dart';
 import 'package:hcgcalidadapp/src/modelos/categoria_empaque.dart';
 import 'package:hcgcalidadapp/src/modelos/categoria_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
+import 'package:hcgcalidadapp/src/modelos/destinos.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_empaque.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/firma.dart';
@@ -235,6 +237,18 @@ void main() async {
           tipoClienteNombre: tipoCliente[i]["tipoClienteNombre"]);
       try {
         await DatabaseEcuador.addTipoCliente(tipo);
+      } catch (DatabaseException) {}
+    }
+
+    var url12 = Uri.http(co.url, '/api/DestinoMaritimo');
+    final responseDestinos = await http.get(url12);
+    var destinos = json.decode(responseDestinos.body);
+    for (int i = 0; i < destinos.length; i++) {
+      var tipoDestino = ProcesoMaritimoDestinos(
+          procesoMaritimoDestinoId: destinos[i]["destinoMaritimoId"],
+          procesoMaritimoDestinoNombre: destinos[i]["destinoMaritimoNombre"]);
+      try {
+        await DatabaseDestino.addProcesoMaritimoDestinos(tipoDestino);
       } catch (DatabaseException) {}
     }
 
