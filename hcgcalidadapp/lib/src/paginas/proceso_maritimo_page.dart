@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_destinos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 //import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
@@ -11,6 +12,7 @@ import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/bloc/registro_proceso_maritimo_bloc.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
+import 'package:hcgcalidadapp/src/modelos/destinos.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 //import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
@@ -85,6 +87,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   void initState() {
     cargarCombo();
     cargarComboClientes();
+    cargarComboDestinos();
     super.initState();
   }
 
@@ -101,6 +104,12 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   String clientesNombre = "";
   int clientesId = 0;
   bool clientesEnable = false;
+
+  GlobalKey<ListaBusquedaState> _keyDestinos1 = GlobalKey();
+  List<AutoComplete> listaDestinos = new List<AutoComplete>();
+  String destinosNombre = "";
+  int destinosId = 0;
+  bool destinosEnable = false;
 
   cargarCombo() async {
     List<PostCosecha> postcosechas = List();
@@ -123,6 +132,19 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     });
     setState(() {
       clientesEnable = true;
+    });
+  }
+
+  cargarComboDestinos() async {
+    List<ProcesoMaritimoDestinos> destinos = List();
+    destinos = await DatabaseDestino.getAllProcesoMaritimoDestinos();
+    destinos.forEach((element) {
+      listaDestinos.add(AutoComplete(
+          id: element.procesoMaritimoDestinoId,
+          nombre: element.procesoMaritimoDestinoNombre));
+    });
+    setState(() {
+      destinosEnable = true;
     });
   }
 
@@ -229,33 +251,34 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     );
   }
 
-  // Widget _itemHidratacion() {
-  //   return (Row(
-  //     children: <Widget>[
-  //       Container(
-  //         width: width * 0.5,
-  //         child: Text('Estado de Soluciones'),
-  //       ),
-  //       Radio(
-  //           value: 0,
-  //           groupValue: estadoSolucionesGroupValue,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               estadoSolucionesGroupValue = value;
-  //             });
-  //           }),
-  //       Spacer(),
-  //       Radio(
-  //           value: 1,
-  //           groupValue: estadoSolucionesGroupValue,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               estadoSolucionesGroupValue = value;
-  //             });
-  //           }),
-  //     ],
-  //   ));
-  // }
+  Widget _destinos() {
+    return Container(
+      width: 250,
+      height: 80,
+      child: destinosEnable
+          ? ListaBusqueda(
+              key: _keyDestinos1,
+              lista: listaDestinos,
+              hintText: "Destinos",
+              valorDefecto: destinosNombre,
+              hintSearchText: "Seleccione el destino",
+              icon: Icon(Icons.move_to_inbox),
+              width: 200.0,
+              style: TextStyle(
+                fontSize: 15,
+              ),
+              parentAction: (value) {
+                AutoComplete destinos = listaDestinos.firstWhere((item) {
+                  return item.nombre == value;
+                });
+                destinosId = destinos.id;
+              },
+            )
+          : Container(
+              child: CircularProgressIndicator(),
+            ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -314,6 +337,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 height: height * 0.05,
               ),
               _postcosecha(),
+              _destinos(),
               _clientes(),
               _numeroGuia(),
               _realizadoPor(),

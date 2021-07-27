@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
 import 'package:hcgcalidadapp/src/modelos/historial.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_aprobar.dart';
@@ -12,6 +14,9 @@ class ReporteGeneralPage extends StatefulWidget {
 }
 
 class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
+  bool sinc = false;
+
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Historial> lista = List();
   ReporteGeneralDto reporteGeneral;
   List<Widget> dinamicos = List<Widget>();
@@ -23,43 +28,9 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     super.initState();
   }
 
-  cargarFalenciaListWidget(FalenciaReporteGeneralDto falencia, int indice) {
-    String textoTitle = indice.toString() + ". " + falencia.nombreFalencia;
-    String falenciaText = "Falencias: " + falencia.cantidad.toString();
-    String porcentajeText =
-        "Porcentaje: " + falencia.porcentajeFalencia.toStringAsFixed(2) + "%";
-    dynamic falenciaSetear = Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-                leading: Icon(Icons.error_outline), title: Text(textoTitle)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                TextButton(
-                  child: Text(falenciaText),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-                TextButton(
-                  child: Text(porcentajeText),
-                  onPressed: () {/* ... */},
-                ),
-                const SizedBox(width: 8),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-    dinamicos.add(falenciaSetear);
-  }
-
   cargarLista() async {
     dinamicos = new List<Widget>();
-    lista = await DatabaseReportesAprobacion.historialReportes();
+    //lista = await DatabaseReportesAprobacion.historialReportes();
     reporteGeneral = await DatabaseReportesAprobacion.getReporteGeneral();
     var asd = jsonEncode(lista);
     if (reporteGeneral.falencias != null) {
@@ -72,31 +43,121 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     });
   }
 
+  cargarFalenciaListWidget(FalenciaReporteGeneralDto falencia, int indice) {
+    String textoTitle = indice.toString() + ". " + falencia.nombreFalencia;
+    String falenciaText = "Falencias: " + falencia.cantidad.toString();
+    String porcentajeText =
+        "Porcentaje: " + falencia.porcentajeFalencia.toStringAsFixed(2) + "%";
+
+    dynamic falenciaSetear = Center(
+        child: Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(leading: Icon(Icons.description), title: Text(textoTitle)),
+        Column(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: Text(falenciaText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+                TextButton(
+                  child: Text(porcentajeText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    ));
+    dinamicos.add(falenciaSetear);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("REPORTE GENERAL")),
+      key: scaffoldKey,
+      appBar: AppBar(
+        title: Text('REPORTE GENERAL HCG'),
+      ),
       body: Container(
           margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(5),
+          padding: EdgeInsets.all(1),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.transparent,
-              boxShadow: [BoxShadow(color: Colors.transparent, blurRadius: 7)]),
-          child: Row(
-            children: [
-              Row(children: [Text("REPORTE GENERAL")]),
-              Row(children: [Text("REPORTE GENERAL")]),
-            ],
-          )
-          /*child: banderaList
-            ? ListView(
-                children: dinamicos,
-              )
-            : Container(
-                child: CircularProgressIndicator(),
-              ),*/
-          ),
+              color: Colors.greenAccent,
+              boxShadow: [BoxShadow(color: Colors.redAccent, blurRadius: 10)]),
+          width: double.infinity,
+          child: Container(
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Column(
+                      children: [
+                        Text('RESUMEN REVISION',
+                            style: Theme.of(context).textTheme.headline6),
+                      ],
+                    ),
+                    Divider(),
+                    Column(
+                      children: [
+                        Text(
+                            'RAMOS REVISADOS:' +
+                                '                                ' +
+                                '${reporteGeneral.ramosRevisados}',
+                            style: Theme.of(context).textTheme.subtitle1),
+                      ],
+                    ),
+                    Divider(),
+                    Column(
+                      children: [
+                        Text(
+                            'RAMOS NO CONFORMES:' +
+                                '                           ' +
+                                '${reporteGeneral.ramosNoConformes}',
+                            style: Theme.of(context).textTheme.subtitle1),
+                      ],
+                    ),
+                    Divider(),
+                    Column(
+                      children: [
+                        Text(
+                            '%RAMOS NO CONFORMES:' +
+                                ' ' +
+                                '${reporteGeneral.porRamosNoConformes}',
+                            style: Theme.of(context).textTheme.subtitle1),
+                      ],
+                    ),
+                    Divider(),
+                    Column(
+                      children: [
+                        Text('RESUMEN CAUSAS',
+                            style: Theme.of(context).textTheme.headline6)
+                      ],
+                    ),
+                    banderaList
+                        ? Column(
+                            children: dinamicos,
+                          )
+                        : Container(
+                            child: CircularProgressIndicator(),
+                          ),
+                    // _graficarReporte(),
+                  ],
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

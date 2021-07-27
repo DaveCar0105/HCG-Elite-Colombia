@@ -353,7 +353,7 @@ class DatabaseReportesAprobacion {
       }
     }
     if (reporteGeneral.ramosRevisados > 0) {
-      reporteGeneral.porRamosNoConformes = 100 -
+      reporteGeneral.porRamosNoConformes =
           ((reporteGeneral.ramosNoConformes * 100) /
               reporteGeneral.ramosRevisados);
     }

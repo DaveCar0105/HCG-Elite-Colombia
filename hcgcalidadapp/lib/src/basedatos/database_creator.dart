@@ -186,7 +186,9 @@ class DatabaseCreator {
       'procesoMaritimoUsuarioControlId';
   static const procesoMaritimoObservaciones = 'procesoMaritimoObservaciones';
   static const procesoMaritimoNumeroGuia = 'procesoMaritimoNumeroGuia';
-  static const procesoMaritimoDestinoId = "procesoMaritimoDestino";
+  static const procesoMaritimoDestinoTable = 'procesoMaritimoDestinoTable';
+  static const procesoMaritimoDestinoId = 'procesoMaritimoDestinoId';
+  static const procesoMaritimoDestinoNombre = 'procesoMaritimoDestinoNombre';
   static const procesoMaritimoRealizadoPor = 'procesoMaritimoRealizadoPor';
   static const procesomoMaritimoAcompanamiento =
       'procesomoMaritimoAcompanamiento';
@@ -836,6 +838,19 @@ class DatabaseCreator {
     await db.execute(procesoHidratacionSql);
   }
 
+  //DESTINO
+  Future<void> createProcesoMaritimoDestinoTable(Database db) async {
+    print("crandon tabla destinos maritimos");
+    final procesoMaritimoDestinoSql =
+        '''CREATE TABLE $procesoMaritimoDestinoTable
+      (
+        $procesoMaritimoDestinoId INTEGER PRIMARY KEY,
+        $procesoMaritimoDestinoNombre TEXT
+      )''';
+
+    await db.execute(procesoMaritimoDestinoSql);
+  }
+
   // CREATE TABLE MARITIMO
   Future<void> createProcesoMaritimoTable(Database db) async {
     final procesoMaritimoSql = '''CREATE TABLE $procesoMaritimoTable
@@ -1022,5 +1037,6 @@ class DatabaseCreator {
     await createTipoCliente(db);
     await createCirculoCalidad(db);
     await createProcesoMaritimoTable(db);
+    await createProcesoMaritimoDestinoTable(db);
   }
 }

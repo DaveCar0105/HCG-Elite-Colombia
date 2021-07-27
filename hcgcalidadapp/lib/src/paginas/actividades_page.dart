@@ -103,7 +103,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
   cargarComboActiviades() async {
     List<TipoActividad> activiades = List();
     activiades = await DatabaseEcuador.getAllTipoActividad();
-    print("ACTIVIDADESSSSS");
+    print("ACTIVIDADES");
     print(jsonEncode(activiades));
     activiades.forEach((element) {
       listaActividades.add(AutoComplete(

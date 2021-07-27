@@ -13,7 +13,7 @@ class ProcesoMaritimo {
     this.procesoMaritimoObservaciones,
     //this.procesoMaritimoEstadoSoluciones,
     this.procesoMaritimoNumeroGuia,
-    this.procesoMaritimoDestinoId,
+    //this.procesoMaritimoDestinoId,
     this.procesoMaritimoRealizadoPor,
     this.procesoMaritimoAcompanamiento,
     this.procesoMaritimoNombreHidratante,
@@ -66,7 +66,7 @@ class ProcesoMaritimo {
   String procesoMaritimoObservaciones;
   // int procesoMaritimoEstadoSoluciones;
   int procesoMaritimoNumeroGuia;
-  int procesoMaritimoDestinoId;
+  //int procesoMaritimoDestinoId;
   String procesoMaritimoRealizadoPor;
   String procesoMaritimoAcompanamiento;
   int procesoMaritimoNombreHidratante;
@@ -127,7 +127,7 @@ class ProcesoMaritimo {
             json["procesoMaritimoUsuarioControlId"],
         //procesoMaritimoEstadoSoluciones: json["procesoHidratacionEstadoSoluciones"],
         procesoMaritimoNumeroGuia: json["procesoMaritimoNumeroGuia"],
-        procesoMaritimoDestinoId: json["procesoMaritimoDestino"],
+        //procesoMaritimoDestinoId: json["procesoMaritimoDestino"],
         procesoMaritimoRealizadoPor:
             json["procesoMaritimoRealizadoPor"].toString(),
         procesoMaritimoAcompanamiento:
@@ -214,7 +214,7 @@ class ProcesoMaritimo {
         "procesoMaritimoId": procesoMaritimoId,
         "procesoMaritimoUsuarioControlId": procesoMaritimoUsuarioControlId,
         "procesoMaritimoNumeroGuia": procesoMaritimoNumeroGuia,
-        "procesoMaritimoDestino": procesoMaritimoDestinoId,
+        // "procesoMaritimoDestino": procesoMaritimoDestinoId,
         "procesoMaritimoRealizadoPor": procesoMaritimoRealizadoPor,
         "procesoMaritimoAcompanamiento": procesoMaritimoAcompanamiento,
         "procesoMaritimoNombreHidratante": procesoMaritimoNombreHidratante,

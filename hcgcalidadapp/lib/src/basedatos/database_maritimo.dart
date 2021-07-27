@@ -19,8 +19,8 @@ class DatabaseProcesoMaritimo {
             node[DatabaseCreator.procesoMaritimoObservaciones],
         procesoMaritimoNumeroGuia:
             node[DatabaseCreator.procesoMaritimoNumeroGuia],
-        procesoMaritimoDestinoId:
-            node[DatabaseCreator.procesoMaritimoDestinoId],
+        // procesoMaritimoDestinoId:
+        //     node[DatabaseCreator.procesoMaritimoDestinoId],
         procesoMaritimoRealizadoPor:
             node[DatabaseCreator.procesoMaritimoRealizadoPor],
         procesoMaritimoAcompanamiento:
@@ -120,10 +120,12 @@ class DatabaseProcesoMaritimo {
     return data.isNotEmpty ? data.first['CANTIDAD'] : 0;
   }
 
+  //${DatabaseCreator.procesoMaritimoDestinoId}
+  //${procesoMaritimo.procesoMaritimoDestinoId},
   static Future<int> addProcesoMaritimo(ProcesoMaritimo procesoMaritimo) async {
     final sql = '''INSERT INTO ${DatabaseCreator.procesoMaritimoTable}
     (${DatabaseCreator.procesoMaritimoUsuarioControlId},${DatabaseCreator.procesoMaritimoObservaciones},${DatabaseCreator.procesoMaritimoNumeroGuia},
-    ${DatabaseCreator.procesoMaritimoDestinoId},${DatabaseCreator.procesoMaritimoRealizadoPor},${DatabaseCreator.procesomoMaritimoAcompanamiento},${DatabaseCreator.procesoMaritimoNombreHidratante},${DatabaseCreator.procesoMaritimoPhSoluciones},
+     ${DatabaseCreator.procesoMaritimoRealizadoPor},${DatabaseCreator.procesomoMaritimoAcompanamiento},${DatabaseCreator.procesoMaritimoNombreHidratante},${DatabaseCreator.procesoMaritimoPhSoluciones},
      ${DatabaseCreator.procesoMaritimoNivelSolucionTinas},${DatabaseCreator.procesoMaritimoSolucionHidratacionSinVegetal},${DatabaseCreator.procesoMaritimoTemperaturaCuartoFrio},${DatabaseCreator.procesoMaritimoTemperaturaSolucionesHidratacion},${DatabaseCreator.procesoMaritimoEmpaqueAmbienteTemperatura},
      ${DatabaseCreator.procesoMaritimoFlorEmpacada},${DatabaseCreator.procesoMaritimoTransportCareEmpaque},${DatabaseCreator.procesoMaritimoCajasVisualDeformes},${DatabaseCreator.procesoMaritimoEtiquetasCajasUbicadas},${DatabaseCreator.procesoMaritimoTemperaturaCubiculoCamion},
      ${DatabaseCreator.procesoMaritimoTemperaturaCajasTransferencia},${DatabaseCreator.procesoMaritimoAparenciaCajasTransferencia},${DatabaseCreator.procesoMaritimoEstibasDebidamenteSelladas},${DatabaseCreator.procesoMaritimoPalletsEsquinerosCorrectamenteAjustados},${DatabaseCreator.procesoMaritimoPalletsAlturaContenedor},
@@ -134,9 +136,10 @@ class DatabaseProcesoMaritimo {
      ${DatabaseCreator.procesoMaritimoObservacionesRequerimientosCriticos},
      ${DatabaseCreator.clienteId},${DatabaseCreator.clienteNombre},${DatabaseCreator.postcosechaId}
      )
+    
     VALUES
     (${procesoMaritimo.procesoMaritimoUsuarioControlId},'${procesoMaritimo.procesoMaritimoObservaciones}',${procesoMaritimo.procesoMaritimoNumeroGuia},
-    ${procesoMaritimo.procesoMaritimoDestinoId},'${procesoMaritimo.procesoMaritimoRealizadoPor}','${procesoMaritimo.procesoMaritimoAcompanamiento}',${procesoMaritimo.procesoMaritimoNombreHidratante},${procesoMaritimo.procesoMaritimoPhSoluciones},
+    '${procesoMaritimo.procesoMaritimoRealizadoPor}','${procesoMaritimo.procesoMaritimoAcompanamiento}',${procesoMaritimo.procesoMaritimoNombreHidratante},${procesoMaritimo.procesoMaritimoPhSoluciones},
      ${procesoMaritimo.procesoMaritimoNivelSolucionTinas},${procesoMaritimo.procesoMaritimoSolucionHidratacionSinVegetal},${procesoMaritimo.procesoMaritimoTemperaturaCuartoFrio},${procesoMaritimo.procesoMaritimoTemperaturaSolucionesHidratacion},${procesoMaritimo.procesoMaritimoEmpaqueAmbienteTemperatura},
      ${procesoMaritimo.procesoMaritimoFlorEmpacada},${procesoMaritimo.procesoMaritimoTransportCareEmpaque},${procesoMaritimo.procesoMaritimoCajasVisualDeformes},${procesoMaritimo.procesoMaritimoEtiquetasCajasUbicadas},${procesoMaritimo.procesoMaritimoTemperaturaCubiculoCamion},
      ${procesoMaritimo.procesoMaritimoTemperaturaCajasTransferencia},${procesoMaritimo.procesoMaritimoAparenciaCajasTransferencia},${procesoMaritimo.procesoMaritimoEstibasDebidamenteSelladas},${procesoMaritimo.procesoMaritimoPalletsEsquinerosCorrectamenteAjustados},${procesoMaritimo.procesoMaritimoPalletsAlturaContenedor},
