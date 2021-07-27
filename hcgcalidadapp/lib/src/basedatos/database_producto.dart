@@ -9,10 +9,10 @@ class DatabaseProducto {
     final sql =
         '''SELECT * FROM ${DatabaseCreator.productoTable} WHERE ${DatabaseCreator.elite} = $valor''';
     final data = await db.rawQuery(sql);
-    print(sql);
+    //print(sql);
     List<Producto> productos = List();
     for (final node in data) {
-      print(jsonEncode(node));
+      //print(jsonEncode(node));
       productos.add(new Producto(
           productoId: node[DatabaseCreator.productoId],
           productoNombre: node[DatabaseCreator.productoNombre]));

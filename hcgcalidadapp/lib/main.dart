@@ -34,7 +34,6 @@ import 'package:hcgcalidadapp/src/paginas/detalle_proceso_hidratacion_page.dart'
 import 'package:hcgcalidadapp/src/paginas/errores_page.dart';
 import 'package:hcgcalidadapp/src/paginas/falencias_ramos_page.dart';
 import 'package:hcgcalidadapp/src/paginas/firma_page.dart';
-//import 'package:hcgcalidadapp/src/paginas/home_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_page.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_firmas_page.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_reportes.dart';
@@ -66,6 +65,7 @@ void main() async {
     var url = Uri.http(co.url, '/api/Productos');
     print(url);
     final dataProductos = await http.get(url);
+    print(url);
     var productos = json.decode(dataProductos.body);
     for (int i = 0; i < productos.length; i++) {
       var producto = Producto(

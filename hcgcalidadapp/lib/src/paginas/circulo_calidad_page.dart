@@ -1,28 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
-
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/paginas/lista_ramos_page.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:hcgcalidadapp/src/basedatos/database_ramos.dart';
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
 
 // ignore: must_be_immutable
 class circuloCalidadPage extends StatefulWidget {
   bool valor;
   int ramosId;
-  //var supervisor1Check = ['Regular','Bueno','Excelente'];
 
   circuloCalidadPage() {
     this.valor = valor;
@@ -38,8 +35,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   var supervisor2Check = ['Regular', 'Bueno', 'Excelente'];
   Map<String, bool> supervisorListValues = {};
   Map<String, bool> supervisorListValues2 = {};
-  //final totalRamos = TextEditingController();
-  //final tallosRamos = TextEditingController();
   final ramosRechazados = TextEditingController();
   final ramosRevisados = TextEditingController();
   final derogacion = TextEditingController();
@@ -48,10 +43,10 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   final linea = TextEditingController();
   final supervisor1 = TextEditingController();
   final supervisor2 = TextEditingController();
+  final variedad1 = TextEditingController();
+  final variedad2 = TextEditingController();
   final comentarios = TextEditingController();
   final ordenModal = TextEditingController();
-  circuloCalidad circulo = new circuloCalidad();
-  String numeroOrden = '';
 
   GlobalKey<ListaBusquedaState> _keyProducto = GlobalKey();
   static List<AutoComplete> listaProducto = new List<AutoComplete>();
@@ -94,6 +89,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   String problema2Nombre = "";
   int problema2Id = 0;
   bool problema2Enable = false;
+
   GlobalKey<ListaBusquedaState> _keyProblema3 = GlobalKey();
   static List<AutoComplete> listaProblema3 = new List<AutoComplete>();
   String problema3Nombre = "";
@@ -104,119 +100,94 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   String problema4Nombre = "";
   int problema4Id = 0;
   bool problema4Enable = false;
+
   GlobalKey<ListaBusquedaState> _keyProblema5 = GlobalKey();
   static List<AutoComplete> listaProblema5 = new List<AutoComplete>();
   String problema5Nombre = "";
   int problema5Id = 0;
   bool problema5Enable = false;
 
-  /*GlobalKey<ListaBusquedaState> _keyTipoCliente = GlobalKey();
-  static List<AutoComplete> listaTipoCliente = new List<AutoComplete>();
-  String clienteTipo = "";
-  int clienteTipoID = 0;
-  bool clienteTipoEnable = false;*/
-
   bool elite = false;
   bool problemas = false;
   _circuloCalidadPageState() {
-    print("ingreso al circulad de calidad");
     elite = true;
     cargarRamos(1);
   }
 
   _guardarReporteCirculoCalidad() async {
-    circulo.ramosNumeroOrden = numeroOrden;
-    circulo.clienteId2 = int.parse(ramosRevisados.text);
-    circulo.clienteId1 = int.parse(ramosRechazados.text);
-    //circulo.productoId1= int.parse(source)
+    circuloCalidad circulo = new circuloCalidad();
     circulo.ramosRevisados = int.parse(ramosRevisados.text);
-    circulo.calidadReunion = 0;
-    circulo.problemaId2 = clienteId;
-    circulo.problemaId3 = productoId;
-
-    //ramos.ramosTallos = int.parse(tallosRamos.text);
-    circulo.ramosRechazados =
-        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
-    circulo.productoId1 = derogacion.text;
+    circulo.ramosRechazados = int.parse(ramosRevisados.text);
+    circulo.calidadReunion = int.parse(numeroReunionCirculoCalidad.text);
+    circulo.problemaId1 = problema1Id;
+    circulo.problemaId2 = problema2Id;
+    circulo.problemaId3 = problema3Id;
+    circulo.problemaId4 = problema4Id;
+    circulo.problemaId5 = problema5Id;
+    circulo.clienteId1 = clienteId;
+    circulo.clienteId2 = clienteId2;
+    circulo.productoId1 = productoId;
+    circulo.productoId2 = productoId2;
     circulo.postcosechaId = postcosechaId;
-    //ramos.ramosMarca = marca.text;
-    circulo.problemaId4 = 0;
+    circulo.codigoMesa = int.parse(codigoMesa.text);
+    circulo.linea = int.parse(linea.text);
+    circulo.supervisor1 = supervisor1.text;
+    circulo.supervisor2 = supervisor2.text;
+    circulo.supervisorcheck1 = "Bueno";
+    circulo.supervisorcheck2 = "Bueno";
+    circulo.comentarios = comentarios.text;
+    circulo.variedad1 = variedad1.text;
+    circulo.variedad2 = variedad2.text;
     if (circulo.circuloCalidadId != null) {
       await DatabaseCirculoCalidad.updateCirculoCalidad(circulo);
     } else {
-      circulo.productoId2 = DateTime.now().millisecondsSinceEpoch;
-      //circulo.circuloCalidadId await DatabaseCirculoCalidad.addcirculoCalidad(circulo);
+      await DatabaseCirculoCalidad.addcirculoCalidad(circulo);
     }
   }
 
-  // _showSnackBar() {
-  //   final snackBar = SnackBar(
-  //     content: Text(
-  //         'Número de orden debe ser escaneado \nTodos los números deben ser enteros'),
-  //     action: SnackBarAction(
-  //       label: 'Ok',
-  //       onPressed: () {},
-  //     ),
-  //   );
-  //   scaffoldKey.currentState.showSnackBar(snackBar);
-  // }
-
-  // cargarProblemas(int problemasId) async{
-  //   listaProblema1 = List<AutoComplete>();
-  //   listaProblema2 = List<AutoComplete>();
-  //   listaProblema3 = List<AutoComplete>();
-  //   listaProblema4 = List<AutoComplete>();
-  //   listaProblema5 = List<AutoComplete>();
-
-  //   int problema = 0;
-  //   if (problemas) {
-  //     problema = 1;
-  //   }
-
-  //   List<FalenciaRamos> problema1 = List();
-  //   problema1 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-  //   problema1.forEach((element) {
-  //     listaProblema1.add(
-  //         AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-  //   });
-  //    List<FalenciaRamos> problema2 = List();
-  //   problema2 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-  //   problema2.forEach((element) {
-  //     listaProblema2.add(
-  //         AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-  //   });
-  //   List<FalenciaRamos> problema3 = List();
-  //   problema3 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-  //   problema3.forEach((element) {
-  //     listaProblema3.add(
-  //         AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-  //   });
-  //   List<FalenciaRamos> problema4 = List();
-  //   problema4 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-  //   problema4.forEach((element) {
-  //     listaProblema4.add(
-  //         AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-  //   });
-  //   List<FalenciaRamos> problema5 = List();
-  //   problema5 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-  //   problema5.forEach((element) {
-  //     listaProblema5.add(
-  //         AutoComplete(id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-  //   });
-
-  //   setState(() {
-  //     print("ingreso ");
-  //     problema1Enable = true;
-  //     problema2Enable =true;
-  //     problema3Enable =true;
-  //     problema4Enable =true;
-  //     problema5Enable =true;
-
-  //   });
-  // }
+  bool _validarCirculoCalidad() {
+    if (ramosRechazados.text == '' ||
+        ramosRevisados.text == '' ||
+        variedad1.text == '' ||
+        variedad2.text == '' ||
+        numeroReunionCirculoCalidad.text == '' ||
+        codigoMesa.text == '' ||
+        linea.text == '' ||
+        supervisor1.text == '' ||
+        supervisor2.text == '' ||
+        comentarios.text == '' ||
+        postcosechaId == 0 ||
+        clienteId == 0 ||
+        clienteId2 == 0 ||
+        productoId == 0 ||
+        productoId2 == 0 ||
+        problema1Id == 0) {
+      mostrarSnackbar(
+          'Llenar el formulario Circulo Calidad', null, scaffoldKey);
+      return false;
+    }
+    final util = Utilidades();
+    if (!util.isNumberEntero(ramosRechazados.text)) {
+      mostrarSnackbar(
+          'Error: Ramos rechazados no es un numero entero', null, scaffoldKey);
+      return false;
+    }
+    if (!util.isNumberEntero(ramosRevisados.text)) {
+      mostrarSnackbar(
+          'Error: Ramos revisados no es un numero entero', null, scaffoldKey);
+      return false;
+    }
+    if (int.parse(ramosRechazados.text) > int.parse(ramosRevisados.text)) {
+      mostrarSnackbar(
+          'Error: Informe incorrecto ramos rechazados superior a ramos revisados',
+          null,
+          scaffoldKey);
+      return false;
+    }
+    return true;
+  }
 
   cargarRamos(int ramosId) async {
-    print("ingreso a cargar la informacion");
     listaProducto = List<AutoComplete>();
     listaProducto2 = List<AutoComplete>();
     listaCliente = List<AutoComplete>();
@@ -238,46 +209,21 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     problema1.forEach((element) {
       listaProblema1.add(AutoComplete(
           id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-    });
-    List<FalenciaRamos> problema2 = List();
-    problema2 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-    problema2.forEach((element) {
       listaProblema2.add(AutoComplete(
           id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-    });
-    List<FalenciaRamos> problema3 = List();
-    problema3 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-    problema3.forEach((element) {
       listaProblema3.add(AutoComplete(
           id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-    });
-    List<FalenciaRamos> problema4 = List();
-    problema4 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-    problema4.forEach((element) {
       listaProblema4.add(AutoComplete(
           id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
-    });
-    List<FalenciaRamos> problema5 = List();
-    problema5 = await DatabaseFalenciaRamos.getAllFalenciaRamos();
-    problema5.forEach((element) {
       listaProblema5.add(AutoComplete(
           id: element.falenciaRamosId, nombre: element.falenciaRamosNombre));
     });
 
-    ///
-    print("va a cargar");
     List<Producto> productos = List<Producto>();
     productos = await DatabaseProducto.getAllProductos(valor);
-    print("cantidad de productos: " + productos.length.toString());
     productos.forEach((element) {
       listaProducto.add(
           AutoComplete(id: element.productoId, nombre: element.productoNombre));
-    });
-
-    List<Producto> productos2 = List<Producto>();
-    productos2 = await DatabaseProducto.getAllProductos(valor);
-    print("cantidad de productos: " + productos2.length.toString());
-    productos2.forEach((element) {
       listaProducto2.add(
           AutoComplete(id: element.productoId, nombre: element.productoNombre));
     });
@@ -287,16 +233,9 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     clientes.forEach((element) {
       listaCliente.add(
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
-    });
-    List<Cliente> clientes2 = List();
-    clientes2 = await DatabaseCliente.getAllCliente(valor);
-    clientes2.forEach((element) {
       listaCliente2.add(
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
-    ////////////PROBLEMAS
-
-    //////
 
     List<PostCosecha> postcosechas = List();
     postcosechas = await DatabasePostcosecha.getAllPostcosecha(valor);
@@ -304,10 +243,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
       listaPostcosecha.add(AutoComplete(
           id: element.postCosechaId, nombre: element.postCosechaNombre));
     });
-    print("postcosecha cargada: " + listaPostcosecha.length.toString());
 
     setState(() {
-      print("ingreso ");
       prodEnable = true;
       prodEnable2 = true;
       clientEnable = true;
@@ -337,8 +274,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    // _tipoCliente(),
-                    // _numeroOrden(),
                     _postcosecha(),
                     _cantidadRamosRevisados(),
                     _cantidadRamosRechazados(),
@@ -352,18 +287,12 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                     _cliente2(),
                     _producto1(),
                     _producto2(),
-
-                    //problema2
-
-                    //_cantidadRamos(), //ramos revisados
-                    //_cantidadTallos(),
                     _codigoMesa(),
                     _linea(),
+                    _variedad1(),
+                    _variedad2(),
                     _supervisor1(),
-                    //_superVisor1Check(),
                     _supervisor2(),
-                    // _derogacion(),
-
                     Divider(),
                     Column(children: [
                       Text('Evaluacion supervisor#1',
@@ -378,7 +307,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                     Column(children: _superVisor2Check()),
                     _comentarios(),
                     _botonGuardar(context),
-
                     SizedBox(
                       height: 20,
                     )
@@ -392,106 +320,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
           )),
     );
   }
-
-  /* Widget _tipoCliente() {
-    return Container(
-      width: 250,
-      height: 90,
-      child: clientEnable
-          ? ListaBusqueda(
-              key: _keyCliente,
-              lista: listaTipoCliente,
-              hintText: "Cliente",
-              valorDefecto: clienteTipo,
-              hintSearchText: "Seleccione el tipo del cliente",
-              icon: Icon(Icons.supervised_user_circle),
-              width: 200.0,
-              style: TextStyle(fontSize: 15),
-              parentAction: (value) {
-                AutoComplete clienteTipo = listaCliente.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                clienteId = clienteTipo.id;
-              },
-            )
-          : Container(
-              child: CircularProgressIndicator(),
-            ),
-    );
-  }*/
-
-  /*Widget _numeroOrden() {
-    return Container(
-      height: 100,
-      width: 200,
-      alignment: Alignment.center,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: numeroOrden == ''
-                ? RaisedButton(
-                    onPressed: () {
-                      _bottomSheetOrden(context);
-                    },
-                    color: Colors.red,
-                    child: Text('Ingresar Orden'),
-                    textColor: Colors.white,
-                    shape: StadiumBorder(),
-                  )
-                : Container(
-                    child: Text(
-                      numeroOrden == null ? "" : numeroOrden,
-                      textScaleFactor: 1,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-          ),
-          numeroOrden == ''
-              ? SizedBox()
-              : RaisedButton(
-                  shape: CircleBorder(),
-                  color: Colors.red,
-                  child: Icon(
-                    Icons.create,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    _bottomSheetOrden(context);
-                  })
-        ],
-      ),
-    );
-  }*/
-
-  // Widget _cantidadRamos() {
-  //   return Container(
-  //     width: 200,
-  //     height: 90,
-  //     child: TextField(
-  //       keyboardType: TextInputType.number,
-  //       decoration: InputDecoration(
-  //           hintText: 'Ramos revisados', labelText: 'Ramos Revisados'),
-  //       controller: totalRamos,
-  //     ),
-  //   );
-  // }
-
-  // Widget _cantidadTallos() {
-  //   return Container(
-  //     width: 200,
-  //     height: 90,
-  //     child: TextField(
-  //       keyboardType: TextInputType.number,
-  //       decoration: InputDecoration(
-  //           hintText: 'Tallos por ramo', labelText: 'Tallos por ramo'),
-  //       controller: tallosRamos,
-  //     ),
-  //   );
-  // }
 
   Widget _cantidadRamosRechazados() {
     return Container(
@@ -523,51 +351,12 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     );
   }
 
-  // Widget _derogacion() {
-  //   return Container(
-  //     width: 200,
-  //     height: 90,
-  //     child: TextField(
-  //       keyboardType: TextInputType.text,
-  //       decoration: InputDecoration(
-  //         hintText: 'Derogacion',
-  //         labelText: 'Derogacion',
-  //       ),
-  //       controller: derogacion,
-  //     ),
-  //   );
-  // }
-
   _botonGuardar(BuildContext context) {
     return Container(
       child: RaisedButton(
         onPressed: () async {
-          //if (_validarRamos() ) {
-          //&&_validarTallos
-          final util = Utilidades();
-          if ( //numeroOrden != '' &&
-              //util.isNumberEntero(totalRamos.text) &&
-              //util.isNumberEntero(tallosRamos.text) &&
-              //derogacion.text != '' &&
-              util.isNumberEntero(ramosRechazados.text) &&
-                  util.isNumberEntero(ramosRevisados.text) &&
-                  clienteId != 0 &&
-                  clienteId2 != 0 &&
-                  productoId != 0 &&
-                  productoId2 != 0 &&
-                  problema1Id != 0 &&
-                  problema2Id != 0 &&
-                  problema3Id != 0 &&
-                  problema4Id != 0 &&
-                  problema5Id != 0 &&
-                  numeroReunionCirculoCalidad.text != '' &&
-                  codigoMesa.text != '' &&
-                  linea.text != '' &&
-                  supervisor1.text != '' &&
-                  supervisor2.text != '' &&
-                  comentarios.text != '' &&
-                  postcosechaId != 0) {
-            await _guardarReporteCirculoCalidad()();
+          if (_validarCirculoCalidad()) {
+            await _guardarReporteCirculoCalidad();
             Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -610,7 +399,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete problema1 = listaProblema1.firstWhere((item) {
                   return item.nombre == value;
                 });
-                productoId = problema1.id;
+                problema1Id = problema1.id;
               },
             )
           : Container(
@@ -639,7 +428,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete problema2 = listaProblema2.firstWhere((item) {
                   return item.nombre == value;
                 });
-                productoId = problema2.id;
+                problema2Id = problema2.id;
               },
             )
           : Container(
@@ -668,7 +457,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete problema3 = listaProblema3.firstWhere((item) {
                   return item.nombre == value;
                 });
-                productoId = problema3.id;
+                problema3Id = problema3.id;
               },
             )
           : Container(
@@ -697,7 +486,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete problema4 = listaProblema4.firstWhere((item) {
                   return item.nombre == value;
                 });
-                productoId = problema4.id;
+                problema4Id = problema4.id;
               },
             )
           : Container(
@@ -726,7 +515,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete problema5 = listaProblema5.firstWhere((item) {
                   return item.nombre == value;
                 });
-                productoId = problema5.id;
+                problema5Id = problema5.id;
               },
             )
           : Container(
@@ -784,7 +573,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete producto2 = listaProducto.firstWhere((item) {
                   return item.nombre == value;
                 });
-                productoId = producto2.id;
+                productoId2 = producto2.id;
               },
             )
           : Container(
@@ -838,7 +627,7 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
                 AutoComplete cliente2 = listaCliente.firstWhere((item) {
                   return item.nombre == value;
                 });
-                clienteId = cliente2.id;
+                clienteId2 = cliente2.id;
               },
             )
           : Container(
@@ -937,6 +726,36 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     );
   }
 
+  Widget _variedad1() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Variedad1',
+          labelText: 'Variedad1',
+        ),
+        controller: variedad1,
+      ),
+    );
+  }
+
+  Widget _variedad2() {
+    return Container(
+      width: 200,
+      height: 90,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Variedad2',
+          labelText: 'Variedad2',
+        ),
+        controller: variedad2,
+      ),
+    );
+  }
+
   Widget _supervisor2() {
     return Container(
       width: 200,
@@ -965,24 +784,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
         controller: comentarios,
       ),
     );
-  }
-
-  bool _validarRamos() {
-    if (ramosRechazados.text == '' || ramosRevisados.text == '') {
-      //totalRamos.text == ''
-      mostrarSnackbar('Llenar Ramos', null, scaffoldKey);
-      return false;
-    }
-    if (int.parse(ramosRechazados.text) < int.parse(ramosRevisados.text)) {
-      mostrarSnackbar('Error en Ramos Elaborados', null, scaffoldKey);
-      return false;
-    }
-    if (int.parse(ramosRevisados.text) < int.parse(ramosRevisados.text)) {
-      mostrarSnackbar('Error en Ramos a revisar', null, scaffoldKey);
-      return false;
-    }
-
-    return true;
   }
 
   List<Widget> _superVisor2Check() {
@@ -1020,78 +821,4 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
             }))
         .toList());
   }
-
-  // bool _validarTallos() {
-  //   if (tallosRamos.text == '') {
-  //     mostrarSnackbar('Llenar los tallos por ramo', null, scaffoldKey);
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
-  // _bottomSheetOrden(context) {
-  //   showModalBottomSheet(
-  //       context: context,
-  //       builder: (BuildContext bc) {
-  //         return Container(
-  //           child: Wrap(
-  //             children: <Widget>[
-  //               ListTile(
-  //                 leading: Icon(
-  //                   Icons.camera_alt,
-  //                   color: Colors.red,
-  //                 ),
-  //                 title: Text('Codigo QR'),
-  //                 onTap: () async {
-  //                   Navigator.maybePop(context);
-  //                   try {
-  //                     numeroOrden = await scanner.scan();
-  //                   } catch (e) {
-  //                     numeroOrden = "";
-  //                   }
-
-  //                   setState(() {});
-  //                 },
-  //               ),
-  //               ListTile(
-  //                 leading: Icon(
-  //                   Icons.font_download,
-  //                   color: Colors.red,
-  //                 ),
-  //                 title: Text('Ingresar Orden'),
-  //                 onTap: () async {
-  //                   await showDialog(
-  //                       context: context,
-  //                       builder: (_) => new AlertDialog(
-  //                             title: Text("Ingresa el número de orden"),
-  //                             content: TextField(
-  //                               controller: ordenModal,
-  //                               decoration:
-  //                                   InputDecoration(hintText: '# de Orden'),
-  //                             ),
-  //                             actions: <Widget>[
-  //                               FlatButton(
-  //                                 child: Text('Guardar'),
-  //                                 onPressed: () {
-  //                                   numeroOrden = ordenModal.text;
-  //                                   setState(() {});
-  //                                   Navigator.of(context).pop();
-  //                                 },
-  //                               ),
-  //                               FlatButton(
-  //                                 child: Text('Cancelar'),
-  //                                 onPressed: () {
-  //                                   Navigator.pop(context);
-  //                                 },
-  //                               )
-  //                             ],
-  //                           ));
-  //                   Navigator.pop(context);
-  //                 },
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
 }

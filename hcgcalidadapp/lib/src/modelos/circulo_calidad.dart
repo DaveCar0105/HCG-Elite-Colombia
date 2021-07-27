@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/rendering.dart';
+
 circuloCalidad ramosFromJson(String str) =>
     circuloCalidad.fromJson(json.decode(str));
 
@@ -8,7 +10,6 @@ String ramosToJson(circuloCalidad data) => json.encode(data.toJson());
 class circuloCalidad {
   circuloCalidad({
     this.circuloCalidadId,
-    //this.ramosNumeroOrden,
     this.ramosRevisados,
     this.ramosRechazados,
     this.calidadReunion,
@@ -34,9 +35,8 @@ class circuloCalidad {
   });
 
   int circuloCalidadId = 0;
-  String ramosNumeroOrden;
   int ramosRevisados;
-  String ramosRechazados;
+  int ramosRechazados;
   int calidadReunion;
   int problemaId1;
   int problemaId2;
@@ -45,9 +45,9 @@ class circuloCalidad {
   int problemaId5;
   int clienteId1;
   int clienteId2;
-  String productoId1;
+  int productoId1;
   int productoId2;
-  int variedad1;
+  String variedad1;
   int postcosechaId;
   String variedad2;
   int codigoMesa;
@@ -60,7 +60,6 @@ class circuloCalidad {
 
   factory circuloCalidad.fromJson(Map<String, dynamic> json) => circuloCalidad(
       circuloCalidadId: json["controlRamosId"],
-      // ramosNumeroOrden: json["ramosNumeroOrden"],
       ramosRevisados: json["ramosRevisados"],
       ramosRechazados: json["ramosRechazados"],
       calidadReunion: json["calidadReunion"],
@@ -85,7 +84,6 @@ class circuloCalidad {
       comentarios: json["comentarios"]);
   Map<String, dynamic> toJson() => {
         "circuloCalidadId": circuloCalidadId,
-        //"ramosNumeroOrden": ramosNumeroOrden,
         "ramosRevisados": ramosRevisados,
         "ramosRechazados": ramosRechazados,
         "calidadReunion": calidadReunion,
