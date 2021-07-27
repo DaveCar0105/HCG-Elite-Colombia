@@ -1529,6 +1529,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     if (procesoMaritimoNombreHidratanteValue >= 0 &&
         procesoMaritimoPhSolucionesvalue >= 0 &&
         procesoMaritimoNivelSolucionTinasValue >= 0 &&
+        destinosId >= 0 &&
         procesoMaritimoSolucionHidratacionSinVegetalValue >= 0 &&
         procesoMaritimoTemperaturaCuartoFrioValue >= 0 &&
         procesoMaritimoTemperaturaSolucionesHidratacionValue >= 0 &&
@@ -1573,7 +1574,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
           procesoMaritimoUsuarioControlId: 1,
           procesoMaritimoNumeroGuia:
               int.parse(procesoMaritimoNumeroGuiaValue.text),
-          //poner destino
+          procesoMaritimoDestinoId: destinosId,
           procesoMaritimoRealizadoPor: procesoMaritimoRealizadoPorValue.text,
           procesoMaritimoAcompanamiento:
               procesoMaritimoAcompanamientoValue.text,
@@ -1649,7 +1650,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
           procesoMaritimoObservacionesRequerimientosCriticos:
               procesoMaritimoObservacionesRequerimientosCriticosValue.text,
           procesoMaritimoFecha: DateTime.now(),
-          postcosechaId: postcosechaId);
+          postcosechaId: postcosechaId,
+          clienteId: clientesId);
       int procesoMaritimoId =
           await DatabaseProcesoMaritimo.addProcesoMaritimo(procesoMaritimo);
       if (procesoMaritimoId != 0) {

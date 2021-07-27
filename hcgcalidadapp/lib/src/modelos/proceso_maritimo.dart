@@ -10,10 +10,8 @@ class ProcesoMaritimo {
   ProcesoMaritimo({
     this.procesoMaritimoId,
     this.procesoMaritimoUsuarioControlId,
-    this.procesoMaritimoObservaciones,
-    //this.procesoMaritimoEstadoSoluciones,
     this.procesoMaritimoNumeroGuia,
-    //this.procesoMaritimoDestinoId,
+    this.procesoMaritimoDestinoId,
     this.procesoMaritimoRealizadoPor,
     this.procesoMaritimoAcompanamiento,
     this.procesoMaritimoNombreHidratante,
@@ -63,10 +61,8 @@ class ProcesoMaritimo {
 
   int procesoMaritimoId;
   int procesoMaritimoUsuarioControlId;
-  String procesoMaritimoObservaciones;
-  // int procesoMaritimoEstadoSoluciones;
   int procesoMaritimoNumeroGuia;
-  //int procesoMaritimoDestinoId;
+  int procesoMaritimoDestinoId;
   String procesoMaritimoRealizadoPor;
   String procesoMaritimoAcompanamiento;
   int procesoMaritimoNombreHidratante;
@@ -122,12 +118,11 @@ class ProcesoMaritimo {
         postcosechaId: json["postcosechaId"],
         postcosechaNombre: json["postcosechaNombre"],
         clienteId: json["clienteId"],
-        clienteNombre: json["clienteNombre"],
         procesoMaritimoUsuarioControlId:
             json["procesoMaritimoUsuarioControlId"],
         //procesoMaritimoEstadoSoluciones: json["procesoHidratacionEstadoSoluciones"],
         procesoMaritimoNumeroGuia: json["procesoMaritimoNumeroGuia"],
-        //procesoMaritimoDestinoId: json["procesoMaritimoDestino"],
+        procesoMaritimoDestinoId: json["procesoMaritimoDestinoId"],
         procesoMaritimoRealizadoPor:
             json["procesoMaritimoRealizadoPor"].toString(),
         procesoMaritimoAcompanamiento:
@@ -214,7 +209,7 @@ class ProcesoMaritimo {
         "procesoMaritimoId": procesoMaritimoId,
         "procesoMaritimoUsuarioControlId": procesoMaritimoUsuarioControlId,
         "procesoMaritimoNumeroGuia": procesoMaritimoNumeroGuia,
-        // "procesoMaritimoDestino": procesoMaritimoDestinoId,
+        "procesoMaritimoDestinoId": procesoMaritimoDestinoId,
         "procesoMaritimoRealizadoPor": procesoMaritimoRealizadoPor,
         "procesoMaritimoAcompanamiento": procesoMaritimoAcompanamiento,
         "procesoMaritimoNombreHidratante": procesoMaritimoNombreHidratante,
@@ -288,7 +283,6 @@ class ProcesoMaritimo {
         "procesoMaritimoObservacionesRequerimientosCriticos":
             procesoMaritimoObservacionesRequerimientosCriticos,
         "clienteId": clienteId,
-        "ClienteNombre": clienteNombre,
         "postcosechaId": postcosechaId,
         "postcosechaNombre": postcosechaNombre,
         "procesoMaritimoFecha": procesoMaritimoFecha.toIso8601String(),

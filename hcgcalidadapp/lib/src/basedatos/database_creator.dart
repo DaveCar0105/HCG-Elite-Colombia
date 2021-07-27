@@ -857,7 +857,6 @@ class DatabaseCreator {
       (
         $procesoMaritimoId INTEGER PRIMARY KEY,
         $procesoMaritimoUsuarioControlId INTEGER,
-        $procesoMaritimoObservaciones TEXT,
         $procesoMaritimoNumeroGuia INTEGER,
         $procesoMaritimoDestinoId TEXT,
         $procesoMaritimoRealizadoPor TEXT,
@@ -904,7 +903,6 @@ class DatabaseCreator {
 
         $procesoMaritimoFecha DATE,
         $clienteId INTEGER,
-        $clienteNombre TEXT,
         $postcosechaId INTEGER
       )''';
 
