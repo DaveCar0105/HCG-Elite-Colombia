@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/modelos/ramo.dart';
-import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 
 class DatabaseCirculoCalidad {
   static Future<List<circuloCalidad>> getAllcirculoCalidad() async {
@@ -16,6 +14,7 @@ class DatabaseCirculoCalidad {
           circuloCalidadId: node[DatabaseCreator.procesoCirculoCalidadId],
           ramosRevisados:
               node[DatabaseCreator.procesoCirculoCalidadRamosRevisados],
+          postcosechaId: node[DatabaseCreator.postcosechaId],
           ramosRechazados:
               node[DatabaseCreator.procesoCirculoCalidadRamosRechazados],
           calidadReunion: node[DatabaseCreator.procesoCirculoCalidadReunion],

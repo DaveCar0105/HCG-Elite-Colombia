@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/rendering.dart';
-
 circuloCalidad ramosFromJson(String str) =>
     circuloCalidad.fromJson(json.decode(str));
 
