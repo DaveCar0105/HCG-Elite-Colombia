@@ -46,6 +46,8 @@ namespace HCGCALIDADSERVICES.Models
         public int ProcesoMaritimoPalletIdentificadoEtiqueta { get; set; }
         public int ProcesoMaritimoComponentePalletDestinosEtiquetas { get; set; }
         public int ProcesoMaritimoCamionSelloSeguridadContenedor { get; set; }
+        public int ProcesoMaritimoVerificacionEncendidoTermografo { get; set; }
+        public int ProcesoMaritimoFotografiaPalletsEmpresaContenor { get; set; }
         public DateTime? ProcesoMaritimoFecha { get; set; }
         public int ClienteId { get; set; }
         public int PostcosechaId { get; set; }

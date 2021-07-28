@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_empaque.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
-import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/empaque.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
@@ -55,10 +53,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
   bool clientTipoEnable = false;
 
   GlobalKey<ListaBusquedaState> _keyCliente = GlobalKey();
-  static List<AutoComplete> listaCliente = new List<AutoComplete>();
-  String clienteNombre = "";
   int clienteId = 0;
-  bool clientEnable = false;
 
   GlobalKey<ListaBusquedaState> _keyPostcosecha = GlobalKey();
   static List<AutoComplete> listaPostcosecha = new List<AutoComplete>();
@@ -112,7 +107,6 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
   cargarEmpaque(int empaqueId) async {
     listaProducto = List<AutoComplete>();
     listaPostcosecha = List<AutoComplete>();
-    listaCliente = List<AutoComplete>();
     listaTipoCliente = List<AutoComplete>();
 
     int valor = 0;
@@ -125,13 +119,6 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
     productos.forEach((element) {
       listaProducto.add(
           AutoComplete(id: element.productoId, nombre: element.productoNombre));
-    });
-
-    List<Cliente> clientes = List();
-    clientes = await DatabaseCliente.getAllCliente(valor);
-    clientes.forEach((element) {
-      listaCliente.add(
-          AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
 
     List<TipoCliente> tipoClientes = List();
@@ -150,7 +137,6 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
     });
     setState(() {
       prodEnable = true;
-      clientEnable = true;
       postcosechaEnable = true;
       clientTipoEnable = true;
     });
@@ -407,30 +393,32 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
   }
 
   Widget _cliente() {
+    final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
       width: 250,
       height: 90,
-      child: clientEnable
-          ? ListaBusqueda(
+      child: _listBus(listaClienteProvider)
+    );
+  }
+
+  Widget _listBus(listaClienteProvider) {
+    return ListaBusqueda(
               key: _keyCliente,
-              lista: listaCliente,
-              hintText: "Cliente",
-              valorDefecto: clienteNombre,
+              lista: listaClienteProvider.listaClientess,
+              hintText: listaClienteProvider.nombreCliente,
+              valorDefecto: listaClienteProvider.clienteNombre,
               hintSearchText: "Escriba el nombre del cliente",
               icon: Icon(Icons.supervised_user_circle),
               width: 200.0,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                AutoComplete cliente = listaCliente.firstWhere((item) {
+                AutoComplete cliente =
+                    listaClienteProvider.listaClientess.firstWhere((item) {
                   return item.nombre == value;
                 });
                 clienteId = cliente.id;
               },
-            )
-          : Container(
-              child: CircularProgressIndicator(),
-            ),
-    );
+            );
   }
 
   Widget _tipoCliente() {
@@ -453,6 +441,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
                   return item.nombre == value;
                 });
                 listaClienteProvider.listaClientes = tipoCliente.id;
+                listaClienteProvider.clienteNombre = tipoCliente.nombre;
               },
             )
           : Container(

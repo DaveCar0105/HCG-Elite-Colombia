@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_banda.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
-import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
-import 'package:hcgcalidadapp/src/paginas/lista_ramos_page.dart';
 import 'package:hcgcalidadapp/src/paginas/problemas_banda_page.dart';
 import 'package:hcgcalidadapp/src/providers/TipoClienteProvider.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 import 'package:provider/provider.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:hcgcalidadapp/src/basedatos/database_ramos.dart';
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
 
 // ignore: must_be_immutable
@@ -52,10 +48,7 @@ class _BandaPageState extends State<BandaPage> {
   bool prodEnable = false;
 
   GlobalKey<ListaBusquedaState> _keyCliente = GlobalKey();
-  static List<AutoComplete> listaCliente = [];
-  String clienteNombre = "";
   int clienteId = 0;
-  bool clientEnable = false;
 
   GlobalKey<ListaBusquedaState> _keyTipoCliente = GlobalKey();
   static List<AutoComplete> listaTipoCliente = new List<AutoComplete>();
@@ -122,7 +115,6 @@ class _BandaPageState extends State<BandaPage> {
 
   cargarRamos(int ramosId) async {
     listaProducto = [];
-    listaCliente = [];
     listaPostcosecha = [];
     listaTipos = [];
     listaTipoCliente = [];
@@ -135,13 +127,6 @@ class _BandaPageState extends State<BandaPage> {
     productos.forEach((element) {
       listaProducto.add(
           AutoComplete(id: element.productoId, nombre: element.productoNombre));
-    });
-
-    List<Cliente> clientes = [];
-    clientes = await DatabaseCliente.getAllCliente(valor);
-    clientes.forEach((element) {
-      listaCliente.add(
-          AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
 
     List<TipoCliente> tipoClientes = List();
@@ -167,7 +152,6 @@ class _BandaPageState extends State<BandaPage> {
 
     setState(() {
       prodEnable = true;
-      clientEnable = true;
       postcosechaEnable = true;
       tipoEnable = true;
       clientTipoEnable = true;
@@ -438,30 +422,32 @@ class _BandaPageState extends State<BandaPage> {
   }
 
   Widget _cliente() {
+    final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
       width: 250,
       height: 90,
-      child: clientEnable
-          ? ListaBusqueda(
+      child: _listBus(listaClienteProvider)
+    );
+  }
+
+  Widget _listBus(listaClienteProvider) {
+    return ListaBusqueda(
               key: _keyCliente,
-              lista: listaCliente,
-              hintText: "Cliente",
-              valorDefecto: clienteNombre,
+              lista: listaClienteProvider.listaClientess,
+              hintText: listaClienteProvider.nombreCliente,
+              valorDefecto: listaClienteProvider.clienteNombre,
               hintSearchText: "Escriba el nombre del cliente",
               icon: Icon(Icons.supervised_user_circle),
               width: 200.0,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                AutoComplete cliente = listaCliente.firstWhere((item) {
+                AutoComplete cliente =
+                    listaClienteProvider.listaClientess.firstWhere((item) {
                   return item.nombre == value;
                 });
                 clienteId = cliente.id;
               },
-            )
-          : Container(
-              child: CircularProgressIndicator(),
-            ),
-    );
+            );
   }
 
   Widget _tipoCliente() {
@@ -484,6 +470,7 @@ class _BandaPageState extends State<BandaPage> {
                   return item.nombre == value;
                 });
                 listaClienteProvider.listaClientes = tipoCliente.id;
+                listaClienteProvider.clienteNombre = tipoCliente.nombre;
               },
             )
           : Container(

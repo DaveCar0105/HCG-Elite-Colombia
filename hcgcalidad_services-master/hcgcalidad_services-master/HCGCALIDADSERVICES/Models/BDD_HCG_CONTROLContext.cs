@@ -1685,6 +1685,14 @@ namespace HCGCALIDADSERVICES.Models
                     .HasColumnName("PROCESO_MARITIMO_CAMION_SELLO_SEGURIDAD_CONTENEDOR")
                     .IsUnicode(false);
 
+                entity.Property(e => e.ProcesoMaritimoVerificacionEncendidoTermografo)
+                    .HasColumnName("PROCESO_MARITIMO_VERIFICACION_ENCENDIDO_TERMOGRAFO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoFotografiaPalletsEmpresaContenor)
+                    .HasColumnName("PROCESO_MARITIMO_FOTOGRAFIA_PALLETS_EMPRESA_CONTENEDOR")
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ProcesoMaritimoFecha)
                     .HasColumnName("PROCESO_MARITIMO_FECHA")
                     .HasColumnType("datetime");

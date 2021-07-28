@@ -34,23 +34,7 @@ class ListaBusquedaState extends State<ListaBusqueda>{
 
     setState(() {
       lista = widget.lista;
-
-      for(var item in lista){
-        String value = item.nombre;
-        items.add(new DropdownMenuItem(
-            child: new Text(
-              item.nombre,
-              style: widget.style,
-              overflow: TextOverflow.clip,
-              maxLines: 1,
-              softWrap: true,
-            ),
-            value: value
-        ));
-
-        selectedValue = widget.valorDefecto;
-
-      }
+      selectedValue = widget.valorDefecto;
     });
     super.initState();
 
@@ -59,6 +43,7 @@ class ListaBusquedaState extends State<ListaBusqueda>{
 
   @override
   Widget build(BuildContext context) {
+    print("valor preselected "+widget.valorDefecto);
     return Row(
       children: <Widget>[
         Container(
@@ -68,8 +53,18 @@ class ListaBusquedaState extends State<ListaBusqueda>{
         Container(
           width: widget.width,
           child: SearchableDropdown(
-            items: items,
-            value: selectedValue,
+            items: lista.map((e) {
+              return DropdownMenuItem(
+                child: new Text(
+                  e.nombre,
+              style: widget.style,
+              overflow: TextOverflow.clip,
+              maxLines: 1,
+              softWrap: true,),
+                value: e.nombre,
+              );
+            }).toList(),
+            value: widget.valorDefecto,
             isExpanded: true,
             hint: new Text(
               widget.hintText,

@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
-import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 
-class TipoClienteProvide with ChangeNotifier {
-  List<AutoComplete> _listaClientes = new List<AutoComplete>();
+class TipoClienteProvide extends ChangeNotifier {
+  List<AutoComplete> _listaClientes = [];
   List<Cliente> _clientes = new List<Cliente>();
+  String _nombreCliente = "";
+  String _clienteNombre = "";
 
   TipoClienteProvide() {
     _listaClientes = List<AutoComplete>();
@@ -18,24 +18,35 @@ class TipoClienteProvide with ChangeNotifier {
   }
 
   cargar() async {
-    List<Cliente> clientes = List();
-    clientes = await DatabaseCliente.getAllCliente(1);
-    clientes.forEach((element) {
-      _clientes.add(element);
+    _clientes = await DatabaseCliente.getAllCliente(1);
+    _clientes.forEach((element) {
       _listaClientes.add(
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
+    _nombreCliente= "Cliente";
+    _clienteNombre = "";
   }
 
-  get listaClientes {
+  List<AutoComplete>  get listaClientess {
     return _listaClientes;
   }
 
+  get nombreCliente  {
+    return _nombreCliente ;
+  }
+
+  get clienteNombre  {
+    return _clienteNombre;
+  }
+
+  set clienteNombre(String valor){
+    _clienteNombre = "";
+    _nombreCliente = "Cliente " + valor;
+    notifyListeners();
+  }
+
   set listaClientes(int valor) {
-    print("Cantidad: " + jsonEncode(_clientes[0]));
-    print("CantidadB: " + this._listaClientes.length.toString());
     this._listaClientes.clear();
-    print("Cantidad: " + this._listaClientes.length.toString());
     List<Cliente> clientes = this
         ._clientes
         .where((element) => element.tipoClienteId == valor)
@@ -44,7 +55,6 @@ class TipoClienteProvide with ChangeNotifier {
       _listaClientes.add(
           AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
-    print("Cantidad2: " + this._listaClientes.length.toString());
     notifyListeners();
   }
 }
