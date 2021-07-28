@@ -14,7 +14,6 @@ class LoginServices{
       var url = Uri.http(co.url, '/api/Usuarios/$user/$password');
       final respuesta = await http.get(url,headers: header);
       var jsonResponse = json.decode(respuesta.body);
-      print(jsonResponse);
       return int.parse(jsonResponse.toString());
     }catch(ex){
       return 0;

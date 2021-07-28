@@ -18,30 +18,17 @@ import 'package:hcgcalidadapp/src/modelos/falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/firma.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/problema_ecommerce.dart';
-import 'package:hcgcalidadapp/src/modelos/procesoEmpaque.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
-import 'package:hcgcalidadapp/src/paginas/actividades_page.dart';
-import 'package:hcgcalidadapp/src/paginas/alistamiento_page.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
-import 'package:hcgcalidadapp/src/paginas/banda_page.dart';
-import 'package:hcgcalidadapp/src/paginas/boncheo_page.dart';
-import 'package:hcgcalidadapp/src/paginas/circulo_calidad_page.dart';
-import 'package:hcgcalidadapp/src/paginas/ecommerce_page.dart';
-import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
-import 'package:hcgcalidadapp/src/paginas/empaque_elite_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_checks_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_formularios_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_registros_page.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_empaque_page.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_hidratacion_page.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
-import 'package:hcgcalidadapp/src/paginas/ramos_elite_page.dart';
-import 'package:hcgcalidadapp/src/paginas/registro_temperatura_page.dart';
 import 'package:hcgcalidadapp/src/paginas/reporte_general_page.dart';
 import 'package:hcgcalidadapp/src/paginas/sincronizar_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:hcgcalidadapp/src/preferencias.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -262,6 +249,8 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: Text('Salir'),
               onTap: () {
+                Preferences pref = Preferences();
+                pref.userId = 0;
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     'login', (Route<dynamic> route) => false);
               },

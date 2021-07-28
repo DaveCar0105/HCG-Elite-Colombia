@@ -23,11 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   login() async{
     Preferences pref = Preferences();
     pref.userId = await userService.postLogin(user.text, pass.text);
-    print(pref.userId);
     if(pref.userId > 0){
       Navigator.pushReplacementNamed(context, 'home');
     }
-
   }
 
   @override
