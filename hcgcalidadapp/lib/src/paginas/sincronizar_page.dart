@@ -80,7 +80,7 @@ class _SincronizarPageState extends State<SincronizarPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SINCRONIZAR REPORTES'),
+        title: Text('SINCRONIZAR'),
         actions: [
           RaisedButton(
             onPressed: () async {

@@ -11,14 +11,6 @@ class DatabaseProcesoMaritimo {
     final data = await db.rawQuery(sql);
     List<ProcesoMaritimo> maritimo = List();
     for (var node in data) {
-      // print(DatabaseCreator.procesoHidratacionPhSolucion);
-      //print("cliente : " + node[DatabaseCreator.clienteId]);
-      node = data[2];
-      print("------------------------------------------------------");
-      for (var key in node.keys) {
-        var asd = node[key];
-        print('key: $key, value: $asd \n');
-      }
       maritimo.add(new ProcesoMaritimo(
         procesoMaritimoId: node[DatabaseCreator.procesoMaritimoId],
         procesoMaritimoUsuarioControlId:
@@ -95,6 +87,10 @@ class DatabaseProcesoMaritimo {
             DatabaseCreator.procesoMaritimoComponentePalletDestinosEtiquetas],
         procesoMaritimoCamionSelloSeguridadContenedor:
             node[DatabaseCreator.procesoMaritimoCamionSelloSeguridadContenedor],
+        procesoMaritimoVerificacionEncendidoTermografo: node[
+            DatabaseCreator.procesoMaritimoVerificacionEncendidoTermografo],
+        procesoMaritimoFotografiaPalletsEmpresaContenor: node[
+            DatabaseCreator.procesoMaritimoFotografiaPalletsEmpresaContenor],
         clienteNombre: node[DatabaseCreator.clienteNombre],
         clienteId: node[DatabaseCreator.clienteId],
         postcosechaId: node[DatabaseCreator.postcosechaId],
@@ -141,7 +137,7 @@ class DatabaseProcesoMaritimo {
      ${DatabaseCreator.procesoMaritimoPalletsAlturaContenedor},
      ${DatabaseCreator.procesoMaritimoTemperaturaPalletContenedor},${DatabaseCreator.procesoMaritimoPalletIdentificadoNumero},${DatabaseCreator.procesoMaritimoTomaRegistroTemperaturas},${DatabaseCreator.procesoMaritimoGenset},${DatabaseCreator.procesoMaritimoContenedorEdadFabricacion},
      ${DatabaseCreator.procesoMaritimoContenedorCumplimientoSeteo},${DatabaseCreator.procesoMaritimoContenedorPreEnfriado},${DatabaseCreator.procesoMaritimoContenedorlavadoDesinfectado},${DatabaseCreator.procesoMaritimoCarguePreviamenteHumedecidos},${DatabaseCreator.procesoMaritimoLlegandoCierreSellado},
-     ${DatabaseCreator.procesoMaritimoEstibasSelloICA},${DatabaseCreator.procesoMaritimoPalletsTensionZunchos},${DatabaseCreator.procesoMaritimoPalletIdentificadoEtiqueta},${DatabaseCreator.procesoMaritimoComponentePalletDestinosEtiquetas},${DatabaseCreator.procesoMaritimoCamionSelloSeguridadContenedor},
+     ${DatabaseCreator.procesoMaritimoEstibasSelloICA},${DatabaseCreator.procesoMaritimoPalletsTensionZunchos},${DatabaseCreator.procesoMaritimoPalletIdentificadoEtiqueta},${DatabaseCreator.procesoMaritimoComponentePalletDestinosEtiquetas},${DatabaseCreator.procesoMaritimoCamionSelloSeguridadContenedor},${DatabaseCreator.procesoMaritimoVerificacionEncendidoTermografo},${DatabaseCreator.procesoMaritimoFotografiaPalletsEmpresaContenor},
      ${DatabaseCreator.procesoMaritimoObservacionesHidratacion},${DatabaseCreator.procesoMaritimoObservacionesEmpaque},${DatabaseCreator.procesoMaritimoObservacionesTransferencias},${DatabaseCreator.procesoMaritimoObservacionesPalletizado},${DatabaseCreator.procesoMaritimoObservacionesLlenadoContenedor},
      ${DatabaseCreator.procesoMaritimoObservacionesRequerimientosCriticos},
      ${DatabaseCreator.clienteId},${DatabaseCreator.postcosechaId},${DatabaseCreator.procesoMaritimoFecha},${DatabaseCreator.procesoMaritimoDestinoId}
@@ -160,10 +156,10 @@ class DatabaseProcesoMaritimo {
      ${procesoMaritimo.procesoMaritimoPalletsAlturaContenedor},
      ${procesoMaritimo.procesoMaritimoTemperaturaPalletContenedor},${procesoMaritimo.procesoMaritimoPalletIdentificadoNumero},${procesoMaritimo.procesoMaritimoTomaRegistroTemperaturas},${procesoMaritimo.procesoMaritimoGenset},${procesoMaritimo.procesoMaritimoContenedorEdadFabricacion},
      ${procesoMaritimo.procesoMaritimoContenedorCumplimientoSeteo},${procesoMaritimo.procesoMaritimoContenedorPreEnfriado},${procesoMaritimo.procesoMaritimoContenedorlavadoDesinfectado},${procesoMaritimo.procesoMartimoCarguePreviamenteHumedecidos},${procesoMaritimo.procesoMaritimoLlegandoCierreSellado},
-     ${procesoMaritimo.procesoMaritimoEstibasSelloICA},${procesoMaritimo.procesoMaritimoPalletsTensionZunchos},${procesoMaritimo.procesoMaritimoPalletIdentificadoEtiqueta},${procesoMaritimo.procesoMaritimoComponentePalletDestinosEtiquetas},${procesoMaritimo.procesoMaritimoCamionSelloSeguridadContenedor},
-     '${procesoMaritimo.procesoMaritimoObservacionesHidratacion}','${procesoMaritimo.procesoMaritimoObservacionesEmpaque}','${procesoMaritimo.procesoMaritimoObservacionesTransferencias}','${procesoMaritimo.procesoMaritimoObservacionesPalletizado}','${procesoMaritimo.procesoMaritimoObservacionesLlenadoContenedor}',
-     '${procesoMaritimo.procesoMaritimoObservacionesRequerimientosCriticos}',
-      ${procesoMaritimo.clienteId},${procesoMaritimo.postcosechaId},'${procesoMaritimo.procesoMaritimoFecha}',${procesoMaritimo.procesoMaritimoDestinoId}
+     ${procesoMaritimo.procesoMaritimoEstibasSelloICA},${procesoMaritimo.procesoMaritimoPalletsTensionZunchos},${procesoMaritimo.procesoMaritimoPalletIdentificadoEtiqueta},${procesoMaritimo.procesoMaritimoComponentePalletDestinosEtiquetas},${procesoMaritimo.procesoMaritimoCamionSelloSeguridadContenedor},${procesoMaritimo.procesoMaritimoVerificacionEncendidoTermografo},${procesoMaritimo.procesoMaritimoFotografiaPalletsEmpresaContenor},
+    '${procesoMaritimo.procesoMaritimoObservacionesHidratacion}','${procesoMaritimo.procesoMaritimoObservacionesEmpaque}','${procesoMaritimo.procesoMaritimoObservacionesTransferencias}','${procesoMaritimo.procesoMaritimoObservacionesPalletizado}','${procesoMaritimo.procesoMaritimoObservacionesLlenadoContenedor}',
+    '${procesoMaritimo.procesoMaritimoObservacionesRequerimientosCriticos}',
+     ${procesoMaritimo.clienteId},${procesoMaritimo.postcosechaId},'${procesoMaritimo.procesoMaritimoFecha}',${procesoMaritimo.procesoMaritimoDestinoId}
       )''';
     return await db.rawInsert(sql);
   }

@@ -46,6 +46,8 @@ class ProcesoMaritimo {
     this.procesoMaritimoPalletIdentificadoEtiqueta,
     this.procesoMaritimoComponentePalletDestinosEtiquetas,
     this.procesoMaritimoCamionSelloSeguridadContenedor,
+    this.procesoMaritimoVerificacionEncendidoTermografo,
+    this.procesoMaritimoFotografiaPalletsEmpresaContenor,
     this.procesoMaritimoObservacionesHidratacion,
     this.procesoMaritimoObservacionesEmpaque,
     this.procesoMaritimoObservacionesPalletizado,
@@ -98,6 +100,8 @@ class ProcesoMaritimo {
   int procesoMaritimoPalletIdentificadoEtiqueta;
   int procesoMaritimoComponentePalletDestinosEtiquetas;
   int procesoMaritimoCamionSelloSeguridadContenedor;
+  int procesoMaritimoVerificacionEncendidoTermografo;
+  int procesoMaritimoFotografiaPalletsEmpresaContenor;
 
   String procesoMaritimoObservacionesHidratacion;
   String procesoMaritimoObservacionesEmpaque;
@@ -188,6 +192,10 @@ class ProcesoMaritimo {
             json["procesoMaritimoComponentePalletDestinosEtiquetas"],
         procesoMaritimoCamionSelloSeguridadContenedor:
             json["procesoMaritimoCamionSelloSeguridadContenedor"],
+        procesoMaritimoVerificacionEncendidoTermografo:
+            json["procesoMaritimoVerificacionEncendidoTermografo"],
+        procesoMaritimoFotografiaPalletsEmpresaContenor:
+            json["procesoMaritimoFotografiaPalletsEmpresaContenor"],
 
         procesoMaritimoObservacionesHidratacion:
             json["procesoMaritimoObservacionesHidratacion"],
@@ -270,6 +278,10 @@ class ProcesoMaritimo {
             procesoMaritimoComponentePalletDestinosEtiquetas,
         "procesoMaritimoCamionSelloSeguridadContenedor":
             procesoMaritimoCamionSelloSeguridadContenedor,
+        "procesoMaritimoVerificacionEncendidoTermografo":
+            procesoMaritimoVerificacionEncendidoTermografo,
+        "procesoMaritimoFotografiaPalletsEmpresaContenor":
+            procesoMaritimoFotografiaPalletsEmpresaContenor,
         "procesoMaritimoObservacionesHidratacion":
             procesoMaritimoObservacionesHidratacion,
         "procesoMaritimoObservacionesEmpaque":

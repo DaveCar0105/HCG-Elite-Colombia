@@ -254,6 +254,11 @@ class DatabaseCreator {
       'procesoMaritimoComponentePalletDestinosEtiquetas';
   static const procesoMaritimoCamionSelloSeguridadContenedor =
       'procesoMaritimoCamionSelloSeguridadContenedor';
+  static const procesoMaritimoVerificacionEncendidoTermografo =
+      'procesoMaritimoVerificacionEncendidoTermografo';
+  static const procesoMaritimoFotografiaPalletsEmpresaContenor =
+      'procesoMaritimoFotografiaPalletsEmpresaContenor';
+
   static const procesoMaritimoObservacionesHidratacion =
       'procesoMaritimoObservacionessHidratacion';
   static const procesoMaritimoObservacionesEmpaque =
@@ -893,6 +898,8 @@ class DatabaseCreator {
         $procesoMaritimoPalletIdentificadoEtiqueta INTEGER,
         $procesoMaritimoComponentePalletDestinosEtiquetas INTEGER,
         $procesoMaritimoCamionSelloSeguridadContenedor INTEGER,
+        $procesoMaritimoVerificacionEncendidoTermografo INTEGER,
+        $procesoMaritimoFotografiaPalletsEmpresaContenor INTEGER,
 
         $procesoMaritimoObservacionesHidratacion TEXT,
         $procesoMaritimoObservacionesEmpaque TEXT,

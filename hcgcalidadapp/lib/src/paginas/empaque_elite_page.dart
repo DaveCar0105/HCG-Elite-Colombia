@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
@@ -330,27 +332,31 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
       child: RaisedButton(
         onPressed: () async {
           final util = Utilidades();
-          if (numeroOrden != '' &&
+
+          //if (
+          numeroOrden != '' &&
               util.isNumberEntero(totalCajas.text) &&
               util.isNumberEntero(ramosCaja.text) &&
               derogacion.text != '' &&
               util.isNumberEntero(cajasADespachar.text) &&
               util.isNumberEntero(tallosRamo.text) &&
-              clienteId != 0 &&
               tipoClienteId != 0 &&
+              clienteId != 0 &&
               productoId != 0 &&
               util.isNumberEntero(ramosRevisarCaja.text) &&
               marca.text != '' &&
-              postcosechaId != 0) {
-            await _guardarReporteEmpaque();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        ListaEmpaquePage(empaque)));
-          } else {
-            _showSnackBar();
-          }
+              postcosechaId != 0;
+          //)
+          // {
+          await _guardarReporteEmpaque();
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      ListaEmpaquePage(empaque)));
+          // } else {
+          //   _showSnackBar();
+          // }
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         color: Colors.red,

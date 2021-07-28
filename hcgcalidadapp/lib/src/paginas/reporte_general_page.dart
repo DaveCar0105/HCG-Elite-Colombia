@@ -52,6 +52,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   cargarFalenciaListWidget(FalenciaReporteGeneralDto falencia, int indice) {
     String textoTitle = indice.toString() + ". " + falencia.nombreFalencia;
     String falenciaText = "Falencias: " + falencia.cantidad.toString();
+
     String porcentajeText =
         "Porcentaje: " + falencia.porcentajeFalencia.toStringAsFixed(2) + "%";
 
@@ -154,8 +155,8 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   children: [
                                     Text(
                                         '%RAMOS NO CONFORMES:' +
-                                            '                    ' +
-                                            '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
+                                            ' ' +
+                                            '${reporteGeneral.porRamosNoConformes}' +
                                             '%',
                                         style: Theme.of(context)
                                             .textTheme
@@ -191,3 +192,5 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     );
   }
 }
+
+Widget _traer() {}

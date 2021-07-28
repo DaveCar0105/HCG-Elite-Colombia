@@ -49,6 +49,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   int procesoMaritimoContenedorlavadoDesinfectadoValue = -1;
   int procesoMartimoCarguePreviamenteHumedecidosValue = -1;
   int procesoMaritimoLlegandoCierreSelladoValue = -1;
+  int procesoMaritimoVerificacionEncendidoTermografoValue = -1;
+  int procesoMaritimoFotografiaPalletsEmpresaContenorValue = -1;
 
   int procesoMaritimoEstibasSelloICAValue = -1;
   int procesoMaritimoPalletsTensionZunchosvalue = -1;
@@ -278,7 +280,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text('Proceso Maritimo Check'), actions: <Widget>[
+      appBar: AppBar(title: Text('PROCESO MARITIMO CHECK'), actions: <Widget>[
         StreamBuilder(
             stream: _procesoMaritimoBloc.registroProcesoMaritimoStream(),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
@@ -1412,6 +1414,66 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                       }),
                 ],
               ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Verificación de encendido adecuado de termógrafo, respaldo etiqueta, código.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue:
+                          procesoMaritimoVerificacionEncendidoTermografoValue,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoVerificacionEncendidoTermografoValue =
+                              value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue:
+                          procesoMaritimoVerificacionEncendidoTermografoValue,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoVerificacionEncendidoTermografoValue =
+                              value;
+                        });
+                      }),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Fotografías de cargue pallets de la empresa cuando es contenedor compartido.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue:
+                          procesoMaritimoFotografiaPalletsEmpresaContenorValue,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoFotografiaPalletsEmpresaContenorValue =
+                              value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue:
+                          procesoMaritimoFotografiaPalletsEmpresaContenorValue,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoFotografiaPalletsEmpresaContenorValue =
+                              value;
+                        });
+                      }),
+                ],
+              ),
               _procesoMaritimoObsevacionesRequerimientosCriticos(),
               SizedBox(
                 height: height * 0.1,
@@ -1560,6 +1622,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
         procesoMaritimoPalletIdentificadoEtiquetaValue >= 0 &&
         procesoMaritimoComponentePalletDestinosEtiquetasValue >= 0 &&
         procesoMaritimoCamionSelloSeguridadContenedorValue >= 0 &&
+        procesoMaritimoVerificacionEncendidoTermografoValue >= 0 &&
+        procesoMaritimoFotografiaPalletsEmpresaContenorValue >= 0 &&
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
@@ -1638,6 +1702,10 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               procesoMaritimoComponentePalletDestinosEtiquetasValue,
           procesoMaritimoCamionSelloSeguridadContenedor:
               procesoMaritimoCamionSelloSeguridadContenedorValue,
+          procesoMaritimoVerificacionEncendidoTermografo:
+              procesoMaritimoVerificacionEncendidoTermografoValue,
+          procesoMaritimoFotografiaPalletsEmpresaContenor:
+              procesoMaritimoFotografiaPalletsEmpresaContenorValue,
           procesoMaritimoObservacionesHidratacion:
               procesoMaritimoObsevacionesHidratacionValue.text,
           procesoMaritimoObservacionesEmpaque:
@@ -1702,6 +1770,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     procesoMaritimoPalletIdentificadoEtiquetaValue = -1;
     procesoMaritimoComponentePalletDestinosEtiquetasValue = -1;
     procesoMaritimoCamionSelloSeguridadContenedorValue = -1;
+    procesoMaritimoVerificacionEncendidoTermografoValue = -1;
+    procesoMaritimoFotografiaPalletsEmpresaContenorValue = -1;
 
     procesoMaritimoObsevacionesHidratacionValue.text = '';
     procesoMaritimoObservacionesEmpaqueValue.text = '';
