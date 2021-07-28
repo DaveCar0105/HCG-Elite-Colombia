@@ -17,6 +17,11 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   bool sinc = false;
   //int ramosRevisados = 0;
 
+  bool reporteGeneralValue;
+  bool ramosRevisadosValue;
+  bool ramosNoConformes;
+  bool porRamosNoConformes;
+
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   List<Historial> lista = List();
   ReporteGeneralDto reporteGeneral;
@@ -99,77 +104,87 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
           child: Container(
             child: ListView(
               children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Column(
-                      children: [
-                        Text('RESUMEN REVISION',
-                            style: Theme.of(context).textTheme.headline6),
-                      ],
-                    ),
+                banderaList
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: [
+                              Text('RESUMEN REVISION',
+                                  style: Theme.of(context).textTheme.headline6),
+                            ],
+                          ),
 
-                    Divider(),
-                    banderaList
-                        ? Row(
+                          Divider(),
+                          banderaList
+                              ? Row(
+                                  children: [
+                                    Text(
+                                        'RAMOS REVISADOS:' +
+                                            '                                ' +
+                                            '${reporteGeneral.ramosRevisados}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1),
+                                  ],
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          Divider(),
+                          banderaList
+                              ? Row(
+                                  children: [
+                                    Text(
+                                        'RAMOS NO CONFORMES:' +
+                                            '                       ' +
+                                            '${reporteGeneral.ramosNoConformes}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1),
+                                  ],
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          Divider(),
+                          banderaList
+                              ? Row(
+                                  children: [
+                                    Text(
+                                        '%RAMOS NO CONFORMES:' +
+                                            '                    ' +
+                                            '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
+                                            '%',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle1),
+                                  ],
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          Divider(),
+                          Column(
                             children: [
-                              Text(
-                                  'RAMOS REVISADOS:' +
-                                      '                                ' +
-                                      '${reporteGeneral.ramosRevisados}',
-                                  style: Theme.of(context).textTheme.subtitle1),
+                              Text('RESUMEN CAUSAS',
+                                  style: Theme.of(context).textTheme.headline6)
                             ],
-                          )
-                        : Container(
-                            child: CircularProgressIndicator(),
                           ),
-                    Divider(),
-                    banderaList
-                        ? Row(
-                            children: [
-                              Text(
-                                  'RAMOS NO CONFORMES:' +
-                                      '                       ' +
-                                      '${reporteGeneral.ramosNoConformes}',
-                                  style: Theme.of(context).textTheme.subtitle1),
-                            ],
-                          )
-                        : Container(
-                            child: CircularProgressIndicator(),
-                          ),
-                    Divider(),
-                    banderaList
-                        ? Row(
-                            children: [
-                              Text(
-                                  '%RAMOS NO CONFORMES:' +
-                                      '                    ' +
-                                      '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
-                                      '%',
-                                  style: Theme.of(context).textTheme.subtitle1),
-                            ],
-                          )
-                        : Container(
-                            child: CircularProgressIndicator(),
-                          ),
-                    Divider(),
-                    Column(
-                      children: [
-                        Text('RESUMEN CAUSAS',
-                            style: Theme.of(context).textTheme.headline6)
-                      ],
-                    ),
-                    banderaList
-                        ? Column(
-                            children: dinamicos,
-                          )
-                        : Container(
-                            child: CircularProgressIndicator(),
-                          ),
-                    // _graficarReporte(),
-                  ],
-                ),
+                          banderaList
+                              ? Column(
+                                  children: dinamicos,
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          // _graficarReporte(),
+                        ],
+                      )
+                    : Container(
+                        child: CircularProgressIndicator(),
+                      ),
               ],
             ),
           )),
