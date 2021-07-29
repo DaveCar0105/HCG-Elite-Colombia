@@ -13,7 +13,8 @@ class AprobacionPage extends StatefulWidget {
 
 class _AprobacionPageState extends State<AprobacionPage> {
   List<ReporteAprobacion> listaReportes = [];
-  List<Map<String, dynamic>> listaBandas = [];
+
+  List<ReporteAprobacionBanda> listaBandas = [];
   List<Map<String, dynamic>> listaEcuador = [];
   bool inicio = false;
   @override
@@ -26,7 +27,9 @@ class _AprobacionPageState extends State<AprobacionPage> {
     List<ReporteAprobacion> lista = [];
     lista = await DatabaseReportesAprobacion.getAllReportes();
     listaReportes = lista;
-    listaBandas = await DatabaseBanda.getAllBandasAprobacion();
+    List<ReporteAprobacionBanda> listaB = [];
+    listaB = await DatabaseReportesAprobacion.getAllReportesBanda();
+    listaBandas = listaB;
     listaEcuador = await DatabaseEcuador.getAllEcuadorAprobacion();
     setState(() {});
   }
@@ -63,9 +66,7 @@ class _AprobacionPageState extends State<AprobacionPage> {
             ListView.builder(
               itemCount: listaBandas.length,
               itemBuilder: (context, index) => _itemResumenBanda(
-                  listaReportes[index],
-                  w,
-                  listaBandas[index]), //cambiar la variable despues
+                  listaBandas[index], w), //cambiar la variable despues
             ),
             ListView.builder(
               itemCount: listaEcuador.length,
@@ -87,21 +88,20 @@ class _AprobacionPageState extends State<AprobacionPage> {
     );
   }
 
-  Widget _itemResumenBanda(
-      ReporteAprobacion report, double w, Map<String, dynamic> item) {
+  Widget _itemResumenBanda(ReporteAprobacionBanda report, double w) {
     int ramos = 0;
-    int empaque = 0;
-    ramos = report.totalRamosRevisados;
-    empaque =
-        report.totalEmpaqueRamosRevisados + report.totalEmpaqueCajasRevisadas;
+    //int empaque = 0;
+    ramos = report.totalRamosRevisadosBanda;
+    // empaque = report.totalEmpaqueRamosRevisadosBanda +
+    //     report.totalEmpaqueCajasRevisadasBanda;
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    DetalleOrdenesCliente(item['controlBandaId'])));
+                builder: (BuildContext context) => DetalleOrdenesClienteBanda(
+                    report.clienteBandaId))); //item['controlBandaId']
       },
       child: Container(
         margin: EdgeInsets.all(10),
@@ -116,7 +116,7 @@ class _AprobacionPageState extends State<AprobacionPage> {
           children: <Widget>[
             Container(
               child: Text(
-                item['clienteNombre'],
+                report.clienteBandaNombre, //item['clienteNombre']
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textScaleFactor: 1,
               ),
@@ -132,66 +132,66 @@ class _AprobacionPageState extends State<AprobacionPage> {
                 : Container(),
             ramos > 0
                 ? itemTexto('Promedio % No conformidad: ',
-                    report.inconformidadP.toStringAsFixed(2), w - 20)
+                    report.inconformidadBandaP.toStringAsFixed(2), w - 20)
                 : Container(),
             ramos > 0
                 ? itemTexto('Cantidad Ramos No conformes: ',
-                    report.totalRamosRamos.toString(), w - 20)
+                    report.totalRamosRamosBanda.toString(), w - 20)
                 : Container(),
             ramos > 0
-                ? itemTexto(
-                    'Problema principal: ', report.falenciaPrincipal, w - 20)
-                : Container(),
-            ramos > 0
-                ? itemTexto(
-                    'Problema secundario: ', report.falenciaSegundaria, w - 20)
-                : Container(),
-            ramos > 0
-                ? itemTexto('Ramos revisados: ',
-                    report.totalRamosRevisados.toString(), w - 20)
-                : Container(),
-            empaque > 0
-                ? Text(
-                    'Resumen control Empaque',
-                    style: TextStyle(fontSize: 21, color: Colors.blue),
-                  )
-                : Container(),
-            empaque > 0
-                ? itemTexto(
-                    'Promedio % No conformes Cajas: ',
-                    report.inconformidadEmpaqueCajasP.toStringAsFixed(2),
-                    w - 20)
-                : Container(),
-            empaque > 0
-                ? itemTexto(
-                    'Promedio % No conformes Ramos: ',
-                    report.inconformidadEmpaqueRamosP.toStringAsFixed(2),
-                    w - 20)
-                : Container(),
-            empaque > 0
-                ? itemTexto('Cantidad Cajas No conformes: ',
-                    report.totalEmpaqueCajas.toString(), w - 20)
-                : Container(),
-            empaque > 0
-                ? itemTexto('Cantidad Ramos No conformes: ',
-                    report.totalEmpaqueRamos.toString(), w - 20)
-                : Container(),
-            empaque > 0
                 ? itemTexto('Problema principal: ',
-                    report.falenciaPrincipalEmpaque.toString(), w - 20)
+                    report.falenciaPrincipalBanda, w - 20)
                 : Container(),
-            empaque > 0
+            ramos > 0
                 ? itemTexto('Problema secundario: ',
-                    report.falenciaSegundariaEmpaque.toString(), w - 20)
+                    report.falenciaSegundariaBanda, w - 20)
                 : Container(),
-            empaque > 0
+            ramos > 0
                 ? itemTexto('Ramos revisados: ',
-                    report.totalEmpaqueRamosRevisados.toString(), w - 20)
+                    report.totalRamosRevisadosBanda.toString(), w - 20)
                 : Container(),
-            empaque > 0
-                ? itemTexto('Cajas revisadas: ',
-                    report.totalEmpaqueCajasRevisadas.toString(), w - 20)
-                : Container(),
+            // empaque > 0
+            //     ? Text(
+            //         'Resumen control Empaque',
+            //         style: TextStyle(fontSize: 21, color: Colors.blue),
+            //       )
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto(
+            //         'Promedio % No conformes Cajas: ',
+            //         report.inconformidadEmpaqueCajasBandaP.toStringAsFixed(2),
+            //         w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto(
+            //         'Promedio % No conformes Ramos: ',
+            //         report.inconformidadEmpaqueRamosBandaP.toStringAsFixed(2),
+            //         w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto('Cantidad Cajas No conformes: ',
+            //         report.totalEmpaqueCajasBanda.toString(), w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto('Cantidad Ramos No conformes: ',
+            //         report.totalEmpaqueRamosBanda.toString(), w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto('Problema principal: ',
+            //         report.falenciaPrincipalEmpaqueBanda.toString(), w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto('Problema secundario: ',
+            //         report.falenciaSegundariaEmpaqueBanda.toString(), w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto('Ramos revisados: ',
+            //         report.totalEmpaqueRamosRevisadosBanda.toString(), w - 20)
+            //     : Container(),
+            // empaque > 0
+            //     ? itemTexto('Cajas revisadas: ',
+            //         report.totalEmpaqueCajasRevisadasBanda.toString(), w - 20)
+            //     : Container(),
           ],
         ),
       ),

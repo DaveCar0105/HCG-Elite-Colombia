@@ -215,6 +215,196 @@ class DatabaseReportesAprobacion {
     return retorno;
   }
 
+  static Future<List<ReporteAprobacionBanda>> getAllReportesBanda() async {
+    List<ReporteAprobacionBanda> retorno = new List();
+    final sql =
+        '''SELECT ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
+    FROM ${DatabaseCreator.controlBandaTable},${DatabaseCreator.clienteTable}
+    WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId}
+    AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+    GROUP BY ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}
+    ''';
+    final datas = await db.rawQuery(sql);
+
+    // final sqlE =
+    //     '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.empaqueTotal}) As ${DatabaseCreator.empaqueTotal}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar} , COUNT(*) AS NUMERO
+    // FROM ${DatabaseCreator.controlEmpaqueTable},${DatabaseCreator.clienteTable}
+    // WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId}
+    // AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+    // GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}
+    // ''';
+    // final datasE = await db.rawQuery(sqlE);
+
+    var data = datas.toList();
+    //data.addAll(datasE);
+    while (data.length > 0) {
+      ReporteAprobacionBanda item = new ReporteAprobacionBanda();
+      int clienteId = data[0][DatabaseCreator.clienteId];
+      String clienteNombre = data[0][DatabaseCreator.clienteNombre];
+      int total = 0;
+      int totalEC = 0;
+      int totalER = 0;
+      int totalProblemas = 0;
+
+      int numero = 0;
+      int numeroE = 0;
+      item.inconformidadBandaP = 0;
+      item.totalRamosRamosBanda = 0;
+      item.inconformidadEmpaqueRamosBandaP = 0;
+      item.totalEmpaqueRamosBanda = 0;
+      item.totalEmpaqueCajasBanda = 0;
+      item.falenciaPrincipalBanda = '';
+      item.falenciaSegundariaBanda = '';
+      item.inconformidadEmpaqueCajasBandaP = 0;
+      item.totalEmpaqueCajasRevisadasBanda = 0;
+      item.totalEmpaqueRamosRevisadosBanda = 0;
+      item.totalRamosRevisadosBanda = 0;
+
+      var subCliente =
+          data.where((e) => e[DatabaseCreator.clienteId] == clienteId).toList();
+      while (subCliente.length > 0) {
+        if (subCliente[0].containsKey('ramosTotal')) {
+          numero += subCliente[0]['NUMERO'];
+          total += subCliente[0][DatabaseCreator.ramosTotal];
+          final sql2 =
+              '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
+          FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.falenciasReporteRamosTable}, ${DatabaseCreator.falenciaRamosTable},${DatabaseCreator.controlRamosTable}
+          WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.ramosId}
+          AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+          ORDER BY REPETIDOS DESC
+          LIMIT 2
+          ''';
+          var data2 = await db.rawQuery(sql2);
+
+          try {
+            item.falenciaPrincipalBanda = data2[0]['falenciaRamosNombre'];
+          } catch (e) {
+            item.falenciaSegundariaBanda = '';
+          }
+          try {
+            item.falenciaSegundariaBanda = data2[1]['falenciaRamosNombre'];
+          } catch (e) {
+            item.falenciaSegundariaBanda = '';
+          }
+
+          final sql1 = '''SELECT COUNT(*) AS AFECTADOS
+          FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.controlRamosTable}
+          WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          ''';
+          var data1 = await db.rawQuery(sql1);
+          var variable =
+              double.parse(data1[0]['AFECTADOS'].toString()) * 100 / total;
+          item.inconformidadBandaP = variable;
+          item.totalRamosRamosBanda = data1[0]['AFECTADOS'];
+          item.totalRamosRevisadosBanda = total;
+
+          subCliente.removeWhere((element) {
+            return element[DatabaseCreator.clienteId] == clienteId &&
+                element.containsKey('ramosTotal');
+          });
+        } else {
+          numeroE += subCliente[0]['NUMERO'];
+          totalEC += subCliente[0][DatabaseCreator.empaqueTotal];
+          totalER += subCliente[0][DatabaseCreator.empaqueRamosRevisar];
+          final sql2 =
+              '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}, ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre}
+          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
+          WHERE ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
+          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          GROUP BY ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+          ORDER BY REPETIDOS DESC
+          LIMIT 2
+          ''';
+          var data2 = await db.rawQuery(sql2);
+          try {
+            item.falenciaPrincipalEmpaqueBanda =
+                data2[0]['falenciaEmpaqueNombre'];
+          } catch (e) {
+            item.falenciaPrincipalEmpaqueBanda = '';
+          }
+          try {
+            item.falenciaSegundariaEmpaqueBanda =
+                data2[1]['falenciaEmpaqueNombre'];
+          } catch (e) {
+            item.falenciaSegundariaEmpaqueBanda = '';
+          }
+
+          final sql1 =
+              '''SELECT COUNT(DISTINCT	${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS CAJAS
+          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
+          WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
+          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
+          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'C%'
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
+          ''';
+          var data1 = await db.rawQuery(sql1);
+          final sql3 =
+              '''SELECT COUNT(DISTINCT ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS RAMOS
+          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
+          WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
+          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
+          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
+          ''';
+          var data3 = await db.rawQuery(sql3);
+          try {
+            item.totalEmpaqueRamosBanda = data3[0]['RAMOS'];
+          } catch (e) {
+            item.totalEmpaqueRamosBanda = 0;
+          }
+          try {
+            item.totalEmpaqueCajasBanda = data1[0]['CAJAS'];
+          } catch (e) {
+            item.totalEmpaqueCajasBanda = 0;
+          }
+
+          item.inconformidadEmpaqueRamosBandaP =
+              (item.totalEmpaqueRamosBanda / totalER) * 100;
+          item.totalEmpaqueRamosBanda = item.totalEmpaqueRamosBanda;
+          item.totalEmpaqueRamosRevisadosBanda = totalER;
+          item.inconformidadEmpaqueCajasBandaP =
+              (item.totalEmpaqueCajasBanda / totalEC) * 100;
+          item.totalEmpaqueCajasRevisadasBanda = totalEC;
+          item.totalEmpaqueCajasBanda = item.totalEmpaqueCajasBanda;
+
+          subCliente.removeWhere((element) {
+            return element[DatabaseCreator.clienteId] == clienteId &&
+                element.containsKey('empaqueTotal');
+          });
+        }
+      }
+      ;
+      item.clienteBandaId = clienteId;
+      item.clienteBandaNombre = clienteNombre;
+      item.inconformidadBandaP = item.inconformidadBandaP;
+      item.inconformidadEmpaqueCajasBandaP =
+          item.inconformidadEmpaqueCajasBandaP;
+      item.inconformidadEmpaqueRamosBandaP =
+          item.inconformidadEmpaqueRamosBandaP;
+      data.removeWhere((element1) {
+        return element1[DatabaseCreator.clienteId] == clienteId;
+      });
+      retorno.add(item);
+    }
+
+    return retorno;
+  }
+
   static Future<ReporteGeneralDto> getReporteGeneral() async {
     ReporteGeneralDto reporteGeneral = new ReporteGeneralDto();
     List<ReporteAprobacion> retorno = new List();
@@ -623,6 +813,84 @@ class DatabaseReportesAprobacion {
   }
 
   static Future<List<OrdenRamo>> getAllOrdenesRamos(int clienteId) async {
+    List<OrdenRamo> listaRamos = List();
+    final sql =
+        '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId},
+    ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre},
+    ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaNombre},
+    ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre},
+    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramoMarca},
+    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosTotal},
+    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosNumeroOrden},
+    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosDespachar},
+    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosElaborados}
+          FROM ${DatabaseCreator.controlRamosTable}, ${DatabaseCreator.postcosechaTable}, ${DatabaseCreator.clienteTable}, ${DatabaseCreator.productoTable}  
+          WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = $clienteId
+          AND ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}
+          AND ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.postcosechaId}
+          AND ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          ''';
+    var data = await db.rawQuery(sql);
+    for (var i = 0; i < data.length; i++) {
+      OrdenRamo item = new OrdenRamo();
+      int total = 0;
+      item.ordenRamoId = data[i][DatabaseCreator.controlRamosId];
+      item.numeroOrden = data[i][DatabaseCreator.ramosNumeroOrden];
+      item.clienteNombre = data[i][DatabaseCreator.clienteNombre];
+      item.postCosechaNombre = data[i][DatabaseCreator.postcosechaNombre];
+      item.productoNombre = data[i][DatabaseCreator.productoNombre];
+      item.marca = data[i][DatabaseCreator.ramoMarca];
+      total = data[i][DatabaseCreator.ramosTotal];
+      item.ramosRevisados = total;
+      item.ramosElaborados = data[i][DatabaseCreator.ramosElaborados];
+      item.ramosADespachar = data[i][DatabaseCreator.ramosDespachar];
+      item.inspeccion = double.parse(total.toString()) *
+          100 /
+          double.parse(data[i][DatabaseCreator.ramosElaborados].toString());
+
+      final sql1 = '''SELECT COUNT(*) AS RAMOS
+          FROM ${DatabaseCreator.ramosTable}
+          WHERE ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
+          ''';
+      var data1 = await db.rawQuery(sql1);
+      try {
+        item.ramoInconformidad = double.parse(data1[0]['RAMOS']) * 100 / total;
+        item.ramosNoConformes = data1[0]['RAMOS'];
+      } catch (e) {
+        item.ramoInconformidad = 0;
+        item.ramosNoConformes = 0;
+      }
+      final sql2 =
+          '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
+          FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.falenciasReporteRamosTable}, ${DatabaseCreator.falenciaRamosTable},${DatabaseCreator.controlRamosTable}
+          WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.ramosId}
+          AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
+          GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+          ORDER BY REPETIDOS DESC
+          LIMIT 2
+          ''';
+      var data2 = await db.rawQuery(sql2);
+      try {
+        item.falenciaPrincipal = data2[0]['falenciaRamosNombre'];
+      } catch (e) {
+        item.falenciaPrincipal = 'NO APLICA';
+      }
+      try {
+        item.falenciaSegundaria = data2[1]['falenciaRamosNombre'];
+      } catch (e) {
+        item.falenciaSegundaria = 'NO APLICA';
+      }
+
+      listaRamos.add(item);
+    }
+    return listaRamos;
+  }
+
+  static Future<List<OrdenRamo>> getAllOrdenesRamosBanda(int clienteId) async {
     List<OrdenRamo> listaRamos = List();
     final sql =
         '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId},

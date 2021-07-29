@@ -87,9 +87,139 @@ class ReporteAprobacion {
       };
 }
 
-// ReporteAprobacion reporteAprobacionBandaFromJson(String str) => ReporteAprobacion.fromJson(json.decode(str));
+ReporteAprobacionBanda reporteAprobacionBandaFromJson(String str) =>
+    ReporteAprobacionBanda.fromJson(json.decode(str));
 
-// String reporteAprobacionBandaToJson(ReporteAprobacion data) => json.encode(data.toJson());
+String reporteAprobacionBandaToJson(ReporteAprobacionBanda data) =>
+    json.encode(data.toJson());
+
+class ReporteAprobacionBanda {
+  ReporteAprobacionBanda({
+    this.clienteBandaId,
+    this.clienteBandaNombre,
+    this.inconformidadBandaP,
+    this.falenciaPrincipalBanda,
+    this.falenciaSegundariaBanda,
+    this.inconformidadEmpaqueCajasBandaP,
+    this.inconformidadEmpaqueRamosBandaP,
+    this.falenciaPrincipalEmpaqueBanda,
+    this.falenciaSegundariaEmpaqueBanda,
+    this.totalEmpaqueCajasBanda,
+    this.totalEmpaqueRamosBanda,
+    this.totalRamosRamosBanda,
+    this.aprobadoBanda,
+    this.totalRamosRevisadosBanda,
+    this.totalEmpaqueRamosRevisadosBanda,
+    this.totalEmpaqueCajasRevisadasBanda,
+    this.ordenRamoBandaId,
+    this.numeroOrdenBanda,
+    this.postCosechaBandaNombre,
+    this.productoBandaNombre,
+    this.marcaBanda,
+    this.ramoInconformidadBanda,
+    this.ramosRevisadosBanda,
+    this.ramosADespacharBanda,
+    this.ramosElaboradosBanda,
+    this.inspeccionBanda,
+    this.ramosNoConformesBanda,
+  });
+
+  int clienteBandaId;
+  String clienteBandaNombre;
+  double inconformidadBandaP;
+  String falenciaPrincipalBanda;
+  String falenciaSegundariaBanda;
+  double inconformidadEmpaqueCajasBandaP;
+  double inconformidadEmpaqueRamosBandaP;
+  String falenciaPrincipalEmpaqueBanda;
+  String falenciaSegundariaEmpaqueBanda;
+  int totalEmpaqueCajasBanda;
+  int totalEmpaqueRamosBanda;
+  int totalRamosRamosBanda;
+  int aprobadoBanda;
+  int totalRamosRevisadosBanda;
+  int totalEmpaqueRamosRevisadosBanda;
+  int totalEmpaqueCajasRevisadasBanda;
+
+  int ordenRamoBandaId;
+  String numeroOrdenBanda;
+  String postCosechaBandaNombre;
+  String productoBandaNombre;
+  String marcaBanda;
+  double ramoInconformidadBanda;
+  int ramosRevisadosBanda;
+  int ramosADespacharBanda;
+  int ramosElaboradosBanda;
+  double inspeccionBanda;
+  int ramosNoConformesBanda;
+  //String falenciaPrincipalBanda;
+  //String falenciaSegundaria;
+
+  factory ReporteAprobacionBanda.fromJson(Map<String, dynamic> json) =>
+      ReporteAprobacionBanda(
+          clienteBandaId: json["clienteBandaId"],
+          clienteBandaNombre: json["clienteBandaNombre"],
+          ordenRamoBandaId: json["ordenBandaId"],
+          numeroOrdenBanda: json["numeroOrdenBanda"],
+          postCosechaBandaNombre: json["postCosechaBandaNombre"],
+          productoBandaNombre: json["productoBandaNombre"],
+          marcaBanda: json["marcaBanda"],
+          ramoInconformidadBanda: json["ramoInconformidadBanda"],
+          ramosRevisadosBanda: json["ramosRevisadosBanda"],
+          ramosADespacharBanda: json["ramosADespacharBanda"],
+          ramosElaboradosBanda: json["ramosElaboradosBanda"],
+          inspeccionBanda: json["inspeccionBanda"],
+          ramosNoConformesBanda: json["ramosNoConformesBanda"],
+          inconformidadBandaP: json["inconformidadBandaP"].toDouble(),
+          falenciaPrincipalBanda: json["falenciaPrincipalBanda"],
+          falenciaSegundariaBanda: json["falenciaSegundariaBanda"],
+          inconformidadEmpaqueCajasBandaP:
+              json["inconformidadEmpaqueCajasBandaP"].toDouble(),
+          inconformidadEmpaqueRamosBandaP:
+              json["inconformidadEmpaqueRamosBandaP"].toDouble(),
+          falenciaPrincipalEmpaqueBanda: json["falenciaPrincipalEmpaqueBanda"],
+          falenciaSegundariaEmpaqueBanda:
+              json["falenciaSegundariaEmpaqueBanda"],
+          totalEmpaqueCajasBanda: json["totalEmpaqueCajasBanda"],
+          totalEmpaqueRamosBanda: json["totalEmpaqueRamosBanda"],
+          totalRamosRamosBanda: json["totalRamosRamosBanda"],
+          aprobadoBanda: json["aprobadoBanda"],
+          totalRamosRevisadosBanda: json["totalRamosRevisadosBanda"],
+          totalEmpaqueRamosRevisadosBanda:
+              json["totalEmpaqueRamosRevisadosBanda"],
+          totalEmpaqueCajasRevisadasBanda:
+              json["totalEmpaqueCajasRevisadasBanda"]);
+
+  Map<String, dynamic> toJson() => {
+        "clienteBandaId": clienteBandaId,
+        "clienteBandaNombre": clienteBandaNombre,
+        "inconformidadBandaP": inconformidadBandaP,
+        "falenciaPrincipalBanda": falenciaPrincipalBanda,
+        "falenciaSegundariaBanda": falenciaSegundariaBanda,
+        "inconformidadEmpaqueCajasBandaP": inconformidadEmpaqueCajasBandaP,
+        "inconformidadEmpaqueRamosBandaP": inconformidadEmpaqueRamosBandaP,
+        "falenciaPrincipalEmpaqueBanda": falenciaPrincipalEmpaqueBanda,
+        "falenciaSegundariaEmpaqueBanda": falenciaSegundariaEmpaqueBanda,
+        "totalEmpaqueCajasBanda": totalEmpaqueCajasBanda,
+        "totalEmpaqueRamosBanda": totalEmpaqueRamosBanda,
+        "totalRamosRamosBanda": totalRamosRamosBanda,
+        "aprobadoBanda": aprobadoBanda,
+        "totalRamosRevisadosBanda": totalRamosRevisadosBanda,
+        "totalEmpaqueRamosRevisadosBanda": totalEmpaqueRamosRevisadosBanda,
+        "totalEmpaqueCajasRevisadasBanda": totalEmpaqueCajasRevisadasBanda,
+        "ordenBandaId": ordenRamoBandaId,
+        "numeroOrdenBanda": numeroOrdenBanda,
+        "postCosechaBandaNombre": postCosechaBandaNombre,
+        "productoBandaNombre": productoBandaNombre,
+        "marcaBanda": marcaBanda,
+        "ramoInconformidadBanda": ramoInconformidadBanda,
+        "ramosRevisadosBanda": ramosRevisadosBanda,
+        "ramosADespacharBanda": ramosADespacharBanda,
+        "ramosElaboradosBanda": ramosElaboradosBanda,
+        "inspeccionBanda": inspeccionBanda,
+        "ramosNoConformesBanda": ramosNoConformesBanda,
+      };
+}
 
 OrdenEmpaque ordenEmpaqueFromJson(String str) =>
     OrdenEmpaque.fromJson(json.decode(str));
