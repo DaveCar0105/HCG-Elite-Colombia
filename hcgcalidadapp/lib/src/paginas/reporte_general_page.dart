@@ -38,6 +38,8 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     dinamicos = new List<Widget>();
     //lista = await DatabaseReportesAprobacion.historialReportes();
     reporteGeneral = await DatabaseReportesAprobacion.getReporteGeneral();
+    if(reporteGeneral.porRamosNoConformes==null)
+      reporteGeneral.porRamosNoConformes = 0;
     var asd = jsonEncode(lista);
     if (reporteGeneral.falencias != null) {
       for (int i = 0; i < reporteGeneral.falencias.length; i++) {
@@ -89,6 +91,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -96,11 +99,16 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
       ),
       body: Container(
           margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(1),
+          padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.greenAccent,
-              boxShadow: [BoxShadow(color: Colors.redAccent, blurRadius: 10)]),
+              border: Border.all(
+                color: Colors.redAccent,
+                width: 2
+              )
+              //color: Colors.redAccent,
+              //boxShadow: [BoxShadow(color: Colors.redAccent, blurRadius: 10)]
+              ),
           width: double.infinity,
           child: Container(
             child: ListView(
@@ -155,7 +163,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   children: [
                                     Text(
                                         '%RAMOS NO CONFORMES:' +
-                                            ' ' +
+                                            '                 ' +
                                             '${reporteGeneral.porRamosNoConformes}' +
                                             '%',
                                         style: Theme.of(context)
@@ -167,12 +175,26 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   child: CircularProgressIndicator(),
                                 ),
                           Divider(),
+                          Divider(),
                           Column(
                             children: [
                               Text('RESUMEN CAUSAS',
                                   style: Theme.of(context).textTheme.headline6)
                             ],
                           ),
+                          Divider(),
+                          Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.primaries.last,
+                                  width: 2
+                                )
+                              )
+                            ),
+                          ),
+                          Divider(),
                           banderaList
                               ? Column(
                                   children: dinamicos,
@@ -180,7 +202,6 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                               : Container(
                                   child: CircularProgressIndicator(),
                                 ),
-                          // _graficarReporte(),
                         ],
                       )
                     : Container(
@@ -192,5 +213,3 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     );
   }
 }
-
-Widget _traer() {}
