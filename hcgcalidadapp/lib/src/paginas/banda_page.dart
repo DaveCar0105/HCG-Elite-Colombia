@@ -131,7 +131,7 @@ class _BandaPageState extends State<BandaPage> {
 
     List<TipoCliente> tipoClientes = List();
     tipoClientes = await DatabaseEcuador.getAllTipoCliente();
-    print("tiupo cliente: " + tipoClientes.length.toString());
+    print("tipo cliente: " + tipoClientes.length.toString());
     tipoClientes.forEach((element) {
       listaTipoCliente.add(AutoComplete(
           id: element.tipoClienteId, nombre: element.tipoClienteNombre));
@@ -424,30 +424,27 @@ class _BandaPageState extends State<BandaPage> {
   Widget _cliente() {
     final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
-      width: 250,
-      height: 90,
-      child: _listBus(listaClienteProvider)
-    );
+        width: 250, height: 90, child: _listBus(listaClienteProvider));
   }
 
   Widget _listBus(listaClienteProvider) {
     return ListaBusqueda(
-              key: _keyCliente,
-              lista: listaClienteProvider.listaClientess,
-              hintText: listaClienteProvider.nombreCliente,
-              valorDefecto: listaClienteProvider.clienteNombre,
-              hintSearchText: "Escriba el nombre del cliente",
-              icon: Icon(Icons.supervised_user_circle),
-              width: 200.0,
-              style: TextStyle(fontSize: 15),
-              parentAction: (value) {
-                AutoComplete cliente =
-                    listaClienteProvider.listaClientess.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                clienteId = cliente.id;
-              },
-            );
+      key: _keyCliente,
+      lista: listaClienteProvider.listaClientess,
+      hintText: listaClienteProvider.nombreCliente,
+      valorDefecto: listaClienteProvider.clienteNombre,
+      hintSearchText: "Escriba el nombre del cliente",
+      icon: Icon(Icons.supervised_user_circle),
+      width: 200.0,
+      style: TextStyle(fontSize: 15),
+      parentAction: (value) {
+        AutoComplete cliente =
+            listaClienteProvider.listaClientess.firstWhere((item) {
+          return item.nombre == value;
+        });
+        clienteId = cliente.id;
+      },
+    );
   }
 
   Widget _tipoCliente() {

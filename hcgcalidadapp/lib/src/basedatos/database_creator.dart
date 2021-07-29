@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 Database db;
 
 class DatabaseCreator {
+  //TABLA FINAL DE BANDA
   static const controlBandaTable = 'controlBanda';
   static const falenciaBandaTable = 'falenciaBanda';
   static const falenciaBandaId = 'falenciaBandaId';
@@ -354,6 +355,7 @@ class DatabaseCreator {
       'procesoCirculoCalidadCheckSuperviso1';
   static const procesoCirculoCalidadCheckSuperviso2 =
       'procesoCirculoCalidadCheckSuperviso2';
+  static const procesoCirculoCalidadFecha = 'procesoCirculoCalidadFecha';
 
   //static const procesoMaritimo
 
@@ -983,7 +985,8 @@ class DatabaseCreator {
         $procesoCirculoCalidadCheckSuperviso2 TEXT,
         $procesoCirculoCalidadComentarios TEXT,
         $procesoCirculoCalidadSupervisor1 TEXT,
-        $procesoCirculoCalidadSupervisor2 TEXT
+        $procesoCirculoCalidadSupervisor2 TEXT,
+        $procesoCirculoCalidadFecha DATE
     )''';
     await db.execute(procesoCirculoCalidadSql);
   }

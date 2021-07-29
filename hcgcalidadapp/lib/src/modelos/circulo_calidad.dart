@@ -30,6 +30,7 @@ class circuloCalidad {
     this.supervisorcheck1,
     this.supervisorcheck2,
     this.comentarios,
+    this.circuloCalidadFecha,
   });
 
   int circuloCalidadId = 0;
@@ -55,6 +56,7 @@ class circuloCalidad {
   String supervisorcheck1;
   String supervisorcheck2;
   String comentarios;
+  DateTime circuloCalidadFecha;
 
   factory circuloCalidad.fromJson(Map<String, dynamic> json) => circuloCalidad(
       circuloCalidadId: json["controlRamosId"],
@@ -79,7 +81,8 @@ class circuloCalidad {
       supervisor2: json["supervisor2"],
       supervisorcheck1: json["supervisorcheck1"],
       supervisorcheck2: json["supervisorcheck2"],
-      comentarios: json["comentarios"]);
+      comentarios: json["comentarios"],
+      circuloCalidadFecha: json["circuloCalidadFecha"]);
   Map<String, dynamic> toJson() => {
         "circuloCalidadId": circuloCalidadId,
         "ramosRevisados": ramosRevisados,
@@ -103,6 +106,7 @@ class circuloCalidad {
         "supervisor2": supervisor2,
         "supervisorcheck1": supervisorcheck1,
         "supervisorcheck2": supervisorcheck2,
-        "comentarios": comentarios
+        "comentarios": comentarios,
+        "circuloCalidadFecha": circuloCalidadFecha
       };
 }

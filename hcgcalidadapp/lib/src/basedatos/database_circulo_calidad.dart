@@ -11,33 +11,36 @@ class DatabaseCirculoCalidad {
     List<circuloCalidad> circulo = List();
     for (final node in data) {
       circulo.add(new circuloCalidad(
-          circuloCalidadId: node[DatabaseCreator.procesoCirculoCalidadId],
-          ramosRevisados:
-              node[DatabaseCreator.procesoCirculoCalidadRamosRevisados],
-          postcosechaId: node[DatabaseCreator.postcosechaId],
-          ramosRechazados:
-              node[DatabaseCreator.procesoCirculoCalidadRamosRechazados],
-          calidadReunion: node[DatabaseCreator.procesoCirculoCalidadReunion],
-          problemaId1: node[DatabaseCreator.procesoCirculoCalidadProblemaId1],
-          problemaId2: node[DatabaseCreator.procesoCirculoCalidadProblemaId2],
-          problemaId3: node[DatabaseCreator.procesoCirculoCalidadProblemaId3],
-          problemaId4: node[DatabaseCreator.procesoCirculoCalidadProblemaId4],
-          problemaId5: node[DatabaseCreator.procesoCirculoCalidadProblemaId5],
-          clienteId1: node[DatabaseCreator.procesoCirculoCalidadClienteId1],
-          clienteId2: node[DatabaseCreator.procesoCirculoCalidadClienteId2],
-          productoId1: node[DatabaseCreator.procesoCirculoCalidadProducto1],
-          productoId2: node[DatabaseCreator.procesoCirculoCalidadProducto2],
-          variedad1: node[DatabaseCreator.procesoCirculoCalidadVariedad1],
-          variedad2: node[DatabaseCreator.procesoCirculoCalidadVariedad2],
-          codigoMesa: node[DatabaseCreator.procesoCirculoCalidadCodigoMesa],
-          linea: node[DatabaseCreator.procesoCirculoCalidadLinea],
-          supervisor1: node[DatabaseCreator.procesoCirculoCalidadSupervisor1],
-          supervisor2: node[DatabaseCreator.procesoCirculoCalidadSupervisor2],
-          supervisorcheck1:
-              node[DatabaseCreator.procesoCirculoCalidadCheckSuperviso1],
-          supervisorcheck2:
-              node[DatabaseCreator.procesoCirculoCalidadCheckSuperviso2],
-          comentarios: node[DatabaseCreator.procesoCirculoCalidadComentarios]));
+        circuloCalidadId: node[DatabaseCreator.procesoCirculoCalidadId],
+        ramosRevisados:
+            node[DatabaseCreator.procesoCirculoCalidadRamosRevisados],
+        postcosechaId: node[DatabaseCreator.postcosechaId],
+        ramosRechazados:
+            node[DatabaseCreator.procesoCirculoCalidadRamosRechazados],
+        calidadReunion: node[DatabaseCreator.procesoCirculoCalidadReunion],
+        problemaId1: node[DatabaseCreator.procesoCirculoCalidadProblemaId1],
+        problemaId2: node[DatabaseCreator.procesoCirculoCalidadProblemaId2],
+        problemaId3: node[DatabaseCreator.procesoCirculoCalidadProblemaId3],
+        problemaId4: node[DatabaseCreator.procesoCirculoCalidadProblemaId4],
+        problemaId5: node[DatabaseCreator.procesoCirculoCalidadProblemaId5],
+        clienteId1: node[DatabaseCreator.procesoCirculoCalidadClienteId1],
+        clienteId2: node[DatabaseCreator.procesoCirculoCalidadClienteId2],
+        productoId1: node[DatabaseCreator.procesoCirculoCalidadProducto1],
+        productoId2: node[DatabaseCreator.procesoCirculoCalidadProducto2],
+        variedad1: node[DatabaseCreator.procesoCirculoCalidadVariedad1],
+        variedad2: node[DatabaseCreator.procesoCirculoCalidadVariedad2],
+        codigoMesa: node[DatabaseCreator.procesoCirculoCalidadCodigoMesa],
+        linea: node[DatabaseCreator.procesoCirculoCalidadLinea],
+        supervisor1: node[DatabaseCreator.procesoCirculoCalidadSupervisor1],
+        supervisor2: node[DatabaseCreator.procesoCirculoCalidadSupervisor2],
+        supervisorcheck1:
+            node[DatabaseCreator.procesoCirculoCalidadCheckSuperviso1],
+        supervisorcheck2:
+            node[DatabaseCreator.procesoCirculoCalidadCheckSuperviso2],
+        comentarios: node[DatabaseCreator.procesoCirculoCalidadComentarios],
+        circuloCalidadFecha:
+            DateTime.parse(node[DatabaseCreator.procesoCirculoCalidadFecha]),
+      ));
     }
     return circulo;
   }
@@ -66,7 +69,8 @@ class DatabaseCirculoCalidad {
         ${DatabaseCreator.procesoCirculoCalidadSupervisor2},
         ${DatabaseCreator.procesoCirculoCalidadComentarios},
         ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso1},
-        ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso2}) 
+        ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso2},
+        ${DatabaseCreator.procesoCirculoCalidadFecha}) 
     VALUES(
     ${circulo.postcosechaId},
     ${circulo.clienteId1},
@@ -89,7 +93,8 @@ class DatabaseCirculoCalidad {
     '${circulo.supervisor2}',
     '${circulo.comentarios}',
     '${circulo.supervisorcheck1}',
-    '${circulo.supervisorcheck2}'
+    '${circulo.supervisorcheck2}',
+    '${circulo.circuloCalidadFecha}'
     )''';
     return await db.rawInsert(sql);
   }
@@ -117,7 +122,8 @@ class DatabaseCirculoCalidad {
     ${DatabaseCreator.procesoCirculoCalidadSupervisor2} ='${circulo.supervisor2}',
     ${DatabaseCreator.procesoCirculoCalidadComentarios} ='${circulo.comentarios}',
     ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso1} ='${circulo.supervisorcheck1}',
-    ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso2} ='${circulo.supervisorcheck2}'
+    ${DatabaseCreator.procesoCirculoCalidadCheckSuperviso2} ='${circulo.supervisorcheck2}',
+    ${DatabaseCreator.procesoCirculoCalidadFecha}='${circulo.circuloCalidadFecha}'
     WHERE ${DatabaseCreator.procesoCirculoCalidadId} = ${circulo.circuloCalidadId}
     ''';
     print(jsonEncode(sql));
