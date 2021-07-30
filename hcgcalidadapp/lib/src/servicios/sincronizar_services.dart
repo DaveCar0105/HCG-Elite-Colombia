@@ -3,6 +3,7 @@ import 'package:hcgcalidadapp/src/basedatos/database_error.dart';
 import 'package:hcgcalidadapp/src/constantes.dart';
 import 'package:hcgcalidadapp/src/modelos/control.dart';
 import 'package:hcgcalidadapp/src/modelos/error.dart';
+import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_sincronizacion.dart';
 import 'package:http/http.dart' as http;
 
@@ -238,6 +239,29 @@ class SincServices{
       return 0;
     }
   }
+
+  static Future<int> postAllProcesoMaritimo(List<ProcesoMaritimo> reporte) async{
+    final co = Constantes();
+    Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
+    try{
+      var url = Uri.http(co.url, '/api/Sincro/ProcesoMaritimo');
+      var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
+      if(respuesta.statusCode>=200 && respuesta.statusCode <=299){
+        return respuesta.statusCode;
+      }else{
+        ErrorT errorT = new ErrorT();
+        errorT.errorDetalle = (respuesta.statusCode.toString() + ' - ' + respuesta.body.toString());
+        await DatabaseError.addError(errorT);
+        return respuesta.statusCode;
+      }
+    }catch(ex){
+      ErrorT errorT = new ErrorT();
+      errorT.errorDetalle = 'Proceso Maritimo: ' + ex.toString();
+      await DatabaseError.addError(errorT);
+      return 0;
+    }
+  }
+
   static Future<int> postProcesoEmpaque(List<ProcesoEmpaque> reporte) async{
     final co = Constantes();
     Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};

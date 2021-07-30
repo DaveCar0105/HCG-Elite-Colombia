@@ -10,8 +10,6 @@ class DatabaseActividad {
     List<Actividad> actividades = List();
 
     for (final node in data) {
-      print("----------------------LISTA DE ACTIVDADES EN DATABS------");
-      print(jsonEncode(node));
       actividades.add(new Actividad(
           actividadId: node[DatabaseCreator.actividadId],
           actividadUsuarioControlId:

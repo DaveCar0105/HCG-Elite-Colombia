@@ -91,10 +91,8 @@ class DatabaseProcesoMaritimo {
             DatabaseCreator.procesoMaritimoVerificacionEncendidoTermografo],
         procesoMaritimoFotografiaPalletsEmpresaContenor: node[
             DatabaseCreator.procesoMaritimoFotografiaPalletsEmpresaContenor],
-        clienteNombre: node[DatabaseCreator.clienteNombre],
         clienteId: node[DatabaseCreator.clienteId],
         postcosechaId: node[DatabaseCreator.postcosechaId],
-        postcosechaNombre: node[DatabaseCreator.postcosechaNombre],
         procesoMaritimoObservacionesHidratacion:
             node[DatabaseCreator.procesoMaritimoObservacionesHidratacion],
         procesoMaritimoObservacionesEmpaque:

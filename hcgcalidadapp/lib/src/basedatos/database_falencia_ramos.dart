@@ -15,15 +15,13 @@ class DatabaseFalenciaRamos{
     }
     return falenciasRamos;
   }
-  static Future<int> addFalenciaRamos(FalenciaRamos falenciaRamos) async {
 
+  static Future<int> addFalenciaRamos(FalenciaRamos falenciaRamos) async {
     final sql =
     '''INSERT INTO ${DatabaseCreator.falenciaRamosTable}(${DatabaseCreator.falenciaRamosId},${DatabaseCreator.falenciaRamosNombre},${DatabaseCreator.categoriaRamosId},${DatabaseCreator.elite}) 
     VALUES(${falenciaRamos.falenciaRamosId},'${falenciaRamos.falenciaRamosNombre}',${falenciaRamos.categoriaRamosId},${falenciaRamos.elite})''';
     return await db.rawInsert(sql);
   }
-
-
 
   static Future<void> updateFalenciaRamos(FalenciaRamos falenciaRamos) async {
     final sql = '''UPDATE ${DatabaseCreator.falenciaRamosTable}
@@ -32,7 +30,6 @@ class DatabaseFalenciaRamos{
     ${DatabaseCreator.elite} = ${falenciaRamos.elite}
     WHERE ${DatabaseCreator.falenciaRamosId} == ${falenciaRamos.falenciaRamosId}
     ''';
-
     await db.rawUpdate(sql);
   }
 

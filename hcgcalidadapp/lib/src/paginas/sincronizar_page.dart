@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
 import 'package:hcgcalidadapp/src/modelos/cantidad.dart';
+import 'package:hcgcalidadapp/src/utilidades/alertMesssageDialog.dart';
 
 class SincronizarPage extends StatefulWidget {
   @override
@@ -29,7 +30,9 @@ class _SincronizarPageState extends State<SincronizarPage> {
         cantidad.procesoEmp +
         cantidad.ramos +
         cantidad.empaque +
-        cantidad.banda;
+        cantidad.banda+
+        cantidad.procesoMaritimos+
+        cantidad.circuloCalidad;
     setState(() {});
   }
 
@@ -45,57 +48,18 @@ class _SincronizarPageState extends State<SincronizarPage> {
           sincronizando = false;
         });
       } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext cont) => AlertDialog(
-                  title: Text("Error de internet"),
-                  content: Text("Su conexión de internet presenta fallas"),
-                  actions: [
-                    FlatButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text("Aceptar"))
-                  ],
-                ));
+        alertDialogInternet(context);
       }
     } on SocketException catch (_) {
-      showDialog(
-          context: context,
-          builder: (BuildContext cont) => AlertDialog(
-                title: Text("Error de internet"),
-                content: Text("Su conexión de internet presenta fallas"),
-                actions: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text("Aceptar"))
-                ],
-              ));
+      alertDialogInternet(context);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      /*appBar: AppBar(
-        title: Text('SINCRONIZAR'),
-        actions: [
-          RaisedButton(
-            onPressed: () async {
-              try {
-                String valor = await DatabaseReportesAprobacion.jsonRamos();
-                Clipboard.setData(new ClipboardData(text: valor));
-              } catch (e) {
-                Clipboard.setData(new ClipboardData(text: e.toString()));
-              }
-            },
-            child: Text("Copiar"),
-          )
-        ],
-      ),*/
-      body: Container(
+    return Center(
+      child: 
+      Container(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -114,6 +78,8 @@ class _SincronizarPageState extends State<SincronizarPage> {
                 Text("Control Empaque: " + cantidad.empaque.toString()),
                 Text("Control Banda: " + cantidad.banda.toString()),
                 Text("Control Ecuador: " + cantidad.ecuador.toString()),
+                Text("Proceso Maritimos: " + cantidad.procesoMaritimos.toString()),
+                Text("Circulo de Calidad: " + cantidad.circuloCalidad.toString()),
               ],
             )),
             Container(

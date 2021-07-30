@@ -1,25 +1,26 @@
 import 'dart:convert';
 import 'package:hcgcalidadapp/src/basedatos/database_actividad.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_alistamiento.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_banda.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_boncheo.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_detalle_firma.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_ecommerce.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_error.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_firma.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_proceso_empaque.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_temperatura.dart';
 import 'package:hcgcalidadapp/src/modelos/actividad.dart';
 import 'package:hcgcalidadapp/src/modelos/cantidad.dart';
+import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/modelos/control.dart';
 import 'package:hcgcalidadapp/src/modelos/detalleFirma.dart';
 import 'package:hcgcalidadapp/src/modelos/error.dart';
 import 'package:hcgcalidadapp/src/modelos/firma.dart';
 import 'package:hcgcalidadapp/src/modelos/historial.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
+import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_aprobar.dart';
 import 'package:hcgcalidadapp/src/modelos/procesoEmpaque.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
@@ -1086,6 +1087,15 @@ class DatabaseReportesAprobacion {
           ''';
     var data7 = await db.rawQuery(sql7);
 
+     final sql8 = '''SELECT COUNT(*) AS CANTIDAD
+          FROM ${DatabaseCreator.procesoCirculoCalidadTable}
+          ''';
+    var data8 = await db.rawQuery(sql8);
+     final sql9 = '''SELECT COUNT(*) AS CANTIDAD
+          FROM ${DatabaseCreator.procesoMaritimoTable}
+          ''';
+    var data9 = await db.rawQuery(sql9);
+
     cant.ramos = data[0]['CANTIDAD'];
     cant.empaque = data1[0]['CANTIDAD'];
     cant.procesoEmp = data2[0]['CANTIDAD'];
@@ -1094,6 +1104,8 @@ class DatabaseReportesAprobacion {
     cant.actividades = data5[0]['CANTIDAD'];
     cant.banda = data6[0]['CANTIDAD'];
     cant.ecuador = data7[0]['CANTIDAD'];
+    cant.circuloCalidad = data8[0]['CANTIDAD'];
+    cant.procesoMaritimos = data9[0]['CANTIDAD'];
     return cant;
   }
 
@@ -1113,6 +1125,10 @@ class DatabaseReportesAprobacion {
     List<RegistroHidratacion> listaHidratacion = [];
     List<ProcesoEmpaque> listaProcesoEmpaque = [];
     List<RegistroTemperatura> listaTemperatura = [];
+    List<ProcesoMaritimo> listaProcesoMaritimo = [];
+    List<circuloCalidad> listaCirculoCalidad = [];
+
+
     actividades = await DatabaseActividad.getAllActividad();
     hidratacion = await DatabaseProcesoHidratacion.getAllProcesosHidratacion();
     procesoEmpaque = await DatabaseProcesoEmpaque.getAllProcesosEmpaque();
@@ -1121,10 +1137,11 @@ class DatabaseReportesAprobacion {
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
+    listaProcesoMaritimo = await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
+    listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidad();
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
     listaRamo.detallesFirma = [];
-
     listaEmpaque.firmas = [];
     listaEmpaque.detallesFirma = [];
     listaEmpaque.listaEmpaque = [];
@@ -1145,6 +1162,18 @@ class DatabaseReportesAprobacion {
     if (actCode >= 200 && actCode <= 299) {
       await actividadesSinc();
     }
+
+
+    for (int act = 0; act < listaCirculoCalidad.length; act++) {
+      print(jsonEncode(listaCirculoCalidad[act]));
+    }
+    
+    for (int act = 0; act < listaProcesoMaritimo.length; act++) {
+      print(jsonEncode(listaProcesoMaritimo[act]));
+      //listaProcesoMaritimo[act].procesoMaritimoId = null;
+    }
+    int proMariCode = await SincServices.postAllProcesoMaritimo(listaProcesoMaritimo);
+
     for (int hid = 0; hid < hidratacion.length; hid++) {
       listaHidratacion.add(RegistroHidratacion(
           procesoHidratacionUsuarioControlId:
@@ -1168,6 +1197,8 @@ class DatabaseReportesAprobacion {
     if (hidCode >= 200 && hidCode <= 299) {
       await hidratacionSinc();
     }
+
+  
     for (int pemp = 0; pemp < procesoEmpaque.length; pemp++) {
       listaProcesoEmpaque.add(ProcesoEmpaque(
           procesoEmpaqueAltura: procesoEmpaque[pemp].procesoEmpaqueAltura,
@@ -1638,6 +1669,16 @@ class DatabaseReportesAprobacion {
   static procesoEmpaqueSinc() async {
     final sqlPE = 'DELETE FROM ${DatabaseCreator.procesoEmpaqueTable}';
     await db.rawDelete(sqlPE);
+  }
+
+  static procesoMaritimoSinc() async {
+    final sqlA = 'DELETE FROM ${DatabaseCreator.procesoMaritimoTable}';
+    await db.rawDelete(sqlA);
+  }
+
+  static circuloCalidadSinz() async {
+    final sqlA = 'DELETE FROM ${DatabaseCreator.procesoCirculoCalidadTable}';
+    await db.rawDelete(sqlA);
   }
 
   static historialReportes() async {

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_actividad.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/bloc/registro_actividades_bloc.dart';
@@ -26,9 +25,6 @@ class _ActividadesPageState extends State<ActividadesPage> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final appBar = AppBar();
-
-  //final _descripcionActividadController = new TextEditingController();
-
   TimeOfDay _timeInicio = TimeOfDay.now();
   String horaInicio = '';
 
@@ -243,11 +239,6 @@ class _ActividadesPageState extends State<ActividadesPage> {
                             fontSize: height * 0.025),
                       ),
                       _listaActividades(),
-                      // TextField(
-                      //   controller: _descripcionActividadController,
-                      //   maxLines: 3,
-
-                      // ),
                       SizedBox(
                         height: height * 0.06,
                       ),
@@ -327,14 +318,12 @@ class _ActividadesPageState extends State<ActividadesPage> {
     );
   }
 
-  //se movio del IF  //&& _descripcionActividadController.text != ''
   _validarForm() async {
     if (postcosechaId != 0 && horaInicio != '' && horaFin != '') {
       Actividad actividad = new Actividad(
           actividadUsuarioControlId: 1,
           actividadHoraInicio: horaInicio,
           actividadHoraFin: horaFin,
-          //actividadDetalle: _descripcionActividadController.text,
           actividadFecha: DateTime.now(),
           tipoActividadDescripcion: listaActividadesNombre,
           tipoActividadId: listaActiviadesId,
@@ -358,7 +347,6 @@ class _ActividadesPageState extends State<ActividadesPage> {
   _limpiarFormulario() {
     horaFin = '';
     horaInicio = '';
-    // _descripcionActividadController.text = '';
     setState(() {});
   }
 }

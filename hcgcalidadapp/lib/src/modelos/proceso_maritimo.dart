@@ -55,10 +55,8 @@ class ProcesoMaritimo {
     this.procesoMaritimoObservacionesLlenadoContenedor,
     this.procesoMaritimoObservacionesRequerimientosCriticos,
     this.procesoMaritimoFecha,
-    this.clienteNombre,
     this.clienteId,
-    this.postcosechaId,
-    this.postcosechaNombre,
+    this.postcosechaId
   });
 
   int procesoMaritimoId;
@@ -111,16 +109,13 @@ class ProcesoMaritimo {
   String procesoMaritimoObservacionesRequerimientosCriticos;
 
   int clienteId;
-  String clienteNombre;
   DateTime procesoMaritimoFecha;
   int postcosechaId;
-  String postcosechaNombre;
 
   factory ProcesoMaritimo.fromJson(Map<String, dynamic> json) =>
       ProcesoMaritimo(
         procesoMaritimoId: json["procesoMaritimoId"],
         postcosechaId: json["postcosechaId"],
-        postcosechaNombre: json["postcosechaNombre"],
         clienteId: json["clienteId"],
         procesoMaritimoUsuarioControlId:
             json["procesoMaritimoUsuarioControlId"],
@@ -296,7 +291,6 @@ class ProcesoMaritimo {
             procesoMaritimoObservacionesRequerimientosCriticos,
         "clienteId": clienteId,
         "postcosechaId": postcosechaId,
-        "postcosechaNombre": postcosechaNombre,
         "procesoMaritimoFecha": procesoMaritimoFecha.toIso8601String(),
       };
 }

@@ -25,13 +25,8 @@ class DatabaseTemperatura {
               DateTime.parse(node[DatabaseCreator.temperaturaFecha]),
           postcosechaId: node[DatabaseCreator.postcosechaId],
           clienteId: node[DatabaseCreator.clienteId])
-          
           );
     }
-    var asd = jsonEncode(productos);
-    print("----------- TEMPERATURA ----------------");
-    print(asd);
-    print("----------- FIN TEMPERATURA ----------------");
     return productos;
   }
 
@@ -39,7 +34,6 @@ class DatabaseTemperatura {
     final sql =
         'SELECT COUNT(*) AS CANTIDAD FROM ${DatabaseCreator.temperaturaTable}';
     final data = await db.rawQuery(sql);
-
     return data.isNotEmpty ? data.first['CANTIDAD'] : 0;
   }
 

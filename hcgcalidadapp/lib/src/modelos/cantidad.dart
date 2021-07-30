@@ -17,7 +17,9 @@ class Cantidad {
     this.procesoHid,
     this.actividades,
     this.banda,
-    this.ecuador
+    this.ecuador,
+    this.procesoMaritimos,
+    this.circuloCalidad
   });
 
   int ramos;
@@ -28,6 +30,8 @@ class Cantidad {
   int actividades;
   int banda;
   int ecuador;
+  int procesoMaritimos;
+  int circuloCalidad;
 
   factory Cantidad.fromJson(Map<String, dynamic> json) => Cantidad(
     ramos: json["ramos"],
@@ -38,6 +42,8 @@ class Cantidad {
     actividades: json["actividades"],
     banda: json["banda"],
     ecuador: json["ecuador"],
+    procesoMaritimos: json["procesoMaritimos"],
+    circuloCalidad: json["circuloCalidad"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +55,7 @@ class Cantidad {
     "actividades": actividades,
     "banda": banda,
     "ecuador": ecuador,
+    "procesoMaritimos": procesoMaritimos,
+    "circuloCalidad": circuloCalidad
   };
 }
