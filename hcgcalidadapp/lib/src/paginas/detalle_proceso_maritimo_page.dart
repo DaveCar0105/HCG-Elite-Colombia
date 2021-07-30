@@ -38,7 +38,7 @@ class DetalleRegistroProcesoMaritimoPage extends StatelessWidget {
                         '*La temperatura cubículo camión transferencia entre 1ºC ${_respuesta(data[i].procesoMaritimoTemperaturaCubiculoCamion)}\n'
                         '*La temperatura de  cajas de transferencia están entre 1° a 3 C: ${_respuesta(data[i].procesoMaritimoTemperaturaCajasTransferencia)}\n'
                         '*La apariencia de las cajas de transferencia estan en buen estado, no mojadas, correctamente marcadas, no deformes: ${_respuesta(data[i].procesoMaritimoAparenciaCajasTransferencia)}\n'
-                        'PALLETIZADO'
+                        'PALLETIZADO\n'
                         '*Las estibas de madera están debidamente selladas, limpias, en buen estado,  correctamente armadas y del tamaño adecuado: ${_respuesta(data[i].procesoMaritimoEstibasDebidamenteSelladas)}\n'
                         '*Pallets con esquineros con altura que coincide, resistentes y  correctamente ajustados con 4 zunchos transversales y 4 zunchos  verticales: ${_respuesta(data[i].procesoMaritimoPalletsEsquinerosCorrectamenteAjustados)}\n'
                         '*Pallets con altura no mayor a 2.35m? Los pallets no deben sobrepasar  la línea roja del contenedor: ${_respuesta(data[i].procesoMaritimoPalletsAlturaContenedor)}\n'

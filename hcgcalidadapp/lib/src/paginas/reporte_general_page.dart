@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
+import 'package:hcgcalidadapp/src/paginas/sincronizar_page.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   cargarLista() async {
     dinamicos = new List<Widget>();
     reporteGeneral = await DatabaseReportesAprobacion.getReporteGeneral();
-    if(reporteGeneral.porRamosNoConformes==null)
+    if (reporteGeneral.porRamosNoConformes == null)
       reporteGeneral.porRamosNoConformes = 0;
     if (reporteGeneral.falencias != null) {
       for (int i = 0; i < reporteGeneral.falencias.length; i++) {
@@ -93,11 +94,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: Colors.redAccent,
-                width: 2
-              )
-            ),
+              border: Border.all(color: Colors.redAccent, width: 2)),
           width: double.infinity,
           child: Container(
             child: ListView(
@@ -113,23 +110,21 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   style: Theme.of(context).textTheme.headline6),
                             ],
                           ),
-
                           Divider(),
                           banderaList
                               ? Row(
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        'RAMOS REVISADOS:',
-                                        style: Theme.of(context).textTheme.subtitle1
-                                      )
-                                    ),
+                                        child: Text('RAMOS REVISADOS:',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1)),
                                     Expanded(
-                                      child: Text(
-                                        '${reporteGeneral.ramosRevisados}',
-                                        style: Theme.of(context).textTheme.subtitle1
-                                      )
-                                    )
+                                        child: Text(
+                                            '${reporteGeneral.ramosRevisados}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1))
                                   ],
                                 )
                               : Container(
@@ -140,17 +135,16 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                               ? Row(
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        'RAMOS NO CONFORMES:    ',
-                                        style: Theme.of(context).textTheme.subtitle1
-                                      )
-                                    ),
+                                        child: Text('RAMOS NO CONFORMES:    ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1)),
                                     Expanded(
-                                      child: Text(
-                                        '${reporteGeneral.ramosNoConformes}',
-                                        style: Theme.of(context).textTheme.subtitle1
-                                      )
-                                    )
+                                        child: Text(
+                                            '${reporteGeneral.ramosNoConformes}',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1))
                                   ],
                                 )
                               : Container(
@@ -161,17 +155,17 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                               ? Row(
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        '%RAMOS NO CONFORMES: ',
-                                        style: Theme.of(context).textTheme.subtitle1
-                                      )
-                                    ),
+                                        child: Text('%RAMOS NO CONFORMES: ',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1)),
                                     Expanded(
-                                      child: Text(
-                                        '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' + '%',
-                                        style: Theme.of(context).textTheme.subtitle1
-                                      )
-                                    )
+                                        child: Text(
+                                            '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
+                                                '%',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .subtitle1))
                                   ],
                                 )
                               : Container(
@@ -189,13 +183,10 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           Container(
                             width: width,
                             decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  color: Colors.primaries.last,
-                                  width: 2
-                                )
-                              )
-                            ),
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.primaries.last,
+                                        width: 2))),
                           ),
                           Divider(),
                           banderaList
@@ -213,6 +204,59 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
               ],
             ),
           )),
+      floatingActionButton: FloatingActionButton(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SincronizarPage()));
+          },
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          color: Colors.red,
+          textColor: Colors.white,
+          child: Container(
+            width: 130,
+            height: 70,
+            child: Row(
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                // Text(
+                //   'FORMULARIOS',
+                //   style: TextStyle(fontSize: 15),
+                // ),
+                Icon(Icons.save)
+              ],
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  itemTexto(String clave, String valor, double w) {
+    return Container(
+        width: w,
+        child: Wrap(
+          children: <Widget>[
+            Container(
+              width: w,
+              child: Text(
+                clave,
+                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                textScaleFactor: 1,
+              ),
+            ),
+            Container(
+              child: Text(
+                valor,
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+                textScaleFactor: 1,
+              ),
+            )
+          ],
+        ));
   }
 }
