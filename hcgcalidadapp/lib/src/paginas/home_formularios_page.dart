@@ -18,25 +18,13 @@ import 'package:hcgcalidadapp/src/modelos/falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/firma.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/problema_ecommerce.dart';
-import 'package:hcgcalidadapp/src/modelos/procesoEmpaque.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
-import 'package:hcgcalidadapp/src/paginas/actividades_page.dart';
-import 'package:hcgcalidadapp/src/paginas/alistamiento_page.dart';
-import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/banda_page.dart';
-import 'package:hcgcalidadapp/src/paginas/boncheo_page.dart';
 import 'package:hcgcalidadapp/src/paginas/circulo_calidad_page.dart';
-import 'package:hcgcalidadapp/src/paginas/ecommerce_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
 import 'package:hcgcalidadapp/src/paginas/empaque_elite_page.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_empaque_page.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_hidratacion_page.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ramos_elite_page.dart';
-import 'package:hcgcalidadapp/src/paginas/registro_temperatura_page.dart';
-import 'package:hcgcalidadapp/src/paginas/reporte_general_page.dart';
-import 'package:hcgcalidadapp/src/paginas/sincronizar_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -206,13 +194,10 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      /*appBar: AppBar(
-        title: Text('FORMULARIOS HCG'),
-      ),*/
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[
-          Botones(
+          /*Botones(
             child: RaisedButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10)),
@@ -240,8 +225,7 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
                 ),
               ),
             ),
-            // text: 'raise botton',
-          ),
+          ),*/
           Botones(
             child: RaisedButton(
               onPressed: () {
@@ -271,8 +255,6 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
                 ),
               ),
             ),
-
-            // text: 'raise botton',
           ),
           Botones(
             child: RaisedButton(
