@@ -1,18 +1,23 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Preferences{
+
   static final Preferences _instancia = new Preferences._internal();
+  Preferences._internal();
+  SharedPreferences _prefs;
+
   factory Preferences(){
     return _instancia;
   }
-  Preferences._internal();
-  SharedPreferences _prefs;
+
   initPrefs() async {
     this._prefs = await SharedPreferences.getInstance();
   }
+
   get userId{
     return _prefs.getInt('userId3')??0;
   }
+
   set userId(int value){
     _prefs.setInt('userId3', value);
   }
@@ -27,6 +32,7 @@ class Preferences{
   get fechaIns{
     return _prefs.getString('fechaInst3')??'';
   }
+  
   set fechaIns(String value){
     _prefs.setString('fechaInst3', value);
   }

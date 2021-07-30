@@ -206,9 +206,9 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('FORMULARIOS HCG'),
-      ),
+      ),*/
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[

@@ -206,9 +206,9 @@ class _HomeRegistrosPageState extends State<HomeRegistrosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('REGISTROS HCG'),
-      ),
+      ),*/
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[

@@ -36,6 +36,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currenIndexBottomNavigation = 0;
   bool _switchVal = true;
   bool sinc = false;
   sincornizar() async {
@@ -192,6 +193,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  final pages = [
+    HomeFormulariosPage(),
+    HomeChecksPage(),
+    HomeRegistrosPage(),
+    AprobacionPage(),
+    SincronizarPage(),
+    ReporteGeneralPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -258,7 +268,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: GridView.count(
+      body:pages[_currenIndexBottomNavigation],
+      /*GridView.count(
         crossAxisCount: 2,
         children: <Widget>[
           Botones(
@@ -437,7 +448,48 @@ class _HomePageState extends State<HomePage> {
             //text: 'raise botton',
           ),
         ],
-      ),
+      ),*/
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currenIndexBottomNavigation,
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon:Icon(Icons.library_books),
+            title: Text("Formulario"),
+            backgroundColor: Colors.blue 
+          ),
+          BottomNavigationBarItem(
+            icon:Icon(Icons.playlist_add_check),
+            title: Text("Checks"),
+            backgroundColor: Colors.blue 
+          ),
+          BottomNavigationBarItem(
+            icon:Icon(Icons.bar_chart),
+            title: Text("Registros"),
+            backgroundColor: Colors.blue 
+          ),
+          BottomNavigationBarItem(
+            icon:Icon(Icons.check_circle),
+            title: Text("Aprobacion"),
+            backgroundColor: Colors.blue 
+          ),
+          BottomNavigationBarItem(
+            icon:Icon(Icons.autorenew_rounded),
+            title: Text("Sincronizacion"),
+            backgroundColor: Colors.blue 
+          ),
+          BottomNavigationBarItem(
+            icon:Icon(Icons.assessment_outlined),
+            title: Text("Reporte General"),
+            backgroundColor: Colors.blue 
+          ),
+        ],
+        onTap: (index){
+          setState(() {
+            _currenIndexBottomNavigation = index;
+          });
+        },
+      )
     );
   }
 }

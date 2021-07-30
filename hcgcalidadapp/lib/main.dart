@@ -65,9 +65,7 @@ void main() async {
   }
   if (sinc == false) {
     var url = Uri.http(co.url, '/api/Productos');
-    print(url);
     final dataProductos = await http.get(url);
-    print(url);
     var productos = json.decode(dataProductos.body);
     for (int i = 0; i < productos.length; i++) {
       var producto = Producto(
@@ -84,8 +82,6 @@ void main() async {
     final responseCliente = await http.get(url1);
     var clientes = json.decode(responseCliente.body);
     for (int i = 0; i < clientes.length; i++) {
-      //print(jsonEncode(clientes));
-      //print("-----------------------------------------");
       var cliente = Cliente(
           clienteId: clientes[i]["clienteId"],
           clienteNombre: clientes[i]["clienteNombre"],
@@ -249,9 +245,10 @@ void main() async {
           procesoMaritimoDestinoNombre: destinos[i]["destinoMaritimoNombre"]);
       try {
         await DatabaseDestino.addProcesoMaritimoDestinos(tipoDestino);
-      } catch (DatabaseException) {}
+      } catch (DatabaseException) {
+        
+      }
     }
-
     pref.fechaIns = DateTime.now().toIso8601String();
     pref.sinc = true;
   }

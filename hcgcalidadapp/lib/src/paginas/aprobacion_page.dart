@@ -41,8 +41,8 @@ class _AprobacionPageState extends State<AprobacionPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Aprobación'),
-          bottom: TabBar(
+          //title: Text('Aprobación'),
+          title: TabBar(
             tabs: [
               Tab(
                 icon: Icon(Icons.local_florist),

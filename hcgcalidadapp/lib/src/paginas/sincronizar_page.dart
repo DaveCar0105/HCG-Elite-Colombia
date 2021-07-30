@@ -79,7 +79,7 @@ class _SincronizarPageState extends State<SincronizarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('SINCRONIZAR'),
         actions: [
           RaisedButton(
@@ -94,7 +94,7 @@ class _SincronizarPageState extends State<SincronizarPage> {
             child: Text("Copiar"),
           )
         ],
-      ),
+      ),*/
       body: Container(
         width: double.infinity,
         child: Column(

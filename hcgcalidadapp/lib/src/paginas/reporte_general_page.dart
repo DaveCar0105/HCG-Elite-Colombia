@@ -94,9 +94,9 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('REPORTE GENERAL HCG'),
-      ),
+      ),*/
       body: Container(
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(15),

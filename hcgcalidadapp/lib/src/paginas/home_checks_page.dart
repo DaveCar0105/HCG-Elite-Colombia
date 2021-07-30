@@ -206,9 +206,9 @@ class _HomeChecksPageState extends State<HomeChecksPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text('CHECKS HCG'),
-      ),
+      ),*/
       body: GridView.count(
         crossAxisCount: 2,
         children: <Widget>[

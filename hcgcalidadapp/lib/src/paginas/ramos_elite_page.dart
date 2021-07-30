@@ -144,12 +144,14 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   @override
   Widget build(BuildContext context) {
+    String value2= "";
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         title: Text('Ramos Elite'),
       ),
       body: Container(
+        padding: const EdgeInsets.all(16.0),
           width: double.infinity,
           child: Container(
             child: ListView(
@@ -158,7 +160,17 @@ class _RamosElitePageState extends State<RamosElitePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    // _tipoCliente(),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Nombre"),
+                      onSaved: (value){
+                        value2 =  value;
+                      },
+                      validator: (value){
+                        if(value.isEmpty){
+                          return "Llene este campo";
+                        }
+                      },
+                    ),
                     _numeroOrden(),
                     _tipoCliente(),
                     _cliente(),
