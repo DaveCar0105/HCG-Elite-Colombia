@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
-import 'package:hcgcalidadapp/src/modelos/historial.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
@@ -13,15 +12,12 @@ class ReporteGeneralPage extends StatefulWidget {
 
 class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   bool sinc = false;
-  //int ramosRevisados = 0;
-
   bool reporteGeneralValue;
   bool ramosRevisadosValue;
   bool ramosNoConformes;
   bool porRamosNoConformes;
 
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  List<Historial> lista = List();
   ReporteGeneralDto reporteGeneral;
   List<Widget> dinamicos = List<Widget>();
   bool banderaList = false;
@@ -34,11 +30,9 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
 
   cargarLista() async {
     dinamicos = new List<Widget>();
-    //lista = await DatabaseReportesAprobacion.historialReportes();
     reporteGeneral = await DatabaseReportesAprobacion.getReporteGeneral();
     if(reporteGeneral.porRamosNoConformes==null)
       reporteGeneral.porRamosNoConformes = 0;
-    var asd = jsonEncode(lista);
     if (reporteGeneral.falencias != null) {
       for (int i = 0; i < reporteGeneral.falencias.length; i++) {
         cargarFalenciaListWidget(reporteGeneral.falencias[i], (i + 1));
