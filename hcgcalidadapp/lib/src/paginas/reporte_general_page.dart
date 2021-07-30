@@ -2,10 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
 import 'package:hcgcalidadapp/src/modelos/historial.dart';
-import 'package:hcgcalidadapp/src/modelos/reporte_aprobar.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
@@ -106,9 +104,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                 color: Colors.redAccent,
                 width: 2
               )
-              //color: Colors.redAccent,
-              //boxShadow: [BoxShadow(color: Colors.redAccent, blurRadius: 10)]
-              ),
+            ),
           width: double.infinity,
           child: Container(
             child: ListView(
@@ -129,13 +125,18 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           banderaList
                               ? Row(
                                   children: [
-                                    Text(
-                                        'RAMOS REVISADOS:' +
-                                            '                                ' +
-                                            '${reporteGeneral.ramosRevisados}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1),
+                                    Expanded(
+                                      child: Text(
+                                        'RAMOS REVISADOS:',
+                                        style: Theme.of(context).textTheme.subtitle1
+                                      )
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '${reporteGeneral.ramosRevisados}',
+                                        style: Theme.of(context).textTheme.subtitle1
+                                      )
+                                    )
                                   ],
                                 )
                               : Container(
@@ -145,13 +146,18 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           banderaList
                               ? Row(
                                   children: [
-                                    Text(
-                                        'RAMOS NO CONFORMES:' +
-                                            '                       ' +
-                                            '${reporteGeneral.ramosNoConformes}',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1),
+                                    Expanded(
+                                      child: Text(
+                                        'RAMOS NO CONFORMES:    ',
+                                        style: Theme.of(context).textTheme.subtitle1
+                                      )
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '${reporteGeneral.ramosNoConformes}',
+                                        style: Theme.of(context).textTheme.subtitle1
+                                      )
+                                    )
                                   ],
                                 )
                               : Container(
@@ -161,14 +167,18 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           banderaList
                               ? Row(
                                   children: [
-                                    Text(
-                                        '%RAMOS NO CONFORMES:' +
-                                            '                 ' +
-                                            '${reporteGeneral.porRamosNoConformes}' +
-                                            '%',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .subtitle1),
+                                    Expanded(
+                                      child: Text(
+                                        '%RAMOS NO CONFORMES: ',
+                                        style: Theme.of(context).textTheme.subtitle1
+                                      )
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' + '%',
+                                        style: Theme.of(context).textTheme.subtitle1
+                                      )
+                                    )
                                   ],
                                 )
                               : Container(
