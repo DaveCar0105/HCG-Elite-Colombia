@@ -408,12 +408,101 @@ class DatabaseReportesAprobacion {
 
   static Future<ReporteGeneralDto> getReporteGeneral() async {
     ReporteGeneralDto reporteGeneral = new ReporteGeneralDto();
-    List<ReporteAprobacion> retorno = new List();
-    List<FalenciaReporteGeneralDto> listaFalencias =
-        new List<FalenciaReporteGeneralDto>();
+    List<FalenciaReporteGeneralDto> listaFalencias = new List<FalenciaReporteGeneralDto>();
+    List<ClienteReporteGeneralDto> listaClientes = new List<ClienteReporteGeneralDto>();
+    List<ProductoReporteGeneralDto> listaProductos = new List<ProductoReporteGeneralDto>();
+    List<int> listaIdClientesProcesador = List<int>();
     reporteGeneral.ramosNoConformes = 0;
     reporteGeneral.ramosRevisados = 0;
     reporteGeneral.totalFalencias = 0;
+    //////////////////////////////////// PRODUCTOS //////////////////////////////////////////////////////////
+    
+    try{
+      final sqlProductos =
+        '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, 
+        SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
+        FROM ${DatabaseCreator.controlRamosTable},${DatabaseCreator.productoTable}
+        WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
+        AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+        GROUP BY ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}
+      ''';
+      final datasProductos = await db.rawQuery(sqlProductos);
+      for (dynamic elementoQuery in datasProductos) {
+        ProductoReporteGeneralDto productoReporteGeneralDto = new ProductoReporteGeneralDto();
+        productoReporteGeneralDto.id = elementoQuery["productoId"];
+        productoReporteGeneralDto.nombreProducto = elementoQuery["productoNombre"];
+        productoReporteGeneralDto.porcentajeProducto = 0;
+        productoReporteGeneralDto.totalProductos = elementoQuery["ramosTotal"];
+        final sqlProductosRamos = '''SELECT COUNT(*) AS AFECTADOS
+          FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.controlRamosTable}
+          WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId} = ${elementoQuery[DatabaseCreator.productoId]}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          ''';
+          final datasProductosRamos = await db.rawQuery(sqlProductosRamos);
+          if(datasProductosRamos.length>0){
+            productoReporteGeneralDto.cantidad = datasProductosRamos[0]["AFECTADOS"];
+            productoReporteGeneralDto.porcentajeProducto = productoReporteGeneralDto.totalProductos > 0
+          ? ((productoReporteGeneralDto.cantidad * 100) / productoReporteGeneralDto.totalProductos)
+          : 0;
+          } else {
+            productoReporteGeneralDto.cantidad = 0;
+          }
+          listaProductos.add(productoReporteGeneralDto);
+      }
+      final sqlProductosEmpaque =
+        '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar}
+        FROM ${DatabaseCreator.controlEmpaqueTable},${DatabaseCreator.productoTable}
+        WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
+        AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+        GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}
+        ''';
+        final datasProductosEmpaque = await db.rawQuery(sqlProductosEmpaque);
+      for (dynamic elementoQuery in datasProductosEmpaque) {
+        int indice = listaProductos.lastIndexWhere((element) => element.id==elementoQuery["productoId"]);
+        int valorAfectados = 0;
+        final sqlProductosRamosEmpaque = 
+              '''SELECT COUNT(DISTINCT ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS RAMOS
+          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
+          WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId} = ${elementoQuery[DatabaseCreator.productoId]}
+          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
+          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}
+          ''';
+        final datasProductosREmp = await db.rawQuery(sqlProductosRamosEmpaque);
+        for (dynamic afectad in datasProductosREmp) {
+            valorAfectados += afectad['RAMOS'];
+        }
+        if(indice==-1){
+          ProductoReporteGeneralDto productoReporteGeneralDto = new ProductoReporteGeneralDto();
+          productoReporteGeneralDto.id = elementoQuery["productoId"];
+          productoReporteGeneralDto.nombreProducto = elementoQuery["productoNombre"];
+          productoReporteGeneralDto.porcentajeProducto = 0;
+          productoReporteGeneralDto.totalProductos = elementoQuery[DatabaseCreator.empaqueRamosRevisar];
+          if(datasProductosREmp.length>0){
+            productoReporteGeneralDto.cantidad = valorAfectados;
+            productoReporteGeneralDto.porcentajeProducto = productoReporteGeneralDto.totalProductos > 0
+          ? ((productoReporteGeneralDto.cantidad * 100) / productoReporteGeneralDto.totalProductos)
+          : 0;
+          } else {
+            productoReporteGeneralDto.cantidad = 0;
+          }
+          listaProductos.add(productoReporteGeneralDto);
+        }else {
+          listaProductos[indice].cantidad += valorAfectados;
+          listaProductos[indice].totalProductos += elementoQuery[DatabaseCreator.empaqueRamosRevisar];
+          if(datasProductosREmp[0]!=null){
+            listaProductos[indice].porcentajeProducto = listaProductos[indice].totalProductos > 0
+          ? ((listaProductos[indice].cantidad * 100) / listaProductos[indice].totalProductos)
+          : 0;
+          }
+        } 
+      }
+    }catch(E){}
+    //////////////////////////////CLIENTES - FALENCIAS //////////////////////////////////////////////////////
     final sql =
         '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
     FROM ${DatabaseCreator.controlRamosTable},${DatabaseCreator.clienteTable}
@@ -433,115 +522,119 @@ class DatabaseReportesAprobacion {
     var data = datas.toList();
     data.addAll(datasE);
     for (dynamic elementoQuery in data) {
+      ClienteReporteGeneralDto clienteReporteGeneralDto = new ClienteReporteGeneralDto();
+      clienteReporteGeneralDto.nombreCliente = elementoQuery["clienteNombre"];
+      clienteReporteGeneralDto.cantidad = 0;
+      clienteReporteGeneralDto.porcentajeCliente = 0;
+      clienteReporteGeneralDto.id = elementoQuery["clienteId"];
+      clienteReporteGeneralDto.totalClientes = 0;
       int clienteId = elementoQuery[DatabaseCreator.clienteId];
-      var subCliente =
-          data.where((e) => e[DatabaseCreator.clienteId] == clienteId).toList();
-
-      for (dynamic client in subCliente) {
-        if (client.containsKey('ramosTotal')) {
-          reporteGeneral.ramosRevisados += client[DatabaseCreator.ramosTotal];
-          final sql2 =
-              '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
-          FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.falenciasReporteRamosTable}, ${DatabaseCreator.falenciaRamosTable},${DatabaseCreator.controlRamosTable}
-          WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.ramosId}
-          AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
-          GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
-          ORDER BY REPETIDOS DESC
-          ''';
-          var data2 = await db.rawQuery(sql2);
-          for (dynamic falen in data2) {
-            if (listaFalencias
-                .any((element) => element.id == falen['falenciaRamosId'])) {
-              var indice = listaFalencias.indexWhere(
-                  (element) => element.id == falen['falenciaRamosId']);
-              listaFalencias[indice].cantidad += falen['REPETIDOS'];
-              reporteGeneral.totalFalencias += falen['REPETIDOS'];
-            } else {
-              FalenciaReporteGeneralDto newFalencia =
-                  new FalenciaReporteGeneralDto();
-              newFalencia.cantidad = falen['REPETIDOS'];
-              newFalencia.id = falen['falenciaRamosId'];
-              newFalencia.nombreFalencia = falen['falenciaRamosNombre'];
-              newFalencia.porcentajeFalencia = 0;
-              reporteGeneral.totalFalencias += falen['REPETIDOS'];
-              listaFalencias.add(newFalencia);
+      var subCliente = data.where((e) => e[DatabaseCreator.clienteId] == clienteId).toList();
+      if(listaIdClientesProcesador.any((idCL) => idCL==clienteId)==false){
+        for (dynamic client in subCliente) {
+          if (client.containsKey('ramosTotal')) {
+            clienteReporteGeneralDto.totalClientes += client["ramosTotal"];
+            reporteGeneral.ramosRevisados += client[DatabaseCreator.ramosTotal];
+            final sql2 =
+                '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
+            FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.falenciasReporteRamosTable}, ${DatabaseCreator.falenciaRamosTable},${DatabaseCreator.controlRamosTable}
+            WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.ramosId}
+            AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+            AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
+            AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
+            AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+            GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+            ORDER BY REPETIDOS DESC
+            ''';
+            var data2 = await db.rawQuery(sql2);
+            for (dynamic falen in data2) {
+              if (listaFalencias
+                  .any((element) => element.id == falen['falenciaRamosId'])) {
+                var indice = listaFalencias.indexWhere(
+                    (element) => element.id == falen['falenciaRamosId']);
+                listaFalencias[indice].cantidad += falen['REPETIDOS'];
+                reporteGeneral.totalFalencias += falen['REPETIDOS'];
+              } else {
+                FalenciaReporteGeneralDto newFalencia =
+                    new FalenciaReporteGeneralDto();
+                newFalencia.cantidad = falen['REPETIDOS'];
+                newFalencia.id = falen['falenciaRamosId'];
+                newFalencia.nombreFalencia = falen['falenciaRamosNombre'];
+                newFalencia.porcentajeFalencia = 0;
+                reporteGeneral.totalFalencias += falen['REPETIDOS'];
+                listaFalencias.add(newFalencia);
+              }
+            }
+            final sql1 = '''SELECT COUNT(*) AS AFECTADOS
+            FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.controlRamosTable}
+            WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
+            AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
+            AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+            ''';
+            var data1 = await db.rawQuery(sql1);
+            for (dynamic afectad in data1) {
+              reporteGeneral.ramosNoConformes += afectad['AFECTADOS'];
+              clienteReporteGeneralDto.cantidad += afectad['AFECTADOS'];
+            }
+          } else {
+            reporteGeneral.ramosRevisados +=
+                client[DatabaseCreator.empaqueRamosRevisar];
+            clienteReporteGeneralDto.totalClientes += client[DatabaseCreator.empaqueRamosRevisar];
+            final sql2 =
+                '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}, ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre}
+            FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
+            WHERE ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
+            AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
+            AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
+            AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+            AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+            GROUP BY ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+            ORDER BY REPETIDOS DESC
+            ''';
+            var data2 = await db.rawQuery(sql2);
+            for (dynamic falen in data2) {
+              if (listaFalencias
+                  .any((element) => element.id == falen['falenciaEmpaqueId'])) {
+                var indice = listaFalencias.indexWhere(
+                    (element) => element.id == falen['falenciaEmpaqueId']);
+                listaFalencias[indice].cantidad += falen['REPETIDOS'];
+                reporteGeneral.totalFalencias += falen['REPETIDOS'];
+              } else {
+                FalenciaReporteGeneralDto newFalencia =
+                    new FalenciaReporteGeneralDto();
+                newFalencia.cantidad = falen['REPETIDOS'];
+                newFalencia.id = falen['falenciaEmpaqueId'];
+                newFalencia.nombreFalencia = falen['falenciaEmpaqueNombre'];
+                newFalencia.porcentajeFalencia = 0;
+                reporteGeneral.totalFalencias += falen['REPETIDOS'];
+                listaFalencias.add(newFalencia);
+              }
+            }
+            final sql3 =
+                '''SELECT COUNT(DISTINCT ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS RAMOS
+            FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
+            WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
+            AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
+            AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
+            AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
+            AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
+            AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+            GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
+            ''';
+            var data3 = await db.rawQuery(sql3);
+            for (dynamic afectad in data3) {
+              reporteGeneral.ramosNoConformes += afectad['RAMOS'];
+              clienteReporteGeneralDto.cantidad += afectad['RAMOS'];
             }
           }
-          final sql1 = '''SELECT COUNT(*) AS AFECTADOS
-          FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.controlRamosTable}
-          WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
-          ''';
-          var data1 = await db.rawQuery(sql1);
-          for (dynamic afectad in data1) {
-            reporteGeneral.ramosNoConformes += afectad['AFECTADOS'];
-          }
-        } else {
-          reporteGeneral.ramosRevisados +=
-              client[DatabaseCreator.empaqueRamosRevisar];
-          final sql2 =
-              '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}, ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre}
-          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
-          WHERE ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
-          GROUP BY ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          ORDER BY REPETIDOS DESC
-          ''';
-          var data2 = await db.rawQuery(sql2);
-          for (dynamic falen in data2) {
-            if (listaFalencias
-                .any((element) => element.id == falen['falenciaEmpaqueId'])) {
-              var indice = listaFalencias.indexWhere(
-                  (element) => element.id == falen['falenciaEmpaqueId']);
-              listaFalencias[indice].cantidad += falen['REPETIDOS'];
-              reporteGeneral.totalFalencias += falen['REPETIDOS'];
-            } else {
-              FalenciaReporteGeneralDto newFalencia =
-                  new FalenciaReporteGeneralDto();
-              newFalencia.cantidad = falen['REPETIDOS'];
-              newFalencia.id = falen['falenciaEmpaqueId'];
-              newFalencia.nombreFalencia = falen['falenciaEmpaqueNombre'];
-              newFalencia.porcentajeFalencia = 0;
-              reporteGeneral.totalFalencias += falen['REPETIDOS'];
-              listaFalencias.add(newFalencia);
-            }
-          }
-          final sql1 =
-              '''SELECT COUNT(DISTINCT	${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS CAJAS
-          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
-          WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
-          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'C%'
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
-          GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
-          ''';
-          var data1 = await db.rawQuery(sql1);
-          final sql3 =
-              '''SELECT COUNT(DISTINCT ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS RAMOS
-          FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
-          WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${client[DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
-          AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
-          GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
-          ''';
-          var data3 = await db.rawQuery(sql3);
-          for (dynamic afectad in data3) {
-            reporteGeneral.ramosNoConformes += afectad['RAMOS'];
-          }
+          clienteReporteGeneralDto.porcentajeCliente = clienteReporteGeneralDto.totalClientes > 0
+            ? ((clienteReporteGeneralDto.cantidad * 100) / clienteReporteGeneralDto.totalClientes)
+            : 0;
         }
+        listaClientes.add(clienteReporteGeneralDto);
+        listaIdClientesProcesador.add(clienteId);
       }
+      
     }
     if (reporteGeneral.ramosRevisados > 0) {
       reporteGeneral.porRamosNoConformes =
@@ -554,7 +647,11 @@ class DatabaseReportesAprobacion {
           ? ((falen.cantidad * 100) / reporteGeneral.totalFalencias)
           : 0;
     }
+    listaClientes.sort((a, b) => b.porcentajeCliente.compareTo(a.porcentajeCliente));
+    listaProductos.sort((a, b) => b.porcentajeProducto.compareTo(a.porcentajeProducto));
     reporteGeneral.falencias = listaFalencias;
+    reporteGeneral.clientes = listaClientes;
+    reporteGeneral.productos = listaProductos;
     return reporteGeneral;
   }
 
@@ -1164,15 +1261,15 @@ class DatabaseReportesAprobacion {
     }
 
 
-    for (int act = 0; act < listaCirculoCalidad.length; act++) {
+    /*for (int act = 0; act < listaCirculoCalidad.length; act++) {
       print(jsonEncode(listaCirculoCalidad[act]));
     }
     
     for (int act = 0; act < listaProcesoMaritimo.length; act++) {
       print(jsonEncode(listaProcesoMaritimo[act]));
       //listaProcesoMaritimo[act].procesoMaritimoId = null;
-    }
-    int proMariCode = await SincServices.postAllProcesoMaritimo(listaProcesoMaritimo);
+    }*/
+    //int proMariCode = await SincServices.postAllProcesoMaritimo(listaProcesoMaritimo);
 
     for (int hid = 0; hid < hidratacion.length; hid++) {
       listaHidratacion.add(RegistroHidratacion(

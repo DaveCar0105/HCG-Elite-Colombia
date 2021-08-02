@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
-import 'package:hcgcalidadapp/src/paginas/sincronizar_page.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
   @override
@@ -20,6 +19,8 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   ReporteGeneralDto reporteGeneral;
   List<Widget> dinamicos = List<Widget>();
+  List<Widget> dinamicosClientes = List<Widget>();
+  List<Widget> dinamicosProductos = List<Widget>();
   bool banderaList = false;
 
   @override
@@ -36,6 +37,16 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     if (reporteGeneral.falencias != null) {
       for (int i = 0; i < reporteGeneral.falencias.length; i++) {
         cargarFalenciaListWidget(reporteGeneral.falencias[i], (i + 1));
+      }
+    }
+    if (reporteGeneral.clientes != null) {
+      for (int i = 0; i < reporteGeneral.clientes.length; i++) {
+        cargarClientesListWidget(reporteGeneral.clientes[i], (i + 1));
+      }
+    }
+    if (reporteGeneral.productos != null) {
+      for (int i = 0; i < reporteGeneral.productos.length; i++) {
+        cargarProductosListWidget(reporteGeneral.productos[i], (i + 1));
       }
     }
     setState(() {
@@ -81,14 +92,89 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     dinamicos.add(falenciaSetear);
   }
 
+  cargarClientesListWidget(ClienteReporteGeneralDto cliente, int indice) {
+    String textoTitle = indice.toString() + ". " + cliente.nombreCliente;
+    String clienteTextRevisados = "revisados: " + cliente.totalClientes.toString();
+    String clienteTextRechazados = "rechazados: " + cliente.cantidad.toString();
+    String porcentajeText =
+        "%: " + cliente.porcentajeCliente.toStringAsFixed(2) + "%";
+    dynamic clienteSetear = Center(
+        child: Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(leading: Icon(Icons.person), title: Text(textoTitle)),
+        Column(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: Text(clienteTextRevisados),
+                  onPressed: () {/* ... */},
+                ),
+                TextButton(
+                  child: Text(clienteTextRechazados),
+                  onPressed: () {/* ... */},
+                ),
+                TextButton(
+                  child: Text(porcentajeText),
+                  onPressed: () {/* ... */},
+                ),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    ));
+    dinamicosClientes.add(clienteSetear);
+  }
+
+  cargarProductosListWidget(ProductoReporteGeneralDto producto, int indice) {
+    String textoTitle = indice.toString() + ". " + producto.nombreProducto;
+    String productoTextRevisados = "revisados: " + producto.totalProductos.toString();
+    String productoTextRechazados = "rechazados: " + producto.cantidad.toString();
+    String porcentajeText =
+        "%: " + producto.porcentajeProducto.toStringAsFixed(2) + "%";
+    dynamic productoSetear = Center(
+        child: Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(leading: Icon(Icons.description), title: Text(textoTitle)),
+        Column(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: Text(productoTextRevisados),
+                  onPressed: () {/* ... */},
+                ),
+                TextButton(
+                  child: Text(productoTextRechazados),
+                  onPressed: () {/* ... */},
+                ),
+                TextButton(
+                  child: Text(porcentajeText),
+                  onPressed: () {/* ... */},
+                ),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    ));
+    dinamicosProductos.add(productoSetear);
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
-      /*appBar: AppBar(
-        title: Text('REPORTE GENERAL HCG'),
-      ),*/
       body: Container(
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(15),
@@ -175,7 +261,57 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           Divider(),
                           Column(
                             children: [
-                              Text('RESUMEN CAUSAS',
+                              Text('RESUMEN CAUSAS - CLIENTES',
+                                  style: Theme.of(context).textTheme.headline6)
+                            ],
+                          ),
+                          Divider(),
+                          Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.primaries.last,
+                                        width: 2))),
+                          ),
+                          Divider(),
+                          banderaList
+                              ? Column(
+                                  children: dinamicosClientes,
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          Divider(),
+                          Divider(),
+                          Column(
+                            children: [
+                              Text('RESUMEN CAUSAS - PRODUCTOS',
+                                  style: Theme.of(context).textTheme.headline6)
+                            ],
+                          ),
+                          Divider(),
+                          Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.primaries.last,
+                                        width: 2))),
+                          ),
+                          Divider(),
+                          banderaList
+                              ? Column(
+                                  children: dinamicosProductos,
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          Divider(),
+                          Divider(),
+                          Column(
+                            children: [
+                              Text('RESUMEN CAUSAS - PROBLEMAS',
                                   style: Theme.of(context).textTheme.headline6)
                             ],
                           ),
@@ -204,7 +340,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
               ],
             ),
           )),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         child: RaisedButton(
           onPressed: () {
             Navigator.push(context,
@@ -230,33 +366,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
             ),
           ),
         ),
-      ),
+      ),*/
     );
-  }
-
-  itemTexto(String clave, String valor, double w) {
-    return Container(
-        width: w,
-        child: Wrap(
-          children: <Widget>[
-            Container(
-              width: w,
-              child: Text(
-                clave,
-                style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                textScaleFactor: 1,
-              ),
-            ),
-            Container(
-              child: Text(
-                valor,
-                style: TextStyle(
-                  fontSize: 18,
-                ),
-                textScaleFactor: 1,
-              ),
-            )
-          ],
-        ));
   }
 }
