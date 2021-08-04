@@ -160,7 +160,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    TextFormField(
+                    /*TextFormField(
                       decoration: InputDecoration(labelText: "Nombre"),
                       onSaved: (value){
                         value2 =  value;
@@ -170,7 +170,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
                           return "Llene este campo";
                         }
                       },
-                    ),
+                    ),*/
                     _numeroOrden(),
                     _tipoCliente(),
                     _cliente(),
@@ -375,10 +375,12 @@ class _RamosElitePageState extends State<RamosElitePage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete producto = listaProducto.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                productoId = producto.id;
+                if(value!= null && value!=""){
+                  AutoComplete producto = listaProducto.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  productoId = producto.id;
+                }
               },
             )
           : Container(
@@ -403,11 +405,13 @@ class _RamosElitePageState extends State<RamosElitePage> {
               width: 200.0,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                listaClienteProvider.listaClientes = tipoCliente.id;
-                listaClienteProvider.clienteNombre = tipoCliente.nombre;
+                if(value!= null && value!=""){
+                  AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  listaClienteProvider.listaClientes = tipoCliente.id;
+                  listaClienteProvider.clienteNombre = tipoCliente.nombre;
+                }
               })
           : Container(
               child: CircularProgressIndicator(),
@@ -435,11 +439,13 @@ class _RamosElitePageState extends State<RamosElitePage> {
               width: 200.0,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                AutoComplete cliente =
+                if(value!= null && value!=""){
+                  AutoComplete cliente =
                     listaClienteProvider.listaClientess.firstWhere((item) {
                   return item.nombre == value;
-                });
-                clienteId = cliente.id;
+                  });
+                  clienteId = cliente.id;
+                }
               },
             );
   }
@@ -461,10 +467,12 @@ class _RamosElitePageState extends State<RamosElitePage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                postcosechaId = postcosecha.id;
+                if(value!= null && value!=""){
+                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  postcosechaId = postcosecha.id;
+                }
               },
             )
           : Container(

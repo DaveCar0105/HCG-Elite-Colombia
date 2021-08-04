@@ -304,10 +304,12 @@ class _BandaPageState extends State<BandaPage> {
                 width: 200,
                 style: TextStyle(fontSize: 15),
                 parentAction: (value) {
-                  AutoComplete tip = listaTipos.firstWhere((item) {
-                    return item.nombre == value;
-                  });
-                  tipoId = tip.id;
+                  if(value!= null && value!=""){
+                    AutoComplete tip = listaTipos.firstWhere((item) {
+                      return item.nombre == value;
+                    });
+                    tipoId = tip.id;
+                  }
                 },
               )
             : Container(
@@ -409,10 +411,12 @@ class _BandaPageState extends State<BandaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete producto = listaProducto.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                productoId = producto.id;
+                if(value!= null && value!=""){
+                  AutoComplete producto = listaProducto.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  productoId = producto.id;
+                }
               },
             )
           : Container(
@@ -438,11 +442,13 @@ class _BandaPageState extends State<BandaPage> {
       width: 200.0,
       style: TextStyle(fontSize: 15),
       parentAction: (value) {
-        AutoComplete cliente =
+        if(value!= null && value!=""){
+          AutoComplete cliente =
             listaClienteProvider.listaClientess.firstWhere((item) {
-          return item.nombre == value;
-        });
-        clienteId = cliente.id;
+            return item.nombre == value;
+          });
+          clienteId = cliente.id;
+        }
       },
     );
   }
@@ -463,11 +469,13 @@ class _BandaPageState extends State<BandaPage> {
               width: 200.0,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                listaClienteProvider.listaClientes = tipoCliente.id;
-                listaClienteProvider.clienteNombre = tipoCliente.nombre;
+                if(value!= null && value!=""){
+                  AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  listaClienteProvider.listaClientes = tipoCliente.id;
+                  listaClienteProvider.clienteNombre = tipoCliente.nombre;
+                }
               },
             )
           : Container(
@@ -493,10 +501,12 @@ class _BandaPageState extends State<BandaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                postcosechaId = postcosecha.id;
+                if(value!= null && value!=""){
+                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  postcosechaId = postcosecha.id;
+                }
               },
             )
           : Container(

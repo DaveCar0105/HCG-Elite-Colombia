@@ -203,10 +203,12 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                postcosechaId = postcosecha.id;
+                if(value!= null && value!=""){
+                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  postcosechaId = postcosecha.id;
+                }
               },
             )
           : Container(
@@ -232,10 +234,12 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete clientes = listaClientes.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                clientesId = clientes.id;
+                if(value!= null && value!=""){
+                  AutoComplete clientes = listaClientes.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  clientesId = clientes.id;
+                }
               },
             )
           : Container(
@@ -261,10 +265,12 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete destinos = listaDestinos.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                destinosId = destinos.id;
+                if(value!= null && value!=""){
+                  AutoComplete destinos = listaDestinos.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  destinosId = destinos.id;
+                }
               },
             )
           : Container(

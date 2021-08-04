@@ -65,10 +65,12 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
           fontSize: 15,
         ),
         parentAction: (value){
-          AutoComplete postcosecha= listaPostcosecha.firstWhere((item){
-            return item.nombre == value;
-          });
-          postcosechaId = postcosecha.id;
+          if(value!= null && value!=""){
+            AutoComplete postcosecha= listaPostcosecha.firstWhere((item){
+              return item.nombre == value;
+            });
+            postcosechaId = postcosecha.id;
+          }
         },
       ):Container(
         child: CircularProgressIndicator(),

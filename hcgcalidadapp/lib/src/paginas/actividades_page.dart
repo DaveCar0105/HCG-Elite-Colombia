@@ -128,10 +128,12 @@ class _ActividadesPageState extends State<ActividadesPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                postcosechaId = postcosecha.id;
+                if(value!= null && value!=""){
+                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  postcosechaId = postcosecha.id;
+                }
               },
             )
           : Container(
@@ -157,11 +159,13 @@ class _ActividadesPageState extends State<ActividadesPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete actividades = listaActividades.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                listaActiviadesId = actividades.id;
-                listaActividadesNombre = actividades.nombre;
+                if(value!= null && value!=""){
+                  AutoComplete actividades = listaActividades.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  listaActiviadesId = actividades.id;
+                  listaActividadesNombre = actividades.nombre;
+                }
               },
             )
           : Container(

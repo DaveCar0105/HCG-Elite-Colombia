@@ -95,10 +95,12 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                postcosechaId = postcosecha.id;
+                if(value!= null && value!=""){
+                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  postcosechaId = postcosecha.id;
+                }
               },
             )
           : Container(
@@ -124,10 +126,12 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                AutoComplete cliente = listaClientes.firstWhere((item) {
-                  return item.nombre == value;
-                });
-                clienteId = cliente.id;
+                if(value!= null && value!=""){
+                  AutoComplete cliente = listaClientes.firstWhere((item) {
+                    return item.nombre == value;
+                  });
+                  clienteId = cliente.id;
+                }
               },
             )
           : Container(
@@ -201,13 +205,13 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     _postcosecha(),
+                    _clientes(),
+                    Divider(),
                     _InputTemperatura(
                         title: 'Temperatura Cuarto Frío',
                         fontSize: height * 0.025,
                         padding: EdgeInsets.symmetric(horizontal: width * 0.2),
                         controller: temperaturaExterna),
-                    Divider(),
-                    _clientes(),
                     _InputTemperatura(
                         title: 'Temperatura Caja #1',
                         fontSize: height * 0.025,

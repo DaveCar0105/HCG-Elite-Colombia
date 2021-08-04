@@ -356,10 +356,12 @@ class _ProcesoEmpaquePageState extends State<ProcesoEmpaquePage> {
           fontSize: 11,
         ),
         parentAction: (value){
-          AutoComplete postcosecha = listaPostcosecha.firstWhere((item){
-            return item.nombre.compareTo(value) == 0;
-          });
-          postcosechaId = postcosecha.id;
+          if(value!= null && value!=""){
+            AutoComplete postcosecha = listaPostcosecha.firstWhere((item){
+              return item.nombre.compareTo(value) == 0;
+            });
+            postcosechaId = postcosecha.id;
+          }
         },
       ):Container(
         child: CircularProgressIndicator(),
