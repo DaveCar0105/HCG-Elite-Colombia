@@ -23,9 +23,7 @@ class _ListaEmpaquePageState extends State<ListaEmpaquePage> {
   cargarEmpaques(String x) async{
     empaques = [];
     empaques = await DatabaseEmpaque.getAllEmpaque(empaque.controlEmpaqueId);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -111,7 +109,6 @@ class _ListaEmpaquePageState extends State<ListaEmpaquePage> {
     }
     else{
       tipo = 'RAMO';
-
     }
     return Container(
       margin: EdgeInsets.all(10),

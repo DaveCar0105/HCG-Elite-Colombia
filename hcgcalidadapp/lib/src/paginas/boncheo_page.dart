@@ -10,7 +10,6 @@ import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/paginas/problemas_boncheo_page.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
-import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
 // ignore: must_be_immutable
