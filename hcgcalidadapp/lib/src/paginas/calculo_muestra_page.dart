@@ -141,7 +141,15 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
                     )
                   ],
                 ),
-                Column()
+                Divider(),
+                Column(
+                  children: [
+                    Text(
+                      "RESULTADO DE MUESTRA",
+                      style: Theme.of(context).textTheme.subtitle1,
+                    )
+                  ],
+                )
               ],
             ),
           )),
