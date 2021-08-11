@@ -26,6 +26,7 @@ import 'package:hcgcalidadapp/src/paginas/alistamiento_page.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/banda_page.dart';
 import 'package:hcgcalidadapp/src/paginas/boncheo_page.dart';
+import 'package:hcgcalidadapp/src/paginas/calculo_muestra_page.dart';
 import 'package:hcgcalidadapp/src/paginas/circulo_calidad_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecommerce_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
@@ -264,6 +265,37 @@ class _HomeRegistrosPageState extends State<HomeRegistrosPage> {
                       style: TextStyle(fontSize: 15),
                     ),
                     Icon(Icons.engineering_outlined)
+                  ],
+                ),
+              ),
+            ),
+            //text: 'raise botton',
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            calculoMuestraPage(this._switchVal, 10)));
+              },
+              child: Container(
+                width: 130,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Muestra',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.analytics)
                   ],
                 ),
               ),
