@@ -67,15 +67,6 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
                       height: 20,
                     )
                   ],
-                ),
-                Divider(),
-                Column(
-                  children: [
-                    Text(
-                      "RESULTADO DE MUESTRA",
-                      style: Theme.of(context).textTheme.subtitle1,
-                    )
-                  ],
                 )
               ],
             ),
