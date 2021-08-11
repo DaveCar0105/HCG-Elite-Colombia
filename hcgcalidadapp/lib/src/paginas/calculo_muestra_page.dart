@@ -1,106 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
-import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
-import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
-import 'package:hcgcalidadapp/src/modelos/producto.dart';
-import 'package:hcgcalidadapp/src/modelos/ramos.dart';
-import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
-import 'package:hcgcalidadapp/src/paginas/lista_ramos_page.dart';
-import 'package:hcgcalidadapp/src/providers/TipoClienteProvider.dart';
-import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
+import 'package:hcgcalidadapp/src/modelos/calculo_muestra.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
-import 'package:provider/provider.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
-import 'package:hcgcalidadapp/src/basedatos/database_ramos.dart';
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
 
 // ignore: must_be_immutable
 class calculoMuestraPage extends StatefulWidget {
-  bool valor;
-  int ramosId;
-  calculoMuestraPage(bool valor, int ramosId) {
-    this.valor = valor;
-    this.ramosId = ramosId;
-  }
+  calculoMuestraPage() {}
+
   @override
   _calculoMuestraPageState createState() =>
-      _calculoMuestraPageState(this.valor, this.ramosId);
+      _calculoMuestraPageState();
 }
 
 class _calculoMuestraPageState extends State<calculoMuestraPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
   final totalRamos = TextEditingController();
   final margenDeError = TextEditingController();
   final nivelDeConfianza = TextEditingController();
-  final ramosElaborados = TextEditingController();
-  final derogacion = TextEditingController();
-  final marca = TextEditingController();
-  final ordenModal = TextEditingController();
-  ControlRamos ramos = new ControlRamos();
-  String numeroOrden = '';
+  String resultadoText = "";
+  String textoResultado = "Cantidad de muestreo: ";
+  _calculoMuestraPageState() {}
 
-  // GlobalKey<ListaBusquedaState> _keyProducto = GlobalKey();
-  // static List<AutoComplete> listaProducto = new List<AutoComplete>();
-  // String productoNombre = "";
-  // int productoId = 0;
-  // bool prodEnable = false;
-
-  // GlobalKey<ListaBusquedaState> _keyTipoCliente = GlobalKey();
-  // static List<AutoComplete> listaTipoCliente = new List<AutoComplete>();
-  // String tipoClienteNombre = "";
-  // int tipoClienteId = 0;
-  // bool clientTipoEnable = false;
-
-  // GlobalKey<ListaBusquedaState> _keyCliente = GlobalKey();
-  // int clienteId = 0;
-
-  // GlobalKey<ListaBusquedaState> _keyPostcosecha = GlobalKey();
-  // static List<AutoComplete> listaPostcosecha = new List<AutoComplete>();
-  // String postcosechaNombre = "";
-  // int postcosechaId = 0;
-  // bool postcosechaEnable = false;
-
-  bool elite = false;
-  _calculoMuestraPageState(bool valor, int ramosId) {
-    elite = valor;
-    derogacion.text = 'NO APLICA';
-    cargarRamos(ramosId);
-  }
-
-  _guardarReporteRamos() async {
-    ramos.ramosNumeroOrden = numeroOrden;
-    ramos.ramosTotal = int.parse(totalRamos.text);
-    ramos.ramosAprobado = 0;
-    //ramos.clienteId = clienteId;
-    //ramos.productoId = productoId;
-    ramos.ramosElaborados = int.parse(ramosElaborados.text);
-    //ramos.ramosDespachar = int.parse(ramosADespachar.text);
-    //ramos.ramosTallos = int.parse(tallosRamos.text);
-    ramos.ramosFecha =
-        '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
-    ramos.ramosDerogado = derogacion.text;
-    //ramos.postcosechaId = postcosechaId;
-    ramos.ramosMarca = marca.text;
-    ramos.usuarioId = 0;
-    if (ramos.controlRamosId != null) {
-      await DatabaseRamos.updateRamos(ramos);
-    } else {
-      ramos.ramosDesde = DateTime.now().millisecondsSinceEpoch;
-      ramos.controlRamosId = await DatabaseRamos.addRamos(ramos);
-    }
-  }
-
-  cargarRamos(int ramosId) async {
-    // listaProducto = List<AutoComplete>();
-    // listaPostcosecha = List<AutoComplete>();
-    // listaTipoCliente = List<AutoComplete>();
-
-    int valor = 0;
-    if (elite) {
-      valor = 1;
-    }
+  _guardarReporteRamos() {
+    CalculoMuestra calculoMuestra = new CalculoMuestra();
+    calculoMuestra.NivelDeConfianza = 0;
+    calculoMuestra.RamosTotales = 0;
+    calculoMuestra.MargenDeError = 0;
+    try{
+      calculoMuestra.NivelDeConfianza = double.parse(nivelDeConfianza.text);
+      calculoMuestra.RamosTotales = int.parse(totalRamos.text);
+      calculoMuestra.MargenDeError = double.parse(margenDeError.text);
+      setState(() {
+        resultadoText = this.textoResultado + calculoMuestra.calcularMuestra();
+      });
+    }catch(e){}
   }
 
   @override
@@ -121,20 +55,13 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    /*TextFormField(
-                      decoration: InputDecoration(labelText: "Nombre"),
-                      onSaved: (value){
-                        value2 =  value;
-                      },
-                      validator: (value){
-                        if(value.isEmpty){
-                          return "Llene este campo";
-                        }
-                      },
-                    ),*/
                     _cantidadRamosTotales(),
                     _NivelDeConfianza(),
                     _margenDeError(),
+                    Divider(),
+                    Text(resultadoText,
+                      style: Theme.of(context).textTheme.subtitle1),
+                      Divider(),
                     _botonSiguiente(context),
                     SizedBox(
                       height: 20,
@@ -154,6 +81,8 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
       height: 90,
       child: TextField(
         keyboardType: TextInputType.number,
+        maxLengthEnforced: true,
+        maxLength: 2,
         decoration: InputDecoration(
           hintText: 'Nivel de confianza en %',
           labelText: 'Nivel de confianza en %',
@@ -169,6 +98,8 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
       height: 90,
       child: TextField(
         keyboardType: TextInputType.number,
+        maxLengthEnforced: true,
+        maxLength: 2,
         decoration: InputDecoration(
           hintText: 'Margen de Error en %',
           labelText: 'Margen de Error en %',
@@ -188,7 +119,7 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
           hintText: 'Ramos Totales',
           labelText: 'RamosTotales',
         ),
-        controller: ramosElaborados,
+        controller: totalRamos,
       ),
     );
   }
@@ -199,25 +130,10 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
         onPressed: () async {
           if (_validarRamos()) {
             final util = Utilidades();
-            if (numeroOrden != '' &&
-                    util.isNumberEntero(totalRamos.text) &&
-                    //util.isNumberEntero(tallosRamos.text) &&
-                    derogacion.text != '' &&
-                    //util.isNumberEntero(ramosADespachar.text) &&
-                    util.isNumberEntero(ramosElaborados.text) &&
-                    //clienteId != 0 &&
-                    //productoId != 0 &&
-                    marca.text != ''
-                //postcosechaId != 0
-                ) {
-              await _guardarReporteRamos();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          ListaRamosPage(ramos)));
+            if (util.isNumberEntero(totalRamos.text) && util.isNumberEntero(nivelDeConfianza.text) && util.isNumberEntero(margenDeError.text)) {
+              _guardarReporteRamos();
             } else {
-              //_showSnackBar();
+              mostrarSnackbar('Ingrese solo valores numericos', null, scaffoldKey);
             }
           }
         },
@@ -226,7 +142,7 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
         textColor: Colors.white,
         child: Container(
           height: 60,
-          width: 100,
+          width: 120,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -239,17 +155,11 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
 
   bool _validarRamos() {
     if (nivelDeConfianza.text == '' ||
-        ramosElaborados.text == '' ||
+        totalRamos.text == '' ||
         margenDeError.text == '') {
-      mostrarSnackbar('Llenar Datos', null, scaffoldKey);
+      mostrarSnackbar('Ingrese los valores', null, scaffoldKey);
       return false;
     }
-
-    if (int.parse(ramosElaborados.text) < int.parse(totalRamos.text)) {
-      mostrarSnackbar('Error en Ramos a revisar', null, scaffoldKey);
-      return false;
-    }
-
     return true;
   }
 }

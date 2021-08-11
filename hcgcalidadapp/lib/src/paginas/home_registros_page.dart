@@ -282,7 +282,7 @@ class _HomeRegistrosPageState extends State<HomeRegistrosPage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            calculoMuestraPage(this._switchVal, 10)));
+                            calculoMuestraPage()));
               },
               child: Container(
                 width: 130,
