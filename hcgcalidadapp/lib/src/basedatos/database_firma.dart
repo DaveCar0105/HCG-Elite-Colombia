@@ -60,6 +60,16 @@ class DatabaseFirma{
     ''';
     await db.rawUpdate(sql);
   }
+
+  static borrarReportesBanda(int reporteId)async {
+    final sql =
+    '''UPDATE ${DatabaseCreator.controlBandaTable}
+    SET ${DatabaseCreator.ramosAprobado} = 10
+    WHERE ${DatabaseCreator.controlRamosId} = $reporteId
+    ''';
+    await db.rawUpdate(sql);
+  }
+
   static borrarReportesEmpaque(int reporteId)async {
 
     final sqlE =

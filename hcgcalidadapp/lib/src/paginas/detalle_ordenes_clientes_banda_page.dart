@@ -26,10 +26,8 @@ class _DetalleOrdenesClienteBandaState extends State<DetalleOrdenesClienteBanda>
   _DetalleOrdenesClienteBandaState(this.clienteId);
 
   cargarOrdenes() async {
-    listaEmpaque =
-        await DatabaseReportesAprobacion.getAllOrdenes(this.clienteId);
     listaRamo =
-        await DatabaseReportesAprobacion.getAllOrdenesRamos(this.clienteId);
+        await DatabaseReportesAprobacion.getAllOrdenesRamosBanda(this.clienteId);
     setState(() {});
   }
 
@@ -122,7 +120,7 @@ class _DetalleOrdenesClienteBandaState extends State<DetalleOrdenesClienteBanda>
                                           child: Text('Aceptar'),
                                           onPressed: () async {
                                             await DatabaseFirma
-                                                .borrarReportesRamos(
+                                                .borrarReportesBanda(
                                                     listaRamo[index]
                                                         .ordenRamoId);
                                             cargarOrdenes();

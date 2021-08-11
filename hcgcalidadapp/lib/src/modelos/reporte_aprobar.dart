@@ -344,3 +344,67 @@ class OrdenRamo {
         "ramosRevisados": ramosRevisados,
       };
 }
+
+
+OrdenBanda ordenBandaFromJson(String str) => OrdenBanda.fromJson(json.decode(str));
+
+String ordenBandaToJson(OrdenBanda data) => json.encode(data.toJson());
+
+class OrdenBanda {
+  OrdenBanda(
+      {this.ordenRamoId,
+      this.numeroOrden,
+      this.clienteNombre,
+      this.postCosechaNombre,
+      this.productoNombre,
+      this.tipoControlNombre,
+      this.marca,
+      this.ramoInconformidad,
+      this.ramosRevisados,
+      this.ramosElaborados,
+      this.ramosADespachar,
+      this.inspeccion,
+      this.ramosNoConformes,
+      this.falenciaPrincipal,
+      this.falenciaSegundaria});
+
+  int ordenRamoId;
+  String numeroOrden;
+  String clienteNombre;
+  String postCosechaNombre;
+  String productoNombre;
+  String tipoControlNombre;
+  String marca;
+  double ramoInconformidad;
+  int ramosRevisados;
+  int ramosADespachar;
+  int ramosElaborados;
+  double inspeccion;
+  int ramosNoConformes;
+  String falenciaPrincipal;
+  String falenciaSegundaria;
+
+  factory OrdenBanda.fromJson(Map<String, dynamic> json) => OrdenBanda(
+        ordenRamoId: json["ordenRamoId"],
+        numeroOrden: json["numeroOrden"],
+        clienteNombre: json["clienteNombre"],
+        postCosechaNombre: json["postCosechaNombre"],
+        productoNombre: json["productoNombre"],
+        tipoControlNombre: json["tipoControlNombre"],
+        marca: json["marca"],
+        ramosRevisados: json["ramosRevisados"],
+        ramoInconformidad: json["ramoInconformidad"].toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ordenRamoId": ordenRamoId,
+        "numeroOrden": numeroOrden,
+        "clienteNombre": clienteNombre,
+        "postCosechaNombre": postCosechaNombre,
+        "productoNombre": productoNombre,
+        "tipoControlNombre": tipoControlNombre,
+        "marca": marca,
+        "ramoInconformidad": ramoInconformidad,
+        "ramosRevisados": ramosRevisados,
+      };
+}

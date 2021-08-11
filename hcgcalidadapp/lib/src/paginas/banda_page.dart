@@ -95,7 +95,6 @@ class _BandaPageState extends State<BandaPage> {
       await DatabaseBanda.updateBandas(ramos);
     } else {
       ramos.ramosDesde = DateTime.now().millisecondsSinceEpoch;
-
       Text('se ejecutoooooo');
       ramos.controlRamosId = await DatabaseBanda.addBandas(ramos);
     }
