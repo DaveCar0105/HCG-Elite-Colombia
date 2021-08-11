@@ -7,7 +7,10 @@ class DatabaseFalenciaReporteRamos{
     .${DatabaseCreator.falenciasReporteRamosId}, ${DatabaseCreator.falenciaRamosTable}
     .${DatabaseCreator.falenciaRamosNombre}, ${DatabaseCreator.falenciaRamosTable}
     .${DatabaseCreator.falenciaRamosId},${DatabaseCreator.falenciasReporteRamosTable}
-    .${DatabaseCreator.falenciasReporteRamosCantidad}
+    .${DatabaseCreator.falenciasReporteRamosCantidad},${DatabaseCreator.falenciasReporteRamosTable}
+    .${DatabaseCreator.variedad},${DatabaseCreator.falenciasReporteRamosTable}
+    .${DatabaseCreator.numeroMesa},${DatabaseCreator.falenciasReporteRamosTable}
+    .${DatabaseCreator.linea}
     FROM 
     ${DatabaseCreator.falenciasReporteRamosTable},
     ${DatabaseCreator.falenciaRamosTable}
@@ -24,6 +27,9 @@ class DatabaseFalenciaReporteRamos{
           falenciasReporteRamosId: node[DatabaseCreator.falenciasReporteRamosId],
           falenciaRamosId: node[DatabaseCreator.falenciaRamosId],
           falenciaRamosNombre :node[DatabaseCreator.falenciaRamosNombre],
+          numeroMesa :node[DatabaseCreator.numeroMesa],
+          variedad :node[DatabaseCreator.variedad],
+          linea :node[DatabaseCreator.linea]
       ));
     }
     return falenciaReporteRamos;
@@ -31,8 +37,12 @@ class DatabaseFalenciaReporteRamos{
   static Future<int> addFalenciaReporteRamos(FalenciaReporteRamos falenciaReporteRamos) async {
 
     final sql =
-    '''INSERT INTO ${DatabaseCreator.falenciasReporteRamosTable}(${DatabaseCreator.falenciaRamosId},${DatabaseCreator.ramosId},${DatabaseCreator.falenciasReporteRamosCantidad}) 
-    VALUES(${falenciaReporteRamos.falenciaRamosId},${falenciaReporteRamos.ramosId},${falenciaReporteRamos.falenciasReporteRamosCantidad})''';
+    '''INSERT INTO ${DatabaseCreator.falenciasReporteRamosTable}(${DatabaseCreator.falenciaRamosId},${DatabaseCreator.ramosId},${DatabaseCreator.falenciasReporteRamosCantidad}
+    ,${DatabaseCreator.numeroMesa},${DatabaseCreator.variedad},${DatabaseCreator.linea}) 
+    VALUES(${falenciaReporteRamos.falenciaRamosId},${falenciaReporteRamos.ramosId},${falenciaReporteRamos.falenciasReporteRamosCantidad}
+    ,'${falenciaReporteRamos.numeroMesa}'
+    ,'${falenciaReporteRamos.variedad}'
+    ,'${falenciaReporteRamos.linea}')''';
     return await db.rawInsert(sql);
   }
   static Future<void> updateCantidadFalenciaReporteRamos(FalenciaReporteRamos falenciaReporteRamos) async {

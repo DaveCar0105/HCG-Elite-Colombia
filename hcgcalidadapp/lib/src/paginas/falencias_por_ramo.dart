@@ -17,11 +17,17 @@ class FalenciasPorRamo extends StatefulWidget {
 }
 
 class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
+  final numeroMesaTextEditingController = TextEditingController();
+  final variedadTextEditingController = TextEditingController();
+  final lineaTextEditingController = TextEditingController();
   GlobalKey<ListaBusquedaState> _keyFalencias = GlobalKey();
+  final GlobalKey<FormState>  _formKey = GlobalKey<FormState>();
   static List<AutoComplete> listaFalencias = new List<AutoComplete>();
   String falenciaNombre = "";
   int falenciaId=0;
   bool falenciaEnable =false;
+  bool floatingEnable =false;
+  bool estaticFormEnable =true;
   List<FalenciaReporteRamos> listaFalenciasReporte = List();
   int ramoId;
   int controlRamoId;
@@ -38,13 +44,112 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
       appBar: AppBar(
         title: Text("Falencias por ramo"),
       ),
-      body: Container(
-        child: ListView.builder(
-            itemCount: listaFalenciasReporte.length,
-            itemBuilder: (context, index)=>_itemFalencia(listaFalenciasReporte[index],size)
-        ),
+      body:
+      Scrollbar(
+        child: 
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(15),
+              child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Número de mesa",
+                            hintText: 'Ingrese el # mesa',
+                            enabled: estaticFormEnable
+                          ),
+                          controller: numeroMesaTextEditingController,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return "Llene este campo";
+                            }
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            labelText: "Línea",
+                            hintText: 'Ingrese el #línea',
+                            enabled: estaticFormEnable
+                          ),
+                          controller: lineaTextEditingController,
+                          validator: (value){
+                            if(value.isEmpty){
+                              return "Llene este campo";
+                            }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Variedad",
+                        hintText: 'Ingrese la variedad',
+                        enabled: estaticFormEnable
+                      ),
+                      controller: variedadTextEditingController,
+                      validator: (value){
+                        if(value.isEmpty){
+                          return "Llene este campo";
+                        }
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: RaisedButton(
+                        onPressed: () {
+                          print("asdasdasd1" + _formKey.currentState.toString());
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              estaticFormEnable = false;
+                              floatingEnable = true;
+                            });
+                          }
+                        },
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        color: Colors.red,
+                        textColor: Colors.white,
+                        child: Container(
+                          height: 50,
+                          width: 150,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text('Guardar'),
+                              Icon(Icons.save)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              )
+            ),
+            ),
+            Divider(),
+            Expanded(
+              child: ListView.builder(
+                itemCount: listaFalenciasReporte.length,
+                itemBuilder: (context, index)=>_itemFalencia(listaFalenciasReporte[index],size)
+              ),
+            )
+          ]
+        )
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: floatingEnable?FloatingActionButton(
         onPressed: () async {
           listaFalencias = [];
           List<FalenciaRamos> falenciaRamos = List();
@@ -119,8 +224,7 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
           ));
         },
         child: Icon(Icons.add),
-      ),
-
+      ):Container(),
       persistentFooterButtons: <Widget>[
         Container(
           height: 35,
@@ -200,21 +304,21 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
     );
   }
   agregarFalencia() async{
-
     if(falenciaId > 0){
       final falenciaReporteRamos = FalenciaReporteRamos();
       falenciaReporteRamos.falenciaRamosId = falenciaId;
       falenciaReporteRamos.falenciaRamosNombre = falenciaNombre;
       falenciaReporteRamos.falenciasReporteRamosCantidad = 1;
+      falenciaReporteRamos.numeroMesa = numeroMesaTextEditingController.text;
+      falenciaReporteRamos.variedad = variedadTextEditingController.text;
+      falenciaReporteRamos.linea = lineaTextEditingController.text;
       if(this.ramoId == 0){
         this.ramoId = await DatabaseRamos.addRamo(this.controlRamoId);
       }
       falenciaReporteRamos.ramosId = this.ramoId;
       await DatabaseFalenciaReporteRamos.addFalenciaReporteRamos(falenciaReporteRamos);
 
-    }else{
-
-    }
+    }else{}
     await cargarLista(this.ramoId);
   }
   cargarLista(int ramoId) async{
@@ -223,6 +327,13 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
     widget.actualizarLista('');
     setState(() {
       listaFalenciasReporte = falencias;
+      if(falencias.length>0){
+        numeroMesaTextEditingController.text = falencias[0].numeroMesa;
+        variedadTextEditingController.text = falencias[0].variedad;
+        lineaTextEditingController.text = falencias[0].linea;
+        estaticFormEnable = false;
+        floatingEnable = true;
+      }
     });
   }
 }

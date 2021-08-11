@@ -357,6 +357,12 @@ class DatabaseCreator {
       'procesoCirculoCalidadCheckSuperviso2';
   static const procesoCirculoCalidadFecha = 'procesoCirculoCalidadFecha';
 
+
+  // CAMPOS ADICIONALES REFERENTE A HIDRATACION, FINAL DE BANDA Y EMPAQUE
+  static const numeroMesa = 'numeroMesa';
+  static const variedad = 'variedad';
+  static const linea = 'linea';
+
   //static const procesoMaritimo
 
   Future<void> createControlRamosTable(Database db) async {
@@ -539,7 +545,10 @@ class DatabaseCreator {
       $falenciaBandaId INTEGER PRIMARY KEY AUTOINCREMENT,
       $falenciaRamosId INTEGER,
       $falenciaBandaRamos INTEGER,
-      $controlRamosId INTEGER
+      $controlRamosId INTEGER,
+      $numeroMesa TEXT,
+      $variedad TEXT,
+      $linea TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -774,7 +783,10 @@ class DatabaseCreator {
       $falenciasReporteRamosId INTEGER PRIMARY KEY AUTOINCREMENT,
       $falenciasReporteRamosCantidad INTEGER,
       $falenciaRamosId INTEGER,
-      $ramosId INTEGER
+      $ramosId INTEGER,
+      $numeroMesa TEXT,
+      $variedad TEXT,
+      $linea TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -786,7 +798,10 @@ class DatabaseCreator {
       $falenciasReporteEmpaqueId INTEGER PRIMARY KEY AUTOINCREMENT,
       $falenciasReporteEmpaqueCantidad INTEGER,
       $falenciaEmpaqueId INTEGER,
-      $empaqueId INTEGER
+      $empaqueId INTEGER,
+      $numeroMesa TEXT,
+      $variedad TEXT,
+      $linea TEXT
     )''';
 
     await db.execute(ramosSql);

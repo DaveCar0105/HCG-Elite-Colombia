@@ -16,13 +16,19 @@ class FalenciaReporteRamos {
     this.falenciaRamosId,
     this.ramosId,
     this.falenciaRamosNombre,
-    this.total
+    this.total,
+    this.numeroMesa,
+    this.variedad,
+    this.linea
   });
 
   int falenciasReporteRamosId;
   int falenciasReporteRamosCantidad;
   String falenciasReporteRamosPorcentaje;
   int falenciaRamosId;
+  String numeroMesa;
+  String variedad;
+  String linea;
   int ramosId;
   String falenciaRamosNombre;
   int total;
@@ -34,6 +40,9 @@ class FalenciaReporteRamos {
     falenciaRamosId: json["falenciaRamosId"],
     ramosId: json["ramosId"],
     total: json["total"],
+    numeroMesa: json["numeroMesa"],
+    variedad: json["variedad"],
+    linea: json["linea"]
   );
 
   Map<String, dynamic> toJson() => {
@@ -43,5 +52,8 @@ class FalenciaReporteRamos {
     "falenciaRamosId": falenciaRamosId,
     "ramosId": ramosId,
     "total": total,
+    "numeroMesa": numeroMesa,
+    "variedad": variedad,
+    "linea": linea
   };
 }

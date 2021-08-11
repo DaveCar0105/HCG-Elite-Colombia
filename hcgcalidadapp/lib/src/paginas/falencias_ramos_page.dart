@@ -260,14 +260,10 @@ class _FalenciasRamosPageState extends State<FalenciasRamosPage> {
   }
 
   aumentarFalencia(FalenciaReporteRamos falenciaReporteRamos)async {
-
-
     if(falenciaReporteRamos.falenciasReporteRamosCantidad < falenciaReporteRamos.total){
       falenciaReporteRamos.falenciasReporteRamosCantidad++;
       await DatabaseFalenciaReporteRamos.updateCantidadFalenciaReporteRamos(falenciaReporteRamos);
-
     }
-
     cargarLista(falenciaReporteRamos.ramosId);
   }
 }
