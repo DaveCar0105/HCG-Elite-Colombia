@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_banda.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_aprobar.dart';
@@ -13,7 +14,6 @@ class AprobacionPage extends StatefulWidget {
 
 class _AprobacionPageState extends State<AprobacionPage> {
   List<ReporteAprobacion> listaReportes = [];
-
   List<ReporteAprobacionBanda> listaBandas = [];
   List<Map<String, dynamic>> listaEcuador = [];
   bool inicio = false;
@@ -41,7 +41,6 @@ class _AprobacionPageState extends State<AprobacionPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          //title: Text('Aprobación'),
           title: TabBar(
             tabs: [
               Tab(
@@ -90,11 +89,7 @@ class _AprobacionPageState extends State<AprobacionPage> {
 
   Widget _itemResumenBanda(ReporteAprobacionBanda report, double w) {
     int ramos = 0;
-    //int empaque = 0;
     ramos = report.totalRamosRevisadosBanda;
-    // empaque = report.totalEmpaqueRamosRevisadosBanda +
-    //     report.totalEmpaqueCajasRevisadasBanda;
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -150,48 +145,6 @@ class _AprobacionPageState extends State<AprobacionPage> {
                 ? itemTexto('Ramos revisados: ',
                     report.totalRamosRevisadosBanda.toString(), w - 20)
                 : Container(),
-            // empaque > 0
-            //     ? Text(
-            //         'Resumen control Empaque',
-            //         style: TextStyle(fontSize: 21, color: Colors.blue),
-            //       )
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto(
-            //         'Promedio % No conformes Cajas: ',
-            //         report.inconformidadEmpaqueCajasBandaP.toStringAsFixed(2),
-            //         w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto(
-            //         'Promedio % No conformes Ramos: ',
-            //         report.inconformidadEmpaqueRamosBandaP.toStringAsFixed(2),
-            //         w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto('Cantidad Cajas No conformes: ',
-            //         report.totalEmpaqueCajasBanda.toString(), w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto('Cantidad Ramos No conformes: ',
-            //         report.totalEmpaqueRamosBanda.toString(), w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto('Problema principal: ',
-            //         report.falenciaPrincipalEmpaqueBanda.toString(), w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto('Problema secundario: ',
-            //         report.falenciaSegundariaEmpaqueBanda.toString(), w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto('Ramos revisados: ',
-            //         report.totalEmpaqueRamosRevisadosBanda.toString(), w - 20)
-            //     : Container(),
-            // empaque > 0
-            //     ? itemTexto('Cajas revisadas: ',
-            //         report.totalEmpaqueCajasRevisadasBanda.toString(), w - 20)
-            //     : Container(),
           ],
         ),
       ),
