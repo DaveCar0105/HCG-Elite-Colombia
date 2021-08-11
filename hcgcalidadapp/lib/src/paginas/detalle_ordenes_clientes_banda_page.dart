@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_firma.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
@@ -17,7 +19,7 @@ class _DetalleOrdenesClienteBandaState extends State<DetalleOrdenesClienteBanda>
   int clienteId;
   TabController _controller;
   List<OrdenEmpaque> listaEmpaque = List();
-  List<OrdenRamo> listaRamo = List();
+  List<OrdenBanda> listaRamo = List();
   List<Widget> list = [
     Tab(icon: Icon(Icons.local_florist)),
     //Tab(icon: Icon(Icons.view_compact)),
@@ -27,7 +29,7 @@ class _DetalleOrdenesClienteBandaState extends State<DetalleOrdenesClienteBanda>
 
   cargarOrdenes() async {
     listaRamo =
-        await DatabaseReportesAprobacion.getAllOrdenesRamosBanda(this.clienteId);
+        await DatabaseReportesAprobacion.getAllOrdenesBanda(this.clienteId);
     setState(() {});
   }
 
@@ -65,7 +67,7 @@ class _DetalleOrdenesClienteBandaState extends State<DetalleOrdenesClienteBanda>
                   margin: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
+                      borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(color: Colors.black, blurRadius: 7)
                       ]),
@@ -78,6 +80,8 @@ class _DetalleOrdenesClienteBandaState extends State<DetalleOrdenesClienteBanda>
                         listaRamo[index].numeroOrden +
                         '\n Producto: ' +
                         listaRamo[index].productoNombre +
+                        '\n Tipo Control: ' +
+                        listaRamo[index].tipoControlNombre +
                         '\n Marca: ' +
                         listaRamo[index].marca +
                         '\n '),

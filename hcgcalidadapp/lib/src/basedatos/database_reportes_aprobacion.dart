@@ -30,7 +30,6 @@ import 'package:hcgcalidadapp/src/preferencias.dart';
 import 'package:hcgcalidadapp/src/servicios/sincronizar_services.dart';
 
 class DatabaseReportesAprobacion {
-  
   static Future<List<ReporteAprobacion>> getAllReportes() async {
     List<ReporteAprobacion> retorno = new List();
     final sql =
@@ -279,7 +278,8 @@ class DatabaseReportesAprobacion {
           } catch (e) {
             item.falenciaSegundariaBanda = '';
           }
-          final sql1 = '''SELECT SUM(${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaBandaRamos}) AS AFECTADOS
+          final sql1 =
+              '''SELECT SUM(${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaBandaRamos}) AS AFECTADOS
           FROM ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.controlBandaTable}
           WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
           AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.controlRamosId}
@@ -315,18 +315,21 @@ class DatabaseReportesAprobacion {
 
   static Future<ReporteGeneralDto> getReporteGeneral() async {
     ReporteGeneralDto reporteGeneral = new ReporteGeneralDto();
-    List<FalenciaReporteGeneralDto> listaFalencias = new List<FalenciaReporteGeneralDto>();
-    List<ClienteReporteGeneralDto> listaClientes = new List<ClienteReporteGeneralDto>();
-    List<ProductoReporteGeneralDto> listaProductos = new List<ProductoReporteGeneralDto>();
+    List<FalenciaReporteGeneralDto> listaFalencias =
+        new List<FalenciaReporteGeneralDto>();
+    List<ClienteReporteGeneralDto> listaClientes =
+        new List<ClienteReporteGeneralDto>();
+    List<ProductoReporteGeneralDto> listaProductos =
+        new List<ProductoReporteGeneralDto>();
     List<int> listaIdClientesProcesador = List<int>();
     reporteGeneral.ramosNoConformes = 0;
     reporteGeneral.ramosRevisados = 0;
     reporteGeneral.totalFalencias = 0;
     //////////////////////////////////// PRODUCTOS //////////////////////////////////////////////////////////
-    
-    try{
+
+    try {
       final sqlProductos =
-        '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, 
+          '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, 
         SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
         FROM ${DatabaseCreator.controlRamosTable},${DatabaseCreator.productoTable}
         WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
@@ -335,9 +338,11 @@ class DatabaseReportesAprobacion {
       ''';
       final datasProductos = await db.rawQuery(sqlProductos);
       for (dynamic elementoQuery in datasProductos) {
-        ProductoReporteGeneralDto productoReporteGeneralDto = new ProductoReporteGeneralDto();
+        ProductoReporteGeneralDto productoReporteGeneralDto =
+            new ProductoReporteGeneralDto();
         productoReporteGeneralDto.id = elementoQuery["productoId"];
-        productoReporteGeneralDto.nombreProducto = elementoQuery["productoNombre"];
+        productoReporteGeneralDto.nombreProducto =
+            elementoQuery["productoNombre"];
         productoReporteGeneralDto.porcentajeProducto = 0;
         productoReporteGeneralDto.totalProductos = elementoQuery["ramosTotal"];
         final sqlProductosRamos = '''SELECT COUNT(*) AS AFECTADOS
@@ -346,30 +351,34 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
           ''';
-          final datasProductosRamos = await db.rawQuery(sqlProductosRamos);
-          if(datasProductosRamos.length>0){
-            productoReporteGeneralDto.cantidad = datasProductosRamos[0]["AFECTADOS"];
-            productoReporteGeneralDto.porcentajeProducto = productoReporteGeneralDto.totalProductos > 0
-          ? ((productoReporteGeneralDto.cantidad * 100) / productoReporteGeneralDto.totalProductos)
-          : 0;
-          } else {
-            productoReporteGeneralDto.cantidad = 0;
-          }
-          listaProductos.add(productoReporteGeneralDto);
+        final datasProductosRamos = await db.rawQuery(sqlProductosRamos);
+        if (datasProductosRamos.length > 0) {
+          productoReporteGeneralDto.cantidad =
+              datasProductosRamos[0]["AFECTADOS"];
+          productoReporteGeneralDto.porcentajeProducto =
+              productoReporteGeneralDto.totalProductos > 0
+                  ? ((productoReporteGeneralDto.cantidad * 100) /
+                      productoReporteGeneralDto.totalProductos)
+                  : 0;
+        } else {
+          productoReporteGeneralDto.cantidad = 0;
+        }
+        listaProductos.add(productoReporteGeneralDto);
       }
       final sqlProductosEmpaque =
-        '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar}
+          '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar}
         FROM ${DatabaseCreator.controlEmpaqueTable},${DatabaseCreator.productoTable}
         WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
         AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
         GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}
         ''';
-        final datasProductosEmpaque = await db.rawQuery(sqlProductosEmpaque);
+      final datasProductosEmpaque = await db.rawQuery(sqlProductosEmpaque);
       for (dynamic elementoQuery in datasProductosEmpaque) {
-        int indice = listaProductos.lastIndexWhere((element) => element.id==elementoQuery["productoId"]);
+        int indice = listaProductos.lastIndexWhere(
+            (element) => element.id == elementoQuery["productoId"]);
         int valorAfectados = 0;
-        final sqlProductosRamosEmpaque = 
-              '''SELECT COUNT(DISTINCT ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS RAMOS
+        final sqlProductosRamosEmpaque =
+            '''SELECT COUNT(DISTINCT ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}) AS RAMOS
           FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
           WHERE ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId}
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId} = ${elementoQuery[DatabaseCreator.productoId]}
@@ -381,34 +390,42 @@ class DatabaseReportesAprobacion {
           ''';
         final datasProductosREmp = await db.rawQuery(sqlProductosRamosEmpaque);
         for (dynamic afectad in datasProductosREmp) {
-            valorAfectados += afectad['RAMOS'];
+          valorAfectados += afectad['RAMOS'];
         }
-        if(indice==-1){
-          ProductoReporteGeneralDto productoReporteGeneralDto = new ProductoReporteGeneralDto();
+        if (indice == -1) {
+          ProductoReporteGeneralDto productoReporteGeneralDto =
+              new ProductoReporteGeneralDto();
           productoReporteGeneralDto.id = elementoQuery["productoId"];
-          productoReporteGeneralDto.nombreProducto = elementoQuery["productoNombre"];
+          productoReporteGeneralDto.nombreProducto =
+              elementoQuery["productoNombre"];
           productoReporteGeneralDto.porcentajeProducto = 0;
-          productoReporteGeneralDto.totalProductos = elementoQuery[DatabaseCreator.empaqueRamosRevisar];
-          if(datasProductosREmp.length>0){
+          productoReporteGeneralDto.totalProductos =
+              elementoQuery[DatabaseCreator.empaqueRamosRevisar];
+          if (datasProductosREmp.length > 0) {
             productoReporteGeneralDto.cantidad = valorAfectados;
-            productoReporteGeneralDto.porcentajeProducto = productoReporteGeneralDto.totalProductos > 0
-          ? ((productoReporteGeneralDto.cantidad * 100) / productoReporteGeneralDto.totalProductos)
-          : 0;
+            productoReporteGeneralDto.porcentajeProducto =
+                productoReporteGeneralDto.totalProductos > 0
+                    ? ((productoReporteGeneralDto.cantidad * 100) /
+                        productoReporteGeneralDto.totalProductos)
+                    : 0;
           } else {
             productoReporteGeneralDto.cantidad = 0;
           }
           listaProductos.add(productoReporteGeneralDto);
-        }else {
+        } else {
           listaProductos[indice].cantidad += valorAfectados;
-          listaProductos[indice].totalProductos += elementoQuery[DatabaseCreator.empaqueRamosRevisar];
-          if(datasProductosREmp[0]!=null){
-            listaProductos[indice].porcentajeProducto = listaProductos[indice].totalProductos > 0
-          ? ((listaProductos[indice].cantidad * 100) / listaProductos[indice].totalProductos)
-          : 0;
+          listaProductos[indice].totalProductos +=
+              elementoQuery[DatabaseCreator.empaqueRamosRevisar];
+          if (datasProductosREmp[0] != null) {
+            listaProductos[indice].porcentajeProducto =
+                listaProductos[indice].totalProductos > 0
+                    ? ((listaProductos[indice].cantidad * 100) /
+                        listaProductos[indice].totalProductos)
+                    : 0;
           }
-        } 
+        }
       }
-    }catch(E){}
+    } catch (E) {}
     //////////////////////////////CLIENTES - FALENCIAS //////////////////////////////////////////////////////
     final sql =
         '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
@@ -429,15 +446,17 @@ class DatabaseReportesAprobacion {
     var data = datas.toList();
     data.addAll(datasE);
     for (dynamic elementoQuery in data) {
-      ClienteReporteGeneralDto clienteReporteGeneralDto = new ClienteReporteGeneralDto();
+      ClienteReporteGeneralDto clienteReporteGeneralDto =
+          new ClienteReporteGeneralDto();
       clienteReporteGeneralDto.nombreCliente = elementoQuery["clienteNombre"];
       clienteReporteGeneralDto.cantidad = 0;
       clienteReporteGeneralDto.porcentajeCliente = 0;
       clienteReporteGeneralDto.id = elementoQuery["clienteId"];
       clienteReporteGeneralDto.totalClientes = 0;
       int clienteId = elementoQuery[DatabaseCreator.clienteId];
-      var subCliente = data.where((e) => e[DatabaseCreator.clienteId] == clienteId).toList();
-      if(listaIdClientesProcesador.any((idCL) => idCL==clienteId)==false){
+      var subCliente =
+          data.where((e) => e[DatabaseCreator.clienteId] == clienteId).toList();
+      if (listaIdClientesProcesador.any((idCL) => idCL == clienteId) == false) {
         for (dynamic client in subCliente) {
           if (client.containsKey('ramosTotal')) {
             clienteReporteGeneralDto.totalClientes += client["ramosTotal"];
@@ -486,7 +505,8 @@ class DatabaseReportesAprobacion {
           } else {
             reporteGeneral.ramosRevisados +=
                 client[DatabaseCreator.empaqueRamosRevisar];
-            clienteReporteGeneralDto.totalClientes += client[DatabaseCreator.empaqueRamosRevisar];
+            clienteReporteGeneralDto.totalClientes +=
+                client[DatabaseCreator.empaqueRamosRevisar];
             final sql2 =
                 '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}, ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre}
             FROM ${DatabaseCreator.empaqueTable}, ${DatabaseCreator.falenciasReporteEmpaqueTable}, ${DatabaseCreator.falenciaEmpaqueTable},${DatabaseCreator.controlEmpaqueTable}
@@ -534,14 +554,15 @@ class DatabaseReportesAprobacion {
               clienteReporteGeneralDto.cantidad += afectad['RAMOS'];
             }
           }
-          clienteReporteGeneralDto.porcentajeCliente = clienteReporteGeneralDto.totalClientes > 0
-            ? ((clienteReporteGeneralDto.cantidad * 100) / clienteReporteGeneralDto.totalClientes)
-            : 0;
+          clienteReporteGeneralDto.porcentajeCliente =
+              clienteReporteGeneralDto.totalClientes > 0
+                  ? ((clienteReporteGeneralDto.cantidad * 100) /
+                      clienteReporteGeneralDto.totalClientes)
+                  : 0;
         }
         listaClientes.add(clienteReporteGeneralDto);
         listaIdClientesProcesador.add(clienteId);
       }
-      
     }
     if (reporteGeneral.ramosRevisados > 0) {
       reporteGeneral.porRamosNoConformes =
@@ -554,8 +575,10 @@ class DatabaseReportesAprobacion {
           ? ((falen.cantidad * 100) / reporteGeneral.totalFalencias)
           : 0;
     }
-    listaClientes.sort((a, b) => b.porcentajeCliente.compareTo(a.porcentajeCliente));
-    listaProductos.sort((a, b) => b.porcentajeProducto.compareTo(a.porcentajeProducto));
+    listaClientes
+        .sort((a, b) => b.porcentajeCliente.compareTo(a.porcentajeCliente));
+    listaProductos
+        .sort((a, b) => b.porcentajeProducto.compareTo(a.porcentajeProducto));
     reporteGeneral.falencias = listaFalencias;
     reporteGeneral.clientes = listaClientes;
     reporteGeneral.productos = listaProductos;
@@ -817,7 +840,7 @@ class DatabaseReportesAprobacion {
     return listaEmpaques;
   }
 
-static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
+  static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
     List<OrdenBanda> listaRamos = List();
     final sql =
         '''SELECT ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId},
@@ -830,7 +853,7 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
     ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosNumeroOrden},
     ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosDespachar},
     ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosElaborados}
-          FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.postcosechaTable}, ${DatabaseCreator.clienteTable}, ${DatabaseCreator.productoTable}  
+          FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.postcosechaTable},${DatabaseCreator.tipoControlTable}, ${DatabaseCreator.clienteTable}, ${DatabaseCreator.productoTable}  
           WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = $clienteId
           AND ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}
           AND ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaId} = ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.postcosechaId}
@@ -857,27 +880,29 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
           100 /
           double.parse(data[i][DatabaseCreator.ramosElaborados].toString());
 
-      final sql1 = '''SELECT COUNT(*) AS RAMOS
-          FROM ${DatabaseCreator.ramosTable}
-          WHERE ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
+      final sql1 =
+          '''SELECT SUM(${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaBandaRamos}) AS AFECTADOS
+          FROM ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.controlBandaTable}
+          WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.controlRamosId}
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
           ''';
       var data1 = await db.rawQuery(sql1);
       try {
-        item.ramoInconformidad = double.parse(data1[0]['RAMOS']) * 100 / total;
-        item.ramosNoConformes = data1[0]['RAMOS'];
+        item.ramoInconformidad =
+            double.parse(data1[0]['AFECTADOS'].toString()) * 100 / total;
+        item.ramosNoConformes = data1[0]['AFECTADOS'];
       } catch (e) {
         item.ramoInconformidad = 0;
         item.ramosNoConformes = 0;
       }
       final sql2 =
-          '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
-          FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.falenciasReporteRamosTable}, ${DatabaseCreator.falenciaRamosTable},${DatabaseCreator.controlRamosTable}
-          WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.ramosId}
-          AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
-          GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
+          '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
+          FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.falenciaRamosTable}
+          WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId}
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          GROUP BY ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
           ORDER BY REPETIDOS DESC
           LIMIT 2
           ''';
@@ -956,84 +981,6 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
           GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
-          ORDER BY REPETIDOS DESC
-          LIMIT 2
-          ''';
-      var data2 = await db.rawQuery(sql2);
-      try {
-        item.falenciaPrincipal = data2[0]['falenciaRamosNombre'];
-      } catch (e) {
-        item.falenciaPrincipal = 'NO APLICA';
-      }
-      try {
-        item.falenciaSegundaria = data2[1]['falenciaRamosNombre'];
-      } catch (e) {
-        item.falenciaSegundaria = 'NO APLICA';
-      }
-
-      listaRamos.add(item);
-    }
-    return listaRamos;
-  }
-
-  static Future<List<OrdenRamo>> getAllOrdenesRamosBanda(int clienteId) async {
-    List<OrdenRamo> listaRamos = List();
-    final sql =
-        '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId},
-    ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre},
-    ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaNombre},
-    ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre},
-    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramoMarca},
-    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosTotal},
-    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosNumeroOrden},
-    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosDespachar},
-    ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosElaborados}
-          FROM ${DatabaseCreator.controlRamosTable}, ${DatabaseCreator.postcosechaTable}, ${DatabaseCreator.clienteTable}, ${DatabaseCreator.productoTable}  
-          WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = $clienteId
-          AND ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}
-          AND ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.postcosechaId}
-          AND ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
-          ''';
-    var data = await db.rawQuery(sql);
-    for (var i = 0; i < data.length; i++) {
-      OrdenRamo item = new OrdenRamo();
-      int total = 0;
-      item.ordenRamoId = data[i][DatabaseCreator.controlRamosId];
-      item.numeroOrden = data[i][DatabaseCreator.ramosNumeroOrden];
-      item.clienteNombre = data[i][DatabaseCreator.clienteNombre];
-      item.postCosechaNombre = data[i][DatabaseCreator.postcosechaNombre];
-      item.productoNombre = data[i][DatabaseCreator.productoNombre];
-      item.marca = data[i][DatabaseCreator.ramoMarca];
-      total = data[i][DatabaseCreator.ramosTotal];
-      item.ramosRevisados = total;
-      item.ramosElaborados = data[i][DatabaseCreator.ramosElaborados];
-      item.ramosADespachar = data[i][DatabaseCreator.ramosDespachar];
-      item.inspeccion = double.parse(total.toString()) *
-          100 /
-          double.parse(data[i][DatabaseCreator.ramosElaborados].toString());
-
-      final sql1 = '''SELECT SUM(${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaBandaRamos}) AS AFECTADOS
-          FROM ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.controlBandaTable}
-          WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
-          ''';
-      var data1 = await db.rawQuery(sql1);
-      try {
-        item.ramoInconformidad = double.parse(data1[0]['AFECTADOS']) * 100 / total;
-        item.ramosNoConformes = data1[0]['AFECTADOS'];
-      } catch (e) {
-        item.ramoInconformidad = 0;
-        item.ramosNoConformes = 0;
-      }
-      final sql2 =
-          '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
-          FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.falenciaRamosTable}
-          WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
-          GROUP BY ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
           ORDER BY REPETIDOS DESC
           LIMIT 2
           ''';
@@ -1172,11 +1119,11 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
           ''';
     var data7 = await db.rawQuery(sql7);
 
-     final sql8 = '''SELECT COUNT(*) AS CANTIDAD
+    final sql8 = '''SELECT COUNT(*) AS CANTIDAD
           FROM ${DatabaseCreator.procesoCirculoCalidadTable}
           ''';
     var data8 = await db.rawQuery(sql8);
-     final sql9 = '''SELECT COUNT(*) AS CANTIDAD
+    final sql9 = '''SELECT COUNT(*) AS CANTIDAD
           FROM ${DatabaseCreator.procesoMaritimoTable}
           ''';
     var data9 = await db.rawQuery(sql9);
@@ -1213,7 +1160,6 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
     List<ProcesoMaritimo> listaProcesoMaritimo = [];
     List<circuloCalidad> listaCirculoCalidad = [];
 
-
     actividades = await DatabaseActividad.getAllActividad();
     hidratacion = await DatabaseProcesoHidratacion.getAllProcesosHidratacion();
     procesoEmpaque = await DatabaseProcesoEmpaque.getAllProcesosEmpaque();
@@ -1222,7 +1168,8 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
-    listaProcesoMaritimo = await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
+    listaProcesoMaritimo =
+        await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
     listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidad();
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
@@ -1247,7 +1194,6 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
     if (actCode >= 200 && actCode <= 299) {
       await actividadesSinc();
     }
-
 
     /*for (int act = 0; act < listaCirculoCalidad.length; act++) {
       print(jsonEncode(listaCirculoCalidad[act]));
@@ -1283,7 +1229,6 @@ static Future<List<OrdenBanda>> getAllOrdenesBanda(int clienteId) async {
       await hidratacionSinc();
     }
 
-  
     for (int pemp = 0; pemp < procesoEmpaque.length; pemp++) {
       listaProcesoEmpaque.add(ProcesoEmpaque(
           procesoEmpaqueAltura: procesoEmpaque[pemp].procesoEmpaqueAltura,
