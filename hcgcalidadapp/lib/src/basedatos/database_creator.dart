@@ -357,7 +357,6 @@ class DatabaseCreator {
       'procesoCirculoCalidadCheckSuperviso2';
   static const procesoCirculoCalidadFecha = 'procesoCirculoCalidadFecha';
 
-
   // CAMPOS ADICIONALES REFERENTE A HIDRATACION, FINAL DE BANDA Y EMPAQUE
   static const numeroMesa = 'numeroMesa';
   static const variedad = 'variedad';
@@ -533,7 +532,10 @@ class DatabaseCreator {
     final ramosSql = '''CREATE TABLE $ramosTable
     (
       $ramosId INTEGER PRIMARY KEY AUTOINCREMENT,
-      $controlRamosId INTEGER
+      $controlRamosId INTEGER,
+      $numeroMesa TEXT,
+      $variedad TEXT,
+      $linea TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -668,7 +670,10 @@ class DatabaseCreator {
     final ramosSql = '''CREATE TABLE $empaqueTable
     (
       $empaqueId INTEGER PRIMARY KEY AUTOINCREMENT,
-      $controlEmpaqueId INTEGER
+      $controlEmpaqueId INTEGER,
+      $numeroMesa TEXT,
+      $variedad TEXT,
+      $linea TEXT
     )''';
 
     await db.execute(ramosSql);
@@ -783,10 +788,7 @@ class DatabaseCreator {
       $falenciasReporteRamosId INTEGER PRIMARY KEY AUTOINCREMENT,
       $falenciasReporteRamosCantidad INTEGER,
       $falenciaRamosId INTEGER,
-      $ramosId INTEGER,
-      $numeroMesa TEXT,
-      $variedad TEXT,
-      $linea TEXT
+      $ramosId INTEGER
     )''';
 
     await db.execute(ramosSql);
@@ -798,10 +800,7 @@ class DatabaseCreator {
       $falenciasReporteEmpaqueId INTEGER PRIMARY KEY AUTOINCREMENT,
       $falenciasReporteEmpaqueCantidad INTEGER,
       $falenciaEmpaqueId INTEGER,
-      $empaqueId INTEGER,
-      $numeroMesa TEXT,
-      $variedad TEXT,
-      $linea TEXT
+      $empaqueId INTEGER
     )''';
 
     await db.execute(ramosSql);

@@ -1,17 +1,16 @@
-
 import 'dart:convert';
 
-FalenciaRamos falenciaRamosFromJson(String str) => FalenciaRamos.fromJson(json.decode(str));
+FalenciaRamos falenciaRamosFromJson(String str) =>
+    FalenciaRamos.fromJson(json.decode(str));
 
 String falenciaRamosToJson(FalenciaRamos data) => json.encode(data.toJson());
 
 class FalenciaRamos {
-  FalenciaRamos({
-    this.falenciaRamosId,
-    this.falenciaRamosNombre,
-    this.categoriaRamosId,
-    this.elite
-  });
+  FalenciaRamos(
+      {this.falenciaRamosId,
+      this.falenciaRamosNombre,
+      this.categoriaRamosId,
+      this.elite});
 
   int falenciaRamosId;
   String falenciaRamosNombre;
@@ -19,16 +18,15 @@ class FalenciaRamos {
   int elite;
 
   factory FalenciaRamos.fromJson(Map<String, dynamic> json) => FalenciaRamos(
-    falenciaRamosId: json["falenciaRamosId"],
-    falenciaRamosNombre: json["falenciaRamosNombre"],
-    categoriaRamosId: json["categoriaRamosId"],
-    elite: json["elite"],
-  );
+      falenciaRamosId: json["falenciaRamosId"],
+      falenciaRamosNombre: json["falenciaRamosNombre"],
+      categoriaRamosId: json["categoriaRamosId"],
+      elite: json["elite"]);
 
   Map<String, dynamic> toJson() => {
-    "falenciaRamosId": falenciaRamosId,
-    "falenciaRamosNombre": falenciaRamosNombre,
-    "categoriaRamosId": categoriaRamosId,
-    "elite": elite,
-  };
+        "falenciaRamosId": falenciaRamosId,
+        "falenciaRamosNombre": falenciaRamosNombre,
+        "categoriaRamosId": categoriaRamosId,
+        "elite": elite
+      };
 }
