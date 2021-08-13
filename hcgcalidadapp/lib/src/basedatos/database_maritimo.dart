@@ -161,4 +161,25 @@ class DatabaseProcesoMaritimo {
       )''';
     return await db.rawInsert(sql);
   }
+
+  static Future<int> addProcesoMaritimoMultiplesClientes(
+      List<procesoMaritimoMultiplesClientes>
+          procesoMaritimoMultiplesClientes1) async {
+    int a = 0;
+    for (procesoMaritimoMultiplesClientes asd
+        in procesoMaritimoMultiplesClientes1) {
+      final sql = '''INSERT INTO ${DatabaseCreator.procesoMaritimoTable}
+    (
+      ${DatabaseCreator.clienteId},${DatabaseCreator.procesoMaritimoId}
+      
+    )
+    VALUES
+    ( 
+      ${asd.procesoMaritimoMultipleId},${asd.procesoMaritimoMultiplesClientesId}
+
+    )''';
+      a = await db.rawInsert(sql);
+    }
+    return a;
+  }
 }

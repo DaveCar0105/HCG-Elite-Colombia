@@ -1,63 +1,62 @@
 import 'dart:convert';
 
-ProcesoMaritimo procesoHidratacionFromJson(String str) =>
+ProcesoMaritimo procesoMaritimoFromJson(String str) =>
     ProcesoMaritimo.fromJson(json.decode(str));
 
-String procesoHidratacionToJson(ProcesoMaritimo data) =>
+String procesoMaritimoToJson(ProcesoMaritimo data) =>
     json.encode(data.toJson());
 
 class ProcesoMaritimo {
-  ProcesoMaritimo({
-    this.procesoMaritimoId,
-    this.procesoMaritimoUsuarioControlId,
-    this.procesoMaritimoNumeroGuia,
-    this.procesoMaritimoDestinoId,
-    this.procesoMaritimoRealizadoPor,
-    this.procesoMaritimoAcompanamiento,
-    this.procesoMaritimoNombreHidratante,
-    this.procesoMaritimoPhSoluciones,
-    this.procesoMaritimoNivelSolucionTinas,
-    this.procesoMaritimoSolucionHidratacionSinVegetal,
-    this.procesoMaritimoTemperaturaCuartoFrio,
-    this.procesoMaritimoTemperaturaSolucionesHidratacion,
-    this.procesoMaritimoEmpaqueAmbienteTemperatura,
-    this.procesoMaritimoFlorEmpacada,
-    this.procesoMaritimoTransportCareEmpaque,
-    this.procesoMaritimoCajasVisualDeformes,
-    this.procesoMaritimoEtiquetasCajasUbicadas,
-    this.procesoMaritimoTemperaturaCubiculoCamion,
-    this.procesoMaritimoTemperaturaCajasTransferencia,
-    this.procesoMaritimoAparenciaCajasTransferencia,
-    this.procesoMaritimoEstibasDebidamenteSelladas,
-    this.procesoMaritimoPalletsEsquinerosCorrectamenteAjustados,
-    this.procesoMaritimoPalletsAlturaContenedor,
-    this.procesoMaritimoTemperaturaPalletContenedor,
-    this.procesoMaritimoPalletIdentificadoNumero,
-    this.procesoMaritimoTomaRegistroTemperaturas,
-    this.procesoMaritimoGenset,
-    this.procesoMaritimoContenedorEdadFabricacion,
-    this.procesoMaritimoContenedorCumplimientoSeteo,
-    this.procesoMaritimoContenedorPreEnfriado,
-    this.procesoMaritimoContenedorlavadoDesinfectado,
-    this.procesoMartimoCarguePreviamenteHumedecidos,
-    this.procesoMaritimoLlegandoCierreSellado,
-    this.procesoMaritimoEstibasSelloICA,
-    this.procesoMaritimoPalletsTensionZunchos,
-    this.procesoMaritimoPalletIdentificadoEtiqueta,
-    this.procesoMaritimoComponentePalletDestinosEtiquetas,
-    this.procesoMaritimoCamionSelloSeguridadContenedor,
-    this.procesoMaritimoVerificacionEncendidoTermografo,
-    this.procesoMaritimoFotografiaPalletsEmpresaContenor,
-    this.procesoMaritimoObservacionesHidratacion,
-    this.procesoMaritimoObservacionesEmpaque,
-    this.procesoMaritimoObservacionesPalletizado,
-    this.procesoMaritimoObservacionesTransferencias,
-    this.procesoMaritimoObservacionesLlenadoContenedor,
-    this.procesoMaritimoObservacionesRequerimientosCriticos,
-    this.procesoMaritimoFecha,
-    this.clienteId,
-    this.postcosechaId
-  });
+  ProcesoMaritimo(
+      {this.procesoMaritimoId,
+      this.procesoMaritimoUsuarioControlId,
+      this.procesoMaritimoNumeroGuia,
+      this.procesoMaritimoDestinoId,
+      this.procesoMaritimoRealizadoPor,
+      this.procesoMaritimoAcompanamiento,
+      this.procesoMaritimoNombreHidratante,
+      this.procesoMaritimoPhSoluciones,
+      this.procesoMaritimoNivelSolucionTinas,
+      this.procesoMaritimoSolucionHidratacionSinVegetal,
+      this.procesoMaritimoTemperaturaCuartoFrio,
+      this.procesoMaritimoTemperaturaSolucionesHidratacion,
+      this.procesoMaritimoEmpaqueAmbienteTemperatura,
+      this.procesoMaritimoFlorEmpacada,
+      this.procesoMaritimoTransportCareEmpaque,
+      this.procesoMaritimoCajasVisualDeformes,
+      this.procesoMaritimoEtiquetasCajasUbicadas,
+      this.procesoMaritimoTemperaturaCubiculoCamion,
+      this.procesoMaritimoTemperaturaCajasTransferencia,
+      this.procesoMaritimoAparenciaCajasTransferencia,
+      this.procesoMaritimoEstibasDebidamenteSelladas,
+      this.procesoMaritimoPalletsEsquinerosCorrectamenteAjustados,
+      this.procesoMaritimoPalletsAlturaContenedor,
+      this.procesoMaritimoTemperaturaPalletContenedor,
+      this.procesoMaritimoPalletIdentificadoNumero,
+      this.procesoMaritimoTomaRegistroTemperaturas,
+      this.procesoMaritimoGenset,
+      this.procesoMaritimoContenedorEdadFabricacion,
+      this.procesoMaritimoContenedorCumplimientoSeteo,
+      this.procesoMaritimoContenedorPreEnfriado,
+      this.procesoMaritimoContenedorlavadoDesinfectado,
+      this.procesoMartimoCarguePreviamenteHumedecidos,
+      this.procesoMaritimoLlegandoCierreSellado,
+      this.procesoMaritimoEstibasSelloICA,
+      this.procesoMaritimoPalletsTensionZunchos,
+      this.procesoMaritimoPalletIdentificadoEtiqueta,
+      this.procesoMaritimoComponentePalletDestinosEtiquetas,
+      this.procesoMaritimoCamionSelloSeguridadContenedor,
+      this.procesoMaritimoVerificacionEncendidoTermografo,
+      this.procesoMaritimoFotografiaPalletsEmpresaContenor,
+      this.procesoMaritimoObservacionesHidratacion,
+      this.procesoMaritimoObservacionesEmpaque,
+      this.procesoMaritimoObservacionesPalletizado,
+      this.procesoMaritimoObservacionesTransferencias,
+      this.procesoMaritimoObservacionesLlenadoContenedor,
+      this.procesoMaritimoObservacionesRequerimientosCriticos,
+      this.procesoMaritimoFecha,
+      this.clienteId,
+      this.postcosechaId});
 
   int procesoMaritimoId;
   int procesoMaritimoUsuarioControlId;
@@ -292,5 +291,26 @@ class ProcesoMaritimo {
         "clienteId": clienteId,
         "postcosechaId": postcosechaId,
         "procesoMaritimoFecha": procesoMaritimoFecha.toIso8601String(),
+      };
+}
+
+class procesoMaritimoMultiplesClientes {
+  procesoMaritimoMultiplesClientes(
+      {this.procesoMaritimoMultiplesClientesId,
+      this.procesoMaritimoMultipleId});
+  int procesoMaritimoMultiplesClientesId;
+  int procesoMaritimoMultipleId;
+
+  factory procesoMaritimoMultiplesClientes.fromJson(
+          Map<String, dynamic> json) =>
+      procesoMaritimoMultiplesClientes(
+          procesoMaritimoMultiplesClientesId:
+              json["procesoMaritimoMultiplesClientesId"],
+          procesoMaritimoMultipleId: json["procesoMaritimoMultipleId"]);
+
+  Map<String, dynamic> toJson() => {
+        "procesoMaritimoMultiplesClientesId":
+            procesoMaritimoMultiplesClientesId,
+        "procesoMaritimoMultipleId": procesoMaritimoMultipleId
       };
 }

@@ -15,6 +15,7 @@ import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
+import 'package:multiselect/multiselect.dart';
 
 class ProcesoMaritimoPage extends StatefulWidget {
   @override
@@ -77,6 +78,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
 
+  List ListaMultiplesClientesId;
+
   @override
   void initState() {
     cargarCombo();
@@ -97,6 +100,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   String clientesNombre = "";
   int clientesId = 0;
   bool clientesEnable = false;
+
+  List<String> selected = [];
 
   GlobalKey<ListaBusquedaState> _keyDestinos1 = GlobalKey();
   List<AutoComplete> listaDestinos = new List<AutoComplete>();
@@ -203,8 +208,9 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
-                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                if (value != null && value != "") {
+                  AutoComplete postcosecha =
+                      listaPostcosecha.firstWhere((item) {
                     return item.nombre == value;
                   });
                   postcosechaId = postcosecha.id;
@@ -215,6 +221,25 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               child: CircularProgressIndicator(),
             ),
     );
+  }
+
+  Widget _multiplesClientes() {
+    return Container(
+        child: Center(
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: DropDownMultiSelect(
+          onChanged: (List<String> x) {
+            setState(() {
+              selected = x;
+            });
+          },
+          options: listaClientes.map((e) => e.nombre).toList(),
+          selectedValues: selected,
+          whenEmpty: 'Selecione uno o varios clientes',
+        ),
+      ),
+    ));
   }
 
   Widget _clientes() {
@@ -234,7 +259,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
+                if (value != null && value != "") {
                   AutoComplete clientes = listaClientes.firstWhere((item) {
                     return item.nombre == value;
                   });
@@ -265,7 +290,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
+                if (value != null && value != "") {
                   AutoComplete destinos = listaDestinos.firstWhere((item) {
                     return item.nombre == value;
                   });
@@ -335,9 +360,11 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               SizedBox(
                 height: height * 0.05,
               ),
+
               _postcosecha(),
               _destinos(),
-              _clientes(),
+              _multiplesClientes(),
+              //_clientes(),
               _numeroGuia(),
               _realizadoPor(),
               _acompanamiento(),
@@ -1640,96 +1667,110 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
         procesoMaritimoObservacionesLlenadoContenedorValue != '' &&
         procesoMaritimoObservacionesRequerimientosCriticosValue != '' &&
         postcosechaId != 0 &&
-        clientesId != 0) {
+        clientesId != 0 &&
+        selected.length > 0) {
       ProcesoMaritimo procesoMaritimo = new ProcesoMaritimo(
-          procesoMaritimoUsuarioControlId: 1,
-          procesoMaritimoNumeroGuia:
-              int.parse(procesoMaritimoNumeroGuiaValue.text),
-          procesoMaritimoDestinoId: destinosId,
-          procesoMaritimoRealizadoPor: procesoMaritimoRealizadoPorValue.text,
-          procesoMaritimoAcompanamiento:
-              procesoMaritimoAcompanamientoValue.text,
-          procesoMaritimoNombreHidratante: procesoMaritimoNombreHidratanteValue,
-          procesoMaritimoPhSoluciones: procesoMaritimoPhSolucionesvalue,
-          procesoMaritimoNivelSolucionTinas:
-              procesoMaritimoNivelSolucionTinasValue,
-          procesoMaritimoSolucionHidratacionSinVegetal:
-              procesoMaritimoSolucionHidratacionSinVegetalValue,
-          procesoMaritimoTemperaturaCuartoFrio:
-              procesoMaritimoTemperaturaCuartoFrioValue,
-          procesoMaritimoTemperaturaSolucionesHidratacion:
-              procesoMaritimoTemperaturaSolucionesHidratacionValue,
-          procesoMaritimoEmpaqueAmbienteTemperatura:
-              procesoMaritimoEmpaqueAmbienteTemperaturaValue,
-          procesoMaritimoFlorEmpacada: procesoMaritimoFlorEmpacadaValue,
-          procesoMaritimoTransportCareEmpaque:
-              procesoMaritimoTransportCareEmpaquevalue,
-          procesoMaritimoCajasVisualDeformes:
-              procesoMaritimoCajasVisualDeformesValue,
-          procesoMaritimoEtiquetasCajasUbicadas:
-              procesoMaritimoEtiquetasCajasUbicadasValue,
-          procesoMaritimoTemperaturaCubiculoCamion:
-              procesoMaritimoTemperaturaCubiculoCamionValue,
-          procesoMaritimoTemperaturaCajasTransferencia:
-              procesoMaritimoTemperaturaCajasTransferenciaValue,
-          procesoMaritimoAparenciaCajasTransferencia:
-              procesoMaritimoAparenciaCajasTransferenciaValue,
-          procesoMaritimoEstibasDebidamenteSelladas:
-              procesoMaritimoEstibasDebidamenteSelladasValue,
-          procesoMaritimoPalletsEsquinerosCorrectamenteAjustados:
-              procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue,
-          procesoMaritimoPalletsAlturaContenedor:
-              procesoMaritimoPalletsAlturaContenedorValue,
-          procesoMaritimoTemperaturaPalletContenedor:
-              procesoMaritimoTemperaturaPalletContenedorValue,
-          procesoMaritimoPalletIdentificadoNumero:
-              procesoMaritimoPalletIdentificadoNumeroValue,
-          procesoMaritimoTomaRegistroTemperaturas:
-              procesoMaritimoTomaRegistroTemperaturasValue,
-          procesoMaritimoGenset: procesoMaritimoGensetValue,
-          procesoMaritimoContenedorEdadFabricacion:
-              procesoMaritimoContenedorEdadFabricacionValue,
-          procesoMaritimoContenedorCumplimientoSeteo:
-              procesoMaritimoContenedorCumplimientoSeteoValue,
-          procesoMaritimoContenedorPreEnfriado:
-              procesoMaritimoContenedorPreEnfriadoValue,
-          procesoMaritimoContenedorlavadoDesinfectado:
-              procesoMaritimoContenedorlavadoDesinfectadoValue,
-          procesoMartimoCarguePreviamenteHumedecidos:
-              procesoMartimoCarguePreviamenteHumedecidosValue,
-          procesoMaritimoLlegandoCierreSellado:
-              procesoMaritimoLlegandoCierreSelladoValue,
-          procesoMaritimoEstibasSelloICA: procesoMaritimoEstibasSelloICAValue,
-          procesoMaritimoPalletsTensionZunchos:
-              procesoMaritimoPalletsTensionZunchosvalue,
-          procesoMaritimoPalletIdentificadoEtiqueta:
-              procesoMaritimoPalletIdentificadoEtiquetaValue,
-          procesoMaritimoComponentePalletDestinosEtiquetas:
-              procesoMaritimoComponentePalletDestinosEtiquetasValue,
-          procesoMaritimoCamionSelloSeguridadContenedor:
-              procesoMaritimoCamionSelloSeguridadContenedorValue,
-          procesoMaritimoVerificacionEncendidoTermografo:
-              procesoMaritimoVerificacionEncendidoTermografoValue,
-          procesoMaritimoFotografiaPalletsEmpresaContenor:
-              procesoMaritimoFotografiaPalletsEmpresaContenorValue,
-          procesoMaritimoObservacionesHidratacion:
-              procesoMaritimoObsevacionesHidratacionValue.text,
-          procesoMaritimoObservacionesEmpaque:
-              procesoMaritimoObservacionesEmpaqueValue.text,
-          procesoMaritimoObservacionesTransferencias:
-              procesoMaritimoObservacionesTransferenciaValue.text,
-          procesoMaritimoObservacionesPalletizado:
-              procesoMaritimoObservacionesPalletizadoValue.text,
-          procesoMaritimoObservacionesLlenadoContenedor:
-              procesoMaritimoObservacionesLlenadoContenedorValue.text,
-          procesoMaritimoObservacionesRequerimientosCriticos:
-              procesoMaritimoObservacionesRequerimientosCriticosValue.text,
-          procesoMaritimoFecha: DateTime.now(),
-          postcosechaId: postcosechaId,
-          clienteId: clientesId);
+        procesoMaritimoUsuarioControlId: 1,
+        procesoMaritimoNumeroGuia:
+            int.parse(procesoMaritimoNumeroGuiaValue.text),
+        procesoMaritimoDestinoId: destinosId,
+        procesoMaritimoRealizadoPor: procesoMaritimoRealizadoPorValue.text,
+        procesoMaritimoAcompanamiento: procesoMaritimoAcompanamientoValue.text,
+        procesoMaritimoNombreHidratante: procesoMaritimoNombreHidratanteValue,
+        procesoMaritimoPhSoluciones: procesoMaritimoPhSolucionesvalue,
+        procesoMaritimoNivelSolucionTinas:
+            procesoMaritimoNivelSolucionTinasValue,
+        procesoMaritimoSolucionHidratacionSinVegetal:
+            procesoMaritimoSolucionHidratacionSinVegetalValue,
+        procesoMaritimoTemperaturaCuartoFrio:
+            procesoMaritimoTemperaturaCuartoFrioValue,
+        procesoMaritimoTemperaturaSolucionesHidratacion:
+            procesoMaritimoTemperaturaSolucionesHidratacionValue,
+        procesoMaritimoEmpaqueAmbienteTemperatura:
+            procesoMaritimoEmpaqueAmbienteTemperaturaValue,
+        procesoMaritimoFlorEmpacada: procesoMaritimoFlorEmpacadaValue,
+        procesoMaritimoTransportCareEmpaque:
+            procesoMaritimoTransportCareEmpaquevalue,
+        procesoMaritimoCajasVisualDeformes:
+            procesoMaritimoCajasVisualDeformesValue,
+        procesoMaritimoEtiquetasCajasUbicadas:
+            procesoMaritimoEtiquetasCajasUbicadasValue,
+        procesoMaritimoTemperaturaCubiculoCamion:
+            procesoMaritimoTemperaturaCubiculoCamionValue,
+        procesoMaritimoTemperaturaCajasTransferencia:
+            procesoMaritimoTemperaturaCajasTransferenciaValue,
+        procesoMaritimoAparenciaCajasTransferencia:
+            procesoMaritimoAparenciaCajasTransferenciaValue,
+        procesoMaritimoEstibasDebidamenteSelladas:
+            procesoMaritimoEstibasDebidamenteSelladasValue,
+        procesoMaritimoPalletsEsquinerosCorrectamenteAjustados:
+            procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue,
+        procesoMaritimoPalletsAlturaContenedor:
+            procesoMaritimoPalletsAlturaContenedorValue,
+        procesoMaritimoTemperaturaPalletContenedor:
+            procesoMaritimoTemperaturaPalletContenedorValue,
+        procesoMaritimoPalletIdentificadoNumero:
+            procesoMaritimoPalletIdentificadoNumeroValue,
+        procesoMaritimoTomaRegistroTemperaturas:
+            procesoMaritimoTomaRegistroTemperaturasValue,
+        procesoMaritimoGenset: procesoMaritimoGensetValue,
+        procesoMaritimoContenedorEdadFabricacion:
+            procesoMaritimoContenedorEdadFabricacionValue,
+        procesoMaritimoContenedorCumplimientoSeteo:
+            procesoMaritimoContenedorCumplimientoSeteoValue,
+        procesoMaritimoContenedorPreEnfriado:
+            procesoMaritimoContenedorPreEnfriadoValue,
+        procesoMaritimoContenedorlavadoDesinfectado:
+            procesoMaritimoContenedorlavadoDesinfectadoValue,
+        procesoMartimoCarguePreviamenteHumedecidos:
+            procesoMartimoCarguePreviamenteHumedecidosValue,
+        procesoMaritimoLlegandoCierreSellado:
+            procesoMaritimoLlegandoCierreSelladoValue,
+        procesoMaritimoEstibasSelloICA: procesoMaritimoEstibasSelloICAValue,
+        procesoMaritimoPalletsTensionZunchos:
+            procesoMaritimoPalletsTensionZunchosvalue,
+        procesoMaritimoPalletIdentificadoEtiqueta:
+            procesoMaritimoPalletIdentificadoEtiquetaValue,
+        procesoMaritimoComponentePalletDestinosEtiquetas:
+            procesoMaritimoComponentePalletDestinosEtiquetasValue,
+        procesoMaritimoCamionSelloSeguridadContenedor:
+            procesoMaritimoCamionSelloSeguridadContenedorValue,
+        procesoMaritimoVerificacionEncendidoTermografo:
+            procesoMaritimoVerificacionEncendidoTermografoValue,
+        procesoMaritimoFotografiaPalletsEmpresaContenor:
+            procesoMaritimoFotografiaPalletsEmpresaContenorValue,
+        procesoMaritimoObservacionesHidratacion:
+            procesoMaritimoObsevacionesHidratacionValue.text,
+        procesoMaritimoObservacionesEmpaque:
+            procesoMaritimoObservacionesEmpaqueValue.text,
+        procesoMaritimoObservacionesTransferencias:
+            procesoMaritimoObservacionesTransferenciaValue.text,
+        procesoMaritimoObservacionesPalletizado:
+            procesoMaritimoObservacionesPalletizadoValue.text,
+        procesoMaritimoObservacionesLlenadoContenedor:
+            procesoMaritimoObservacionesLlenadoContenedorValue.text,
+        procesoMaritimoObservacionesRequerimientosCriticos:
+            procesoMaritimoObservacionesRequerimientosCriticosValue.text,
+        procesoMaritimoFecha: DateTime.now(),
+        postcosechaId: postcosechaId,
+        clienteId: clientesId,
+      );
+
       int procesoMaritimoId =
           await DatabaseProcesoMaritimo.addProcesoMaritimo(procesoMaritimo);
       if (procesoMaritimoId != 0) {
+        for (AutoComplete clientesMaritimoCheck in listaClientes) {
+          if (selected.contains(clientesMaritimoCheck.nombre)) {
+            procesoMaritimoMultiplesClientes multiplesClientes =
+                new procesoMaritimoMultiplesClientes();
+            multiplesClientes.procesoMaritimoMultipleId = procesoMaritimoId;
+            multiplesClientes.procesoMaritimoMultiplesClientesId =
+                clientesMaritimoCheck.id;
+            ListaMultiplesClientesId.add(multiplesClientes);
+          }
+        }
+        DatabaseProcesoMaritimo.addProcesoMaritimoMultiplesClientes(
+            ListaMultiplesClientesId);
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
         _procesoMaritimoBloc.registroProcesoMaritimoStream();
