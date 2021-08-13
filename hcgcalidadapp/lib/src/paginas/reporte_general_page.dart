@@ -23,6 +23,15 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   List<Widget> dinamicosProductos = List<Widget>();
   bool banderaList = false;
 
+  //VARIABLE DE CIRCULO DE CALIDAD
+  final GlobalKey<FormState> _formCirculoCalidadKey = GlobalKey<FormState>();
+  final numeroReunionTextEditingController = TextEditingController();
+  final supervisor1TextEditingController = TextEditingController();
+  final supervisor2TextEditingController = TextEditingController();
+  final comentarioTextEditingController = TextEditingController();
+  int _supervisor1GroupValue = -1;
+  int _supervisor2GroupValue = -1;
+
   @override
   void initState() {
     cargarLista();
@@ -311,6 +320,81 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           Divider(),
                           Column(
                             children: [
+                              Text('RESUMEN CAUSAS - VARIEDAD',
+                                  style: Theme.of(context).textTheme.headline6)
+                            ],
+                          ),
+                          Divider(),
+                          Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.primaries.last,
+                                        width: 2))),
+                          ),
+                          Divider(),
+                          banderaList
+                              ? Column(
+                                  children: dinamicosProductos,
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                Divider(),
+                          Divider(),
+                          Column(
+                            children: [
+                              Text('RESUMEN CAUSAS - # MESA',
+                                  style: Theme.of(context).textTheme.headline6)
+                            ],
+                          ),
+                          Divider(),
+                          Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.primaries.last,
+                                        width: 2))),
+                          ),
+                          Divider(),
+                          banderaList
+                              ? Column(
+                                  children: dinamicosProductos,
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                                Divider(),
+                          Divider(),
+                          Column(
+                            children: [
+                              Text('RESUMEN CAUSAS - LÍNEA',
+                                  style: Theme.of(context).textTheme.headline6)
+                            ],
+                          ),
+                          Divider(),
+                          Container(
+                            width: width,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: Colors.primaries.last,
+                                        width: 2))),
+                          ),
+                          Divider(),
+                          banderaList
+                              ? Column(
+                                  children: dinamicosProductos,
+                                )
+                              : Container(
+                                  child: CircularProgressIndicator(),
+                                ),
+                          Divider(),
+                          Divider(),
+                          Column(
+                            children: [
                               Text('RESUMEN CAUSAS - PROBLEMAS',
                                   style: Theme.of(context).textTheme.headline6)
                             ],
@@ -332,6 +416,218 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                               : Container(
                                   child: CircularProgressIndicator(),
                                 ),
+                          Divider(),
+                          Divider(),
+                          Column(
+                            children: [
+                              Text('FORMULARIO CÍRCULO CALIDAD',
+                                  style: Theme.of(context).textTheme.headline6)
+                            ],
+                          ),
+                          Divider(),
+                          Container(
+                            //margin: EdgeInsets.all(10),
+                            //padding: EdgeInsets.all(15),
+                            child: Form(
+                              key: _formCirculoCalidadKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "Número de reunión",
+                                        hintText: 'Ingrese el # reunión',),
+                                    controller: numeroReunionTextEditingController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return "Llene este campo";
+                                      }
+                                    },
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "Nombre supervisor 1",
+                                        hintText: 'Ingrese el nombre del supervisor',),
+                                    controller: supervisor1TextEditingController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return "Llene este campo";
+                                      }
+                                    },
+                                  ),
+                                  Divider(),
+                                  Text('Evaluación supervisor 1',
+                                    style: Theme.of(context).textTheme.subtitle2
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: 1, 
+                                              groupValue: _supervisor1GroupValue, 
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor1GroupValue = value;
+                                                });
+                                              }
+                                            ),
+                                            Text('Regular',
+                                              style: Theme.of(context).textTheme.subtitle2
+                                            )
+                                          ]
+                                        )
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: 2, 
+                                              groupValue: _supervisor1GroupValue, 
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor1GroupValue = value;
+                                                });
+                                              }
+                                            ),
+                                            Text('Bueno',
+                                              style: Theme.of(context).textTheme.subtitle2
+                                            )
+                                          ]
+                                        )
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: 3, 
+                                              groupValue: _supervisor1GroupValue, 
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor1GroupValue = value;
+                                                });
+                                              }
+                                            ),
+                                            Text('Excelente',
+                                              style: Theme.of(context).textTheme.subtitle2
+                                            )
+                                          ]
+                                        )
+                                      ),
+                                    ],
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "Nombre supervisor 2",
+                                        hintText: 'Ingrese el nombre del supervisor',),
+                                    controller: supervisor2TextEditingController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return "Llene este campo";
+                                      }
+                                    },
+                                  ),
+                                  Divider(),
+                                  Text('Evaluación supervisor 2',
+                                    style: Theme.of(context).textTheme.subtitle2
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: 1, 
+                                              groupValue: _supervisor2GroupValue, 
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor2GroupValue = value;
+                                                });
+                                              }
+                                            ),
+                                            Text('Regular',
+                                              style: Theme.of(context).textTheme.subtitle2
+                                            )
+                                          ]
+                                        )
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: 2, 
+                                              groupValue: _supervisor2GroupValue, 
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor2GroupValue = value;
+                                                });
+                                              }
+                                            ),
+                                            Text('Bueno',
+                                              style: Theme.of(context).textTheme.subtitle2
+                                            )
+                                          ]
+                                        )
+                                      ),
+                                      Expanded(
+                                        child: Row(
+                                          children: [
+                                            Radio(
+                                              value: 3, 
+                                              groupValue: _supervisor2GroupValue, 
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor2GroupValue = value;
+                                                });
+                                              }
+                                            ),
+                                            Text('Excelente',
+                                              style: Theme.of(context).textTheme.subtitle2
+                                            )
+                                          ]
+                                        )
+                                      ),
+                                    ],
+                                  ),
+                                  TextFormField(
+                                    decoration: InputDecoration(
+                                        labelText: "Comentario",
+                                        hintText: 'Ingrese el comentario',),
+                                    controller: comentarioTextEditingController,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return "Llene este campo";
+                                      }
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8),
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        if (_formCirculoCalidadKey.currentState.validate()) {
+                                          setState(() {
+                                          });
+                                        }
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20)),
+                                      color: Colors.red,
+                                      textColor: Colors.white,
+                                      child: Container(
+                                        height: 50,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: <Widget>[Text('Generar circulo de calidad'), Icon(Icons.save)],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          )
                         ],
                       )
                     : Container(
@@ -340,33 +636,6 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
               ],
             ),
           )),
-      /*floatingActionButton: FloatingActionButton(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SincronizarPage()));
-          },
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          color: Colors.red,
-          textColor: Colors.white,
-          child: Container(
-            width: 130,
-            height: 70,
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // Text(
-                //   'FORMULARIOS',
-                //   style: TextStyle(fontSize: 15),
-                // ),
-                Icon(Icons.save)
-              ],
-            ),
-          ),
-        ),
-      ),*/
     );
   }
 }
