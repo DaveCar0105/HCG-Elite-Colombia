@@ -181,6 +181,9 @@ class DatabaseCreator {
       'procesoHidratacionNivelSolucion';
   static const procesoHidratacionFecha = 'procesoHidratacionFecha';
   //TABLA MARITIMOS
+  static const procesoMartimoMultiplesClientesTables =
+      'procesoMartimoMultiplesClientesTables';
+
   static const procesoMaritimoTable = 'procesoMaritimoTable';
   static const procesoMaritimoId = 'procesoMaritimoId';
   static const procesoMaritimoUsuarioControlId =
@@ -858,6 +861,16 @@ class DatabaseCreator {
     await db.execute(procesoMaritimoDestinoSql);
   }
 
+  //MULTIPLES CLIENTES
+  Future<void> MultiplesClientesMaritimoTable(Database db) async {
+    final procesoMaritimoMultiplesClientesSql =
+        '''CREATE TABLE $procesoMartimoMultiplesClientesTables
+    (
+      $clienteId INTEGER PRIMARY KEY,
+      $procesoMaritimoId INTEGER
+    )''';
+  }
+
   // CREATE TABLE MARITIMO
   Future<void> createProcesoMaritimoTable(Database db) async {
     final procesoMaritimoSql = '''CREATE TABLE $procesoMaritimoTable
@@ -1046,5 +1059,6 @@ class DatabaseCreator {
     await createCirculoCalidad(db);
     await createProcesoMaritimoTable(db);
     await createProcesoMaritimoDestinoTable(db);
+    await MultiplesClientesMaritimoTable(db);
   }
 }
