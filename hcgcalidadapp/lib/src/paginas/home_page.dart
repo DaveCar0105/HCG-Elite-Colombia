@@ -28,8 +28,6 @@ import 'package:hcgcalidadapp/src/paginas/home_registros_page.dart';
 import 'package:hcgcalidadapp/src/paginas/reporte_general_page.dart';
 import 'package:hcgcalidadapp/src/paginas/sincronizar_page.dart';
 import 'package:hcgcalidadapp/src/servicios/sincronizar_entidades.services.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:hcgcalidadapp/src/preferencias.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,7 +37,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _currenIndexBottomNavigation = 0;
-  bool _switchVal = true;
   bool sinc = false;
   sincornizar() async {
     setState(() {
