@@ -29,7 +29,6 @@ class DatabaseCliente {
     SET ${DatabaseCreator.clienteNombre} = '${cliente.clienteNombre}'
     WHERE ${DatabaseCreator.clienteId} == ${cliente.clienteId}
     ''';
-
     await db.rawUpdate(sql);
   }
 

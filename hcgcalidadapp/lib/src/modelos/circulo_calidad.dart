@@ -32,7 +32,7 @@ class CirculoCalidad {
   String circuloCalidadEvaluacionSupervisor;
   String circuloCalidadSupervisor2;
   String circuloCalidadEvaluacionSupervisor2;
-  DateTime circuloCalidadFecha;
+  String circuloCalidadFecha;
   int postcosechaId;
 
   factory CirculoCalidad.fromJson(Map<String, dynamic> json) => CirculoCalidad(

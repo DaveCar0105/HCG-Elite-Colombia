@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
+import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
+import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
   @override
@@ -33,6 +36,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   final comentarioTextEditingController = TextEditingController();
   int _supervisor1GroupValue = -1;
   int _supervisor2GroupValue = -1;
+  List<String> evaluacion = ["Bueno", "Regular", "Excelente"];
 
   @override
   void initState() {
@@ -570,6 +574,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   TextFormField(
+                                    keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         labelText: "Número de reunión",
                                         hintText: 'Ingrese el # reunión',),
@@ -740,10 +745,22 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   Padding(
                                     padding: const EdgeInsets.all(8),
                                     child: RaisedButton(
-                                      onPressed: () {
-                                        if (_formCirculoCalidadKey.currentState.validate()) {
+                                      onPressed: () async {
+                                        if (_formCirculoCalidadKey.currentState.validate() && _supervisor1GroupValue!=-1 && _supervisor2GroupValue!=-1) {
+                                          String selectSup1 =  evaluacion[_supervisor1GroupValue-1];
+                                          String selectSup2 =  evaluacion[_supervisor2GroupValue-1];
+                                          CirculoCalidad circuloCalidad = new CirculoCalidad();
+                                          circuloCalidad.circuloCalidadNumeroReunion = int.parse(numeroReunionTextEditingController.text);
+                                          circuloCalidad.circuloCalidadSupervisor = supervisor1TextEditingController.text;
+                                          circuloCalidad.circuloCalidadSupervisor2 = supervisor2TextEditingController.text;
+                                          circuloCalidad.circuloCalidadEvaluacionSupervisor = selectSup1;
+                                          circuloCalidad.circuloCalidadEvaluacionSupervisor2 = selectSup2;
+                                          circuloCalidad.circuloCalidadComentario = comentarioTextEditingController.text;
+                                          await DatabaseCirculoCalidad.addcirculoCalidadByReporteGeneral(reporteGeneral, circuloCalidad);
                                           setState(() {
                                           });
+                                        }else {
+                                          mostrarSnackbar("Llene todo el formulario", Colors.redAccent, scaffoldKey);
                                         }
                                       },
                                       shape: RoundedRectangleBorder(
