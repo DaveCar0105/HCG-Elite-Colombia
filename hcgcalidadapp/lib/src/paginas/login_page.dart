@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:hcgcalidadapp/src/preferencias.dart';
 import 'package:hcgcalidadapp/src/servicios/usuario_services.dart';
+import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -12,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final userService = LoginServices();
   final user =TextEditingController();
   final pass =TextEditingController();
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   void initState(){
     super.initState();
@@ -20,11 +23,22 @@ class _LoginPageState extends State<LoginPage> {
       DeviceOrientation.portraitUp,
     ]);
   }
-  login() async{
+  login(BuildContext context) async{
+    final progress = ProgressHUD.of(context);
+    progress?.showWithText('Loading...');
     Preferences pref = Preferences();
-    pref.userId = await userService.postLogin(user.text, pass.text);
-    if(pref.userId > 0){
-      Navigator.pushReplacementNamed(context, 'home');
+    try{
+      pref.userId = await userService.postLogin(user.text, pass.text);
+      if(pref.userId > 0){
+        progress?.dismiss();
+        Navigator.pushReplacementNamed(context, 'home');
+      } else {
+        progress?.dismiss();
+        mostrarSnackbar("Credenciales incorrectas!!!", Colors.redAccent, scaffoldKey);
+      }
+    }catch(e){
+      progress?.dismiss();
+      mostrarSnackbar("Credenciales incorrectas!!!", Colors.redAccent, scaffoldKey);
     }
   }
 
@@ -33,7 +47,12 @@ class _LoginPageState extends State<LoginPage> {
     double h = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Center(
+      key: scaffoldKey,
+      body: 
+      ProgressHUD(
+        child: Builder(
+          builder: (context) => 
+      Center(
           child: Scrollbar(
               child: ListView(
                 children: <Widget>[
@@ -96,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       InkWell(
                         onTap: (){
-                          login();
+                          login(context);
                         },
                         child: Container(
                           height: 35,
@@ -129,6 +148,8 @@ class _LoginPageState extends State<LoginPage> {
               )
           )
       ),
+        )
+      )
 
     );
   }

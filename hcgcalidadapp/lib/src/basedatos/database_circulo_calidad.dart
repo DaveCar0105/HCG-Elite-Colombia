@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
-import 'package:hcgcalidadapp/src/paginas/circulo_calidad_page.dart';
 
 class DatabaseCirculoCalidad {
   static Future<List<CirculoCalidad>> getAllcirculoCalidad() async {
@@ -12,7 +9,20 @@ class DatabaseCirculoCalidad {
     final data = await db.rawQuery(sql);
     List<CirculoCalidad> circulo = List();
     for (final node in data) {
-      print(jsonEncode(node));
+      CirculoCalidad circuloCalidad = new CirculoCalidad();
+      circuloCalidad.circuloCalidadId = node[DatabaseCreator.circuloCalidadId];
+      circuloCalidad.circuloCalidadRevisados = node[DatabaseCreator.circuloCalidadRevisados];
+      circuloCalidad.circuloCalidadRechazados = node[DatabaseCreator.circuloCalidadRechazados];
+      circuloCalidad.circuloCalidadPorcentajeNoConforme = node[DatabaseCreator.circuloCalidadPorcentajeNoConforme];
+      circuloCalidad.circuloCalidadNumeroReunion = node[DatabaseCreator.circuloCalidadNumeroReunion];
+      circuloCalidad.circuloCalidadComentario = node[DatabaseCreator.circuloCalidadComentario];
+      circuloCalidad.circuloCalidadSupervisor = node[DatabaseCreator.circuloCalidadSupervisor];
+      circuloCalidad.circuloCalidadEvaluacionSupervisor = node[DatabaseCreator.circuloCalidadEvaluacionSupervisor];
+      circuloCalidad.circuloCalidadSupervisor2 = node[DatabaseCreator.circuloCalidadSupervisor2];
+      circuloCalidad.circuloCalidadEvaluacionSupervisor2 = node[DatabaseCreator.circuloCalidadEvaluacionSupervisor2];
+      circuloCalidad.circuloCalidadFecha = node[DatabaseCreator.circuloCalidadFecha];
+      circuloCalidad.postcosechaId = node[DatabaseCreator.postcosechaId];
+      circulo.add(circuloCalidad);
     }
     return circulo;
   }
@@ -179,7 +189,7 @@ class DatabaseCirculoCalidad {
       try{
         final sql = '''INSERT INTO ${DatabaseCreator.circuloCalidadLineaTable}
           (
-          ${DatabaseCreator.circuloCalidadNumeroMesaNombre},
+          ${DatabaseCreator.circuloCalidadLineaNombre},
           ${DatabaseCreator.circuloCalidadSameRevisados},
           ${DatabaseCreator.circuloCalidadSameRechazados},
           ${DatabaseCreator.circuloCalidadSamePorcentaje},

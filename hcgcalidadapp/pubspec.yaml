@@ -20,6 +20,7 @@ dependencies:
   provider: ^5.0.0
   multi_select_flutter: ^4.0.0
   multiselect: ^0.0.4
+  flutter_progress_hud: ^2.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

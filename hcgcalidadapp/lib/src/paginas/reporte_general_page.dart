@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
@@ -324,7 +325,11 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: scaffoldKey,
-      body: Container(
+      body: ProgressHUD(
+        child: Builder(
+          builder: (context) =>
+
+      Container(
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(15),
           decoration: BoxDecoration(
@@ -746,7 +751,10 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                     padding: const EdgeInsets.all(8),
                                     child: RaisedButton(
                                       onPressed: () async {
+                                        
                                         if (_formCirculoCalidadKey.currentState.validate() && _supervisor1GroupValue!=-1 && _supervisor2GroupValue!=-1) {
+                                          final progress = ProgressHUD.of(context);
+                                          progress?.showWithText('Guardando...');
                                           String selectSup1 =  evaluacion[_supervisor1GroupValue-1];
                                           String selectSup2 =  evaluacion[_supervisor2GroupValue-1];
                                           CirculoCalidad circuloCalidad = new CirculoCalidad();
@@ -756,11 +764,19 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                           circuloCalidad.circuloCalidadEvaluacionSupervisor = selectSup1;
                                           circuloCalidad.circuloCalidadEvaluacionSupervisor2 = selectSup2;
                                           circuloCalidad.circuloCalidadComentario = comentarioTextEditingController.text;
-                                          await DatabaseCirculoCalidad.addcirculoCalidadByReporteGeneral(reporteGeneral, circuloCalidad);
-                                          setState(() {
-                                          });
+                                          try{
+                                            await DatabaseCirculoCalidad.addcirculoCalidadByReporteGeneral(reporteGeneral, circuloCalidad);
+                                            await DatabaseCirculoCalidad.getAllcirculoCalidad();
+                                            progress?.dismiss();
+                                            mostrarSnackbar("Guardado exitosamente", Colors.green, scaffoldKey);
+                                            setState(() {
+                                            });
+                                          }catch(e){
+                                            progress?.dismiss();
+                                            mostrarSnackbar("Error al guardar", Colors.redAccent, scaffoldKey);
+                                          }
                                         }else {
-                                          mostrarSnackbar("Llene todo el formulario", Colors.redAccent, scaffoldKey);
+                                          mostrarSnackbar("Llenar todo el formulario", Colors.redAccent, scaffoldKey);
                                         }
                                       },
                                       shape: RoundedRectangleBorder(
@@ -789,6 +805,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
               ],
             ),
           )),
+        ))
     );
   }
 }
