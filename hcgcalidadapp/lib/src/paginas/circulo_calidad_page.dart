@@ -115,8 +115,8 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   }
 
   _guardarReporteCirculoCalidad() async {
-    circuloCalidad circulo = new circuloCalidad();
-    circulo.ramosRevisados = int.parse(ramosRevisados.text);
+    CirculoCalidad circulo = new CirculoCalidad();
+    /*circulo.ramosRevisados = int.parse(ramosRevisados.text);
     circulo.ramosRechazados = int.parse(ramosRevisados.text);
     circulo.calidadReunion = int.parse(numeroReunionCirculoCalidad.text);
     circulo.problemaId1 = problema1Id;
@@ -137,12 +137,13 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
     circulo.supervisorcheck2 = "Bueno";
     circulo.comentarios = comentarios.text;
     circulo.variedad1 = variedad1.text;
-    circulo.variedad2 = variedad2.text;
-    if (circulo.circuloCalidadId != null) {
+    circulo.variedad2 = variedad2.text;*/
+    /*if (circulo.circuloCalidadId != null) {
       await DatabaseCirculoCalidad.updateCirculoCalidad(circulo);
     } else {
       await DatabaseCirculoCalidad.addcirculoCalidad(circulo);
-    }
+    }*/
+    await DatabaseCirculoCalidad.addcirculoCalidad(circulo);
   }
 
   bool _validarCirculoCalidad() {

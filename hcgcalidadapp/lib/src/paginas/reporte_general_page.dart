@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_reportes_aprobacion.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
@@ -21,6 +20,9 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   List<Widget> dinamicos = List<Widget>();
   List<Widget> dinamicosClientes = List<Widget>();
   List<Widget> dinamicosProductos = List<Widget>();
+  List<Widget> dinamicosVariedad = List<Widget>();
+  List<Widget> dinamicosNumeroMesa = List<Widget>();
+  List<Widget> dinamicosLinea = List<Widget>();
   bool banderaList = false;
 
   //VARIABLE DE CIRCULO DE CALIDAD
@@ -40,7 +42,12 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
 
   cargarLista() async {
     dinamicos = new List<Widget>();
-    reporteGeneral = await DatabaseReportesAprobacion.getReporteGeneral();
+    dinamicosProductos = new List<Widget>();
+    dinamicosVariedad = new List<Widget>();
+    dinamicosNumeroMesa = new List<Widget>();
+    dinamicosLinea = new List<Widget>();
+    dinamicosClientes = new List<Widget>();
+    reporteGeneral = await DatabaseReporteGeneral.getReporteGeneral();
     if (reporteGeneral.porRamosNoConformes == null)
       reporteGeneral.porRamosNoConformes = 0;
     if (reporteGeneral.falencias != null) {
@@ -56,6 +63,21 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     if (reporteGeneral.productos != null) {
       for (int i = 0; i < reporteGeneral.productos.length; i++) {
         cargarProductosListWidget(reporteGeneral.productos[i], (i + 1));
+      }
+    }
+    if (reporteGeneral.variedades != null) {
+      for (int i = 0; i < reporteGeneral.variedades.length; i++) {
+        cargarVariedadListWidget(reporteGeneral.variedades[i], (i + 1));
+      }
+    }
+    if (reporteGeneral.numerosMesa != null) {
+      for (int i = 0; i < reporteGeneral.numerosMesa.length; i++) {
+        cargarNumeroMesaListWidget(reporteGeneral.numerosMesa[i], (i + 1));
+      }
+    }
+    if (reporteGeneral.lineas != null) {
+      for (int i = 0; i < reporteGeneral.lineas.length; i++) {
+        cargarLineaListWidget(reporteGeneral.lineas[i], (i + 1));
       }
     }
     setState(() {
@@ -177,6 +199,120 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
       ]),
     ));
     dinamicosProductos.add(productoSetear);
+  }
+
+  cargarVariedadListWidget(VariedadReporteGeneralDto variedad, int indice) {
+    String textoTitle = indice.toString() + ". " + variedad.nombreVariedad;
+    String falenciaText = "Cantidad: " + variedad.cantidad.toString();
+
+    String porcentajeText =
+        "Porcentaje: " + variedad.porcentajeVariedad.toStringAsFixed(2) + "%";
+
+    dynamic falenciaSetear = Center(
+        child: Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(leading: Icon(Icons.description), title: Text(textoTitle)),
+        Column(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: Text(falenciaText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+                TextButton(
+                  child: Text(porcentajeText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    ));
+    dinamicosVariedad.add(falenciaSetear);
+  }
+
+  cargarNumeroMesaListWidget( NumeroMesaReporteGeneralDto numeroMesa, int indice) {
+    String textoTitle = indice.toString() + ". " + numeroMesa.nombreNumeroMesa;
+    String falenciaText = "Cantidad: " + numeroMesa.cantidad.toString();
+
+    String porcentajeText =
+        "Porcentaje: " + numeroMesa.porcentajeNumeroMesa.toStringAsFixed(2) + "%";
+
+    dynamic falenciaSetear = Center(
+        child: Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(leading: Icon(Icons.description), title: Text(textoTitle)),
+        Column(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: Text(falenciaText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+                TextButton(
+                  child: Text(porcentajeText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    ));
+    dinamicosNumeroMesa.add(falenciaSetear);
+  }
+
+  cargarLineaListWidget( LineaReporteGeneralDto linea, int indice) {
+    String textoTitle = indice.toString() + ". " + linea.nombreLinea;
+    String falenciaText = "Cantidad: " + linea.cantidad.toString();
+
+    String porcentajeText =
+        "Porcentaje: " + linea.porcentajeLinea.toStringAsFixed(2) + "%";
+
+    dynamic falenciaSetear = Center(
+        child: Card(
+      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(leading: Icon(Icons.description), title: Text(textoTitle)),
+        Column(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: Text(falenciaText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+                TextButton(
+                  child: Text(porcentajeText),
+                  onPressed: () {/* ... */},
+                ),
+                //const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    ));
+    dinamicosLinea.add(falenciaSetear);
   }
 
   @override
@@ -336,7 +472,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           Divider(),
                           banderaList
                               ? Column(
-                                  children: dinamicosProductos,
+                                  children: dinamicosVariedad,
                                 )
                               : Container(
                                   child: CircularProgressIndicator(),
@@ -361,7 +497,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           Divider(),
                           banderaList
                               ? Column(
-                                  children: dinamicosProductos,
+                                  children: dinamicosNumeroMesa,
                                 )
                               : Container(
                                   child: CircularProgressIndicator(),
@@ -386,7 +522,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                           Divider(),
                           banderaList
                               ? Column(
-                                  children: dinamicosProductos,
+                                  children: dinamicosLinea,
                                 )
                               : Container(
                                   child: CircularProgressIndicator(),

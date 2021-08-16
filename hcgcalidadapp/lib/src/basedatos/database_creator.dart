@@ -1,4 +1,3 @@
-import 'package:hcgcalidadapp/src/modelos/tipoActividad.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:io';
 import 'package:path/path.dart' as p;
@@ -313,52 +312,40 @@ class DatabaseCreator {
   static const tipoClienteId = 'tipoClienteId';
   static const tipoClienteNombre = 'tipoClienteNombre';
 
-  // TABLA CIRCULO DE CALIDAD
-  static const procesoCirculoCalidadTable = 'procesoCirculoCalidadTable';
-  static const procesoCirculoCalidadId = 'procesoCirculoCalidadId';
-  static const procesoCirculoCalidadPoscosecha =
-      'procesoCirculoCalidadPoscosecha';
-  static const procesoCirculoCalidadReunion = 'procesoCirculoCalidadReunion';
-  static const procesoCirculoCalidadClienteId1 =
-      'procesoCirculoCalidadClienteId1';
-  static const procesoCirculoCalidadClienteId2 =
-      'procesoCirculoCalidadClienteId2';
-  static const procesoCirculoCalidadProducto1 =
-      'procesoCirculoCalidadProducto1';
-  static const procesoCirculoCalidadProducto2 =
-      'procesoCirculoCalidadProducto2';
-  static const procesoCirculoCalidadRamosRevisados =
-      'procesoCirculoCalidadRamosRevisados';
-  static const procesoCirculoCalidadRamosRechazados =
-      'procesoCirculoCalidadRamosRechazados';
-  static const procesoCirculoCalidadProblemaId1 =
-      'procesoCirculoCalidadProblema1';
-  static const procesoCirculoCalidadProblemaId2 =
-      'procesoCirculoCalidadProblema2';
-  static const procesoCirculoCalidadProblemaId3 =
-      'procesoCirculoCalidadProblema3';
-  static const procesoCirculoCalidadProblemaId4 =
-      'procesoCirculoCalidadProblema4';
-  static const procesoCirculoCalidadProblemaId5 =
-      'procesoCirculoCalidadProblema5';
-  static const procesoCirculoCalidadVariedad1 =
-      'procesoCirculoCalidadVariedad1';
-  static const procesoCirculoCalidadVariedad2 =
-      'procesoCirculoCalidadVariedad2';
-  static const procesoCirculoCalidadCodigoMesa =
-      'procesoCirculoCalidadCodigoMesa';
-  static const procesoCirculoCalidadLinea = 'procesoCirculoCalidadLinea';
-  static const procesoCirculoCalidadSupervisor1 =
-      'procesoCirculoCalidadSupervisor1';
-  static const procesoCirculoCalidadSupervisor2 =
-      'procesoCirculoCalidadSupervisor2';
-  static const procesoCirculoCalidadComentarios =
-      'procesoCirculoCalidadComentarios';
-  static const procesoCirculoCalidadCheckSuperviso1 =
-      'procesoCirculoCalidadCheckSuperviso1';
-  static const procesoCirculoCalidadCheckSuperviso2 =
-      'procesoCirculoCalidadCheckSuperviso2';
-  static const procesoCirculoCalidadFecha = 'procesoCirculoCalidadFecha';
+  // TABLA CIRCULO DE CALIDAD - TABLAS ADICIONALES
+  static const circuloCalidadTable = 'circuloCalidadTable';
+  static const circuloCalidadId = 'circuloCalidadId';
+  static const circuloCalidadRevisados = 'circuloCalidadRevisados';
+  static const circuloCalidadRechazados = 'circuloCalidadRechazados';
+  static const circuloCalidadPorcentajeNoConforme = 'circuloCalidadPorcentajeNoConforme';
+  static const circuloCalidadNumeroReunion = 'circuloCalidadNumeroReunion';
+  static const circuloCalidadComentario = 'circuloCalidadComentario';
+  static const circuloCalidadSupervisor = 'circuloCalidadSupervisor';
+  static const circuloCalidadEvaluacionSupervisor = 'circuloCalidadEvaluacionSupervisor';
+  static const circuloCalidadSupervisor2 = 'circuloCalidadSupervisor2';
+  static const circuloCalidadEvaluacionSupervisor2 = 'circuloCalidadEvaluacionSupervisor2';
+  static const circuloCalidadFecha = 'circuloCalidadFecha';
+
+  static const circuloCalidadProductoTable = 'circuloCalidadProductoTable';
+  static const circuloCalidadClienteTable = 'circuloCalidadClienteTable';
+  static const circuloCalidadFalenciaTable = 'circuloCalidadFalenciaTable';
+
+  static const circuloCalidadVariedadTable = 'circuloCalidadVariedadTable';
+  static const circuloCalidadVariedadId = 'circuloCalidadVariedadId';
+  static const circuloCalidadVariedadNombre = 'circuloCalidadVariedadNombre';
+
+  static const circuloCalidadLineaTable = 'circuloCalidadLineaTable';
+  static const circuloCalidadLineaId = 'circuloCalidadLineaId';
+  static const circuloCalidadLineaNombre = 'circuloCalidadLineaNombre';
+  
+  static const circuloCalidadNumeroMesaTable = 'circuloCalidadNumeroMesaTable';
+  static const circuloCalidadNumeroMesaId = 'circuloCalidadNumeroMesaId';
+  static const circuloCalidadNumeroMesaNombre = 'circuloCalidadNumeroMesaNombre';
+
+  //--campos iguales circulo calidad
+  static const circuloCalidadSameRevisados = 'revisados';
+  static const circuloCalidadSameRechazados = 'rechazados';
+  static const circuloCalidadSamePorcentaje = 'porcentaje';
 
   // CAMPOS ADICIONALES REFERENTE A HIDRATACION, FINAL DE BANDA Y EMPAQUE
   static const numeroMesa = 'numeroMesa';
@@ -389,7 +376,6 @@ class DatabaseCreator {
       $clienteId INTEGER,
       $elite INTEGER
     )''';
-
     await db.execute(ramosSql);
   }
 
@@ -864,7 +850,6 @@ class DatabaseCreator {
 
   //DESTINO
   Future<void> createProcesoMaritimoDestinoTable(Database db) async {
-    print("crandon tabla destinos maritimos");
     final procesoMaritimoDestinoSql =
         '''CREATE TABLE $procesoMaritimoDestinoTable
       (
@@ -988,34 +973,91 @@ class DatabaseCreator {
   //CREATE TABLE CIRCULO DE CALIDAD
   Future<void> createCirculoCalidad(Database db) async {
     final procesoCirculoCalidadSql =
-        '''CREATE TABLE $procesoCirculoCalidadTable 
+        '''CREATE TABLE $circuloCalidadTable
     (
-        $procesoCirculoCalidadId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $circuloCalidadId INTEGER PRIMARY KEY AUTOINCREMENT,
         $postcosechaId INTEGER,
-        $procesoCirculoCalidadReunion INTEGER,
-        $procesoCirculoCalidadClienteId1 INTEGER,
-        $procesoCirculoCalidadClienteId2 INTEGER,
-        $procesoCirculoCalidadProducto1 INTEGER,
-        $procesoCirculoCalidadProducto2 INTEGER,
-        $procesoCirculoCalidadRamosRevisados INTEGER,
-        $procesoCirculoCalidadRamosRechazados INTEGER,
-        $procesoCirculoCalidadProblemaId1 INTEGER,
-        $procesoCirculoCalidadProblemaId2 INTEGER,
-        $procesoCirculoCalidadProblemaId3 INTEGER,
-        $procesoCirculoCalidadProblemaId4 INTEGER,
-        $procesoCirculoCalidadProblemaId5 INTEGER,
-        $procesoCirculoCalidadVariedad1 TEXT,
-        $procesoCirculoCalidadVariedad2 TEXT,
-        $procesoCirculoCalidadCodigoMesa INTEGER,
-        $procesoCirculoCalidadLinea INTEGER,
-        $procesoCirculoCalidadCheckSuperviso1 TEXT,
-        $procesoCirculoCalidadCheckSuperviso2 TEXT,
-        $procesoCirculoCalidadComentarios TEXT,
-        $procesoCirculoCalidadSupervisor1 TEXT,
-        $procesoCirculoCalidadSupervisor2 TEXT,
-        $procesoCirculoCalidadFecha DATE
+        $circuloCalidadRevisados INTEGER,
+        $circuloCalidadRechazados INTEGER,
+        $circuloCalidadPorcentajeNoConforme FLOAT,
+        $circuloCalidadNumeroReunion INTEGER,
+        $circuloCalidadComentario TEXT,
+        $circuloCalidadSupervisor TEXT,
+        $circuloCalidadEvaluacionSupervisor TEXT,
+        $circuloCalidadSupervisor2 TEXT,
+        $circuloCalidadEvaluacionSupervisor2 TEXT,
+        $circuloCalidadFecha DATE
+    )''';
+
+    final procesoCirculoCalidadProductoSql =
+        '''CREATE TABLE $circuloCalidadProductoTable
+    (
+        $circuloCalidadSameRevisados INTEGER,
+        $circuloCalidadSameRechazados INTEGER,
+        $circuloCalidadSamePorcentaje FLOAT,
+        $circuloCalidadId INTEGER,
+        $productoId INTEGER
+    )''';
+
+    final procesoCirculoCalidadClienteSql =
+        '''CREATE TABLE $circuloCalidadClienteTable
+    (
+        $circuloCalidadSameRevisados INTEGER,
+        $circuloCalidadSameRechazados INTEGER,
+        $circuloCalidadSamePorcentaje FLOAT,
+        $circuloCalidadId INTEGER,
+        $clienteId INTEGER
+    )''';
+
+    final procesoCirculoCalidadFalenciaSql =
+        '''CREATE TABLE $circuloCalidadFalenciaTable
+    (
+        $circuloCalidadSameRevisados INTEGER,
+        $circuloCalidadSameRechazados INTEGER,
+        $circuloCalidadSamePorcentaje FLOAT,
+        $circuloCalidadId INTEGER,
+        $falenciaRamosId INTEGER
+    )''';
+
+    final procesoCirculoCalidadVariedadSql =
+        '''CREATE TABLE $circuloCalidadVariedadTable
+    (
+        $circuloCalidadVariedadId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $circuloCalidadVariedadNombre TEXT,
+        $circuloCalidadSameRevisados INTEGER,
+        $circuloCalidadSameRechazados INTEGER,
+        $circuloCalidadSamePorcentaje FLOAT,
+        $circuloCalidadId INTEGER
+    )''';
+
+    final procesoCirculoCalidadNumeroMesaSql =
+        '''CREATE TABLE $circuloCalidadNumeroMesaTable
+    (
+        $circuloCalidadNumeroMesaId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $circuloCalidadNumeroMesaNombre TEXT,
+        $circuloCalidadSameRevisados INTEGER,
+        $circuloCalidadSameRechazados INTEGER,
+        $circuloCalidadSamePorcentaje FLOAT,
+        $circuloCalidadId INTEGER
+    )''';
+
+    final procesoCirculoCalidadLineaSql =
+        '''CREATE TABLE $circuloCalidadLineaTable
+    (
+        $circuloCalidadLineaId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $circuloCalidadLineaNombre TEXT,
+        $circuloCalidadSameRevisados INTEGER,
+        $circuloCalidadSameRechazados INTEGER,
+        $circuloCalidadSamePorcentaje FLOAT,
+        $circuloCalidadId INTEGER
     )''';
     await db.execute(procesoCirculoCalidadSql);
+    await db.execute(procesoCirculoCalidadProductoSql);
+    await db.execute(procesoCirculoCalidadClienteSql);
+    await db.execute(procesoCirculoCalidadFalenciaSql);
+    await db.execute(procesoCirculoCalidadVariedadSql);
+    await db.execute(procesoCirculoCalidadNumeroMesaSql);
+    await db.execute(procesoCirculoCalidadLineaSql);
   }
 
   Future<String> getDatabasePath(String dbName) async {
