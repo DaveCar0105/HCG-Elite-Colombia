@@ -160,17 +160,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    /*TextFormField(
-                      decoration: InputDecoration(labelText: "Nombre"),
-                      onSaved: (value){
-                        value2 =  value;
-                      },
-                      validator: (value){
-                        if(value.isEmpty){
-                          return "Llene este campo";
-                        }
-                      },
-                    ),*/
                     _numeroOrden(),
                     _tipoCliente(),
                     _cliente(),
