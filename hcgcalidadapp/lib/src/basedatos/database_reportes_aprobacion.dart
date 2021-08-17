@@ -855,6 +855,9 @@ class DatabaseReportesAprobacion {
           ''';
     var data9 = await db.rawQuery(sql9);
 
+//eliminar depsues 
+    await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
+
     cant.ramos = data[0]['CANTIDAD'];
     cant.empaque = data1[0]['CANTIDAD'];
     cant.procesoEmp = data2[0]['CANTIDAD'];
@@ -885,7 +888,7 @@ class DatabaseReportesAprobacion {
     List<ProcesoEmpaque> listaProcesoEmpaque = [];
     List<RegistroTemperatura> listaTemperatura = [];
     List<ProcesoMaritimo> listaProcesoMaritimo = [];
-    List<CirculoCalidad> listaCirculoCalidad = [];
+    List<CirculoCalidadInformacionGeneral> listaCirculoCalidad = [];
 
     actividades = await DatabaseActividad.getAllActividad();
     hidratacion = await DatabaseProcesoHidratacion.getAllProcesosHidratacion();
@@ -897,7 +900,7 @@ class DatabaseReportesAprobacion {
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
     listaProcesoMaritimo =
         await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
-    listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidad();
+    listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
     listaRamo.detallesFirma = [];

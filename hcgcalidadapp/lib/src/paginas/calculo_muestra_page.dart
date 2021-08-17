@@ -4,23 +4,23 @@ import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 import 'package:hcgcalidadapp/src/utilidades/utilidades.dart';
 
 // ignore: must_be_immutable
-class calculoMuestraPage extends StatefulWidget {
+class CalculoMuestraPage extends StatefulWidget {
   calculoMuestraPage() {}
 
   @override
-  _calculoMuestraPageState createState() =>
-      _calculoMuestraPageState();
+  _CalculoMuestraPageState createState() =>
+      _CalculoMuestraPageState();
 }
 
-class _calculoMuestraPageState extends State<calculoMuestraPage> {
+class _CalculoMuestraPageState extends State<CalculoMuestraPage> {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  final GlobalKey<FormState> _formCalculoMuestraKey = GlobalKey<FormState>();
   final totalRamos = TextEditingController();
   final margenDeError = TextEditingController();
   final nivelDeConfianza = TextEditingController();
   String resultadoText = "";
   String textoResultado = "Cantidad de muestreo: ";
-  _calculoMuestraPageState() {}
+  _CalculoMuestraPageState() {}
 
   _guardarReporteRamos() {
     CalculoMuestra calculoMuestra = new CalculoMuestra();
@@ -46,9 +46,12 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
         title: Text('CALCULO DE MUESTRA'),
       ),
       body: Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(26.0),
           width: double.infinity,
-          child: Container(
+          child: 
+          Form(
+            key: _formCalculoMuestraKey,
+            child: Container(
             child: ListView(
               children: <Widget>[
                 Column(
@@ -56,7 +59,7 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     _cantidadRamosTotales(),
-                    _NivelDeConfianza(),
+                    _nivelDeConfianza(),
                     _margenDeError(),
                     Divider(),
                     Text(resultadoText,
@@ -70,15 +73,15 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
                 )
               ],
             ),
-          )),
+          )
+          ),
+          ),
     );
   }
 
-  Widget _NivelDeConfianza() {
+  Widget _nivelDeConfianza() {
     return Container(
-      width: 200,
-      height: 90,
-      child: TextField(
+      child: TextFormField(
         keyboardType: TextInputType.number,
         maxLengthEnforced: true,
         maxLength: 2,
@@ -87,15 +90,18 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
           labelText: 'Nivel de confianza en %',
         ),
         controller: nivelDeConfianza,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Llene este campo";
+          }
+        },
       ),
     );
   }
 
   Widget _margenDeError() {
     return Container(
-      width: 200,
-      height: 90,
-      child: TextField(
+      child: TextFormField(
         keyboardType: TextInputType.number,
         maxLengthEnforced: true,
         maxLength: 2,
@@ -104,21 +110,31 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
           labelText: 'Margen de Error en %',
         ),
         controller: margenDeError,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Llene este campo";
+          }
+        },
       ),
     );
   }
 
   Widget _cantidadRamosTotales() {
     return Container(
-      width: 200,
-      height: 90,
-      child: TextField(
+      child: TextFormField(
         keyboardType: TextInputType.number,
+        maxLengthEnforced: true,
+        maxLength: 9,
         decoration: InputDecoration(
           hintText: 'Ramos Totales',
-          labelText: 'RamosTotales',
+          labelText: 'ramos totales',
         ),
         controller: totalRamos,
+        validator: (value) {
+          if (value.isEmpty) {
+            return "Llene este campo";
+          }
+        },
       ),
     );
   }
@@ -127,38 +143,29 @@ class _calculoMuestraPageState extends State<calculoMuestraPage> {
     return Container(
       child: RaisedButton(
         onPressed: () async {
-          if (_validarRamos()) {
+          if (_formCalculoMuestraKey.currentState.validate()) {
             final util = Utilidades();
             if (util.isNumberEntero(totalRamos.text) && util.isNumberEntero(nivelDeConfianza.text) && util.isNumberEntero(margenDeError.text)) {
               _guardarReporteRamos();
             } else {
               mostrarSnackbar('Ingrese solo valores numericos', null, scaffoldKey);
             }
+          } else {
+            mostrarSnackbar('Llene el formulario', Colors.redAccent, scaffoldKey);
           }
         },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         color: Colors.red,
         textColor: Colors.white,
         child: Container(
-          height: 60,
-          width: 120,
+          height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[Text('Calcular'), Icon(Icons.exposure)],
+            children: <Widget>[Text('CALCULAR '), Icon(Icons.exposure)],
           ),
         ),
       ),
     );
-  }
-
-  bool _validarRamos() {
-    if (nivelDeConfianza.text == '' ||
-        totalRamos.text == '' ||
-        margenDeError.text == '') {
-      mostrarSnackbar('Ingrese los valores', null, scaffoldKey);
-      return false;
-    }
-    return true;
   }
 }

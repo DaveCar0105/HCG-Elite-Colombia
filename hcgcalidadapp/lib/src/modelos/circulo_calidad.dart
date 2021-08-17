@@ -297,3 +297,50 @@ class CirculoCalidadLinea {
         "circuloCalidadId": circuloCalidadId
       };
 }
+
+// CIRCULO DE CALIDAD INFORMACION GENERAL
+CirculoCalidadInformacionGeneral circuloCalidadInformacionGeneralFromJson(String str) =>
+    CirculoCalidadInformacionGeneral.fromJson(json.decode(str));
+
+String circuloCalidadInformacionGeneralToJson(CirculoCalidadInformacionGeneral data) => json.encode(data.toJson());
+
+class CirculoCalidadInformacionGeneral{
+  CirculoCalidadInformacionGeneral({
+    circuloCalidad,
+    this.listaCirculoCalidadCliente,
+    this.listaCirculoCalidadFalencia,
+    this.listaCirculoCalidadProducto,
+    this.listaCirculoCalidadVariedad,
+    this.listaCirculoCalidadNumeroMesa,
+    this.listaCirculoCalidadLinea
+  });
+
+  CirculoCalidad circuloCalidad;
+  List<CirculoCalidadCliente> listaCirculoCalidadCliente;
+  List<CirculoCalidadFalencia> listaCirculoCalidadFalencia;
+  List<CirculoCalidadProducto> listaCirculoCalidadProducto;
+  List<CirculoCalidadVariedad> listaCirculoCalidadVariedad;
+  List<CirculoCalidadNumeroMesa> listaCirculoCalidadNumeroMesa;
+  List<CirculoCalidadLinea> listaCirculoCalidadLinea;
+
+
+
+  factory CirculoCalidadInformacionGeneral.fromJson(Map<String, dynamic> json) => CirculoCalidadInformacionGeneral(
+      circuloCalidad: json["circuloCalidad"],
+      listaCirculoCalidadCliente: json["listaCirculoCalidadCliente"],
+      listaCirculoCalidadFalencia: json["listaCirculoCalidadFalencia"],
+      listaCirculoCalidadProducto: json["listaCirculoCalidadProducto"],
+      listaCirculoCalidadVariedad: json["listaCirculoCalidadVariedad"],
+      listaCirculoCalidadLinea: json["listaCirculoCalidadLinea"],
+      listaCirculoCalidadNumeroMesa: json["listaCirculoCalidadNumeroMesa"]);
+      
+  Map<String, dynamic> toJson() => {
+        "circuloCalidad": circuloCalidad,
+        "listaCirculoCalidadCliente": listaCirculoCalidadCliente,
+        "listaCirculoCalidadFalencia": listaCirculoCalidadFalencia,
+        "listaCirculoCalidadProducto": listaCirculoCalidadProducto,
+        "listaCirculoCalidadVariedad": listaCirculoCalidadVariedad,
+        "listaCirculoCalidadLinea": listaCirculoCalidadLinea,
+        "listaCirculoCalidadNumeroMesa": listaCirculoCalidadNumeroMesa
+      };
+}
