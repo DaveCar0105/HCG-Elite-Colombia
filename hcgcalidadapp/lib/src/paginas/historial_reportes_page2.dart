@@ -63,23 +63,26 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Historial de reportes'),
+      ),
       body: SafeArea(
           child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text('Historial Reportes', style: TextStyle(fontSize: 40)),
+            //Text('Historial Reportes', style: TextStyle(fontSize: 40)),
             DataTable(
               dividerThickness: 5,
-              dataRowHeight: 30,
-              headingRowHeight: 100,
+              dataRowHeight: 100,
+              headingRowHeight: 50,
               columnSpacing: 5,
               columns: [
                 DataColumn(label: Text('Reunion'), numeric: true),
                 DataColumn(label: Text('Ramos\nRevisados'), numeric: true),
                 DataColumn(label: Text('Ramos\nRechazados'), numeric: true),
                 DataColumn(label: Text('%No\nConformidad'), numeric: true),
-                DataColumn(label: Text('Accion'), numeric: true),
+                DataColumn(label: Text('Ver\nreporte'), numeric: true),
               ],
               // rows: [
               //   DataRow(cells: [
