@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
-
 // ignore: must_be_immutable
-class ListaBusqueda extends StatefulWidget{
+class ListaBusqueda extends StatefulWidget {
   final ValueChanged<String> parentAction;
   List<AutoComplete> lista;
   String hintText;
@@ -13,41 +12,45 @@ class ListaBusqueda extends StatefulWidget{
   double width;
   TextStyle style;
   String valorDefecto;
-  ListaBusqueda({this.lista, this.hintText, this.hintSearchText, this.icon, this.parentAction, this.width, this.style, this.valorDefecto, Key key}) : super(key: key);
+  ListaBusqueda(
+      {this.lista,
+      this.hintText,
+      this.hintSearchText,
+      this.icon,
+      this.parentAction,
+      this.width,
+      this.style,
+      this.valorDefecto,
+      Key key})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
     return ListaBusquedaState();
   }
-
 }
 
-class ListaBusquedaState extends State<ListaBusqueda>{
+class ListaBusquedaState extends State<ListaBusqueda> {
   bool mostrar = true;
   List<DropdownMenuItem> items = [];
   String selectedValue;
   List<AutoComplete> lista = [];
 
-
   @override
   void initState() {
-
     setState(() {
       lista = widget.lista;
       selectedValue = widget.valorDefecto;
     });
     super.initState();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    print("valor preselected "+widget.valorDefecto);
     return Row(
       children: <Widget>[
         Container(
-          width: MediaQuery.of(context).size.width*0.1,
+          width: MediaQuery.of(context).size.width * 0.1,
           child: widget.icon,
         ),
         Container(
@@ -57,10 +60,11 @@ class ListaBusquedaState extends State<ListaBusqueda>{
               return DropdownMenuItem(
                 child: new Text(
                   e.nombre,
-              style: widget.style,
-              overflow: TextOverflow.clip,
-              maxLines: 1,
-              softWrap: true,),
+                  style: widget.style,
+                  overflow: TextOverflow.clip,
+                  maxLines: 1,
+                  softWrap: true,
+                ),
                 value: e.nombre,
               );
             }).toList(),
@@ -72,9 +76,7 @@ class ListaBusquedaState extends State<ListaBusqueda>{
             ),
             searchHint: new Text(
               widget.hintSearchText,
-              style: new TextStyle(
-                  fontSize: 14
-              ),
+              style: new TextStyle(fontSize: 14),
             ),
             onChanged: (value) {
               setState(() {
@@ -88,8 +90,7 @@ class ListaBusquedaState extends State<ListaBusqueda>{
     );
   }
 
-
-  limpiar(){
+  limpiar() {
     setState(() {
       selectedValue = items[0].value;
     });

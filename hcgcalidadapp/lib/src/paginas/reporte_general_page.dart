@@ -5,6 +5,8 @@ import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
+//import 'package:hcgcalidadapp/src/paginas/historial_reportes_page.dart';
+import 'package:hcgcalidadapp/src/paginas/historial_reportes_page2.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
 class ReporteGeneralPage extends StatefulWidget {
@@ -130,7 +132,8 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
 
   cargarClientesListWidget(ClienteReporteGeneralDto cliente, int indice) {
     String textoTitle = indice.toString() + ". " + cliente.nombreCliente;
-    String clienteTextRevisados = "revisados: " + cliente.totalClientes.toString();
+    String clienteTextRevisados =
+        "revisados: " + cliente.totalClientes.toString();
     String clienteTextRechazados = "rechazados: " + cliente.cantidad.toString();
     String porcentajeText =
         "%: " + cliente.porcentajeCliente.toStringAsFixed(2) + "%";
@@ -169,8 +172,10 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
 
   cargarProductosListWidget(ProductoReporteGeneralDto producto, int indice) {
     String textoTitle = indice.toString() + ". " + producto.nombreProducto;
-    String productoTextRevisados = "revisados: " + producto.totalProductos.toString();
-    String productoTextRechazados = "rechazados: " + producto.cantidad.toString();
+    String productoTextRevisados =
+        "revisados: " + producto.totalProductos.toString();
+    String productoTextRechazados =
+        "rechazados: " + producto.cantidad.toString();
     String porcentajeText =
         "%: " + producto.porcentajeProducto.toStringAsFixed(2) + "%";
     dynamic productoSetear = Center(
@@ -244,12 +249,14 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     dinamicosVariedad.add(falenciaSetear);
   }
 
-  cargarNumeroMesaListWidget( NumeroMesaReporteGeneralDto numeroMesa, int indice) {
+  cargarNumeroMesaListWidget(
+      NumeroMesaReporteGeneralDto numeroMesa, int indice) {
     String textoTitle = indice.toString() + ". " + numeroMesa.nombreNumeroMesa;
     String falenciaText = "Cantidad: " + numeroMesa.cantidad.toString();
 
-    String porcentajeText =
-        "Porcentaje: " + numeroMesa.porcentajeNumeroMesa.toStringAsFixed(2) + "%";
+    String porcentajeText = "Porcentaje: " +
+        numeroMesa.porcentajeNumeroMesa.toStringAsFixed(2) +
+        "%";
 
     dynamic falenciaSetear = Center(
         child: Card(
@@ -282,7 +289,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
     dinamicosNumeroMesa.add(falenciaSetear);
   }
 
-  cargarLineaListWidget( LineaReporteGeneralDto linea, int indice) {
+  cargarLineaListWidget(LineaReporteGeneralDto linea, int indice) {
     String textoTitle = indice.toString() + ". " + linea.nombreLinea;
     String falenciaText = "Cantidad: " + linea.cantidad.toString();
 
@@ -324,488 +331,554 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
-      key: scaffoldKey,
-      body: ProgressHUD(
-        child: Builder(
-          builder: (context) =>
-
-      Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(15),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.redAccent, width: 2)),
-          width: double.infinity,
-          child: Container(
-            child: ListView(
-              children: <Widget>[
-                banderaList
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Column(
-                            children: [
-                              Text('RESUMEN REVISION',
-                                  style: Theme.of(context).textTheme.headline6),
-                            ],
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text('RAMOS REVISADOS:',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1)),
-                                    Expanded(
-                                        child: Text(
-                                            '${reporteGeneral.ramosRevisados}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1))
-                                  ],
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          banderaList
-                              ? Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text('RAMOS NO CONFORMES:    ',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1)),
-                                    Expanded(
-                                        child: Text(
-                                            '${reporteGeneral.ramosNoConformes}',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1))
-                                  ],
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          banderaList
-                              ? Row(
-                                  children: [
-                                    Expanded(
-                                        child: Text('%RAMOS NO CONFORMES: ',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1)),
-                                    Expanded(
-                                        child: Text(
-                                            '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
-                                                '%',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1))
-                                  ],
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('RESUMEN CAUSAS - CLIENTES',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            width: width,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.primaries.last,
-                                        width: 2))),
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Column(
-                                  children: dinamicosClientes,
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('RESUMEN CAUSAS - PRODUCTOS',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            width: width,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.primaries.last,
-                                        width: 2))),
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Column(
-                                  children: dinamicosProductos,
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('RESUMEN CAUSAS - VARIEDAD',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            width: width,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.primaries.last,
-                                        width: 2))),
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Column(
-                                  children: dinamicosVariedad,
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                                Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('RESUMEN CAUSAS - # MESA',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            width: width,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.primaries.last,
-                                        width: 2))),
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Column(
-                                  children: dinamicosNumeroMesa,
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                                Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('RESUMEN CAUSAS - LÍNEA',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            width: width,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.primaries.last,
-                                        width: 2))),
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Column(
-                                  children: dinamicosLinea,
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('RESUMEN CAUSAS - PROBLEMAS',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            width: width,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: Colors.primaries.last,
-                                        width: 2))),
-                          ),
-                          Divider(),
-                          banderaList
-                              ? Column(
-                                  children: dinamicos,
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
-                                ),
-                          Divider(),
-                          Divider(),
-                          Column(
-                            children: [
-                              Text('FORMULARIO CÍRCULO CALIDAD',
-                                  style: Theme.of(context).textTheme.headline6)
-                            ],
-                          ),
-                          Divider(),
-                          Container(
-                            //margin: EdgeInsets.all(10),
-                            //padding: EdgeInsets.all(15),
-                            child: Form(
-                              key: _formCirculoCalidadKey,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+        key: scaffoldKey,
+        body: ProgressHUD(
+            child: Builder(
+          builder: (context) => Container(
+              margin: EdgeInsets.all(10),
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.redAccent, width: 2)),
+              width: double.infinity,
+              child: Container(
+                child: ListView(
+                  children: <Widget>[
+                    banderaList
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Column(
                                 children: [
-                                  TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
+                                  Text('RESUMEN REVISION',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline6),
+                                ],
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                            child: Text('RAMOS REVISADOS:',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1)),
+                                        Expanded(
+                                            child: Text(
+                                                '${reporteGeneral.ramosRevisados}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1))
+                                      ],
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              banderaList
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                            child: Text(
+                                                'RAMOS NO CONFORMES:    ',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1)),
+                                        Expanded(
+                                            child: Text(
+                                                '${reporteGeneral.ramosNoConformes}',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1))
+                                      ],
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              banderaList
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                            child: Text('%RAMOS NO CONFORMES: ',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1)),
+                                        Expanded(
+                                            child: Text(
+                                                '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
+                                                    '%',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle1))
+                                      ],
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('RESUMEN CAUSAS - CLIENTES',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                width: width,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.primaries.last,
+                                            width: 2))),
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Column(
+                                      children: dinamicosClientes,
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('RESUMEN CAUSAS - PRODUCTOS',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                width: width,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.primaries.last,
+                                            width: 2))),
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Column(
+                                      children: dinamicosProductos,
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('RESUMEN CAUSAS - VARIEDAD',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                width: width,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.primaries.last,
+                                            width: 2))),
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Column(
+                                      children: dinamicosVariedad,
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('RESUMEN CAUSAS - # MESA',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                width: width,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.primaries.last,
+                                            width: 2))),
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Column(
+                                      children: dinamicosNumeroMesa,
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('RESUMEN CAUSAS - LÍNEA',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                width: width,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.primaries.last,
+                                            width: 2))),
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Column(
+                                      children: dinamicosLinea,
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('RESUMEN CAUSAS - PROBLEMAS',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                width: width,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            color: Colors.primaries.last,
+                                            width: 2))),
+                              ),
+                              Divider(),
+                              banderaList
+                                  ? Column(
+                                      children: dinamicos,
+                                    )
+                                  : Container(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                              Divider(),
+                              Divider(),
+                              Column(
+                                children: [
+                                  Text('FORMULARIO CÍRCULO CALIDAD',
+                                      style:
+                                          Theme.of(context).textTheme.headline6)
+                                ],
+                              ),
+                              Divider(),
+                              Container(
+                                  //margin: EdgeInsets.all(10),
+                                  //padding: EdgeInsets.all(15),
+                                  child: Form(
+                                key: _formCirculoCalidadKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
                                         labelText: "Número de reunión",
-                                        hintText: 'Ingrese el # reunión',),
-                                    controller: numeroReunionTextEditingController,
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Llene este campo";
-                                      }
-                                    },
-                                  ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Nombre supervisor 1",
-                                        hintText: 'Ingrese el nombre del supervisor',),
-                                    controller: supervisor1TextEditingController,
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Llene este campo";
-                                      }
-                                    },
-                                  ),
-                                  Divider(),
-                                  Text('Evaluación supervisor 1',
-                                    style: Theme.of(context).textTheme.subtitle2
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              value: 1, 
-                                              groupValue: _supervisor1GroupValue, 
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _supervisor1GroupValue = value;
-                                                });
-                                              }
-                                            ),
-                                            Text('Regular',
-                                              style: Theme.of(context).textTheme.subtitle2
-                                            )
-                                          ]
-                                        )
+                                        hintText: 'Ingrese el # reunión',
                                       ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              value: 2, 
-                                              groupValue: _supervisor1GroupValue, 
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _supervisor1GroupValue = value;
-                                                });
-                                              }
-                                            ),
-                                            Text('Bueno',
-                                              style: Theme.of(context).textTheme.subtitle2
-                                            )
-                                          ]
-                                        )
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              value: 3, 
-                                              groupValue: _supervisor1GroupValue, 
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _supervisor1GroupValue = value;
-                                                });
-                                              }
-                                            ),
-                                            Text('Excelente',
-                                              style: Theme.of(context).textTheme.subtitle2
-                                            )
-                                          ]
-                                        )
-                                      ),
-                                    ],
-                                  ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Nombre supervisor 2",
-                                        hintText: 'Ingrese el nombre del supervisor',),
-                                    controller: supervisor2TextEditingController,
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Llene este campo";
-                                      }
-                                    },
-                                  ),
-                                  Divider(),
-                                  Text('Evaluación supervisor 2',
-                                    style: Theme.of(context).textTheme.subtitle2
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              value: 1, 
-                                              groupValue: _supervisor2GroupValue, 
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _supervisor2GroupValue = value;
-                                                });
-                                              }
-                                            ),
-                                            Text('Regular',
-                                              style: Theme.of(context).textTheme.subtitle2
-                                            )
-                                          ]
-                                        )
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              value: 2, 
-                                              groupValue: _supervisor2GroupValue, 
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _supervisor2GroupValue = value;
-                                                });
-                                              }
-                                            ),
-                                            Text('Bueno',
-                                              style: Theme.of(context).textTheme.subtitle2
-                                            )
-                                          ]
-                                        )
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            Radio(
-                                              value: 3, 
-                                              groupValue: _supervisor2GroupValue, 
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _supervisor2GroupValue = value;
-                                                });
-                                              }
-                                            ),
-                                            Text('Excelente',
-                                              style: Theme.of(context).textTheme.subtitle2
-                                            )
-                                          ]
-                                        )
-                                      ),
-                                    ],
-                                  ),
-                                  TextFormField(
-                                    decoration: InputDecoration(
-                                        labelText: "Comentario",
-                                        hintText: 'Ingrese el comentario',),
-                                    controller: comentarioTextEditingController,
-                                    validator: (value) {
-                                      if (value.isEmpty) {
-                                        return "Llene este campo";
-                                      }
-                                    },
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8),
-                                    child: RaisedButton(
-                                      onPressed: () async {
-                                        
-                                        if (_formCirculoCalidadKey.currentState.validate() && _supervisor1GroupValue!=-1 && _supervisor2GroupValue!=-1) {
-                                          final progress = ProgressHUD.of(context);
-                                          progress?.showWithText('Guardando...');
-                                          String selectSup1 =  evaluacion[_supervisor1GroupValue-1];
-                                          String selectSup2 =  evaluacion[_supervisor2GroupValue-1];
-                                          CirculoCalidad circuloCalidad = new CirculoCalidad();
-                                          circuloCalidad.circuloCalidadNumeroReunion = int.parse(numeroReunionTextEditingController.text);
-                                          circuloCalidad.circuloCalidadSupervisor = supervisor1TextEditingController.text;
-                                          circuloCalidad.circuloCalidadSupervisor2 = supervisor2TextEditingController.text;
-                                          circuloCalidad.circuloCalidadEvaluacionSupervisor = selectSup1;
-                                          circuloCalidad.circuloCalidadEvaluacionSupervisor2 = selectSup2;
-                                          circuloCalidad.circuloCalidadComentario = comentarioTextEditingController.text;
-                                          try{
-                                            await DatabaseCirculoCalidad.addcirculoCalidadByReporteGeneral(reporteGeneral, circuloCalidad);
-                                            await DatabaseCirculoCalidad.getAllcirculoCalidad();
-                                            progress?.dismiss();
-                                            mostrarSnackbar("Guardado exitosamente", Colors.green, scaffoldKey);
-                                            setState(() {
-                                            });
-                                          }catch(e){
-                                            progress?.dismiss();
-                                            mostrarSnackbar("Error al guardar", Colors.redAccent, scaffoldKey);
-                                          }
-                                        }else {
-                                          mostrarSnackbar("Llenar todo el formulario", Colors.redAccent, scaffoldKey);
+                                      controller:
+                                          numeroReunionTextEditingController,
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Llene este campo";
                                         }
                                       },
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20)),
-                                      color: Colors.red,
-                                      textColor: Colors.white,
-                                      child: Container(
-                                        height: 50,
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: <Widget>[Text('Generar circulo de calidad'), Icon(Icons.save)],
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: "Nombre supervisor 1",
+                                        hintText:
+                                            'Ingrese el nombre del supervisor',
+                                      ),
+                                      controller:
+                                          supervisor1TextEditingController,
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Llene este campo";
+                                        }
+                                      },
+                                    ),
+                                    Divider(),
+                                    Text('Evaluación supervisor 1',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: Row(children: [
+                                          Radio(
+                                              value: 1,
+                                              groupValue:
+                                                  _supervisor1GroupValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor1GroupValue =
+                                                      value;
+                                                });
+                                              }),
+                                          Text('Regular',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
+                                        ])),
+                                        Expanded(
+                                            child: Row(children: [
+                                          Radio(
+                                              value: 2,
+                                              groupValue:
+                                                  _supervisor1GroupValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor1GroupValue =
+                                                      value;
+                                                });
+                                              }),
+                                          Text('Bueno',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
+                                        ])),
+                                        Expanded(
+                                            child: Row(children: [
+                                          Radio(
+                                              value: 3,
+                                              groupValue:
+                                                  _supervisor1GroupValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor1GroupValue =
+                                                      value;
+                                                });
+                                              }),
+                                          Text('Excelente',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
+                                        ])),
+                                      ],
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: "Nombre supervisor 2",
+                                        hintText:
+                                            'Ingrese el nombre del supervisor',
+                                      ),
+                                      controller:
+                                          supervisor2TextEditingController,
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Llene este campo";
+                                        }
+                                      },
+                                    ),
+                                    Divider(),
+                                    Text('Evaluación supervisor 2',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .subtitle2),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: Row(children: [
+                                          Radio(
+                                              value: 1,
+                                              groupValue:
+                                                  _supervisor2GroupValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor2GroupValue =
+                                                      value;
+                                                });
+                                              }),
+                                          Text('Regular',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
+                                        ])),
+                                        Expanded(
+                                            child: Row(children: [
+                                          Radio(
+                                              value: 2,
+                                              groupValue:
+                                                  _supervisor2GroupValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor2GroupValue =
+                                                      value;
+                                                });
+                                              }),
+                                          Text('Bueno',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
+                                        ])),
+                                        Expanded(
+                                            child: Row(children: [
+                                          Radio(
+                                              value: 3,
+                                              groupValue:
+                                                  _supervisor2GroupValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _supervisor2GroupValue =
+                                                      value;
+                                                });
+                                              }),
+                                          Text('Excelente',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .subtitle2)
+                                        ])),
+                                      ],
+                                    ),
+                                    TextFormField(
+                                      decoration: InputDecoration(
+                                        labelText: "Comentario",
+                                        hintText: 'Ingrese el comentario',
+                                      ),
+                                      controller:
+                                          comentarioTextEditingController,
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return "Llene este campo";
+                                        }
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8),
+                                      child: RaisedButton(
+                                        onPressed: () async {
+                                          if (_formCirculoCalidadKey
+                                                  .currentState
+                                                  .validate() &&
+                                              _supervisor1GroupValue != -1 &&
+                                              _supervisor2GroupValue != -1) {
+                                            final progress =
+                                                ProgressHUD.of(context);
+                                            progress
+                                                ?.showWithText('Guardando...');
+                                            String selectSup1 = evaluacion[
+                                                _supervisor1GroupValue - 1];
+                                            String selectSup2 = evaluacion[
+                                                _supervisor2GroupValue - 1];
+                                            CirculoCalidad circuloCalidad =
+                                                new CirculoCalidad();
+                                            circuloCalidad
+                                                    .circuloCalidadNumeroReunion =
+                                                int.parse(
+                                                    numeroReunionTextEditingController
+                                                        .text);
+                                            circuloCalidad
+                                                    .circuloCalidadSupervisor =
+                                                supervisor1TextEditingController
+                                                    .text;
+                                            circuloCalidad
+                                                    .circuloCalidadSupervisor2 =
+                                                supervisor2TextEditingController
+                                                    .text;
+                                            circuloCalidad
+                                                    .circuloCalidadEvaluacionSupervisor =
+                                                selectSup1;
+                                            circuloCalidad
+                                                    .circuloCalidadEvaluacionSupervisor2 =
+                                                selectSup2;
+                                            circuloCalidad
+                                                    .circuloCalidadComentario =
+                                                comentarioTextEditingController
+                                                    .text;
+                                            try {
+                                              await DatabaseCirculoCalidad
+                                                  .addcirculoCalidadByReporteGeneral(
+                                                      reporteGeneral,
+                                                      circuloCalidad);
+                                              await DatabaseCirculoCalidad
+                                                  .getAllcirculoCalidad();
+                                              progress?.dismiss();
+                                              mostrarSnackbar(
+                                                  "Guardado exitosamente",
+                                                  Colors.green,
+                                                  scaffoldKey);
+                                              setState(() {});
+                                            } catch (e) {
+                                              progress?.dismiss();
+                                              mostrarSnackbar(
+                                                  "Error al guardar",
+                                                  Colors.redAccent,
+                                                  scaffoldKey);
+                                            }
+                                          } else {
+                                            mostrarSnackbar(
+                                                "Llenar todo el formulario",
+                                                Colors.redAccent,
+                                                scaffoldKey);
+                                          }
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        color: Colors.red,
+                                        textColor: Colors.white,
+                                        child: Container(
+                                          height: 50,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(
+                                                  'Generar circulo de calidad'),
+                                              Icon(Icons.save)
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
+                                  ],
+                                ),
+                              ))
+                            ],
                           )
-                        ],
-                      )
-                    : Container(
-                        child: CircularProgressIndicator(),
-                      ),
-              ],
-            ),
-          )),
-        ))
-    );
+                        : Container(
+                            child: CircularProgressIndicator(),
+                          ),
+                  ],
+                ),
+              )),
+        )),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.description),
+          backgroundColor: Colors.green,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ListaReporteGeneralPage2()));
+          },
+        ));
   }
 }

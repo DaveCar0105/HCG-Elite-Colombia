@@ -363,8 +363,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
               _postcosecha(),
               _destinos(),
-              _multiplesClientes(),
-              //_clientes(),
+
+              _clientes(),
               _numeroGuia(),
               _realizadoPor(),
               _acompanamiento(),
