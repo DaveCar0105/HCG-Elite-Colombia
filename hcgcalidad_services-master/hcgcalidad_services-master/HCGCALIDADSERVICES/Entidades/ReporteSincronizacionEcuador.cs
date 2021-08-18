@@ -111,4 +111,28 @@ namespace HCGCALIDADSERVICES.Entidades
         public int FalenciaBandaRamos { get; set; }
     }
 
+    public partial class CirculoCalidadInformacionGeneral
+    {
+        [JsonProperty("circuloCalidad")]
+        public Models.CirculoCalidad CirculoCalidad { get; set; }
+
+        [JsonProperty("listaCirculoCalidadCliente")]
+        public List<Models.CirculoCalidadCliente> ListaCirculoCalidadCliente { get; set; }
+
+        [JsonProperty("listaCirculoCalidadFalencia")]
+        public List<Models.CirculoCalidadFalencia> ListaCirculoCalidadFalencia { get; set; }
+
+        [JsonProperty("listaCirculoCalidadProducto")]
+        public List<Models.CirculoCalidadProducto> ListaCirculoCalidadProducto { get; set; }
+
+        [JsonProperty("listaCirculoCalidadVariedad")]
+        public List<Models.CirculoCalidadVariedad> ListaCirculoCalidadVariedad { get; set; }
+
+        [JsonProperty("listaCirculoCalidadNumeroMesa")]
+        public List<Models.CirculoCalidadNumeroMesa> ListaCirculoCalidadNumeroMesa { get; set; }
+
+        [JsonProperty("listaCirculoCalidadLinea")]
+        public List<Models.CirculoCalidadLinea> ListaCirculoCalidadLinea { get; set; }
+    }
+
 }

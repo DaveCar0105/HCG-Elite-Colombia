@@ -17,15 +17,18 @@ namespace HCGCALIDADSERVICES.Controllers
     {
         private readonly BDD_HCG_CONTROLContext _context;
         private readonly String TAG = "SincroTag ";
+        
         public SincroController(BDD_HCG_CONTROLContext context)
         {
             _context = context;
         }
+        
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
+        
         [HttpPost("Reporte")]
         public dynamic PostReporte(Filtro filtro)
         {
@@ -1247,6 +1250,7 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             return reporte;
         }
+        
         private string[] transformarFecha(DateTime fecha)
         {
             string[] lista = new string[3];
@@ -1258,6 +1262,8 @@ namespace HCGCALIDADSERVICES.Controllers
             lista[2] = fecha.ToString("d", new CultureInfo("en-US"));
             return lista;
         }
+        
+        
         [HttpPost("temperatura")]
         public dynamic PostTemperatura([FromBody] List<RegistroTemperatura> value)
         {
@@ -1294,6 +1300,7 @@ namespace HCGCALIDADSERVICES.Controllers
                 return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
             }
         }
+        
         [HttpPost("hidratacion")]
         public dynamic PostHidratacion([FromBody] List<RegistroHidratacion> value)
         {
@@ -1332,6 +1339,7 @@ namespace HCGCALIDADSERVICES.Controllers
                 return BadRequest("phid" + e.Message.ToString() + e.Source.ToString());
             }
         }
+        
         [HttpPost("actividad")]
         public dynamic PostActividad([FromBody] List<Actividade> value)
         {
@@ -1368,6 +1376,7 @@ namespace HCGCALIDADSERVICES.Controllers
                 return BadRequest("act" + e.Message.ToString() + e.Source.ToString());
             }
         }
+        
         [HttpPost("pempaque")]
         public dynamic PostProcesoEmpaque([FromBody] List<Entidades.ProcesoEmpaque> value)
         {
@@ -1923,11 +1932,11 @@ namespace HCGCALIDADSERVICES.Controllers
             return Ok();
         }
 
-
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
+        
         [HttpPost("prueba/{value}")]
         public dynamic Prueba(int value)
         {
@@ -1945,10 +1954,123 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             
         }
+        
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
         }
+
+        [HttpPost("circuloCalidad")]
+        public dynamic PostCirculoCalidad([FromBody] List<CirculoCalidadInformacionGeneral> circuloCalidadInformacionGenerals)
+        {
+            string TAG = "SINCRONIZAR";
+            try
+            {
+                for (int i = 0; i < circuloCalidadInformacionGenerals.Count; i++)
+                {
+                    List<Models.CirculoCalidadCliente> ListaCirculoCalidadCliente = circuloCalidadInformacionGenerals[i].ListaCirculoCalidadCliente;
+                    List<Models.CirculoCalidadFalencia> ListaCirculoCalidadFalencia = circuloCalidadInformacionGenerals[i].ListaCirculoCalidadFalencia;
+                    List<Models.CirculoCalidadProducto> ListaCirculoCalidadProducto = circuloCalidadInformacionGenerals[i].ListaCirculoCalidadProducto;
+                    List<Models.CirculoCalidadVariedad> ListaCirculoCalidadVariedad = circuloCalidadInformacionGenerals[i].ListaCirculoCalidadVariedad;
+                    List<Models.CirculoCalidadNumeroMesa> ListaCirculoCalidadNumeroMesa = circuloCalidadInformacionGenerals[i].ListaCirculoCalidadNumeroMesa;
+                    List<Models.CirculoCalidadLinea> ListaCirculoCalidadLinea = circuloCalidadInformacionGenerals[i].ListaCirculoCalidadLinea;
+
+                    Models.CirculoCalidad NewCirculoCalidad = new CirculoCalidad();
+                    NewCirculoCalidad.CirculoCalidadRevisados = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadRevisados;
+                    NewCirculoCalidad.CirculoCalidadRechazados = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadRechazados;
+                    NewCirculoCalidad.CirculoCalidadPorcentajeNoConforme = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadPorcentajeNoConforme;
+                    NewCirculoCalidad.CirculoCalidadNumeroReunion = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadNumeroReunion;
+                    NewCirculoCalidad.CirculoCalidadSupervisor = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadSupervisor;
+                    NewCirculoCalidad.CirculoCalidadSupervisor2 = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadSupervisor2;
+                    NewCirculoCalidad.CirculoCalidadEvaluacionSupervisor = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadEvaluacionSupervisor;
+                    NewCirculoCalidad.CirculoCalidadEvaluacionSupervisor2 = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadEvaluacionSupervisor2;
+                    NewCirculoCalidad.CirculoCalidadComentario = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadComentario;
+                    NewCirculoCalidad.CirculoCalidadFecha = circuloCalidadInformacionGenerals[i].CirculoCalidad.CirculoCalidadFecha;
+                    NewCirculoCalidad.PostcosechaId = circuloCalidadInformacionGenerals[i].CirculoCalidad.PostcosechaId;
+                    _context.CirculoCalidad.Add(NewCirculoCalidad);
+                    _context.SaveChanges();
+
+                    for (int indObj = 0; indObj < ListaCirculoCalidadCliente.Count; indObj++)
+                    {
+                        Models.CirculoCalidadCliente NewCirculoCalidadObj = new CirculoCalidadCliente();
+                        NewCirculoCalidadObj.Revisados = ListaCirculoCalidadCliente[indObj].Revisados;
+                        NewCirculoCalidadObj.Rechazados = ListaCirculoCalidadCliente[indObj].Rechazados;
+                        NewCirculoCalidadObj.Porcentaje = ListaCirculoCalidadCliente[indObj].Porcentaje;
+                        NewCirculoCalidadObj.CirculoCalidadId = NewCirculoCalidad.CirculoCalidadId;
+                        NewCirculoCalidadObj.ClienteId = ListaCirculoCalidadCliente[indObj].ClienteId;
+                        _context.CirculoCalidadCliente.Add(NewCirculoCalidadObj);
+                        _context.SaveChanges();
+                    }
+
+                    for (int indObj = 0; indObj < ListaCirculoCalidadProducto.Count; indObj++)
+                    {
+                        Models.CirculoCalidadProducto NewCirculoCalidadObj = new CirculoCalidadProducto();
+                        NewCirculoCalidadObj.Revisados = ListaCirculoCalidadProducto[indObj].Revisados;
+                        NewCirculoCalidadObj.Rechazados = ListaCirculoCalidadProducto[indObj].Rechazados;
+                        NewCirculoCalidadObj.Porcentaje = ListaCirculoCalidadProducto[indObj].Porcentaje;
+                        NewCirculoCalidadObj.CirculoCalidadId = NewCirculoCalidad.CirculoCalidadId;
+                        NewCirculoCalidadObj.ProductoId = ListaCirculoCalidadProducto[indObj].ProductoId;
+                        _context.CirculoCalidadProducto.Add(NewCirculoCalidadObj);
+                        _context.SaveChanges();
+                    }
+
+                    for (int indObj = 0; indObj < ListaCirculoCalidadFalencia.Count; indObj++)
+                    {
+                        Models.CirculoCalidadFalencia NewCirculoCalidadObj = new CirculoCalidadFalencia();
+                        NewCirculoCalidadObj.Revisados = ListaCirculoCalidadFalencia[indObj].Revisados;
+                        NewCirculoCalidadObj.Rechazados = ListaCirculoCalidadFalencia[indObj].Rechazados;
+                        NewCirculoCalidadObj.Porcentaje = ListaCirculoCalidadFalencia[indObj].Porcentaje;
+                        NewCirculoCalidadObj.CirculoCalidadId = NewCirculoCalidad.CirculoCalidadId;
+                        NewCirculoCalidadObj.FalenciaramosId = ListaCirculoCalidadFalencia[indObj].FalenciaramosId;
+                        _context.CirculoCalidadFalencia.Add(NewCirculoCalidadObj);
+                        _context.SaveChanges();
+                    }
+
+                    for (int indObj = 0; indObj < ListaCirculoCalidadVariedad.Count; indObj++)
+                    {
+                        Models.CirculoCalidadVariedad NewCirculoCalidadObj = new CirculoCalidadVariedad();
+                        NewCirculoCalidadObj.Revisados = ListaCirculoCalidadVariedad[indObj].Revisados;
+                        NewCirculoCalidadObj.Rechazados = ListaCirculoCalidadVariedad[indObj].Rechazados;
+                        NewCirculoCalidadObj.Porcentaje = ListaCirculoCalidadVariedad[indObj].Porcentaje;
+                        NewCirculoCalidadObj.CirculoCalidadId = NewCirculoCalidad.CirculoCalidadId;
+                        NewCirculoCalidadObj.CirculoCalidadVariedadNombre = ListaCirculoCalidadVariedad[indObj].CirculoCalidadVariedadNombre;
+                        _context.CirculoCalidadVariedad.Add(NewCirculoCalidadObj);
+                        _context.SaveChanges();
+                    }
+
+                    for (int indObj = 0; indObj < ListaCirculoCalidadNumeroMesa.Count; indObj++)
+                    {
+                        Models.CirculoCalidadNumeroMesa NewCirculoCalidadObj = new CirculoCalidadNumeroMesa();
+                        NewCirculoCalidadObj.Revisados = ListaCirculoCalidadNumeroMesa[indObj].Revisados;
+                        NewCirculoCalidadObj.Rechazados = ListaCirculoCalidadNumeroMesa[indObj].Rechazados;
+                        NewCirculoCalidadObj.Porcentaje = ListaCirculoCalidadNumeroMesa[indObj].Porcentaje;
+                        NewCirculoCalidadObj.CirculoCalidadId = NewCirculoCalidad.CirculoCalidadId;
+                        NewCirculoCalidadObj.CirculoCalidadNumeroMesaNombre = ListaCirculoCalidadNumeroMesa[indObj].CirculoCalidadNumeroMesaNombre;
+                        _context.CirculoCalidadNumeroMesa.Add(NewCirculoCalidadObj);
+                        _context.SaveChanges();
+                    }
+
+                    for (int indObj = 0; indObj < ListaCirculoCalidadLinea.Count; indObj++)
+                    {
+                        Models.CirculoCalidadLinea NewCirculoCalidadObj = new CirculoCalidadLinea();
+                        NewCirculoCalidadObj.Revisados = ListaCirculoCalidadLinea[indObj].Revisados;
+                        NewCirculoCalidadObj.Rechazados = ListaCirculoCalidadLinea[indObj].Rechazados;
+                        NewCirculoCalidadObj.Porcentaje = ListaCirculoCalidadLinea[indObj].Porcentaje;
+                        NewCirculoCalidadObj.CirculoCalidadId = NewCirculoCalidad.CirculoCalidadId;
+                        NewCirculoCalidadObj.CirculoCalidadLineaNombre = ListaCirculoCalidadLinea[indObj].CirculoCalidadLineaNombre;
+                        _context.CirculoCalidadLinea.Add(NewCirculoCalidadObj);
+                        _context.SaveChanges();
+                    }
+                }
+                return Ok(1);
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
+            }
+        }
+
 
     }
 }

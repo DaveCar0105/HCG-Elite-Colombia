@@ -1393,7 +1393,7 @@ namespace HCGCALIDADSERVICES.Models
                 entity.Property(e => e.CirculoCalidadRechazados)
                     .HasColumnName("CIRCULO_CALIDAD_RAMOS_RECHAZADOS");
 
-                entity.Property(e => e.CirculoCalidadumeroReunion)
+                entity.Property(e => e.CirculoCalidadNumeroReunion)
                     .HasColumnName("CIRCULO_CALIDAD_NUMERO_REUNION");
 
                 entity.Property(e => e.CirculoCalidadPorcentajeNoConforme)
@@ -1555,7 +1555,7 @@ namespace HCGCALIDADSERVICES.Models
                 entity.Property(e => e.CirculoCalidadId)
                     .HasColumnName("CIRCULO_CALIDAD_ID");
 
-                entity.Property(e => e.FalenciaramoId)
+                entity.Property(e => e.FalenciaramosId)
                     .HasColumnName("FALENCIA_RAMO_ID");
 
                 entity.HasOne(d => d.CirculoCalidad)
@@ -1565,7 +1565,7 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.HasOne(d => d.Falenciaramo)
                     .WithMany(p => p.CirculoCalidadFalencia)
-                    .HasForeignKey(d => d.FalenciaramoId)
+                    .HasForeignKey(d => d.FalenciaramosId)
                     .HasConstraintName("FK_CIRCULO_CALIDAD_FALENCIA_RELATIONS_FALENCIA_RAMO");
             });
 

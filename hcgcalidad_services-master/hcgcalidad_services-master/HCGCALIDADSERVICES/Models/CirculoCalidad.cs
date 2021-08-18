@@ -20,7 +20,7 @@ namespace HCGCALIDADSERVICES.Models
         public int CirculoCalidadRevisados { get; set; }
         public int CirculoCalidadRechazados { get; set; }
         public float CirculoCalidadPorcentajeNoConforme { get; set; }
-        public int CirculoCalidadumeroReunion { get; set; }
+        public int CirculoCalidadNumeroReunion { get; set; }
         public string CirculoCalidadSupervisor { get; set; }
         public string CirculoCalidadSupervisor2 { get; set; }
         public string CirculoCalidadEvaluacionSupervisor { get; set; }
@@ -70,7 +70,7 @@ namespace HCGCALIDADSERVICES.Models
         public int Rechazados { get; set; }
         public float Porcentaje { get; set; }
         public int CirculoCalidadId { get; set; }
-        public int FalenciaramoId { get; set; }
+        public int FalenciaramosId { get; set; }
         public CirculoCalidad CirculoCalidad { get; set; }
         public Falenciaramo Falenciaramo { get; set; }
     }
