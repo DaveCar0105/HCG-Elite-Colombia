@@ -127,17 +127,15 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
                           });
                         }
                       },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                      shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(10)),
                       color: Colors.red,
                       textColor: Colors.white,
                       child: Container(
                         height: 50,
-                        width: 150,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[Text('Guardar'), Icon(Icons.save)],
+                          children: <Widget>[Text('Guardar '), Icon(Icons.save)],
                         ),
                       ),
                     ),
@@ -222,7 +220,6 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
                                   child: Container(
                                     alignment: Alignment.center,
                                     height: 40,
-                                    width: 150,
                                     child: Text('Agregar'),
                                   ),
                                 )
@@ -242,11 +239,10 @@ class _FalenciasPorRamoState extends State<FalenciasPorRamo> {
             onPressed: () {
               Navigator.pop(context);
             },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+            shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(10)),
             color: Colors.red,
-            child: Text('Aceptar'),
+            textColor: Colors.white,
+            child: Text('Aceptar '),
           ),
         ),
       ],

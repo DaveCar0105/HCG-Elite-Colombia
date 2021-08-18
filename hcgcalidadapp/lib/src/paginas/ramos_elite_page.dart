@@ -199,7 +199,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
                     color: Colors.red,
                     child: Text('Ingresar Orden'),
                     textColor: Colors.white,
-                    shape: StadiumBorder(),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   )
                 : Container(
                     child: Text(
@@ -324,14 +324,13 @@ class _RamosElitePageState extends State<RamosElitePage> {
             }
           }
         },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         color: Colors.red,
         textColor: Colors.white,
         child: Container(
-          height: 60,
-          width: 100,
+          height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text('Siguiente'),
