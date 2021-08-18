@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_historial_reportes.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
-import 'circulo_calidad_page.dart';
 
 // ignore: must_be_immutable
 class ListaReporteGeneralPage2 extends StatefulWidget {
@@ -28,37 +25,6 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
     super.initState();
     fetchAllReportes();
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-
-  //       //key: scaffoldKey,
-  //       appBar: AppBar(
-  //         title: Text('HISTORIAL DE REPORTES GENERALES'),
-  //       ),
-
-  //       body: DataTable(
-  //           horizontalMargin: double.minPositive,
-  //           columns: [
-  //             DataColumn(label: Text("Reunion")),
-  //             DataColumn(label: Text("Ramo\nRevizados")),
-  //             DataColumn(label: Text("Ramos\nRechazados")),
-  //             DataColumn(label: Text("Porcentaje")),
-  //             DataColumn(label: Text("Accion")),
-  //           ],
-  //           rows: reportesLista
-  //               .map<DataRow>((e) => DataRow(cells: [
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                   ]))
-  //               .toList()
-
-  //           ));
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -84,21 +50,6 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
                 DataColumn(label: Text('%No\nConformidad'), numeric: true),
                 DataColumn(label: Text('Ver\nreporte'), numeric: true),
               ],
-              // rows: [
-              //   DataRow(cells: [
-              //     DataCell(Text('1')),
-              //     DataCell(Text('10')),
-              //     DataCell(Text('3')),
-              //     DataCell(Text('20')),
-              //     DataCell(Icon(Icons.visibility), onLongPress: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (context) => ProcesoMaritimoPage()));
-              //     })
-              //   ])
-              // ]
-
               rows: reportesLista != null
                   ? reportesLista
                       .map<DataRow>((element) => DataRow(cells: [

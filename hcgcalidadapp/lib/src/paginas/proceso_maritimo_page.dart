@@ -12,7 +12,6 @@ import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
-import 'package:multiselect/multiselect.dart';
 
 class ProcesoMaritimoPage extends StatefulWidget {
   @override
@@ -75,8 +74,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
 
-  List ListaMultiplesClientesId;
-
   @override
   void initState() {
     cargarCombo();
@@ -97,8 +94,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   String clientesNombre = "";
   int clientesId = 0;
   bool clientesEnable = false;
-
-  List<String> selected = [];
 
   GlobalKey<ListaBusquedaState> _keyDestinos1 = GlobalKey();
   List<AutoComplete> listaDestinos = new List<AutoComplete>();
@@ -210,25 +205,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               child: CircularProgressIndicator(),
             ),
     );
-  }
-
-  Widget _multiplesClientes() {
-    return Container(
-        child: Center(
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: DropDownMultiSelect(
-          onChanged: (List<String> x) {
-            setState(() {
-              selected = x;
-            });
-          },
-          options: listaClientes.map((e) => e.nombre).toList(),
-          selectedValues: selected,
-          whenEmpty: 'Selecione uno o varios clientes',
-        ),
-      ),
-    ));
   }
 
   Widget _clientes() {
@@ -362,17 +338,20 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               SizedBox(
@@ -558,17 +537,20 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               SizedBox(
@@ -720,17 +702,20 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -831,17 +816,20 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -1024,17 +1012,20 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -1243,17 +1234,20 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -1599,15 +1593,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
-        procesoMaritimoObsevacionesHidratacionValue != '' &&
-        procesoMaritimoObservacionesEmpaqueValue != '' &&
-        procesoMaritimoObservacionesTransferenciaValue != '' &&
-        procesoMaritimoObservacionesPalletizadoValue != '' &&
-        procesoMaritimoObservacionesLlenadoContenedorValue != '' &&
-        procesoMaritimoObservacionesRequerimientosCriticosValue != '' &&
         postcosechaId != 0 &&
-        clientesId != 0 &&
-        selected.length > 0) {
+        clientesId != 0 ) {
       ProcesoMaritimo procesoMaritimo = new ProcesoMaritimo(
         procesoMaritimoUsuarioControlId: 1,
         procesoMaritimoNumeroGuia:
@@ -1698,18 +1685,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       int procesoMaritimoId =
           await DatabaseProcesoMaritimo.addProcesoMaritimo(procesoMaritimo);
       if (procesoMaritimoId != 0) {
-        for (AutoComplete clientesMaritimoCheck in listaClientes) {
-          if (selected.contains(clientesMaritimoCheck.nombre)) {
-            procesoMaritimoMultiplesClientes multiplesClientes =
-                new procesoMaritimoMultiplesClientes();
-            multiplesClientes.procesoMaritimoMultipleId = procesoMaritimoId;
-            multiplesClientes.procesoMaritimoMultiplesClientesId =
-                clientesMaritimoCheck.id;
-            ListaMultiplesClientesId.add(multiplesClientes);
-          }
-        }
-        DatabaseProcesoMaritimo.addProcesoMaritimoMultiplesClientes(
-            ListaMultiplesClientesId);
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
         _procesoMaritimoBloc.registroProcesoMaritimoStream();

@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_actividad.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_temperatura.dart';
 import 'package:hcgcalidadapp/src/bloc/registro_temperatura_bloc.dart';
-import 'package:hcgcalidadapp/src/modelos/actividad.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
@@ -80,8 +78,6 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
 
   Widget _postcosecha() {
     return Container(
-      width: 250,
-      height: 70,
       child: postcosechaEnable
           ? ListaBusqueda(
               key: _keyPostcosecha,
@@ -90,7 +86,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
               valorDefecto: postcosechaNombre,
               hintSearchText: "Elegir el nombre de Postcosecha",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -111,8 +107,6 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
 
   Widget _clientes() {
     return Container(
-      width: 250,
-      height: 70,
       child: clientesEnable
           ? ListaBusqueda(
               key: _keyClientes,
@@ -121,7 +115,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
               valorDefecto: postcosechaNombre,
               hintSearchText: "Elegir un cliente",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -199,7 +193,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
           child: ListView(
             children: <Widget>[
               Container(
-                padding: EdgeInsets.only(top: height * 0.05),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -209,40 +203,29 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                     Divider(),
                     _InputTemperatura(
                         title: 'Temperatura Cuarto Frío',
-                        fontSize: height * 0.025,
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.2),
                         controller: temperaturaExterna),
                     _InputTemperatura(
                         title: 'Temperatura Caja #1',
-                        fontSize: height * 0.025,
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-                        margin: EdgeInsets.only(top: height * 0.1),
+                        margin: EdgeInsets.only(top: height * 0.03),
                         controller: temperaturaInterna1),
                     _InputTemperatura(
                         title: 'Temperatura Caja #2',
-                        fontSize: height * 0.025,
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-                        margin: EdgeInsets.only(top: height * 0.1),
+                        margin: EdgeInsets.only(top: height * 0.03),
                         controller: temperaturaInterna2),
                     _InputTemperatura(
                         title: 'Temperatura Caja #3',
-                        fontSize: height * 0.025,
-                        padding: EdgeInsets.symmetric(horizontal: width * 0.2),
-                        margin: EdgeInsets.only(top: height * 0.1),
+                        margin: EdgeInsets.only(top: height * 0.03),
                         controller: temperaturaInterna3),
                   ],
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(
-                  top: height * 0.12,
-                  left: width * 0.1,
-                  right: width * 0.1,
-                ),
+                padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: <Widget>[
                     Expanded(
                       child: RaisedButton.icon(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         onPressed: _validarForm,
                         color: Colors.red,
                         textColor: Colors.white,
@@ -332,12 +315,13 @@ class _InputTemperatura extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: padding,
+      width: MediaQuery.of(context).size.width * 0.85,
       margin: margin,
       child: Column(
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           TextField(
               controller: controller,
