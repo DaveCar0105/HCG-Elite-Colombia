@@ -19,7 +19,7 @@ namespace HCGCALIDADSERVICES.Models
         public int CirculoCalidadId { get; set; }
         public int CirculoCalidadRevisados { get; set; }
         public int CirculoCalidadRechazados { get; set; }
-        public float CirculoCalidadPorcentajeNoConforme { get; set; }
+        public double CirculoCalidadPorcentajeNoConforme { get; set; }
         public int CirculoCalidadNumeroReunion { get; set; }
         public string CirculoCalidadSupervisor { get; set; }
         public string CirculoCalidadSupervisor2 { get; set; }

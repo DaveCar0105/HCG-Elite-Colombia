@@ -63,13 +63,11 @@ namespace HCGCALIDADSERVICES.Controllers
                         .Include(f => f.FalenciaRamo).ThenInclude(fe => fe.CategoriaFalenciaRamo)
                         .ToList();
 
-
-
                     BaseRamo itemBaseRamo = new BaseRamo();
                     string[] fecha = transformarFecha(Convert.ToDateTime(listaBanda[0].ControlEcuadorFecha));
-                    /*itemBaseRamo.Semana = fecha[0];
+                    itemBaseRamo.Semana = fecha[0];
                     itemBaseRamo.Mes = fecha[1];
-                    */itemBaseRamo.Fecha = fecha[2];
+                    itemBaseRamo.Fecha = fecha[2];
                     try
                     {
                         List<Baseorden> baseOrdenTmp = baseOrdenes.Where(c => c.NumPed == listaBanda[0].ControlEcuadorNumeroOrden).ToList();
@@ -141,9 +139,9 @@ namespace HCGCALIDADSERVICES.Controllers
                         List<Models.Problemasecuador> tmpFalencia = new List<Problemasecuador>();
                         tmpFalencia = falBanda.Where(lfe => lfe.FalenciaRamoId == falenciaId).ToList();
                         BaseTotalRamo itemProblema = new BaseTotalRamo();
-                        /*itemProblema.Semana = fecha[0];
+                        itemProblema.Semana = fecha[0];
                         itemProblema.Mes = fecha[1];
-                        */itemProblema.Fecha = fecha[2];
+                        itemProblema.Fecha = fecha[2];
                         itemProblema.ClienteMacro = itemBaseRamo.ClienteMacro;
                         itemProblema.Cliente = itemBaseRamo.Cliente;
                         itemProblema.PostCosecha = itemBaseRamo.PostCosecha;
@@ -219,9 +217,9 @@ namespace HCGCALIDADSERVICES.Controllers
 
                     BaseRamo itemBaseRamo = new BaseRamo();
                     string[] fecha = transformarFecha(Convert.ToDateTime(listaBanda[0].ControlBandaFecha));
-                    /*itemBaseRamo.Semana = fecha[0];
+                    itemBaseRamo.Semana = fecha[0];
                     itemBaseRamo.Mes = fecha[1];
-                    */itemBaseRamo.Fecha = fecha[2];
+                    itemBaseRamo.Fecha = fecha[2];
                     try
                     {
                         List<Baseorden> baseOrdenTmp = baseOrdenes.Where(c => c.NumPed == listaBanda[0].ControlBandaNumeroOrden).ToList();
@@ -287,9 +285,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     }
                     listaBanda.RemoveAll(c => c.ControlBandaId == listaBandaId);
                     BaseTotalRamo itemBaseTotalRamos = new BaseTotalRamo();
-                    /*itemBaseTotalRamos.Semana = fecha[0];
+                    itemBaseTotalRamos.Semana = fecha[0];
                     itemBaseTotalRamos.Mes = fecha[1];
-                    */itemBaseTotalRamos.Fecha = fecha[2];
+                    itemBaseTotalRamos.Fecha = fecha[2];
                     itemBaseTotalRamos.ClienteMacro = itemBaseRamo.ClienteMacro;
                     itemBaseTotalRamos.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamos.PostCosecha = itemBaseRamo.PostCosecha;
@@ -323,9 +321,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     }
 
                     BaseTotalRamo itemBaseTotalRamosConf = new BaseTotalRamo();
-                    /*itemBaseTotalRamosConf.Semana = fecha[0];
+                    itemBaseTotalRamosConf.Semana = fecha[0];
                     itemBaseTotalRamosConf.Mes = fecha[1];
-                    */itemBaseTotalRamosConf.Fecha = fecha[2];
+                    itemBaseTotalRamosConf.Fecha = fecha[2];
                     itemBaseTotalRamosConf.ClienteMacro = itemBaseRamo.ClienteMacro;
                     itemBaseTotalRamosConf.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamosConf.PostCosecha = itemBaseRamo.PostCosecha;
@@ -364,9 +362,9 @@ namespace HCGCALIDADSERVICES.Controllers
                         List<Models.Problemabanda> tmpFalencia = new List<Problemabanda>();
                         tmpFalencia = falBanda.Where(lfe => lfe.FalenciaRamoId == falenciaId).ToList();
                         BaseTotalRamo itemProblema = new BaseTotalRamo();
-                        /*itemProblema.Semana = fecha[0];
+                        itemProblema.Semana = fecha[0];
                         itemProblema.Mes = fecha[1];
-                        */itemProblema.Fecha = fecha[2];
+                        itemProblema.Fecha = fecha[2];
                         itemProblema.ClienteMacro = itemBaseRamo.ClienteMacro;
                         itemProblema.Cliente = itemBaseRamo.Cliente;
                         itemProblema.PostCosecha = itemBaseRamo.PostCosecha;
@@ -442,9 +440,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     }
                     BaseRamo itemBaseRamo = new BaseRamo();
                     string[] fecha = transformarFecha(Convert.ToDateTime(listaControlRamoTmp[0].ControlRamoFecha));
-                    /*itemBaseRamo.Semana = fecha[0];
+                    itemBaseRamo.Semana = fecha[0];
                     itemBaseRamo.Mes = fecha[1];
-                    */itemBaseRamo.Fecha = fecha[2];
+                    itemBaseRamo.Fecha = fecha[2];
                     try
                     {
                         List<Baseorden> baseOrdenTmp = baseOrdenes.Where(c => c.NumPed == listaControlRamoTmp[0].ControlRamoNumeroOrden).ToList();
@@ -519,9 +517,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     listaControlRamoTmp.RemoveAll(lt => lt.ControlRamoId == controlRamoId);
 
                     BaseTotalRamo itemBaseTotalRamos = new BaseTotalRamo();
-                    /*itemBaseTotalRamos.Semana = fecha[0];
+                    itemBaseTotalRamos.Semana = fecha[0];
                     itemBaseTotalRamos.Mes = fecha[1];
-                    */itemBaseTotalRamos.Fecha = fecha[2];
+                    itemBaseTotalRamos.Fecha = fecha[2];
                     itemBaseTotalRamos.ClienteMacro = itemBaseRamo.ClienteMacro;
                     itemBaseTotalRamos.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamos.PostCosecha = itemBaseRamo.PostCosecha;
@@ -555,9 +553,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     }
 
                     BaseTotalRamo itemBaseTotalRamosConf = new BaseTotalRamo();
-                    /*itemBaseTotalRamosConf.Semana = fecha[0];
+                    itemBaseTotalRamosConf.Semana = fecha[0];
                     itemBaseTotalRamosConf.Mes = fecha[1];
-                    */itemBaseTotalRamosConf.Fecha = fecha[2];
+                    itemBaseTotalRamosConf.Fecha = fecha[2];
                     itemBaseTotalRamosConf.ClienteMacro = itemBaseRamo.ClienteMacro;
                     itemBaseTotalRamosConf.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamosConf.PostCosecha = itemBaseRamo.PostCosecha;
@@ -595,9 +593,9 @@ namespace HCGCALIDADSERVICES.Controllers
                         List<Models.Falenciascontrolramo> tmpFalencia = new List<Falenciascontrolramo>();
                         tmpFalencia = listFalRamo.Where(lfe => lfe.FalenciaRamoId == falenciaId).ToList();
                         BaseTotalRamo itemProblema = new BaseTotalRamo();
-                        /*itemProblema.Semana = fecha[0];
+                        itemProblema.Semana = fecha[0];
                         itemProblema.Mes = fecha[1];
-                        */itemProblema.Fecha = fecha[2];
+                        itemProblema.Fecha = fecha[2];
                         itemProblema.ClienteMacro = itemBaseRamo.ClienteMacro;
                         itemProblema.Cliente = itemBaseRamo.Cliente;
                         itemProblema.PostCosecha = itemBaseRamo.PostCosecha;
@@ -690,9 +688,9 @@ namespace HCGCALIDADSERVICES.Controllers
 
                     BaseRamo itemBaseRamo = new BaseRamo();
                     string[] fecha = transformarFecha(Convert.ToDateTime(listaControlEmpaquesTmp[0].ControlEmpaqueFecha));
-                    /*itemBaseRamo.Semana = fecha[0];
+                    itemBaseRamo.Semana = fecha[0];
                     itemBaseRamo.Mes = fecha[1];
-                    */itemBaseRamo.Fecha = fecha[2];
+                    itemBaseRamo.Fecha = fecha[2];
                     try
                     {
                         List<Baseorden> baseOrdenTmp = baseOrdenes.Where(c => c.NumPed == listaControlEmpaquesTmp[0].ControlEmpaqueNumeroOrden).ToList();
@@ -735,9 +733,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     itemBaseRamo.Derrogacion = itemBaseRamo.DerrogadoPor.CompareTo("NO APLICA") == 0 ? false : true;
 
                     BaseCaja itemBaseCaja = new BaseCaja();
-                    /*itemBaseCaja.Semana = fecha[0];
+                    itemBaseCaja.Semana = fecha[0];
                     itemBaseCaja.Mes = fecha[1];
-                    */itemBaseCaja.Fecha = fecha[2];
+                    itemBaseCaja.Fecha = fecha[2];
                     try
                     {
                         List<Baseorden> baseOrdenTmp = baseOrdenes.Where(c => c.NumPed == listaControlEmpaquesTmp[0].ControlEmpaqueNumeroOrden).ToList();
@@ -831,9 +829,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     itemBaseTotalRamos.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamos.PostCosecha = itemBaseRamo.PostCosecha;
 
-                    /*itemBaseTotalRamos.Semana = fecha[0];
+                    itemBaseTotalRamos.Semana = fecha[0];
                     itemBaseTotalRamos.Mes = fecha[1];
-                    */itemBaseTotalRamos.Fecha = fecha[2];
+                    itemBaseTotalRamos.Fecha = fecha[2];
                     itemBaseTotalRamos.ClienteMacro = itemBaseRamo.ClienteMacro;
                     itemBaseTotalRamos.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamos.PostCosecha = itemBaseRamo.PostCosecha;
@@ -883,9 +881,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     itemBaseTotalRamosConf.ClienteMacro = itemBaseRamo.ClienteMacro;
                     itemBaseTotalRamosConf.Cliente = itemBaseRamo.Cliente;
                     itemBaseTotalRamosConf.PostCosecha = itemBaseRamo.PostCosecha;
-                    /*itemBaseTotalRamosConf.Semana = fecha[0];
+                    itemBaseTotalRamosConf.Semana = fecha[0];
                     itemBaseTotalRamosConf.Mes = fecha[1];
-                    */itemBaseTotalRamosConf.Fecha = fecha[2];
+                    itemBaseTotalRamosConf.Fecha = fecha[2];
                     itemBaseTotalRamosConf.Producto = itemBaseRamo.Producto;
                     itemBaseTotalRamosConf.OrdenNo = itemBaseRamo.OrdenNo;
                     itemBaseTotalRamosConf.Indicador = "Conformidad";
@@ -931,9 +929,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     itemBaseTotalCajas.ClienteMacro = itemBaseCaja.ClienteMacro;
                     itemBaseTotalCajas.Cliente = itemBaseCaja.Cliente;
                     itemBaseTotalCajas.PostCosecha = itemBaseCaja.PostCosecha;
-                    /*itemBaseTotalCajas.Semana = fecha[0];
+                    itemBaseTotalCajas.Semana = fecha[0];
                     itemBaseTotalCajas.Mes = fecha[1];
-                    */itemBaseTotalCajas.Fecha = fecha[2];
+                    itemBaseTotalCajas.Fecha = fecha[2];
                     itemBaseTotalCajas.Producto = itemBaseCaja.Producto;
                     itemBaseTotalCajas.OrdenNo = itemBaseCaja.OrdenNo;
                     itemBaseTotalCajas.Indicador = "No conformidad cajas";
@@ -976,9 +974,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     itemBaseTotalCajasConf.ClienteMacro = itemBaseCaja.ClienteMacro;
                     itemBaseTotalCajasConf.Cliente = itemBaseCaja.Cliente;
                     itemBaseTotalCajasConf.PostCosecha = itemBaseCaja.PostCosecha;
-                    /*itemBaseTotalCajasConf.Semana = fecha[0];
+                    itemBaseTotalCajasConf.Semana = fecha[0];
                     itemBaseTotalCajasConf.Mes = fecha[1];
-                    */itemBaseTotalCajasConf.Fecha = fecha[2];
+                    itemBaseTotalCajasConf.Fecha = fecha[2];
                     itemBaseTotalCajasConf.Producto = itemBaseCaja.Producto;
                     itemBaseTotalCajasConf.OrdenNo = itemBaseCaja.OrdenNo;
                     itemBaseTotalCajasConf.Indicador = "Conformidad cajas";
@@ -1028,9 +1026,9 @@ namespace HCGCALIDADSERVICES.Controllers
                         itemProblema.ClienteMacro = itemBaseCaja.ClienteMacro;
                         itemProblema.Cliente = itemBaseCaja.Cliente;
                         itemProblema.PostCosecha = itemBaseCaja.PostCosecha;
-                        /*itemProblema.Semana = fecha[0];
+                        itemProblema.Semana = fecha[0];
                         itemProblema.Mes = fecha[1];
-                        */itemProblema.Fecha = fecha[2];
+                        itemProblema.Fecha = fecha[2];
                         itemProblema.ClienteMacro = itemBaseCaja.ClienteMacro;
                         itemProblema.Cliente = itemBaseCaja.Cliente;
                         itemProblema.PostCosecha = itemBaseCaja.PostCosecha;
@@ -1077,41 +1075,41 @@ namespace HCGCALIDADSERVICES.Controllers
                 {
                     string[] fecha = transformarFecha(Convert.ToDateTime(c.ProcesoHidratacionFecha));
                     ChlEmpaque item = new ChlEmpaque();
-                    /*item.Semana = fecha[0];
+                    item.Semana = fecha[0];
                     item.Mes = fecha[1];
-                    */item.Fecha = fecha[2];
+                    item.Fecha = fecha[2];
                     item.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item.ItemControl = "Estado de Soluciones";
                     item.Cumple = c.ProcesoHidratacionEstadoSoluciones == 0 ? true : false;
 
                     ChlEmpaque item1 = new ChlEmpaque();
-                    /*item1.Semana = fecha[0];
+                    item1.Semana = fecha[0];
                     item1.Mes = fecha[1];
-                    */item1.Fecha = fecha[2];
+                    item1.Fecha = fecha[2];
                     item1.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item1.ItemControl = "Tiempo de Hidratación";
                     item1.Cumple = c.ProcesoHidratacionEstadoSoluciones == 0 ? true : false;
 
                     ChlEmpaque item2 = new ChlEmpaque();
-                    /*item2.Semana = fecha[0];
+                    item2.Semana = fecha[0];
                     item2.Mes = fecha[1];
-                    */item2.Fecha = fecha[2];
+                    item2.Fecha = fecha[2];
                     item2.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item2.ItemControl = "Cantidad Ramos Tinas";
                     item2.Cumple = c.ProcesoHidratacionCantidadRamos == 0 ? true : false;
 
                     ChlEmpaque item3 = new ChlEmpaque();
-                    /*item3.Semana = fecha[0];
+                    item3.Semana = fecha[0];
                     item3.Mes = fecha[1];
-                    */item3.Fecha = fecha[2];
+                    item3.Fecha = fecha[2];
                     item3.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item3.ItemControl = "Ph Solución";
                     item3.Cumple = c.ProcesoHidratacionPhSolucion >= 4 && c.ProcesoHidratacionPhSolucion <= 5 ? true : false;
 
                     ChlEmpaque item4 = new ChlEmpaque();
-                    /*item4.Semana = fecha[0];
+                    item4.Semana = fecha[0];
                     item4.Mes = fecha[1];
-                    */item4.Fecha = fecha[2];
+                    item4.Fecha = fecha[2];
                     item4.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item4.ItemControl = "Nivel Solución";
                     item4.Cumple = c.ProcesoHidratacionNivelSolucion >= 5 && c.ProcesoHidratacionNivelSolucion <= 10 ? true : false;
@@ -1130,65 +1128,65 @@ namespace HCGCALIDADSERVICES.Controllers
                 {
                     string[] fecha = transformarFecha(Convert.ToDateTime(c.ProcesoEmpaqueFecha));
                     ChlEmpaque item = new ChlEmpaque();
-                    /*item.Semana = fecha[0];
+                    item.Semana = fecha[0];
                     item.Mes = fecha[1];
-                    */item.Fecha = fecha[2];
+                    item.Fecha = fecha[2];
                     item.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item.ItemControl = "Alturas de pallets adecuado";
                     item.Cumple = c.ProcesoEmpaqueAltura == 0 ? true : false;
 
                     ChlEmpaque item1 = new ChlEmpaque();
-                    /*item1.Semana = fecha[0];
+                    item1.Semana = fecha[0];
                     item1.Mes = fecha[1];
-                    */item1.Fecha = fecha[2];
+                    item1.Fecha = fecha[2];
                     item1.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item1.ItemControl = "Cajas en buenas condiciones";
                     item1.Cumple = c.ProcesoEmpaqueCajas == 0 ? true : false;
 
                     ChlEmpaque item2 = new ChlEmpaque();
-                    /*item2.Semana = fecha[0];
+                    item2.Semana = fecha[0];
                     item2.Mes = fecha[1];
-                    */item2.Fecha = fecha[2];
+                    item2.Fecha = fecha[2];
                     item2.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item2.ItemControl = "Sujeción correcta";
                     item2.Cumple = c.ProcesoEmpaqueSujeccion == 0 ? true : false;
 
                     ChlEmpaque item3 = new ChlEmpaque();
-                    /*item3.Semana = fecha[0];
+                    item3.Semana = fecha[0];
                     item3.Mes = fecha[1];
-                    */item3.Fecha = fecha[2];
+                    item3.Fecha = fecha[2];
                     item3.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item3.ItemControl = "Movimientos y traslados correctos";
                     item3.Cumple = c.ProcesoEmpaqueMovimientos == 0 ? true : false;
 
                     ChlEmpaque item4 = new ChlEmpaque();
-                    /*item4.Semana = fecha[0];
+                    item4.Semana = fecha[0];
                     item4.Mes = fecha[1];
-                    */item4.Fecha = fecha[2];
+                    item4.Fecha = fecha[2];
                     item4.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item4.ItemControl = "Temperatura cuarto frío adecuada";
                     item4.Cumple = c.ProcesoEmpaqueTemperaturaCuartoFrio == 0 ? true : false;
 
                     ChlEmpaque item5 = new ChlEmpaque();
-                    /*item5.Semana = fecha[0];
+                    item5.Semana = fecha[0];
                     item5.Mes = fecha[1];
-                    */item5.Fecha = fecha[2];
+                    item5.Fecha = fecha[2];
                     item5.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item5.ItemControl = "Temperatura de cajas empacadas adecuada";
                     item5.Cumple = c.ProcesoEmpaqueTemperaturaCajas == 0 ? true : false;
 
                     ChlEmpaque item6 = new ChlEmpaque();
-                    /*item6.Semana = fecha[0];
+                    item6.Semana = fecha[0];
                     item6.Mes = fecha[1];
-                    */item6.Fecha = fecha[2];
+                    item6.Fecha = fecha[2];
                     item6.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item6.ItemControl = "Temperatura de camión adecuada";
                     item6.Cumple = c.ProcesoEmpaqueTemperaturaCamion == 0 ? true : false;
 
                     ChlEmpaque item7 = new ChlEmpaque();
-                    /*item7.Semana = fecha[0];
+                    item7.Semana = fecha[0];
                     item7.Mes = fecha[1];
-                    */item7.Fecha = fecha[2];
+                    item7.Fecha = fecha[2];
                     item7.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item7.ItemControl = "Apilamiento de cajas adecuada";
                     item7.Cumple = c.ProcesoEmpaqueApilamiento == 0 ? true : false;
@@ -1210,17 +1208,17 @@ namespace HCGCALIDADSERVICES.Controllers
                 {
                     string[] fecha = transformarFecha(Convert.ToDateTime(c.TemperaturaFecha));
                     ChlEmpaque item = new ChlEmpaque();
-                    /*item.Semana = fecha[0];
+                    item.Semana = fecha[0];
                     item.Mes = fecha[1];
-                    */item.Fecha = fecha[2];
+                    item.Fecha = fecha[2];
                     item.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item.ItemControl = "Temperatura de cajas";
                     item.Valor = Convert.ToDecimal(c.TemperaturaInterna);
 
                     ChlEmpaque item1 = new ChlEmpaque();
-                    /*item1.Semana = fecha[0];
+                    item1.Semana = fecha[0];
                     item1.Mes = fecha[1];
-                    */item1.Fecha = fecha[2];
+                    item1.Fecha = fecha[2];
                     item1.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item1.ItemControl = "Temperatura cuarto frío";
                     item1.Valor = Convert.ToDecimal(c.TemperaturaExterna);
@@ -1236,8 +1234,8 @@ namespace HCGCALIDADSERVICES.Controllers
                 {
                     string[] fecha = transformarFecha(Convert.ToDateTime(c.ActividadFecha));
                     ActividadesQc item = new ActividadesQc();
-                    /*item.Semana = fecha[0];
-                    item.Mes = fecha[1];*/
+                    item.Semana = fecha[0];
+                    item.Mes = fecha[1];
                     item.Fecha = fecha[2];
                     DateTime desde = new DateTime(2020, 1, 1, Convert.ToInt32(c.ActividadHoraInicio.Split(':')[0]), Convert.ToInt32(c.ActividadHoraInicio.Split(':')[1]), 0);
                     DateTime hasta = new DateTime(2020, 1, 1, Convert.ToInt32(c.ActividadHoraFin.Split(':')[0]), Convert.ToInt32(c.ActividadHoraFin.Split(':')[1]), 0);
@@ -1246,6 +1244,20 @@ namespace HCGCALIDADSERVICES.Controllers
                     item.PostCosecha = c.Postcosecha.PostcosechaNombre;
                     item.Actividad = c.ActividadDetalle;
                     reporte.ActividadesQc.Add(item);
+                });
+
+                //CIRCULO DE CALIDAD
+                List<Models.CirculoCalidad> listaCirculoCalidad = _context.CirculoCalidad.Where(c => new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) <= fechaHasta)
+                    .Include(a => a.Postcosecha).Include(a => a.CirculoCalidadFalencia).ToList();
+
+                listaCirculoCalidad.ForEach(c =>
+                {
+                    string[] fecha = transformarFecha(Convert.ToDateTime(c.CirculoCalidadFecha));
+                    CirculoCalidadCausas item = new CirculoCalidadCausas();
+                    item.Semana = fecha[0];
+                    item.Mes = fecha[1];
+                    item.Fecha = fecha[2];
+                    reporte.CirculoCalidadCausas.Add(item);
                 });
             }
             return reporte;
