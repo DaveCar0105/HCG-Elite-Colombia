@@ -148,20 +148,22 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                   SizedBox(
                     width: width*0.5,
                   ),
-                  Text(
+                  Expanded(
+                    child: Text(
                     'Cumple:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: height * 0.015
+                      //fontSize: height * 0.015
                     ),
                   ),
-                  Spacer(),
-                  Text(
+                  ),
+                  Expanded(child: Text(
                     'No Cumple:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: height * 0.015
+                      //fontSize: height * 0.015
                     ),
+                  ),
                   ),
                 ],
               ),
