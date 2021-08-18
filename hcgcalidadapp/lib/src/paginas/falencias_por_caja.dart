@@ -142,16 +142,15 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                         }
                       },
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(10)),
                       color: Colors.red,
                       textColor: Colors.white,
                       child: Container(
                         height: 50,
-                        width: 150,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[Text('Guardar'), Icon(Icons.save)],
+                          children: <Widget>[Text('Guardar '), Icon(Icons.save)],
                         ),
                       ),
                     ),
@@ -167,7 +166,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                   _itemFalencia(listaFalenciasReporte[index], size)),
         )
       ])),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: floatingEnable?FloatingActionButton(
         onPressed: () async {
           listaFalencias = [];
           List<FalenciaEmpaque> falenciaEmpaques = List();
@@ -213,7 +212,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                                   hintSearchText:
                                       "Escriba el nombre de la falencia",
                                   icon: Icon(Icons.bug_report),
-                                  width: w - 150,
+                                  width: w - 160,
                                   style: TextStyle(fontSize: 14),
                                   parentAction: (value) {
                                     AutoComplete falencia =
@@ -229,7 +228,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                           Expanded(child: Container()),
                           RaisedButton(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15)),
+                                borderRadius: BorderRadius.circular(10)),
                             color: Colors.red,
                             textColor: Colors.white,
                             onPressed: () async {
@@ -239,7 +238,6 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                             child: Container(
                               alignment: Alignment.center,
                               height: 40,
-                              width: 150,
                               child: Text('Agregar'),
                             ),
                           )
@@ -249,7 +247,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                   ));
         },
         child: Icon(Icons.add),
-      ),
+      ): Container(),
       persistentFooterButtons: <Widget>[
         Container(
           height: 35,
@@ -259,10 +257,11 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
               Navigator.pop(context);
             },
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
             ),
             color: Colors.red,
-            child: Text('Aceptar'),
+            textColor: Colors.white,
+            child: Text('Aceptar '),
           ),
         ),
       ],

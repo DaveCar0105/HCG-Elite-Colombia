@@ -242,7 +242,6 @@ class DatabaseCirculoCalidad {
     }
   }
 
-
   static Future<int> addcirculoCalidad(CirculoCalidad circuloCalidad) async {
     int resultadoRaInsert;
     final sql = '''INSERT INTO ${DatabaseCreator.circuloCalidadTable}
@@ -392,10 +391,36 @@ class DatabaseCirculoCalidad {
     return circulo;
   }
 
-
   static Future<void> deleteCirculoCalidad(int circuloCaldiadId) async {
     final sql0 =
         '''DELETE FROM ${DatabaseCreator.circuloCalidadTable} WHERE ${DatabaseCreator.circuloCalidadId} = $circuloCaldiadId''';
     await db.rawDelete(sql0);
+  }
+
+  static Future<void> ciruculoCalidadSaveChangeEntitiesHidratacionEmpaqueFinBanda()async {
+    try{
+      final sql =
+      '''UPDATE ${DatabaseCreator.controlRamosTable}
+      SET ${DatabaseCreator.ramosAprobado} = 4
+      WHERE ${DatabaseCreator.ramosAprobado} = 1
+      ''';
+      await db.rawUpdate(sql);
+    }catch(e){}
+    try{
+      final sqlE =
+      '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
+      SET ${DatabaseCreator.empaqueAprobado} = 4
+      WHERE ${DatabaseCreator.empaqueAprobado} = 1
+      ''';
+      await db.rawUpdate(sqlE);
+    }catch(e){}
+    try{
+      final sqlB =
+      '''UPDATE ${DatabaseCreator.controlBandaTable}
+      SET ${DatabaseCreator.ramosAprobado} = 4
+      WHERE ${DatabaseCreator.ramosAprobado} = 1
+      ''';
+      await db.rawUpdate(sqlB);
+    }catch(e){}
   }
 }

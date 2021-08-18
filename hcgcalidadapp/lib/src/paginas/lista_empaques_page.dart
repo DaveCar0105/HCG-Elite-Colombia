@@ -112,10 +112,11 @@ class _ListaEmpaquePageState extends State<ListaEmpaquePage> {
                   'home', (Route<dynamic> route) => false);
             },
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
             ),
             color: Colors.red,
-            child: Text('Siguiente'),
+            textColor: Colors.white,
+            child: Text('Siguiente '),
           ),
         ),
       ],

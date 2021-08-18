@@ -35,7 +35,7 @@ class DatabaseReportesAprobacion {
         '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
     FROM ${DatabaseCreator.controlRamosTable},${DatabaseCreator.clienteTable}
     WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId}
-    AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+    AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
     GROUP BY ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}
     ''';
     final datas = await db.rawQuery(sql);
@@ -44,7 +44,7 @@ class DatabaseReportesAprobacion {
         '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.empaqueTotal}) As ${DatabaseCreator.empaqueTotal}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar} , COUNT(*) AS NUMERO 
     FROM ${DatabaseCreator.controlEmpaqueTable},${DatabaseCreator.clienteTable}
     WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId}
-    AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+    AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
     GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}
     ''';
     final datasE = await db.rawQuery(sqlE);
@@ -87,7 +87,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
           ORDER BY REPETIDOS DESC
           LIMIT 2
@@ -109,7 +109,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.ramosTable}, ${DatabaseCreator.controlRamosTable}
           WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           ''';
           var data1 = await db.rawQuery(sql1);
           var variable =
@@ -133,7 +133,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           ORDER BY REPETIDOS DESC
           LIMIT 2
@@ -158,7 +158,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'C%'
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
           ''';
           var data1 = await db.rawQuery(sql1);
@@ -170,7 +170,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
           ''';
           var data3 = await db.rawQuery(sql3);
@@ -221,7 +221,7 @@ class DatabaseReportesAprobacion {
         '''SELECT ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
     FROM ${DatabaseCreator.controlBandaTable},${DatabaseCreator.clienteTable}
     WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId}
-    AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+    AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
     GROUP BY ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}
     ''';
     final datas = await db.rawQuery(sql);
@@ -261,7 +261,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.falenciaRamosTable}
           WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId}
           AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
           ORDER BY REPETIDOS DESC
           LIMIT 2
@@ -282,7 +282,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.controlBandaTable}
           WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${subCliente[0][DatabaseCreator.clienteId]}
           AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           ''';
           var data1 = await db.rawQuery(sql1);
           var variable =
@@ -329,7 +329,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
           AND ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.postcosechaId}
           AND ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           ''';
     var data = await db.rawQuery(sql);
     for (var i = 0; i < data.length; i++) {
@@ -356,7 +356,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'C%'
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
           ''';
       var data1 = await db.rawQuery(sql1);
@@ -368,20 +368,20 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           AND ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.empaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.empaqueId}
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.clienteId}
           ''';
       var data2 = await db.rawQuery(sql2);
       try {
         item.empaqueInconformidadCajas =
-            double.parse(data1[0]['CAJAS']) * 100 / totalC;
+            double.parse(data1[0]['CAJAS'].toString()) * 100 / totalC;
       } catch (e) {
         item.empaqueInconformidadCajas = 0;
       }
 
       try {
         item.empaqueInconformidadRamos =
-            double.parse(data2[0]['RAMOS']) * 100 / totalR;
+            double.parse(data2[0]['RAMOS'].toString()) * 100 / totalR;
         item.ramosNoConformes = data2[0]['RAMOS'];
       } catch (e) {
         item.empaqueInconformidadRamos = 0;
@@ -395,7 +395,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${item.ordenEmpaqueId} 
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'C%'
           GROUP BY ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           ORDER BY REPETIDOS DESC
@@ -419,7 +419,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
           AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${item.ordenEmpaqueId} 
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId} = ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
-          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
+          AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} IN (1, 4)
           AND ${DatabaseCreator.falenciaEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueNombre} LIKE 'R%'
           GROUP BY ${DatabaseCreator.falenciasReporteEmpaqueTable}.${DatabaseCreator.falenciaEmpaqueId}
           ORDER BY REPETIDOS DESC
@@ -586,7 +586,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaId} = ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.postcosechaId}
           AND ${DatabaseCreator.tipoControlTable}.${DatabaseCreator.tipoControlId} = ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.tipoControlId}
           AND ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.productoId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           ''';
     var data = await db.rawQuery(sql);
     for (var i = 0; i < data.length; i++) {
@@ -612,7 +612,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.controlBandaTable}
           WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
           AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           ''';
       var data1 = await db.rawQuery(sql1);
       try {
@@ -628,7 +628,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.controlBandaTable}, ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.falenciaRamosTable}
           WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId}
           AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
-          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           GROUP BY ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
           ORDER BY REPETIDOS DESC
           LIMIT 2
@@ -667,7 +667,7 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.clienteId}
           AND ${DatabaseCreator.postcosechaTable}.${DatabaseCreator.postcosechaId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.postcosechaId}
           AND ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           ''';
     var data = await db.rawQuery(sql);
     for (var i = 0; i < data.length; i++) {
@@ -693,7 +693,7 @@ class DatabaseReportesAprobacion {
           ''';
       var data1 = await db.rawQuery(sql1);
       try {
-        item.ramoInconformidad = double.parse(data1[0]['RAMOS']) * 100 / total;
+        item.ramoInconformidad = double.parse(data1[0]['RAMOS'].toString()) * 100 / total;
         item.ramosNoConformes = data1[0]['RAMOS'];
       } catch (e) {
         item.ramoInconformidad = 0;
@@ -705,7 +705,7 @@ class DatabaseReportesAprobacion {
           WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.ramosId}
           AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId}
-          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 1
+          AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           AND ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.controlRamosId} = ${item.ordenRamoId}
           GROUP BY ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.falenciaRamosId}
           ORDER BY REPETIDOS DESC

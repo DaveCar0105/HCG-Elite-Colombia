@@ -199,7 +199,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
                     color: Colors.red,
                     child: Text('Ingresar Orden'),
                     textColor: Colors.white,
-                    shape: StadiumBorder(),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   )
                 : Container(
                     child: Text(
@@ -232,8 +232,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _cantidadRamos() {
     return Container(
-      width: 200,
-      height: 90,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -245,8 +244,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _cantidadTallos() {
     return Container(
-      width: 200,
-      height: 90,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -258,8 +256,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _cantidadRamosDespachar() {
     return Container(
-      width: 200,
-      height: 90,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -273,8 +270,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _cantidadRamosElaborados() {
     return Container(
-      width: 200,
-      height: 90,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -288,8 +284,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _derogacion() {
     return Container(
-      width: 200,
-      height: 90,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -303,6 +298,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _botonSiguiente(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(top: 10),
       child: RaisedButton(
         onPressed: () async {
           if (_validarRamos() && _validarTallos()) {
@@ -328,14 +324,13 @@ class _RamosElitePageState extends State<RamosElitePage> {
             }
           }
         },
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         color: Colors.red,
         textColor: Colors.white,
         child: Container(
-          height: 60,
-          width: 100,
+          height: 50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Text('Siguiente'),
@@ -349,8 +344,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _producto() {
     return Container(
-      width: 250,
-      height: 90,
       child: prodEnable
           ? ListaBusqueda(
               key: _keyProducto,
@@ -359,7 +352,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
               valorDefecto: productoNombre,
               hintSearchText: "Escriba el nombre del producto",
               icon: Icon(Icons.local_florist),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -381,8 +374,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
   Widget _tipoCliente() {
     final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
-      width: 250,
-      height: 90,
       child: clientTipoEnable
           ? ListaBusqueda(
               key: _keyTipoCliente,
@@ -391,7 +382,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
               valorDefecto: tipoClienteNombre,
               hintSearchText: "Seleccione el tipo de cliente",
               icon: Icon(Icons.supervised_user_circle),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
                 if(value!= null && value!=""){
@@ -411,8 +402,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
   Widget _cliente() {
     final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
-      width: 250,
-      height: 90,
       child: _listBus(listaClienteProvider)
     );
   }
@@ -425,7 +414,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
               valorDefecto: listaClienteProvider.clienteNombre,
               hintSearchText: "Escriba el nombre del cliente",
               icon: Icon(Icons.supervised_user_circle),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
                 if(value!= null && value!=""){
@@ -441,8 +430,6 @@ class _RamosElitePageState extends State<RamosElitePage> {
 
   Widget _postcosecha() {
     return Container(
-      width: 250,
-      height: 90,
       child: postcosechaEnable
           ? ListaBusqueda(
               key: _keyPostcosecha,
@@ -451,7 +438,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
               valorDefecto: postcosechaNombre,
               hintSearchText: "Escriba el nombre de Postcosecha",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -473,8 +460,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
   Widget _marca() {
     final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
     return Container(
-      width: 200,
-      height: 90,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
