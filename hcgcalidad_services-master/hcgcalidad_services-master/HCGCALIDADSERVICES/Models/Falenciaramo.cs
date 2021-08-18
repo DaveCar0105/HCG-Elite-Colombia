@@ -13,6 +13,7 @@ namespace HCGCALIDADSERVICES.Models
             Problemabanda = new HashSet<Problemabanda>();
             Problemaboncheo = new HashSet<Problemaboncheo>();
             Problemasecuador = new HashSet<Problemasecuador>();
+            CirculoCalidadFalencia = new HashSet<CirculoCalidadFalencia>();
         }
 
         public int FalenciaRamoId { get; set; }
@@ -30,5 +31,6 @@ namespace HCGCALIDADSERVICES.Models
         public ICollection<Problemabanda> Problemabanda { get; set; }
         public ICollection<Problemaboncheo> Problemaboncheo { get; set; }
         public ICollection<Problemasecuador> Problemasecuador { get; set; }
+        public ICollection<CirculoCalidadFalencia> CirculoCalidadFalencia { get; set; }
     }
 }
