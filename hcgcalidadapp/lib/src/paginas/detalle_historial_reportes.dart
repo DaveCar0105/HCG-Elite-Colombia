@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_falencia_ramos.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
+import 'package:hcgcalidadapp/src/modelos/cliente.dart';
+import 'package:hcgcalidadapp/src/modelos/falencia_ramos.dart';
+import 'package:hcgcalidadapp/src/modelos/producto.dart';
 
 class DetalleHistorialReporteGeneralPage extends StatefulWidget {
-  final CirculoCalidad data;
+  final CirculoCalidadInformacionGeneral data;
 
   DetalleHistorialReporteGeneralPage({this.data});
 
@@ -17,7 +23,7 @@ class DetalleHistorialReporteGeneralPage extends StatefulWidget {
 
 class _DetalleHistorialReporteGeneralPageState
     extends State<DetalleHistorialReporteGeneralPage> {
-  final CirculoCalidad data;
+  final CirculoCalidadInformacionGeneral data;
   _DetalleHistorialReporteGeneralPageState({this.data});
 
   bool loading = true;
@@ -31,13 +37,15 @@ class _DetalleHistorialReporteGeneralPageState
   bool porRamosNoConformes;
 
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  ReporteGeneralDto reporteGeneral;
   List<Widget> dinamicos = List<Widget>();
   List<Widget> dinamicosClientes = List<Widget>();
   List<Widget> dinamicosProductos = List<Widget>();
   List<Widget> dinamicosVariedad = List<Widget>();
   List<Widget> dinamicosNumeroMesa = List<Widget>();
   List<Widget> dinamicosLinea = List<Widget>();
+  List<Producto> listaAllProductos = new List<Producto>();
+  List<Cliente> listaAllClientes = new List<Cliente>();
+  List<FalenciaRamos> listaAllFalencias = new List<FalenciaRamos>();
   bool banderaList = false;
 
   //VARIABLE DE CIRCULO DE CALIDAD
@@ -61,37 +69,39 @@ class _DetalleHistorialReporteGeneralPageState
     dinamicosNumeroMesa = new List<Widget>();
     dinamicosLinea = new List<Widget>();
     dinamicosClientes = new List<Widget>();
-    reporteGeneral = await DatabaseReporteGeneral.getReporteGeneral();
-    if (reporteGeneral.porRamosNoConformes == null)
-      reporteGeneral.porRamosNoConformes = 0;
-    if (reporteGeneral.falencias != null) {
-      for (int i = 0; i < reporteGeneral.falencias.length; i++) {
-        cargarFalenciaListWidget(reporteGeneral.falencias[i], (i + 1));
+    listaAllProductos = await DatabaseProducto.getAllProductos(1);
+    listaAllClientes = await DatabaseCliente.getAllCliente(1);
+    listaAllFalencias = await DatabaseFalenciaRamos.getAllFalenciaRamos();
+    if (data.circuloCalidad.circuloCalidadPorcentajeNoConforme == null)
+      data.circuloCalidad.circuloCalidadPorcentajeNoConforme = 0;
+    if (data.listaCirculoCalidadFalencia != null) {
+      for (int i = 0; i < data.listaCirculoCalidadFalencia.length; i++) {
+        cargarFalenciaListWidget(data.listaCirculoCalidadFalencia[i], (i + 1));
       }
     }
-    if (reporteGeneral.clientes != null) {
-      for (int i = 0; i < reporteGeneral.clientes.length; i++) {
-        cargarClientesListWidget(reporteGeneral.clientes[i], (i + 1));
+    if (data.listaCirculoCalidadCliente != null) {
+      for (int i = 0; i < data.listaCirculoCalidadCliente.length; i++) {
+        cargarClientesListWidget(data.listaCirculoCalidadCliente[i], (i + 1));
       }
     }
-    if (reporteGeneral.productos != null) {
-      for (int i = 0; i < reporteGeneral.productos.length; i++) {
-        cargarProductosListWidget(reporteGeneral.productos[i], (i + 1));
+    if (data.listaCirculoCalidadProducto != null) {
+      for (int i = 0; i < data.listaCirculoCalidadProducto.length; i++) {
+        cargarProductosListWidget(data.listaCirculoCalidadProducto[i], (i + 1));
       }
     }
-    if (reporteGeneral.variedades != null) {
-      for (int i = 0; i < reporteGeneral.variedades.length; i++) {
-        cargarVariedadListWidget(reporteGeneral.variedades[i], (i + 1));
+    if (data.listaCirculoCalidadVariedad != null) {
+      for (int i = 0; i < data.listaCirculoCalidadVariedad.length; i++) {
+        cargarVariedadListWidget(data.listaCirculoCalidadVariedad[i], (i + 1));
       }
     }
-    if (reporteGeneral.numerosMesa != null) {
-      for (int i = 0; i < reporteGeneral.numerosMesa.length; i++) {
-        cargarNumeroMesaListWidget(reporteGeneral.numerosMesa[i], (i + 1));
+    if (data.listaCirculoCalidadNumeroMesa != null) {
+      for (int i = 0; i < data.listaCirculoCalidadNumeroMesa.length; i++) {
+        cargarNumeroMesaListWidget(data.listaCirculoCalidadNumeroMesa[i], (i + 1));
       }
     }
-    if (reporteGeneral.lineas != null) {
-      for (int i = 0; i < reporteGeneral.lineas.length; i++) {
-        cargarLineaListWidget(reporteGeneral.lineas[i], (i + 1));
+    if (data.listaCirculoCalidadLinea != null) {
+      for (int i = 0; i < data.listaCirculoCalidadLinea.length; i++) {
+        cargarLineaListWidget(data.listaCirculoCalidadLinea[i], (i + 1));
       }
     }
     setState(() {
@@ -99,12 +109,16 @@ class _DetalleHistorialReporteGeneralPageState
     });
   }
 
-  cargarFalenciaListWidget(FalenciaReporteGeneralDto falencia, int indice) {
-    String textoTitle = indice.toString() + ". " + falencia.nombreFalencia;
-    String falenciaText = "Falencias: " + falencia.cantidad.toString();
-
+  cargarFalenciaListWidget(CirculoCalidadFalencia falencia, int indice) {
+    String tituloObjeto = "No encontrado";
+    int indice2 = listaAllFalencias.lastIndexWhere((element) => element.falenciaRamosId==falencia.falenciaRamosId);
+    if (indice2!=-1){
+      tituloObjeto = listaAllFalencias[indice2].falenciaRamosNombre;
+    }
+    String textoTitle = indice.toString() + ". " + tituloObjeto.toString();
+    String falenciaText = "Falencias: " + falencia.rechazados.toString();
     String porcentajeText =
-        "Porcentaje: " + falencia.porcentajeFalencia.toStringAsFixed(2) + "%";
+        "Porcentaje: " + falencia.porcentaje.toStringAsFixed(2) + "%";
 
     dynamic falenciaSetear = Center(
         child: Card(
@@ -137,13 +151,18 @@ class _DetalleHistorialReporteGeneralPageState
     dinamicos.add(falenciaSetear);
   }
 
-  cargarClientesListWidget(ClienteReporteGeneralDto cliente, int indice) {
-    String textoTitle = indice.toString() + ". " + cliente.nombreCliente;
+  cargarClientesListWidget(CirculoCalidadCliente cliente, int indice) {
+    String tituloObjeto = "No encontrado";
+    int indice2 = listaAllClientes.lastIndexWhere((element) => element.clienteId==cliente.clienteId);
+    if (indice2!=-1){
+      tituloObjeto = listaAllClientes[indice2].clienteNombre;
+    }
+    String textoTitle = indice.toString() + ". " + tituloObjeto;
     String clienteTextRevisados =
-        "revisados: " + cliente.totalClientes.toString();
-    String clienteTextRechazados = "rechazados: " + cliente.cantidad.toString();
+        "revisados: " + cliente.revisados.toString();
+    String clienteTextRechazados = "rechazados: " + cliente.rechazados.toString();
     String porcentajeText =
-        "%: " + cliente.porcentajeCliente.toStringAsFixed(2) + "%";
+        "%: " + cliente.porcentaje.toStringAsFixed(2) + "%";
     dynamic clienteSetear = Center(
         child: Card(
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -177,14 +196,19 @@ class _DetalleHistorialReporteGeneralPageState
     dinamicosClientes.add(clienteSetear);
   }
 
-  cargarProductosListWidget(ProductoReporteGeneralDto producto, int indice) {
-    String textoTitle = indice.toString() + ". " + producto.nombreProducto;
+  cargarProductosListWidget(CirculoCalidadProducto producto, int indice) {
+    String tituloObjeto = "No encontrado";
+    int indice2 = listaAllProductos.lastIndexWhere((element) => element.productoId==producto.productoId);
+    if (indice2!=-1){
+      tituloObjeto = listaAllProductos[indice2].productoNombre;
+    }
+    String textoTitle = indice.toString() + ". " + tituloObjeto.toString();
     String productoTextRevisados =
-        "revisados: " + producto.totalProductos.toString();
+        "revisados: " + producto.revisados.toString();
     String productoTextRechazados =
-        "rechazados: " + producto.cantidad.toString();
+        "rechazados: " + producto.rechazados.toString();
     String porcentajeText =
-        "%: " + producto.porcentajeProducto.toStringAsFixed(2) + "%";
+        "%: " + producto.porcentaje.toStringAsFixed(2) + "%";
     dynamic productoSetear = Center(
         child: Card(
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
@@ -218,12 +242,12 @@ class _DetalleHistorialReporteGeneralPageState
     dinamicosProductos.add(productoSetear);
   }
 
-  cargarVariedadListWidget(VariedadReporteGeneralDto variedad, int indice) {
-    String textoTitle = indice.toString() + ". " + variedad.nombreVariedad;
-    String falenciaText = "Cantidad: " + variedad.cantidad.toString();
+  cargarVariedadListWidget(CirculoCalidadVariedad variedad, int indice) {
+    String textoTitle = indice.toString() + ". " + variedad.circuloCalidadVariedadNombre;
+    String falenciaText = "Cantidad: " + variedad.rechazados.toString();
 
     String porcentajeText =
-        "Porcentaje: " + variedad.porcentajeVariedad.toStringAsFixed(2) + "%";
+        "Porcentaje: " + variedad.porcentaje.toStringAsFixed(2) + "%";
 
     dynamic falenciaSetear = Center(
         child: Card(
@@ -257,12 +281,12 @@ class _DetalleHistorialReporteGeneralPageState
   }
 
   cargarNumeroMesaListWidget(
-      NumeroMesaReporteGeneralDto numeroMesa, int indice) {
-    String textoTitle = indice.toString() + ". " + numeroMesa.nombreNumeroMesa;
-    String falenciaText = "Cantidad: " + numeroMesa.cantidad.toString();
+      CirculoCalidadNumeroMesa numeroMesa, int indice) {
+    String textoTitle = indice.toString() + ". " + numeroMesa.circuloCalidadNumeroMesaNombre;
+    String falenciaText = "Cantidad: " + numeroMesa.rechazados.toString();
 
     String porcentajeText = "Porcentaje: " +
-        numeroMesa.porcentajeNumeroMesa.toStringAsFixed(2) +
+        numeroMesa.porcentaje.toStringAsFixed(2) +
         "%";
 
     dynamic falenciaSetear = Center(
@@ -296,12 +320,12 @@ class _DetalleHistorialReporteGeneralPageState
     dinamicosNumeroMesa.add(falenciaSetear);
   }
 
-  cargarLineaListWidget(LineaReporteGeneralDto linea, int indice) {
-    String textoTitle = indice.toString() + ". " + linea.nombreLinea;
-    String falenciaText = "Cantidad: " + linea.cantidad.toString();
+  cargarLineaListWidget(CirculoCalidadLinea linea, int indice) {
+    String textoTitle = indice.toString() + ". " + linea.circuloCalidadLineaNombre;
+    String falenciaText = "Cantidad: " + linea.rechazados.toString();
 
     String porcentajeText =
-        "Porcentaje: " + linea.porcentajeLinea.toStringAsFixed(2) + "%";
+        "Porcentaje: " + linea.porcentaje.toStringAsFixed(2) + "%";
 
     dynamic falenciaSetear = Center(
         child: Card(
@@ -377,7 +401,7 @@ class _DetalleHistorialReporteGeneralPageState
                                                   .subtitle1)),
                                       Expanded(
                                           child: Text(
-                                              '${reporteGeneral.ramosRevisados}',
+                                              '${data.circuloCalidad.circuloCalidadRevisados}',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1))
@@ -397,7 +421,7 @@ class _DetalleHistorialReporteGeneralPageState
                                                   .subtitle1)),
                                       Expanded(
                                           child: Text(
-                                              '${reporteGeneral.ramosNoConformes}',
+                                              '${data.circuloCalidad.circuloCalidadRechazados}',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1))
@@ -417,7 +441,7 @@ class _DetalleHistorialReporteGeneralPageState
                                                   .subtitle1)),
                                       Expanded(
                                           child: Text(
-                                              '${reporteGeneral.porRamosNoConformes.toStringAsFixed(2)}' +
+                                              '${data.circuloCalidad.circuloCalidadPorcentajeNoConforme.toStringAsFixed(2)}' +
                                                   '%',
                                               style: Theme.of(context)
                                                   .textTheme
@@ -606,7 +630,7 @@ class _DetalleHistorialReporteGeneralPageState
                                   //rows: DataRow(cells: cells),
                                   Text(
                                       'Numero de Reunion:\t' +
-                                          data.circuloCalidadNumeroReunion
+                                          data.circuloCalidad.circuloCalidadNumeroReunion
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
@@ -614,7 +638,7 @@ class _DetalleHistorialReporteGeneralPageState
                                   Divider(),
                                   Text(
                                       'Nombre Supervisor 1:' +
-                                          data.circuloCalidadSupervisor
+                                          data.circuloCalidad.circuloCalidadSupervisor
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
@@ -622,7 +646,7 @@ class _DetalleHistorialReporteGeneralPageState
                                   Divider(),
                                   Text(
                                       'Evaluacion Supervisor 1:' +
-                                          data.circuloCalidadEvaluacionSupervisor
+                                          data.circuloCalidad.circuloCalidadEvaluacionSupervisor
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
@@ -630,7 +654,7 @@ class _DetalleHistorialReporteGeneralPageState
                                   Divider(),
                                   Text(
                                       'Nombre Supervisor 2:' +
-                                          data.circuloCalidadSupervisor2
+                                          data.circuloCalidad.circuloCalidadSupervisor2
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
@@ -638,7 +662,7 @@ class _DetalleHistorialReporteGeneralPageState
                                   Divider(),
                                   Text(
                                       'Evaluacion Supervisor 2:' +
-                                          data.circuloCalidadEvaluacionSupervisor2
+                                          data.circuloCalidad.circuloCalidadEvaluacionSupervisor2
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
@@ -646,7 +670,7 @@ class _DetalleHistorialReporteGeneralPageState
                                   Divider(),
                                   Text(
                                       'Comentario:' +
-                                          data.circuloCalidadComentario
+                                          data.circuloCalidad.circuloCalidadComentario
                                               .toString(),
                                       style: Theme.of(context)
                                           .textTheme
