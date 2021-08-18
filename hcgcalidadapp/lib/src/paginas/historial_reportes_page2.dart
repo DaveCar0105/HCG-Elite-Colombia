@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_historial_reportes.dart';
-import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
-import 'circulo_calidad_page.dart';
 
 // ignore: must_be_immutable
 class ListaReporteGeneralPage2 extends StatefulWidget {

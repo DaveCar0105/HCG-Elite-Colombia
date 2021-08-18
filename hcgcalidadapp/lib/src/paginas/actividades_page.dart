@@ -113,8 +113,6 @@ class _ActividadesPageState extends State<ActividadesPage> {
 
   Widget _postcosecha() {
     return Container(
-      width: 250,
-      height: 80,
       child: postcosechaEnable
           ? ListaBusqueda(
               key: _keyPostcosecha,
@@ -123,7 +121,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
               valorDefecto: postcosechaNombre,
               hintSearchText: "Escriba el nombre de Postcosecha",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -144,8 +142,6 @@ class _ActividadesPageState extends State<ActividadesPage> {
 
   Widget _listaActividades() {
     return Container(
-      width: 250,
-      height: 80,
       child: listaActividadesEnable
           ? ListaBusqueda(
               key: _keyListaActividades,
@@ -154,7 +150,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
               valorDefecto: listaActividadesNombre,
               hintSearchText: "Seleccione la actividad",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -229,23 +225,17 @@ class _ActividadesPageState extends State<ActividadesPage> {
               children: <Widget>[
                 Container(
                   height: height * 0.6,
-                  padding: EdgeInsets.symmetric(horizontal: width * 0.15),
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: <Widget>[
                       _postcosecha(),
-                      SizedBox(
-                        height: height * 0.10,
-                      ),
                       Text(
                         'ACTIVIDADES',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: height * 0.025),
+                            ),
                       ),
                       _listaActividades(),
-                      SizedBox(
-                        height: height * 0.06,
-                      ),
                       Row(
                         children: <Widget>[
                           Expanded(
@@ -296,21 +286,18 @@ class _ActividadesPageState extends State<ActividadesPage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(
-                    top: height * 0.12,
-                    left: width * 0.1,
-                    right: width * 0.1,
-                  ),
+                  padding: const EdgeInsets.all(10),
                   height: height * 0.36,
                   child: Row(
                     children: <Widget>[
                       Expanded(
                         child: RaisedButton.icon(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           onPressed: _validarForm,
                           color: Colors.red,
                           textColor: Colors.white,
                           icon: Icon(Icons.save),
-                          label: Text('Guardar'),
+                          label: Text(' Guardar'),
                         ),
                       )
                     ],

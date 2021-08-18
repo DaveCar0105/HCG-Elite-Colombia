@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
 import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_general_dto.dart';
-//import 'package:hcgcalidadapp/src/paginas/historial_reportes_page.dart';
-import 'package:hcgcalidadapp/src/paginas/historial_reportes_page2.dart';
-import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
 class DetalleHistorialReporteGeneralPage extends StatefulWidget {
   final CirculoCalidad data;
@@ -25,16 +20,9 @@ class _DetalleHistorialReporteGeneralPageState
   final CirculoCalidad data;
   _DetalleHistorialReporteGeneralPageState({this.data});
 
-  List<CirculoCalidadInformacionGeneral> reportesLista =
-      new List<CirculoCalidadInformacionGeneral>();
   bool loading = true;
 
   get rows => null;
-  Future fetchAllReportes() async {
-    reportesLista =
-        await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
-    setState(() {});
-  }
 
   bool sinc = false;
   bool reporteGeneralValue;
@@ -58,8 +46,6 @@ class _DetalleHistorialReporteGeneralPageState
   final supervisor1TextEditingController = TextEditingController();
   final supervisor2TextEditingController = TextEditingController();
   final comentarioTextEditingController = TextEditingController();
-  int _supervisor1GroupValue = -1;
-  int _supervisor2GroupValue = -1;
   List<String> evaluacion = ["Bueno", "Regular", "Excelente"];
 
   @override

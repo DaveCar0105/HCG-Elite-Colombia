@@ -839,9 +839,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                                 scaffoldKey);
                                           }
                                         },
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
+                                        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(10)),
                                         color: Colors.red,
                                         textColor: Colors.white,
                                         child: Container(

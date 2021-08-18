@@ -12,7 +12,6 @@ import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
-import 'package:multiselect/multiselect.dart';
 
 class ProcesoMaritimoPage extends StatefulWidget {
   @override
@@ -75,8 +74,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final appBar = AppBar();
   final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
 
-  List ListaMultiplesClientesId;
-
   @override
   void initState() {
     cargarCombo();
@@ -97,8 +94,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   String clientesNombre = "";
   int clientesId = 0;
   bool clientesEnable = false;
-
-  List<String> selected = [];
 
   GlobalKey<ListaBusquedaState> _keyDestinos1 = GlobalKey();
   List<AutoComplete> listaDestinos = new List<AutoComplete>();
@@ -145,8 +140,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _realizadoPor() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -160,8 +153,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _acompanamiento() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -175,13 +166,11 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _numeroGuia() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          hintText: 'numero guia',
-          labelText: 'numero guia',
+          hintText: 'Numero guia',
+          labelText: 'Numero guia',
         ),
         controller: procesoMaritimoNumeroGuiaValue,
       ),
@@ -190,8 +179,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _postcosecha() {
     return Container(
-      width: 250,
-      height: 80,
       child: postcosechaEnable
           ? ListaBusqueda(
               key: _keyPostcosecha,
@@ -200,7 +187,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               valorDefecto: postcosechaNombre,
               hintSearchText: "Seleccione el nombre de Postcosecha",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -220,29 +207,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     );
   }
 
-  Widget _multiplesClientes() {
-    return Container(
-        child: Center(
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: DropDownMultiSelect(
-          onChanged: (List<String> x) {
-            setState(() {
-              selected = x;
-            });
-          },
-          options: listaClientes.map((e) => e.nombre).toList(),
-          selectedValues: selected,
-          whenEmpty: 'Selecione uno o varios clientes',
-        ),
-      ),
-    ));
-  }
-
   Widget _clientes() {
     return Container(
-      width: 250,
-      height: 80,
       child: clientesEnable
           ? ListaBusqueda(
               key: _keyClientes,
@@ -251,7 +217,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               valorDefecto: clientesNombre,
               hintSearchText: "Seleccione el nombre del cliente",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -272,8 +238,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _destinos() {
     return Container(
-      width: 250,
-      height: 80,
       child: destinosEnable
           ? ListaBusqueda(
               key: _keyDestinos1,
@@ -282,7 +246,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               valorDefecto: destinosNombre,
               hintSearchText: "Seleccione el destino",
               icon: Icon(Icons.move_to_inbox),
-              width: 200.0,
+              width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(
                 fontSize: 15,
               ),
@@ -357,10 +321,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               SizedBox(
                 height: height * 0.05,
               ),
-
               _postcosecha(),
               _destinos(),
-
               _clientes(),
               _numeroGuia(),
               _realizadoPor(),
@@ -370,34 +332,31 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 Text('HIDRATACION',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
                 children: <Widget>[
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   'No Cumple:',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  // ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               SizedBox(
                 height: height * 0.025,
               ),
-              // _itemHidratacion(),
               Row(
                 children: <Widget>[
                   Container(
@@ -572,29 +531,26 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               Column(children: [
                 Text('EMPAQUE', style: Theme.of(context).textTheme.subtitle1)
               ]),
-
+              Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
                 children: <Widget>[
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   'No Cumple:',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  // ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               SizedBox(
@@ -740,28 +696,26 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 Text('TRANSFERENCIAS',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
                 children: <Widget>[
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   'No Cumple:',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  // ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -856,28 +810,26 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 Text('PALLETIZADO',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
                 children: <Widget>[
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   'No Cumple:',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  // ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -1054,28 +1006,26 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 Text('LLENADO CONTENEDOR',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
                 children: <Widget>[
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   'No Cumple:',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  // ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -1278,28 +1228,26 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 Text('REQUERIMIENTOS CRITICOS',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
                 children: <Widget>[
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Text(
-                    'Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
                   ),
-                  Spacer(),
-                  Text(
-                    'No Cumple:',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  ),
-                  // Spacer(),
-                  // Text(
-                  //   'No Cumple:',
-                  //   style: TextStyle(
-                  //       fontWeight: FontWeight.bold, fontSize: height * 0.019),
-                  // ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
                 ],
               ),
               Row(
@@ -1530,8 +1478,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _procesoMaritimoObsevacionesHidratacion() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -1545,8 +1491,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _procesoMaritimoObsevacionesEmpaque() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -1560,8 +1504,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _procesoMaritimoObsevacionesTransferencia() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -1575,8 +1517,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _procesoMaritimoObsevacionesPalletizado() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -1590,8 +1530,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _procesoMaritimoObsevacionesllenadoContenedor() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -1605,8 +1543,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
 
   Widget _procesoMaritimoObsevacionesRequerimientosCriticos() {
     return Container(
-      width: 200,
-      height: 90,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
@@ -1657,15 +1593,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
-        procesoMaritimoObsevacionesHidratacionValue != '' &&
-        procesoMaritimoObservacionesEmpaqueValue != '' &&
-        procesoMaritimoObservacionesTransferenciaValue != '' &&
-        procesoMaritimoObservacionesPalletizadoValue != '' &&
-        procesoMaritimoObservacionesLlenadoContenedorValue != '' &&
-        procesoMaritimoObservacionesRequerimientosCriticosValue != '' &&
         postcosechaId != 0 &&
-        clientesId != 0 &&
-        selected.length > 0) {
+        clientesId != 0 ) {
       ProcesoMaritimo procesoMaritimo = new ProcesoMaritimo(
         procesoMaritimoUsuarioControlId: 1,
         procesoMaritimoNumeroGuia:
@@ -1756,18 +1685,6 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       int procesoMaritimoId =
           await DatabaseProcesoMaritimo.addProcesoMaritimo(procesoMaritimo);
       if (procesoMaritimoId != 0) {
-        for (AutoComplete clientesMaritimoCheck in listaClientes) {
-          if (selected.contains(clientesMaritimoCheck.nombre)) {
-            procesoMaritimoMultiplesClientes multiplesClientes =
-                new procesoMaritimoMultiplesClientes();
-            multiplesClientes.procesoMaritimoMultipleId = procesoMaritimoId;
-            multiplesClientes.procesoMaritimoMultiplesClientesId =
-                clientesMaritimoCheck.id;
-            ListaMultiplesClientesId.add(multiplesClientes);
-          }
-        }
-        DatabaseProcesoMaritimo.addProcesoMaritimoMultiplesClientes(
-            ListaMultiplesClientesId);
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
         _procesoMaritimoBloc.registroProcesoMaritimoStream();
