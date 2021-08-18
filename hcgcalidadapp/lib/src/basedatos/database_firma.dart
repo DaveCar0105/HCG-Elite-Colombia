@@ -27,21 +27,21 @@ class DatabaseFirma{
     '''UPDATE ${DatabaseCreator.controlRamosTable}
     SET ${DatabaseCreator.ramosAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
-    WHERE ${DatabaseCreator.ramosAprobado} = 1
+    WHERE ${DatabaseCreator.ramosAprobado} IN (1, 4)
     ''';
     await db.rawUpdate(sql);
     final sqlE =
     '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
     SET ${DatabaseCreator.empaqueAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
-    WHERE ${DatabaseCreator.empaqueAprobado} = 1
+    WHERE ${DatabaseCreator.empaqueAprobado} IN (1, 4)
     ''';
     await db.rawUpdate(sqlE);
     final sqlB =
     '''UPDATE ${DatabaseCreator.controlBandaTable}
     SET ${DatabaseCreator.ramosAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
-    WHERE ${DatabaseCreator.ramosAprobado} = 1
+    WHERE ${DatabaseCreator.ramosAprobado} IN (1, 4)
     ''';
     await db.rawUpdate(sqlB);
     final sqlA =
@@ -52,6 +52,7 @@ class DatabaseFirma{
     ''';
     await db.rawUpdate(sqlA);
   }
+  
   static borrarReportesRamos(int reporteId)async {
     final sql =
     '''UPDATE ${DatabaseCreator.controlRamosTable}

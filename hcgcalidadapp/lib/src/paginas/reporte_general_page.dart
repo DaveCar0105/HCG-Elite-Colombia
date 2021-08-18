@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_reporte_general.dart';
@@ -816,13 +817,14 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                                       reporteGeneral,
                                                       circuloCalidad);
                                               await DatabaseCirculoCalidad
-                                                  .getAllcirculoCalidad();
+                                                  .ciruculoCalidadSaveChangeEntitiesHidratacionEmpaqueFinBanda();
                                               progress?.dismiss();
                                               mostrarSnackbar(
                                                   "Guardado exitosamente",
                                                   Colors.green,
                                                   scaffoldKey);
                                               setState(() {});
+                                              Navigator.of(context).pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
                                             } catch (e) {
                                               progress?.dismiss();
                                               mostrarSnackbar(
