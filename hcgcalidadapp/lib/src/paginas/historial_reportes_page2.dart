@@ -29,104 +29,69 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
     fetchAllReportes();
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-
-  //       //key: scaffoldKey,
-  //       appBar: AppBar(
-  //         title: Text('HISTORIAL DE REPORTES GENERALES'),
-  //       ),
-
-  //       body: DataTable(
-  //           horizontalMargin: double.minPositive,
-  //           columns: [
-  //             DataColumn(label: Text("Reunion")),
-  //             DataColumn(label: Text("Ramo\nRevizados")),
-  //             DataColumn(label: Text("Ramos\nRechazados")),
-  //             DataColumn(label: Text("Porcentaje")),
-  //             DataColumn(label: Text("Accion")),
-  //           ],
-  //           rows: reportesLista
-  //               .map<DataRow>((e) => DataRow(cells: [
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                     DataCell(Text("2")),
-  //                   ]))
-  //               .toList()
-
-  //           ));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Historial de reportes'),
       ),
-      body: SafeArea(
-          child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            //Text('Historial Reportes', style: TextStyle(fontSize: 40)),
-            DataTable(
-              dividerThickness: 5,
-              dataRowHeight: 100,
-              headingRowHeight: 50,
-              columnSpacing: 5,
-              columns: [
-                DataColumn(label: Text('Reunion'), numeric: true),
-                DataColumn(label: Text('Ramos\nRevisados'), numeric: true),
-                DataColumn(label: Text('Ramos\nRechazados'), numeric: true),
-                DataColumn(label: Text('%No\nConformidad'), numeric: true),
-                DataColumn(label: Text('Ver\nreporte'), numeric: true),
+      body: Container(
+        padding: EdgeInsets.all(10),
+        margin: EdgeInsets.all(3),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: Colors.redAccent, width: 2)),
+        //color: Colors.amber,
+        child: SingleChildScrollView(
+          child: SafeArea(
+              child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                //Text('Historial Reportes', style: TextStyle(fontSize: 40)),
+                DataTable(
+                  dividerThickness: 5,
+                  dataRowHeight: 70,
+                  headingRowHeight: 60,
+                  columnSpacing: 5,
+                  columns: [
+                    DataColumn(label: Text('Reunion'), numeric: true),
+                    DataColumn(label: Text('Ramos\nRevisados'), numeric: true),
+                    DataColumn(label: Text('Ramos\nRechazados'), numeric: true),
+                    DataColumn(label: Text('%No\nConformidad'), numeric: true),
+                    DataColumn(label: Text('Ver\nreporte'), numeric: true),
+                  ],
+                  rows: reportesLista != null
+                      ? reportesLista
+                          .map<DataRow>((element) => DataRow(cells: [
+                                DataCell(Text(element
+                                    .circuloCalidadNumeroReunion
+                                    .toString())),
+                                DataCell(Text(element.circuloCalidadRevisados
+                                    .toString())),
+                                DataCell(Text(element.circuloCalidadRechazados
+                                    .toString())),
+                                DataCell(Text(element
+                                    .circuloCalidadPorcentajeNoConforme
+                                    .toStringAsFixed(2))),
+                                DataCell(Icon(Icons.visibility), onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetalleHistorialReporteGeneralPage(
+                                                data: element,
+                                              )));
+                                }),
+                              ]))
+                          .toList()
+                      : [],
+                )
               ],
-              // rows: [
-              //   DataRow(cells: [
-              //     DataCell(Text('1')),
-              //     DataCell(Text('10')),
-              //     DataCell(Text('3')),
-              //     DataCell(Text('20')),
-              //     DataCell(Icon(Icons.visibility), onLongPress: () {
-              //       Navigator.push(
-              //           context,
-              //           MaterialPageRoute(
-              //               builder: (context) => ProcesoMaritimoPage()));
-              //     })
-              //   ])
-              // ]
-
-              rows: reportesLista != null
-                  ? reportesLista
-                      .map<DataRow>((element) => DataRow(cells: [
-                            DataCell(Text(element.circuloCalidadNumeroReunion
-                                .toString())),
-                            DataCell(Text(
-                                element.circuloCalidadRevisados.toString())),
-                            DataCell(Text(
-                                element.circuloCalidadRechazados.toString())),
-                            DataCell(Text(element
-                                .circuloCalidadPorcentajeNoConforme
-                                .toStringAsFixed(2))),
-                            DataCell(Icon(Icons.visibility), onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetalleHistorialReporteGeneralPage(
-                                            data: element,
-                                          )));
-                            }),
-                          ]))
-                      .toList()
-                  : [],
-            )
-          ],
+            ),
+          )),
         ),
-      )),
+      ),
     );
   }
 }
