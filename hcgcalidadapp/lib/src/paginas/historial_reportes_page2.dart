@@ -116,7 +116,9 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          DetalleHistorialReportesCirculoCalidadPage()));
+                                          DetalleHistorialReporteGeneralPage(
+                                            data: element,
+                                          )));
                             }),
                           ]))
                       .toList()
