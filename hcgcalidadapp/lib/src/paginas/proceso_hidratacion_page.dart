@@ -51,8 +51,6 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
   }
   Widget  _postcosecha() {
     return Container(
-      width: 250,
-      height: 80,
       child: postcosechaEnable?ListaBusqueda(
         key: _keyPostcosecha,
         lista: listaPostcosecha,
@@ -60,7 +58,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
         valorDefecto: postcosechaNombre,
         hintSearchText: "Escriba el nombre de Postcosecha",
         icon: Icon(Icons.move_to_inbox),
-        width: 200.0,
+        width: MediaQuery.of(context).size.width * 0.75,
         style: TextStyle(
           fontSize: 15,
         ),
@@ -142,6 +140,9 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 height: height * 0.05,
               ),
               _postcosecha(),
+              Container(
+                padding: const EdgeInsets.only(top: 8),
+              ),
               Row(
                 children: <Widget>[
                   SizedBox(
@@ -151,7 +152,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                     'Cumple:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: height * 0.023
+                      fontSize: height * 0.015
                     ),
                   ),
                   Spacer(),
@@ -159,13 +160,13 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                     'No Cumple:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: height * 0.023
+                      fontSize: height * 0.015
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: height * 0.025,
+              Container(
+                padding: const EdgeInsets.only(top: 5),
               ),
               Row(
                 children: <Widget>[
@@ -258,13 +259,8 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 height: height * 0.01,
               ),
               Row(
-                
                 children: <Widget>[
-                  // CheckboxListTile(value: false, onChanged: (newValue){
-                    
-                  // }),
                   Container(
-                    
                     width: width * 0.5,
                     child: Text('Ph Solución'),
                   ),
