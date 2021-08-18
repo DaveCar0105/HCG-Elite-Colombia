@@ -841,19 +841,19 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                         },
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(20)),
+                                                BorderRadius.circular(10)),
                                         color: Colors.red,
                                         textColor: Colors.white,
                                         child: Container(
                                           height: 50,
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                                                MainAxisAlignment.center,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: <Widget>[
                                               Text(
-                                                  'Generar circulo de calidad'),
+                                                  'Generar circulo de calidad '),
                                               Icon(Icons.save)
                                             ],
                                           ),
