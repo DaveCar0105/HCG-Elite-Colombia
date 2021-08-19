@@ -1248,16 +1248,110 @@ namespace HCGCALIDADSERVICES.Controllers
 
                 //CIRCULO DE CALIDAD
                 List<Models.CirculoCalidad> listaCirculoCalidad = _context.CirculoCalidad.Where(c => new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) <= fechaHasta)
-                    .Include(a => a.Postcosecha).Include(a => a.CirculoCalidadFalencia).ToList();
+                    .Include(a => a.Postcosecha)
+                    .Include(a => a.CirculoCalidadVariedad)
+                    .Include(a => a.CirculoCalidadNumeroMesa)
+                    .Include(a => a.CirculoCalidadLinea)
+                    .Include(a => a.CirculoCalidadCliente).ThenInclude(a=> a.Cliente)
+                    .Include(a => a.CirculoCalidadProducto).ThenInclude(a => a.Producto)
+                    .Include(a => a.CirculoCalidadFalencia).ThenInclude(a => a.Falenciaramo).ThenInclude(a => a.CategoriaFalenciaRamo)
+                    .ToList();
 
                 listaCirculoCalidad.ForEach(c =>
                 {
                     string[] fecha = transformarFecha(Convert.ToDateTime(c.CirculoCalidadFecha));
-                    CirculoCalidadCausas item = new CirculoCalidadCausas();
-                    item.Semana = fecha[0];
-                    item.Mes = fecha[1];
-                    item.Fecha = fecha[2];
-                    reporte.CirculoCalidadCausas.Add(item);
+                    string semana = fecha[0];
+                    string mes = fecha[1];
+                    string fechaString = fecha[2];
+                    string postCosecha = c.Postcosecha != null ? c.Postcosecha.PostcosechaNombre : "N/E";
+                    int numeroReu = c.CirculoCalidadNumeroReunion;
+
+                    for (int ind = 0; ind < c.CirculoCalidadFalencia.Count; ind++)
+                    {
+                        CirculoCalidadCausasReporte item = new CirculoCalidadCausasReporte();
+                        item.Semana = semana;
+                        item.Mes = mes;
+                        item.Fecha = fechaString;
+                        item.PostCosecha = postCosecha;
+                        item.NumeroReunion = numeroReu;
+                        item.Causa = c.CirculoCalidadFalencia.ElementAt(ind).Falenciaramo?.CategoriaFalenciaRamo.CategoriaFalenciaRamoNombre;
+                        item.CausaRelacionada = c.CirculoCalidadFalencia.ElementAt(ind).Falenciaramo?.FalenciaRamoNombre;
+                        item.Indice = c.CirculoCalidadFalencia.ElementAt(ind).Rechazados;
+                        item.PorDistribucion = c.CirculoCalidadFalencia.ElementAt(ind).Porcentaje;
+                        reporte.CirculoCalidadCausas.Add(item);
+                    }
+
+                    for (int ind = 0; ind < c.CirculoCalidadCliente.Count; ind++)
+                    {
+                        CirculoCalidadClientesReporte item = new CirculoCalidadClientesReporte();
+                        item.Semana = semana;
+                        item.Mes = mes;
+                        item.Fecha = fechaString;
+                        item.PostCosecha = postCosecha;
+                        item.NumeroReunion = numeroReu;
+                        item.Cliente = c.CirculoCalidadCliente.ElementAt(ind).Cliente?.ClienteNombre;
+                        item.RamosRevisados = c.CirculoCalidadCliente.ElementAt(ind).Revisados;
+                        item.RamosRechazados = c.CirculoCalidadCliente.ElementAt(ind).Rechazados;
+                        item.PorNoConformidad = c.CirculoCalidadCliente.ElementAt(ind).Porcentaje;
+                        reporte.CirculoCalidadClientes.Add(item);
+                    }
+
+                    for (int ind = 0; ind < c.CirculoCalidadProducto.Count; ind++)
+                    {
+                        CirculoCalidadProductosReporte item = new CirculoCalidadProductosReporte();
+                        item.Semana = semana;
+                        item.Mes = mes;
+                        item.Fecha = fechaString;
+                        item.PostCosecha = postCosecha;
+                        item.NumeroReunion = numeroReu;
+                        item.Producto = c.CirculoCalidadProducto.ElementAt(ind).Producto?.ProductoNombre;
+                        item.RamosRevisados = c.CirculoCalidadProducto.ElementAt(ind).Revisados;
+                        item.RamosRechazados = c.CirculoCalidadProducto.ElementAt(ind).Rechazados;
+                        item.PorNoConformidad = c.CirculoCalidadProducto.ElementAt(ind).Porcentaje;
+                        reporte.CirculoCalidadProducto.Add(item);
+                    }
+
+                    for (int ind = 0; ind < c.CirculoCalidadVariedad.Count; ind++)
+                    {
+                        CirculoCalidadVariedadReporte item = new CirculoCalidadVariedadReporte();
+                        item.Semana = semana;
+                        item.Mes = mes;
+                        item.Fecha = fechaString;
+                        item.PostCosecha = postCosecha;
+                        item.NumeroReunion = numeroReu;
+                        item.Variedad = c.CirculoCalidadVariedad.ElementAt(ind).CirculoCalidadVariedadNombre;
+                        item.RamosRechazados = c.CirculoCalidadVariedad.ElementAt(ind).Rechazados;
+                        item.PorNoConformidad = c.CirculoCalidadVariedad.ElementAt(ind).Porcentaje;
+                        reporte.CirculoCalidadVariedad.Add(item);
+                    }
+
+                    for (int ind = 0; ind < c.CirculoCalidadNumeroMesa.Count; ind++)
+                    {
+                        CirculoCalidadNumeroMesaReporte item = new CirculoCalidadNumeroMesaReporte();
+                        item.Semana = semana;
+                        item.Mes = mes;
+                        item.Fecha = fechaString;
+                        item.PostCosecha = postCosecha;
+                        item.NumeroReunion = numeroReu;
+                        item.NumeroMesa = c.CirculoCalidadNumeroMesa.ElementAt(ind).CirculoCalidadNumeroMesaNombre;
+                        item.RamosRechazados = c.CirculoCalidadNumeroMesa.ElementAt(ind).Rechazados;
+                        item.PorNoConformidad = c.CirculoCalidadNumeroMesa.ElementAt(ind).Porcentaje;
+                        reporte.CirculoCalidadNumeroMesa.Add(item);
+                    }
+
+                    for (int ind = 0; ind < c.CirculoCalidadLinea.Count; ind++)
+                    {
+                        CirculoCalidadLineaReporte item = new CirculoCalidadLineaReporte();
+                        item.Semana = semana;
+                        item.Mes = mes;
+                        item.Fecha = fechaString;
+                        item.PostCosecha = postCosecha;
+                        item.NumeroReunion = numeroReu;
+                        item.Linea = c.CirculoCalidadLinea.ElementAt(ind).CirculoCalidadLineaNombre;
+                        item.RamosRechazados = c.CirculoCalidadLinea.ElementAt(ind).Rechazados;
+                        item.PorNoConformidad = c.CirculoCalidadLinea.ElementAt(ind).Porcentaje;
+                        reporte.CirculoCalidadLinea.Add(item);
+                    }
                 });
             }
             return reporte;
