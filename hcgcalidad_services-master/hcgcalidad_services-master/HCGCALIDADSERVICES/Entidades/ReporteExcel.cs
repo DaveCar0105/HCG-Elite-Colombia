@@ -33,6 +33,9 @@
         [JsonProperty("temperaturas")]
         public List<ChlEmpaque> Temperaturas { get; set; }
 
+        [JsonProperty("circuloCalidadCausas")]
+        public List<CirculoCalidadCausas> CirculoCalidadCausas { get; set; }
+
         public ReporteExcel()
         {
             this.BaseRamos = new List<BaseRamo>();
@@ -43,16 +46,17 @@
             this.ChlEmpaque = new List<ChlEmpaque>();
             this.ActividadesQc = new List<ActividadesQc>();
             this.Temperaturas = new List<ChlEmpaque>();
+            this.CirculoCalidadCausas = new List<CirculoCalidadCausas>();
         }
     }
 
     public partial class ActividadesQc
     {
-        /*[JsonProperty("semana")]
+        [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -71,12 +75,12 @@
     }
 
     public partial class BaseCaja
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -125,12 +129,12 @@
     }
 
     public partial class BaseRamo
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -200,12 +204,12 @@
     }
 
     public partial class BaseTotalRamo
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -251,12 +255,12 @@
     }
 
     public partial class ChlEmpaque
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -272,5 +276,35 @@
 
         [JsonProperty("valor", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Valor { get; set; }
+    }
+
+    public partial class CirculoCalidadCausas
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public string NumeroReunion { get; set; }
+
+        [JsonProperty("causa")]
+        public string Causa { get; set; }
+
+        [JsonProperty("causaRelacionada")]
+        public string CausaRelacionada { get; set; }
+
+        [JsonProperty("indice")]
+        public string Indice { get; set; }
+
+        [JsonProperty("porDistribucion")]
+        public int PorDistribucion { get; set; }
     }
 }
