@@ -21,7 +21,7 @@ class DatabaseReporteGeneral {
 
     try {
       final sqlProductos =
-          '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, 
+          '''SELECT ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.postcosechaId},${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, 
         SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
         FROM ${DatabaseCreator.controlRamosTable},${DatabaseCreator.productoTable}
         WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
@@ -30,6 +30,7 @@ class DatabaseReporteGeneral {
       ''';
       final datasProductos = await db.rawQuery(sqlProductos);
       for (dynamic elementoQuery in datasProductos) {
+        reporteGeneral.postcosechaId = elementoQuery[DatabaseCreator.postcosechaId];
         ProductoReporteGeneralDto productoReporteGeneralDto =
             new ProductoReporteGeneralDto();
         productoReporteGeneralDto.id = elementoQuery["productoId"];

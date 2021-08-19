@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:hcgcalidadapp/src/basedatos/database_error.dart';
 import 'package:hcgcalidadapp/src/constantes.dart';
+import 'package:hcgcalidadapp/src/modelos/circulo_calidad.dart';
 import 'package:hcgcalidadapp/src/modelos/control.dart';
 import 'package:hcgcalidadapp/src/modelos/error.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
@@ -174,6 +175,34 @@ class SincServices{
       return lista;
     }
   }
+
+  static Future<int> postCirculoCalidad(List<CirculoCalidadInformacionGeneral> reporte) async{
+    print("ingresps a sincronizar10");
+    final co = Constantes();
+    Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
+    try{
+      print("ingresps a sincronizar11");
+      var url = Uri.http(co.url, '/api/Sincro/circuloCalidad');
+      print("ingresps a sincronizar11.1 "+ url.toString());
+      var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
+      print("ingresps a sincronizar12");
+      if(respuesta.statusCode>=200 && respuesta.statusCode <=299){
+        return respuesta.statusCode;
+      }else{
+        ErrorT errorT = new ErrorT();
+        errorT.errorDetalle = (respuesta.statusCode.toString() + ' - ' + respuesta.body.toString());
+        await DatabaseError.addError(errorT);
+        return respuesta.statusCode;
+      }
+    }catch(ex){
+      print("ingresps a sincronizarerror1 " + ex.toString());
+      ErrorT errorT = new ErrorT();
+      errorT.errorDetalle = 'Circulo-Calidad: ' + ex.toString();
+      await DatabaseError.addError(errorT);
+      return 0;
+    }
+  }
+
   static Future<int> postActividad(List<Actividade> reporte) async{
     final co = Constantes();
     Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
@@ -196,6 +225,7 @@ class SincServices{
       return 0;
     }
   }
+
   static Future<int> postTemperatura(List<RegistroTemperatura> reporte) async{
     final co = Constantes();
     Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};

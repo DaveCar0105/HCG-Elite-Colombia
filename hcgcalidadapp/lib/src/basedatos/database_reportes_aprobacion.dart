@@ -872,6 +872,7 @@ class DatabaseReportesAprobacion {
   }
 
   static Future<int> getAllReportesSinc() async {
+    print("ingresps a sincronizar");
     ReporteSincronizacionEmpaque listaEmpaque =
         new ReporteSincronizacionEmpaque();
     ReporteSincronizacionRamo listaRamo = new ReporteSincronizacionRamo();
@@ -889,18 +890,22 @@ class DatabaseReportesAprobacion {
     List<RegistroTemperatura> listaTemperatura = [];
     List<ProcesoMaritimo> listaProcesoMaritimo = [];
     List<CirculoCalidadInformacionGeneral> listaCirculoCalidad = [];
-
+    print("ingresps a sincronizar2");
     actividades = await DatabaseActividad.getAllActividad();
     hidratacion = await DatabaseProcesoHidratacion.getAllProcesosHidratacion();
     procesoEmpaque = await DatabaseProcesoEmpaque.getAllProcesosEmpaque();
+    print("ingresps a sincronizar3");
     temperatura = await DatabaseTemperatura.getAllTemperaturas();
     firmaEmp = await DatabaseFirma.consultarFirmasEmpaque();
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
+    print("ingresps a sincronizar4");
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
+    print("ingresps a sincronizar5");
     listaProcesoMaritimo =
         await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
     listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
+    print("ingresps a sincronizar6");
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
     listaRamo.detallesFirma = [];
@@ -909,6 +914,19 @@ class DatabaseReportesAprobacion {
     listaEmpaque.listaEmpaque = [];
 
     Preferences pref = Preferences();
+
+
+    try{
+      for (int i = 0; i<listaCirculoCalidad.length;i++ ){
+        //listaCirculoCalidad[i].circuloCalidad.
+      }
+      int resultCirculoCalidad = await SincServices.postCirculoCalidad(listaCirculoCalidad);
+      if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
+        await circuloCalidadSinc();
+      }
+    }catch(e){}
+    
+
 
     for (int act = 0; act < actividades.length; act++) {
       listaActividades.add(Actividade(
@@ -924,16 +942,6 @@ class DatabaseReportesAprobacion {
     if (actCode >= 200 && actCode <= 299) {
       await actividadesSinc();
     }
-
-    /*for (int act = 0; act < listaCirculoCalidad.length; act++) {
-      print(jsonEncode(listaCirculoCalidad[act]));
-    }
-    
-    for (int act = 0; act < listaProcesoMaritimo.length; act++) {
-      print(jsonEncode(listaProcesoMaritimo[act]));
-      //listaProcesoMaritimo[act].procesoMaritimoId = null;
-    }*/
-    //int proMariCode = await SincServices.postAllProcesoMaritimo(listaProcesoMaritimo);
 
     for (int hid = 0; hid < hidratacion.length; hid++) {
       listaHidratacion.add(RegistroHidratacion(
@@ -985,6 +993,7 @@ class DatabaseReportesAprobacion {
     if (pemCode >= 200 && pemCode <= 299) {
       await procesoEmpaqueSinc();
     }
+    
     for (int temp = 0; temp < temperatura.length; temp++) {
       listaTemperatura.add(RegistroTemperatura(
           temperaturaExterna: temperatura[temp].temperaturaExterna,
@@ -1414,6 +1423,25 @@ class DatabaseReportesAprobacion {
   static actividadesSinc() async {
     final sqlA = 'DELETE FROM ${DatabaseCreator.actividadTable}';
     await db.rawDelete(sqlA);
+  }
+
+  static circuloCalidadSinc() async {
+    try{
+      final sqlCircuLOCalidad = 'DELETE FROM ${DatabaseCreator.circuloCalidadTable}';
+      await db.rawDelete(sqlCircuLOCalidad);
+       final sqlCircuLOCalidad1 = 'DELETE FROM ${DatabaseCreator.circuloCalidadClienteTable}';
+      await db.rawDelete(sqlCircuLOCalidad1);
+       final sqlCircuLOCalidad2 = 'DELETE FROM ${DatabaseCreator.circuloCalidadProductoTable}';
+      await db.rawDelete(sqlCircuLOCalidad2);
+       final sqlCircuLOCalidad3 = 'DELETE FROM ${DatabaseCreator.circuloCalidadFalenciaTable}';
+      await db.rawDelete(sqlCircuLOCalidad3);
+       final sqlCircuLOCalidad4 = 'DELETE FROM ${DatabaseCreator.circuloCalidadVariedadTable}';
+      await db.rawDelete(sqlCircuLOCalidad4);
+       final sqlCircuLOCalidad5 = 'DELETE FROM ${DatabaseCreator.circuloCalidadLineaTable}';
+      await db.rawDelete(sqlCircuLOCalidad5);
+      final sqlCircuLOCalidad6 = 'DELETE FROM ${DatabaseCreator.circuloCalidadNumeroMesaTable}';
+      await db.rawDelete(sqlCircuLOCalidad6);
+    } catch(e){}
   }
 
   static hidratacionSinc() async {

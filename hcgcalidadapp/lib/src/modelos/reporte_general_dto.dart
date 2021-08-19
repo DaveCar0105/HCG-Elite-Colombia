@@ -8,7 +8,8 @@ String reporteGeneralToJson(ReporteGeneralDto data) =>
 
 class ReporteGeneralDto {
   ReporteGeneralDto(
-      {this.ramosRevisados,
+      {this.postcosechaId,
+        this.ramosRevisados,
       this.ramosNoConformes,
       this.porRamosNoConformes,
       this.falencias,
@@ -17,6 +18,7 @@ class ReporteGeneralDto {
       this.clientes
       });
 
+  int postcosechaId;
   int ramosRevisados;
   int ramosNoConformes;
   double porRamosNoConformes;
@@ -37,7 +39,7 @@ class ReporteGeneralDto {
           totalFalencias: json["totalFalencias"],
           clientes: json["clientes"],
           productos: json["productos"],
-          
+          postcosechaId: json["postcosechaId"],
           );
 
   Map<String, dynamic> toJson() => {
@@ -47,7 +49,8 @@ class ReporteGeneralDto {
         "falencias": falencias,
         "totalFalencias": totalFalencias,
         "clientes": clientes,
-        "productos": productos
+        "productos": productos,
+        "postcosechaId": postcosechaId
       };
 }
 

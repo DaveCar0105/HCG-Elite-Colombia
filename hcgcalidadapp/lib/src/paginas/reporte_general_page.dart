@@ -811,6 +811,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                                     .circuloCalidadComentario =
                                                 comentarioTextEditingController
                                                     .text;
+                                                    circuloCalidad.postcosechaId = reporteGeneral.postcosechaId;
                                             try {
                                               await DatabaseCirculoCalidad
                                                   .addcirculoCalidadByReporteGeneral(
