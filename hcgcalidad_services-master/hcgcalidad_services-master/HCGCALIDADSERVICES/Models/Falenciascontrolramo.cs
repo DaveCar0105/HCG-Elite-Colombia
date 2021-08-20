@@ -5,7 +5,7 @@ namespace HCGCALIDADSERVICES.Models
 {
     public partial class Falenciascontrolramo
     {
-        public int FalenciaControlRamoId { get; set; }
+        public int FalenciasControlRamoId { get; set; }
         public int? RamoId { get; set; }
         public int FalenciaRamoId { get; set; }
         public int? FalenciaControlRamoCantidad { get; set; }
