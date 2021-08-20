@@ -1555,41 +1555,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   }
 
   _validarForm() async {
-    if (procesoMaritimoNombreHidratanteValue >= 0 &&
-        procesoMaritimoPhSolucionesvalue >= 0 &&
-        procesoMaritimoNivelSolucionTinasValue >= 0 &&
+    if (
         destinosId >= 0 &&
-        procesoMaritimoSolucionHidratacionSinVegetalValue >= 0 &&
-        procesoMaritimoTemperaturaCuartoFrioValue >= 0 &&
-        procesoMaritimoTemperaturaSolucionesHidratacionValue >= 0 &&
-        procesoMaritimoEmpaqueAmbienteTemperaturaValue >= 0 &&
-        procesoMaritimoFlorEmpacadaValue >= 0 &&
-        procesoMaritimoTransportCareEmpaquevalue >= 0 &&
-        procesoMaritimoCajasVisualDeformesValue >= 0 &&
-        procesoMaritimoEtiquetasCajasUbicadasValue >= 0 &&
-        procesoMaritimoTemperaturaCubiculoCamionValue >= 0 &&
-        procesoMaritimoTemperaturaCajasTransferenciaValue >= 0 &&
-        procesoMaritimoAparenciaCajasTransferenciaValue >= 0 &&
-        procesoMaritimoEstibasDebidamenteSelladasValue >= 0 &&
-        procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue >= 0 &&
-        procesoMaritimoPalletsAlturaContenedorValue >= 0 &&
-        procesoMaritimoTemperaturaPalletContenedorValue >= 0 &&
-        procesoMaritimoPalletIdentificadoNumeroValue >= 0 &&
-        procesoMaritimoTomaRegistroTemperaturasValue >= 0 &&
-        procesoMaritimoGensetValue >= 0 &&
-        procesoMaritimoContenedorEdadFabricacionValue >= 0 &&
-        procesoMaritimoContenedorCumplimientoSeteoValue >= 0 &&
-        procesoMaritimoContenedorPreEnfriadoValue >= 0 &&
-        procesoMaritimoContenedorlavadoDesinfectadoValue >= 0 &&
-        procesoMartimoCarguePreviamenteHumedecidosValue >= 0 &&
-        procesoMaritimoLlegandoCierreSelladoValue >= 0 &&
-        procesoMaritimoEstibasSelloICAValue >= 0 &&
-        procesoMaritimoPalletsTensionZunchosvalue >= 0 &&
-        procesoMaritimoPalletIdentificadoEtiquetaValue >= 0 &&
-        procesoMaritimoComponentePalletDestinosEtiquetasValue >= 0 &&
-        procesoMaritimoCamionSelloSeguridadContenedorValue >= 0 &&
-        procesoMaritimoVerificacionEncendidoTermografoValue >= 0 &&
-        procesoMaritimoFotografiaPalletsEmpresaContenorValue >= 0 &&
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
