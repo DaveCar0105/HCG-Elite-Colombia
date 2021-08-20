@@ -1654,8 +1654,28 @@ namespace HCGCALIDADSERVICES.Models
                     .HasColumnName("USUARIO_CONTROL_ID")
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcesoMaritimoObservaciones)
-                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES")
+                entity.Property(e => e.ProcesoMaritimoObservacionesEmpaque)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_EMPAQUE")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesHidratacion)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_HIDRATACION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesLlenadoContenedor)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_LLENA_CONTENEDOR")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesPalletizado)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_PALLETIZADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesRequerimientosCriticos)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_REQUERIMEINTO_CRITICO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesTransferencias)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_TRANSFERENCIAS")
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProcesoMaritimoNumeroGuia)
@@ -1670,7 +1690,7 @@ namespace HCGCALIDADSERVICES.Models
                     .HasColumnName("PROCESO_MARITIMO_REALIZADO_POR")
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcesomoMaritimoAcompanamiento)
+                entity.Property(e => e.ProcesoMaritimoAcompanamiento)
                     .HasColumnName("PROCESO_MARITIMO_ACOMPANAMIENTO")
                     .IsUnicode(false);
 
@@ -1683,7 +1703,7 @@ namespace HCGCALIDADSERVICES.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProcesoMaritimoNivelSolucionTinas)
-                    .HasColumnName("PROCESO_MARITIMO_NIVEL_SOLUCION_TINAS")
+                    .HasColumnName("ROCESO_MARITIMO_NIVEL_SOLUCION_TINAS")
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProcesoMaritimoSolucionHidratacionSinVegetal)

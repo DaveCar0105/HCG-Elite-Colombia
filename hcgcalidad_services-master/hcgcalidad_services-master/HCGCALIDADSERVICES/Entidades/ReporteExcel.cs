@@ -51,6 +51,9 @@
         [JsonProperty("circuloCalidadLineas")]
         public List<CirculoCalidadLineaReporte> CirculoCalidadLinea { get; set; }
 
+        [JsonProperty("procesoMaritimo")]
+        public List<ProcesoMaritimoReporte> ProcesoMaritimo { get; set; }
+
         public ReporteExcel()
         {
             this.BaseRamos = new List<BaseRamo>();
@@ -67,6 +70,7 @@
             this.CirculoCalidadVariedad = new List<CirculoCalidadVariedadReporte>();
             this.CirculoCalidadNumeroMesa = new List<CirculoCalidadNumeroMesaReporte>();
             this.CirculoCalidadLinea = new List<CirculoCalidadLineaReporte>();
+            this.ProcesoMaritimo = new List<ProcesoMaritimoReporte>();
         }
     }
 
@@ -469,5 +473,47 @@
         public double PorNoConformidad { get; set; }
     }
 
+
+    public partial class ProcesoMaritimoReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("codigoQc")]
+        public string CodigoQc { get; set; }
+
+        [JsonProperty("cliente")]
+        public string Cliente { get; set; }
+
+        [JsonProperty("numeroGuia")]
+        public int NumeroGuia { get; set; }
+
+        [JsonProperty("proceso")]
+        public string Proceso { get; set; }
+
+        [JsonProperty("codigoRamosControl")]
+        public string CodigoRamosControl { get; set; }
+
+        [JsonProperty("ramosControl")]
+        public string RamosControl { get; set; }
+
+        [JsonProperty("cumple")]
+        public int Cumple { get; set; }
+
+        [JsonProperty("noCumple")]
+        public int NoCUmple { get; set; }
+
+        [JsonProperty("noAplica")]
+        public int NoAplica { get; set; }
+    }
 
 }

@@ -269,7 +269,7 @@ namespace HCGCALIDADSERVICES.Controllers
                     bramos.PostCosecha.Equals(itemBaseRamo.PostCosecha) &&
                     bramos.Producto.Equals(itemBaseRamo.Producto) &&
                     bramos.Marca.Equals(itemBaseRamo.Marca) &&
-                    bramos.Qc.Equals(itemBaseRamo.Qc) &&
+                    bramos.Qc.Equals(itemBaseRamo.Qc) && 
                     bramos.RamosConformes == itemBaseRamo.RamosConformes &&
                     bramos.RamosDespachar == itemBaseRamo.RamosDespachar &&
                     bramos.RamosElaborados == itemBaseRamo.RamosElaborados &&
@@ -1353,8 +1353,64 @@ namespace HCGCALIDADSERVICES.Controllers
                         reporte.CirculoCalidadLinea.Add(item);
                     }
                 });
-            }
+
+                List<Models.ProcesoMaritimo> listaProcesoMaritimo = _context.ProcesoMaritimo.Where(c => new DateTime(c.ProcesoMaritimoFecha.Value.Year, c.ProcesoMaritimoFecha.Value.Month, c.ProcesoMaritimoFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.ProcesoMaritimoFecha.Value.Year, c.ProcesoMaritimoFecha.Value.Month, c.ProcesoMaritimoFecha.Value.Day, 0, 0, 0) <= fechaHasta)
+                    .Include(a => a.Postcosecha)
+                    .Include(a => a.Usuariocontrol)
+                    .Include(a => a.Cliente)
+                    .ToList();
+
+                listaProcesoMaritimo.ForEach(c =>
+                {
+                    string[] fecha = transformarFecha(Convert.ToDateTime(c.ProcesoMaritimoFecha));
+                    string Semana = fecha[0];
+                    string Mes = fecha[1];
+                    string FechaValue = fecha[2];
+                    string Postcosecha = c.Postcosecha.PostcosechaNombre;
+                    string NombreQc = c.Usuariocontrol.UsuarioControlNombre;
+                    string Cliente = c.Cliente.ClienteNombre;
+                    int NumeroGuia = c.ProcesoMaritimoNumeroGuia;
+
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante,  "HIDRATACION", "Nombre Hidratante", "1.1");
+                    
+                });
+
+            } 
             return reporte;
+        }
+
+        private void addProcesoMaritimo(string Semana, string Mes, string FechaValue, string Postcosecha, string NombreQc, string Cliente, int NumeroGuia, ReporteExcel reporte, int valorProceso, string proceso, string textoProceso, string indiceProceso)
+        {
+            ProcesoMaritimoReporte procesoMaritimoNuevo = new ProcesoMaritimoReporte();
+            procesoMaritimoNuevo.Semana = Semana;
+            procesoMaritimoNuevo.Mes = Mes;
+            procesoMaritimoNuevo.Fecha = FechaValue;
+            procesoMaritimoNuevo.PostCosecha = Postcosecha;
+            procesoMaritimoNuevo.CodigoQc = NombreQc;
+            procesoMaritimoNuevo.Cliente = Cliente;
+            procesoMaritimoNuevo.NumeroGuia = NumeroGuia;
+            procesoMaritimoNuevo.Proceso = proceso;
+            procesoMaritimoNuevo.CodigoRamosControl = indiceProceso;
+            procesoMaritimoNuevo.RamosControl = textoProceso;
+            procesoMaritimoNuevo.Cumple = 0;
+            procesoMaritimoNuevo.NoCUmple = 0;
+            procesoMaritimoNuevo.NoAplica = 0;
+            switch (valorProceso)
+            {
+                case 0:
+                    procesoMaritimoNuevo.Cumple = 1;
+                    break;
+                case 1:
+                    procesoMaritimoNuevo.NoCUmple = 1;
+                    break;
+                case -1:
+                    procesoMaritimoNuevo.NoAplica = 1;
+                    break;
+                default:
+                    procesoMaritimoNuevo.NoAplica = 1;
+                    break;
+            }
+            reporte.ProcesoMaritimo.Add(procesoMaritimoNuevo);
         }
         
         private string[] transformarFecha(DateTime fecha)
@@ -2173,6 +2229,27 @@ namespace HCGCALIDADSERVICES.Controllers
             catch (Exception e)
             {
 
+                return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
+            }
+        }
+
+
+        [HttpPost("procesoMaritimo")]
+        public dynamic PostProcesoMaritimo([FromBody] List<ProcesoMaritimo> procesosMaritimos)
+        {
+            try
+            {
+                for (int i = 0; i < procesosMaritimos.Count; i++)
+                {
+                    Models.ProcesoMaritimo NewProcesoMaritimo = procesosMaritimos[i];
+                    NewProcesoMaritimo.ProcesoMaritimoId = null;
+                    _context.ProcesoMaritimo.Add(NewProcesoMaritimo);
+                    _context.SaveChanges();
+                }
+                return Ok(1);
+            }
+            catch (Exception e)
+            {
                 return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
             }
         }

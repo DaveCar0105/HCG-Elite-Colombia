@@ -7,13 +7,12 @@ namespace HCGCALIDADSERVICES.Models
 {
     public class ProcesoMaritimo
     {
-        public int ProcesoMaritimoId { get; set; }
+        public int? ProcesoMaritimoId { get; set; }
         public int? ProcesoMaritimoUsuarioControlId { get; set; }
-        public string ProcesoMaritimoObservaciones { get; set; }
         public int ProcesoMaritimoNumeroGuia { get; set; }
         public int? ProcesoMaritimoDestinoId { get; set; }
         public string ProcesoMaritimoRealizadoPor { get; set; }
-        public string ProcesomoMaritimoAcompanamiento { get; set; }
+        public string ProcesoMaritimoAcompanamiento { get; set; }
         public int ProcesoMaritimoNombreHidratante { get; set; }
         public int ProcesoMaritimoPhSoluciones { get; set; }
         public int ProcesoMaritimoNivelSolucionTinas { get; set; }
@@ -48,6 +47,14 @@ namespace HCGCALIDADSERVICES.Models
         public int ProcesoMaritimoCamionSelloSeguridadContenedor { get; set; }
         public int ProcesoMaritimoVerificacionEncendidoTermografo { get; set; }
         public int ProcesoMaritimoFotografiaPalletsEmpresaContenor { get; set; }
+
+
+        public string ProcesoMaritimoObservacionesHidratacion { get; set; }
+        public string ProcesoMaritimoObservacionesEmpaque { get; set; }
+        public string ProcesoMaritimoObservacionesTransferencias { get; set; }
+        public string ProcesoMaritimoObservacionesPalletizado { get; set; }
+        public string ProcesoMaritimoObservacionesLlenadoContenedor { get; set; }
+        public string ProcesoMaritimoObservacionesRequerimientosCriticos { get; set; }
         public DateTime? ProcesoMaritimoFecha { get; set; }
         public int ClienteId { get; set; }
         public int PostcosechaId { get; set; }
