@@ -4,11 +4,13 @@ import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
+import 'package:hcgcalidadapp/src/modelos/control_banda.dart';
 import 'package:hcgcalidadapp/src/modelos/postcosecha.dart';
 import 'package:hcgcalidadapp/src/modelos/producto.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
+import 'package:hcgcalidadapp/src/paginas/lista_banda_ramos_page.dart';
 import 'package:hcgcalidadapp/src/paginas/problemas_banda_page.dart';
 import 'package:hcgcalidadapp/src/providers/TipoClienteProvider.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
@@ -38,7 +40,7 @@ class _BandaPageState extends State<BandaPage> {
   final derogacion = TextEditingController();
   final marca = TextEditingController();
   final ordenModal = TextEditingController();
-  ControlRamos ramos = new ControlRamos();
+  ControlBanda ramosBanda = new ControlBanda();
   String numeroOrden = '';
 
   GlobalKey<ListaBusquedaState> _keyProducto = GlobalKey();
@@ -76,27 +78,26 @@ class _BandaPageState extends State<BandaPage> {
   }
 
   _guardarReporteRamos() async {
-    ramos.ramosNumeroOrden = numeroOrden;
-    ramos.ramosTotal = int.parse(totalRamos.text);
-    ramos.ramosAprobado = 0;
-    ramos.clienteId = clienteId;
-    ramos.productoId = productoId;
-    ramos.ramosElaborados = int.parse(ramosElaborados.text);
-    ramos.ramosDespachar = int.parse(ramosADespachar.text);
-    ramos.ramosTallos = int.parse(tallosRamos.text);
-    ramos.ramosFecha =
+    ramosBanda.ramosNumeroOrden = numeroOrden;
+    ramosBanda.ramosTotal = int.parse(totalRamos.text);
+    ramosBanda.ramosAprobado = 0;
+    ramosBanda.clienteId = clienteId;
+    ramosBanda.productoId = productoId;
+    ramosBanda.ramosElaborados = int.parse(ramosElaborados.text);
+    ramosBanda.ramosDespachar = int.parse(ramosADespachar.text);
+    ramosBanda.ramosTallos = int.parse(tallosRamos.text);
+    ramosBanda.ramosFecha =
         '${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}';
-    ramos.ramosDerogado = derogacion.text;
-    ramos.postcosechaId = postcosechaId;
-    ramos.ramosMarca = marca.text;
-    ramos.usuarioId = 0;
-    ramos.tipoId = tipoId;
-    if (ramos.controlRamosId != null) {
-      await DatabaseBanda.updateBandas(ramos);
+    ramosBanda.ramosDerogado = derogacion.text;
+    ramosBanda.postcosechaId = postcosechaId;
+    ramosBanda.ramosMarca = marca.text;
+    ramosBanda.usuarioId = 0;
+    ramosBanda.tipoId = tipoId;
+    if (ramosBanda.controlRamosId != null) {
+      await DatabaseBanda.updateBandas(ramosBanda);
     } else {
-      ramos.ramosDesde = DateTime.now().millisecondsSinceEpoch;
-      Text('se ejecutoooooo');
-      ramos.controlRamosId = await DatabaseBanda.addBandas(ramos);
+      ramosBanda.ramosDesde = DateTime.now().millisecondsSinceEpoch;
+      ramosBanda.controlRamosId = await DatabaseBanda.addBandas(ramosBanda);
     }
   }
 
@@ -130,7 +131,6 @@ class _BandaPageState extends State<BandaPage> {
 
     List<TipoCliente> tipoClientes = List();
     tipoClientes = await DatabaseEcuador.getAllTipoCliente();
-    print("tipo cliente: " + tipoClientes.length.toString());
     tipoClientes.forEach((element) {
       listaTipoCliente.add(AutoComplete(
           id: element.tipoClienteId, nombre: element.tipoClienteNombre));
@@ -165,7 +165,7 @@ class _BandaPageState extends State<BandaPage> {
         title: Text('Final banda - pesca'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           width: double.infinity,
           child: Container(
             child: ListView(
@@ -217,7 +217,8 @@ class _BandaPageState extends State<BandaPage> {
                     color: Colors.red,
                     child: Text('Ingresar Orden'),
                     textColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                   )
                 : Container(
                     child: Text(
@@ -299,7 +300,7 @@ class _BandaPageState extends State<BandaPage> {
                 width: MediaQuery.of(context).size.width * 0.75,
                 style: TextStyle(fontSize: 15),
                 parentAction: (value) {
-                  if(value!= null && value!=""){
+                  if (value != null && value != "") {
                     AutoComplete tip = listaTipos.firstWhere((item) {
                       return item.nombre == value;
                     });
@@ -363,7 +364,7 @@ class _BandaPageState extends State<BandaPage> {
                   context,
                   MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          ProblemasBandaPage(ramos)));
+                          ListaBandasRamosPage(ramosBanda)));
             } else {
               _showSnackBar();
             }
@@ -402,7 +403,7 @@ class _BandaPageState extends State<BandaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
+                if (value != null && value != "") {
                   AutoComplete producto = listaProducto.firstWhere((item) {
                     return item.nombre == value;
                   });
@@ -418,8 +419,7 @@ class _BandaPageState extends State<BandaPage> {
 
   Widget _cliente() {
     final listaClienteProvider = Provider.of<TipoClienteProvide>(context);
-    return Container(
-        child: _listBus(listaClienteProvider));
+    return Container(child: _listBus(listaClienteProvider));
   }
 
   Widget _listBus(listaClienteProvider) {
@@ -433,9 +433,9 @@ class _BandaPageState extends State<BandaPage> {
       width: MediaQuery.of(context).size.width * 0.75,
       style: TextStyle(fontSize: 15),
       parentAction: (value) {
-        if(value!= null && value!=""){
+        if (value != null && value != "") {
           AutoComplete cliente =
-            listaClienteProvider.listaClientess.firstWhere((item) {
+              listaClienteProvider.listaClientess.firstWhere((item) {
             return item.nombre == value;
           });
           clienteId = cliente.id;
@@ -458,8 +458,9 @@ class _BandaPageState extends State<BandaPage> {
               width: MediaQuery.of(context).size.width * 0.75,
               style: TextStyle(fontSize: 15),
               parentAction: (value) {
-                if(value!= null && value!=""){
-                  AutoComplete tipoCliente = listaTipoCliente.firstWhere((item) {
+                if (value != null && value != "") {
+                  AutoComplete tipoCliente =
+                      listaTipoCliente.firstWhere((item) {
                     return item.nombre == value;
                   });
                   listaClienteProvider.listaClientes = tipoCliente.id;
@@ -488,8 +489,9 @@ class _BandaPageState extends State<BandaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
-                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                if (value != null && value != "") {
+                  AutoComplete postcosecha =
+                      listaPostcosecha.firstWhere((item) {
                     return item.nombre == value;
                   });
                   postcosechaId = postcosecha.id;
@@ -504,7 +506,7 @@ class _BandaPageState extends State<BandaPage> {
 
   Widget _marca() {
     return Container(
-     width: MediaQuery.of(context).size.width * 0.85,
+      width: MediaQuery.of(context).size.width * 0.85,
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(

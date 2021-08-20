@@ -6,10 +6,17 @@ Database db;
 
 class DatabaseCreator {
   //TABLA FINAL DE BANDA
+  static const bandaId = 'bandaId';
+  static const bandaTable = 'bandaTable';
+  static const controlBandaId = 'controlBandaId';
   static const controlBandaTable = 'controlBanda';
   static const falenciaBandaTable = 'falenciaBanda';
   static const falenciaBandaId = 'falenciaBandaId';
   static const falenciaBandaRamos = 'falenciaBandaRamos';
+  static const falenciaBandaNombres = 'falenciaBandaNombres';
+  static const falenciasReporteBandaTable = 'falenciasReporteBandaTable';
+  static const falenciasReporteBandaId = 'falenciasReporteBandaId';
+  static const falenciasReporteBandaCantidad = 'falenciasReporteBandaCantidad';
 
   static const controlAlistamientoTable = 'controlAlistamiento';
   static const falenciaAlistamientoTable = 'falenciaAlistamiento';
@@ -317,13 +324,16 @@ class DatabaseCreator {
   static const circuloCalidadId = 'circuloCalidadId';
   static const circuloCalidadRevisados = 'circuloCalidadRevisados';
   static const circuloCalidadRechazados = 'circuloCalidadRechazados';
-  static const circuloCalidadPorcentajeNoConforme = 'circuloCalidadPorcentajeNoConforme';
+  static const circuloCalidadPorcentajeNoConforme =
+      'circuloCalidadPorcentajeNoConforme';
   static const circuloCalidadNumeroReunion = 'circuloCalidadNumeroReunion';
   static const circuloCalidadComentario = 'circuloCalidadComentario';
   static const circuloCalidadSupervisor = 'circuloCalidadSupervisor';
-  static const circuloCalidadEvaluacionSupervisor = 'circuloCalidadEvaluacionSupervisor';
+  static const circuloCalidadEvaluacionSupervisor =
+      'circuloCalidadEvaluacionSupervisor';
   static const circuloCalidadSupervisor2 = 'circuloCalidadSupervisor2';
-  static const circuloCalidadEvaluacionSupervisor2 = 'circuloCalidadEvaluacionSupervisor2';
+  static const circuloCalidadEvaluacionSupervisor2 =
+      'circuloCalidadEvaluacionSupervisor2';
   static const circuloCalidadFecha = 'circuloCalidadFecha';
 
   static const circuloCalidadProductoTable = 'circuloCalidadProductoTable';
@@ -337,10 +347,11 @@ class DatabaseCreator {
   static const circuloCalidadLineaTable = 'circuloCalidadLineaTable';
   static const circuloCalidadLineaId = 'circuloCalidadLineaId';
   static const circuloCalidadLineaNombre = 'circuloCalidadLineaNombre';
-  
+
   static const circuloCalidadNumeroMesaTable = 'circuloCalidadNumeroMesaTable';
   static const circuloCalidadNumeroMesaId = 'circuloCalidadNumeroMesaId';
-  static const circuloCalidadNumeroMesaNombre = 'circuloCalidadNumeroMesaNombre';
+  static const circuloCalidadNumeroMesaNombre =
+      'circuloCalidadNumeroMesaNombre';
 
   //--campos iguales circulo calidad
   static const circuloCalidadSameRevisados = 'revisados';
@@ -464,33 +475,6 @@ class DatabaseCreator {
     await db.execute(ramosSql);
   }
 
-  Future<void> createControlBandaTable(Database db) async {
-    final ramosSql = '''CREATE TABLE $controlBandaTable
-    (
-      $controlRamosId INTEGER PRIMARY KEY AUTOINCREMENT,
-      $detalleFirmaId INTEGER,
-      $productoId INTEGER,
-      $usuarioId INTEGER,
-      $ramosFecha TEXT,
-      $ramosNumeroOrden TEXT,
-      $ramosTotal INTEGER,
-      $ramosAprobado INTEGER,
-      $ramosTallos INTEGER,
-      $ramosDespachar INTEGER,
-      $ramosElaborados INTEGER,
-      $ramosDerogado TEXT,
-      $postcosechaId INTEGER,
-      $ramoMarca TEXT,
-      $ramosDesde INTEGER,
-      $ramosHasta INTEGER,
-      $clienteId INTEGER,
-      $elite INTEGER,
-      $tipoControlId INTEGER
-    )''';
-
-    await db.execute(ramosSql);
-  }
-
   Future<void> createControlBoncheoTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlBoncheoTable
     (
@@ -530,18 +514,68 @@ class DatabaseCreator {
     await db.execute(ramosSql);
   }
 
+  //BANDA TABLE
+  Future<void> createControlBandaTable(Database db) async {
+    final ramosSql = '''CREATE TABLE $controlBandaTable
+    (
+      $controlRamosId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $detalleFirmaId INTEGER,
+      $productoId INTEGER,
+      $usuarioId INTEGER,
+      $ramosFecha TEXT,
+      $ramosNumeroOrden TEXT,
+      $ramosTotal INTEGER,
+      $ramosAprobado INTEGER,
+      $ramosTallos INTEGER,
+      $ramosDespachar INTEGER,
+      $ramosElaborados INTEGER,
+      $ramosDerogado TEXT,
+      $postcosechaId INTEGER,
+      $ramoMarca TEXT,
+      $ramosDesde INTEGER,
+      $ramosHasta INTEGER,
+      $clienteId INTEGER,
+      $elite INTEGER,
+      $tipoControlId INTEGER
+    )''';
+
+    await db.execute(ramosSql);
+  }
+
+  Future<void> createFalenciasReporteBandaTable(Database db) async {
+    final ramosSql = '''CREATE TABLE $falenciasReporteBandaTable
+    (
+      $falenciasReporteBandaId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $falenciasReporteBandaCantidad INTEGER,
+      $falenciaBandaId INTEGER,
+      $bandaId INTEGER,
+      $ramosId INTEGER
+    )''';
+
+    await db.execute(ramosSql);
+  }
+
+  Future<void> createBandaTable(Database db) async {
+    final bandaSql = ''' CREATE TABLE $bandaTable 
+    (
+      $bandaId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $controlRamosId INTEGER,
+      $controlBandaId INTEGER,
+      $numeroMesa TEXT,
+      $variedad TEXT,
+      $linea TEXT
+    )''';
+    await db.execute(bandaSql);
+  }
+
   Future<void> createFalenciaBandaTable(Database db) async {
     final ramosSql = '''CREATE TABLE $falenciaBandaTable
     (
       $falenciaBandaId INTEGER PRIMARY KEY AUTOINCREMENT,
       $falenciaRamosId INTEGER,
       $falenciaBandaRamos INTEGER,
-      $controlRamosId INTEGER,
-      $numeroMesa TEXT,
-      $variedad TEXT,
-      $linea TEXT
+      $bandaId INTEGER
     )''';
-
     await db.execute(ramosSql);
   }
 
@@ -972,8 +1006,7 @@ class DatabaseCreator {
 
   //CREATE TABLE CIRCULO DE CALIDAD
   Future<void> createCirculoCalidad(Database db) async {
-    final procesoCirculoCalidadSql =
-        '''CREATE TABLE $circuloCalidadTable
+    final procesoCirculoCalidadSql = '''CREATE TABLE $circuloCalidadTable
     (
         $circuloCalidadId INTEGER PRIMARY KEY AUTOINCREMENT,
         $postcosechaId INTEGER,
@@ -1097,8 +1130,11 @@ class DatabaseCreator {
     await createProcesoHidratacionTable(db);
     await createProcesoEmpaqueTable(db);
     await createErrorTable(db);
+    //banda
+    await createBandaTable(db);
     await createFalenciaBandaTable(db);
     await createControlBandaTable(db);
+    await createFalenciasReporteBandaTable(db);
     await createControlAlistamientoTable(db);
     await createFalenciaAlistamientoTable(db);
     await createControlBoncheoTable(db);

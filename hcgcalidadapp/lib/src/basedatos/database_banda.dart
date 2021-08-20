@@ -1,15 +1,18 @@
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
+import 'package:hcgcalidadapp/src/modelos/banda.dart';
+import 'package:hcgcalidadapp/src/modelos/control_banda.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos.dart';
+import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos_banda.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/preferencias.dart';
 
 class DatabaseBanda {
-  static Future<List<ControlRamos>> getAllBandas() async {
+  static Future<List<ControlBanda>> getAllBandas() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.controlBandaTable} ''';
     final data = await db.rawQuery(sql);
-    List<ControlRamos> ramos = List();
+    List<ControlBanda> ramos = List();
     for (final node in data) {
-      ramos.add(new ControlRamos(
+      ramos.add(new ControlBanda(
           controlRamosId: node[DatabaseCreator.controlRamosId],
           ramosNumeroOrden: node[DatabaseCreator.ramosNumeroOrden],
           ramosTotal: node[DatabaseCreator.ramosTotal],
@@ -17,6 +20,43 @@ class DatabaseBanda {
           ramosAprobado: node[DatabaseCreator.ramosAprobado]));
     }
     return ramos;
+  }
+
+  static Future<int> addRamoBanda(int controlRamoId, Banda ramo) async {
+    final sql = '''INSERT INTO ${DatabaseCreator.bandaTable} 
+    (${DatabaseCreator.controlRamosId},
+    ${DatabaseCreator.variedad},${DatabaseCreator.numeroMesa},${DatabaseCreator.linea})
+    VALUES(${controlRamoId},'${ramo.variedad}','${ramo.numeroMesa}','${ramo.linea}')''';
+    return await db.rawInsert(sql);
+  }
+
+  static Future<int> addFalenciaReporteRamosbanda(
+      FalenciaReporteRamosBanda falenciaReporteRamosBanda) async {
+    final sql =
+        '''INSERT INTO ${DatabaseCreator.falenciaBandaTable}(${DatabaseCreator.falenciaRamosId},${DatabaseCreator.bandaId},${DatabaseCreator.falenciaBandaRamos}) 
+    VALUES(${falenciaReporteRamosBanda.falenciaBandaId},${falenciaReporteRamosBanda.ramosId},
+    ${falenciaReporteRamosBanda.falenciasReporteRamosCantidad})''';
+    return await db.rawInsert(sql);
+  }
+
+  static Future<List<Banda>> getAllBanda(int controlRamoId) async {
+    final sql =
+        '''SELECT * FROM ${DatabaseCreator.bandaTable} WHERE ${DatabaseCreator.controlRamosId} = $controlRamoId''';
+    final data = await db.rawQuery(sql);
+    List<Banda> ramosBanda = List();
+    for (final node in data) {
+      final sql1 =
+          '''SELECT count(*) as FALENCIAS FROM ${DatabaseCreator.falenciaBandaTable} WHERE ${DatabaseCreator.bandaId} = ${node[DatabaseCreator.bandaId]}''';
+      final data1 = await db.rawQuery(sql1);
+      ramosBanda.add(new Banda(
+          controlRamoId: node[DatabaseCreator.controlRamosId],
+          ramoId: node[DatabaseCreator.bandaId],
+          numeroMesa: node[DatabaseCreator.numeroMesa],
+          variedad: node[DatabaseCreator.variedad],
+          linea: node[DatabaseCreator.linea],
+          cantidadFalencias: data1[0]['FALENCIAS']));
+    }
+    return ramosBanda;
   }
 
   static Future<int> getAllBandasSinSincro() async {
@@ -29,6 +69,15 @@ class DatabaseBanda {
       valor += node["VALOR"];
     }
     return valor;
+  }
+
+  static Future<void> deleteBanda(int ramoId) async {
+    final sql0 =
+        '''DELETE FROM ${DatabaseCreator.falenciasReporteBandaTable} WHERE ${DatabaseCreator.bandaId} = $ramoId''';
+    await db.rawDelete(sql0);
+    final sql =
+        '''DELETE FROM ${DatabaseCreator.bandaTable} WHERE ${DatabaseCreator.bandaId} = $ramoId''';
+    await db.rawDelete(sql);
   }
 
   static Future deleteBandas(int id) async {
@@ -221,7 +270,7 @@ class DatabaseBanda {
     return retorno;
   }
 
-  static Future<int> addBandas(ControlRamos ramos) async {
+  static Future<int> addBandas(ControlBanda ramos) async {
     final sql =
         '''INSERT INTO ${DatabaseCreator.controlBandaTable}(${DatabaseCreator.detalleFirmaId},${DatabaseCreator.productoId},${DatabaseCreator.usuarioId},${DatabaseCreator.ramosFecha},${DatabaseCreator.ramosNumeroOrden},${DatabaseCreator.ramosTotal},${DatabaseCreator.ramosAprobado},${DatabaseCreator.ramosTallos},${DatabaseCreator.ramosDespachar},${DatabaseCreator.ramosElaborados},${DatabaseCreator.ramosDerogado},${DatabaseCreator.postcosechaId},${DatabaseCreator.ramoMarca},${DatabaseCreator.ramosDesde},${DatabaseCreator.ramosHasta},${DatabaseCreator.clienteId},${DatabaseCreator.elite},${DatabaseCreator.tipoControlId}
         ) 
@@ -229,7 +278,7 @@ class DatabaseBanda {
     return await db.rawInsert(sql);
   }
 
-  static Future<void> updateBandas(ControlRamos ramos) async {
+  static Future<void> updateBandas(ControlBanda ramos) async {
     final sql = '''UPDATE ${DatabaseCreator.controlBandaTable}
     SET ${DatabaseCreator.ramosNumeroOrden} = '${ramos.ramosNumeroOrden}',
     ${DatabaseCreator.ramosTallos} = ${ramos.ramosTallos},
@@ -247,7 +296,7 @@ class DatabaseBanda {
     await db.rawInsert(sql);
   }
 
-  static Future<void> finBandas(ControlRamos ramos) async {
+  static Future<void> finBandas(ControlBanda ramos) async {
     final sql = '''UPDATE ${DatabaseCreator.controlBandaTable}
     SET ${DatabaseCreator.ramosAprobado} = ${ramos.ramosAprobado},
     ${DatabaseCreator.ramosHasta} = ${ramos.ramosHasta}
@@ -271,7 +320,7 @@ class DatabaseBanda {
     return await db.rawInsert(sql);
   }
 
-  static Future<List<FalenciaReporteRamos>> getAllFalenciasXBandaId(
+  static Future<List<FalenciaReporteRamosBanda>> getAllFalenciasXBandaId(
       int id) async {
     final sql =
         '''SELECT ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre},
@@ -279,17 +328,17 @@ class DatabaseBanda {
     ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaBandaRamos},
     ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaBandaId}
     FROM ${DatabaseCreator.falenciaBandaTable},${DatabaseCreator.falenciaRamosTable}
-    WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.controlRamosId} = $id
+    WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.bandaId} = $id
     AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
     ''';
     final data = await db.rawQuery(sql);
-    List<FalenciaReporteRamos> falenciaReporteRamos = [];
+    List<FalenciaReporteRamosBanda> falenciaReporteRamos = [];
     for (final node in data) {
-      falenciaReporteRamos.add(new FalenciaReporteRamos(
+      falenciaReporteRamos.add(new FalenciaReporteRamosBanda(
         ramosId: id,
         falenciasReporteRamosCantidad: node[DatabaseCreator.falenciaBandaRamos],
         falenciasReporteRamosId: node[DatabaseCreator.falenciaBandaId],
-        falenciaRamosId: node[DatabaseCreator.falenciaRamosId],
+        falenciaBandaId: node[DatabaseCreator.falenciaRamosId],
         falenciaRamosNombre: node[DatabaseCreator.falenciaRamosNombre],
       ));
     }
