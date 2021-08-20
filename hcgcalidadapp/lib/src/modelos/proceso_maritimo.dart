@@ -48,6 +48,7 @@ class ProcesoMaritimo {
       this.procesoMaritimoCamionSelloSeguridadContenedor,
       this.procesoMaritimoVerificacionEncendidoTermografo,
       this.procesoMaritimoFotografiaPalletsEmpresaContenor,
+      
       this.procesoMaritimoObservacionesHidratacion,
       this.procesoMaritimoObservacionesEmpaque,
       this.procesoMaritimoObservacionesPalletizado,

@@ -855,9 +855,19 @@ class DatabaseReportesAprobacion {
           ''';
     var data9 = await db.rawQuery(sql9);
 
-//eliminar depsues 
-    await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
-
+    Preferences pref = Preferences();
+    List<ProcesoMaritimo> listaProcesoMaritimo = [];
+    listaProcesoMaritimo =
+        await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
+    try{
+      for (int i = 0; i<listaProcesoMaritimo.length;i++ ){
+        listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
+      }
+      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
+      if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
+        //await circuloCalidadSinc();
+      }
+    }catch(e){}
     cant.ramos = data[0]['CANTIDAD'];
     cant.empaque = data1[0]['CANTIDAD'];
     cant.procesoEmp = data2[0]['CANTIDAD'];
@@ -872,7 +882,6 @@ class DatabaseReportesAprobacion {
   }
 
   static Future<int> getAllReportesSinc() async {
-    print("ingresps a sincronizar");
     ReporteSincronizacionEmpaque listaEmpaque =
         new ReporteSincronizacionEmpaque();
     ReporteSincronizacionRamo listaRamo = new ReporteSincronizacionRamo();
@@ -890,22 +899,17 @@ class DatabaseReportesAprobacion {
     List<RegistroTemperatura> listaTemperatura = [];
     List<ProcesoMaritimo> listaProcesoMaritimo = [];
     List<CirculoCalidadInformacionGeneral> listaCirculoCalidad = [];
-    print("ingresps a sincronizar2");
     actividades = await DatabaseActividad.getAllActividad();
     hidratacion = await DatabaseProcesoHidratacion.getAllProcesosHidratacion();
     procesoEmpaque = await DatabaseProcesoEmpaque.getAllProcesosEmpaque();
-    print("ingresps a sincronizar3");
     temperatura = await DatabaseTemperatura.getAllTemperaturas();
     firmaEmp = await DatabaseFirma.consultarFirmasEmpaque();
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
-    print("ingresps a sincronizar4");
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
-    print("ingresps a sincronizar5");
     listaProcesoMaritimo =
         await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
     listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
-    print("ingresps a sincronizar6");
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
     listaRamo.detallesFirma = [];
@@ -914,7 +918,6 @@ class DatabaseReportesAprobacion {
     listaEmpaque.listaEmpaque = [];
 
     Preferences pref = Preferences();
-
 
     try{
       for (int i = 0; i<listaCirculoCalidad.length;i++ ){
@@ -926,6 +929,15 @@ class DatabaseReportesAprobacion {
       }
     }catch(e){}
     
+    try{
+      for (int i = 0; i<listaProcesoMaritimo.length;i++ ){
+        listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
+      }
+      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
+      if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
+        await procesoMaritimoSinc();
+      }
+    }catch(e){}
 
 
     for (int act = 0; act < actividades.length; act++) {

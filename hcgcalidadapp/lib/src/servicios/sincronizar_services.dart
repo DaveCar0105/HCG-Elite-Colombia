@@ -177,15 +177,11 @@ class SincServices{
   }
 
   static Future<int> postCirculoCalidad(List<CirculoCalidadInformacionGeneral> reporte) async{
-    print("ingresps a sincronizar10");
     final co = Constantes();
     Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
     try{
-      print("ingresps a sincronizar11");
       var url = Uri.http(co.url, '/api/Sincro/circuloCalidad');
-      print("ingresps a sincronizar11.1 "+ url.toString());
       var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
-      print("ingresps a sincronizar12");
       if(respuesta.statusCode>=200 && respuesta.statusCode <=299){
         return respuesta.statusCode;
       }else{
@@ -195,9 +191,30 @@ class SincServices{
         return respuesta.statusCode;
       }
     }catch(ex){
-      print("ingresps a sincronizarerror1 " + ex.toString());
       ErrorT errorT = new ErrorT();
       errorT.errorDetalle = 'Circulo-Calidad: ' + ex.toString();
+      await DatabaseError.addError(errorT);
+      return 0;
+    }
+  }
+
+  static Future<int> postProcesoMaritimo(List<ProcesoMaritimo> reporte) async{
+    final co = Constantes();
+    Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
+    try{
+      var url = Uri.http(co.url, '/api/Sincro/procesoMaritimo');
+      var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
+      if(respuesta.statusCode>=200 && respuesta.statusCode <=299){
+        return respuesta.statusCode;
+      }else{
+        ErrorT errorT = new ErrorT();
+        errorT.errorDetalle = (respuesta.statusCode.toString() + ' - ' + respuesta.body.toString());
+        await DatabaseError.addError(errorT);
+        return respuesta.statusCode;
+      }
+    }catch(ex){
+      ErrorT errorT = new ErrorT();
+      errorT.errorDetalle = 'Proceso-Maritimo: ' + ex.toString();
       await DatabaseError.addError(errorT);
       return 0;
     }
