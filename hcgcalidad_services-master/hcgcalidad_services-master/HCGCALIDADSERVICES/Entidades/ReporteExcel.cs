@@ -12,6 +12,9 @@
         [JsonProperty("baseRamos")]
         public List<BaseRamo> BaseRamos { get; set; }
 
+        [JsonProperty("baseRamosBanda")]
+        public List<BaseRamo> BaseRamosBanda { get; set; }
+
         [JsonProperty("baseCajas")]
         public List<BaseCaja> BaseCajas { get; set; }
 
@@ -57,6 +60,7 @@
         public ReporteExcel()
         {
             this.BaseRamos = new List<BaseRamo>();
+            this.BaseRamosBanda = new List<BaseRamo>();
             this.BaseCajas = new List<BaseCaja>();
             this.ProblemasRamoEmpaque = new List<BaseTotalRamo>();
             this.BaseTotalRamos = new List<BaseTotalRamo>();
