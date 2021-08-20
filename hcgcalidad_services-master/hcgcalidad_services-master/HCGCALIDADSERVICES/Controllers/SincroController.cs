@@ -1372,7 +1372,35 @@ namespace HCGCALIDADSERVICES.Controllers
                     int NumeroGuia = c.ProcesoMaritimoNumeroGuia;
 
                     addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante,  "HIDRATACION", "Nombre Hidratante", "1.1");
-                    
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+
                 });
 
             } 
