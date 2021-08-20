@@ -28,7 +28,7 @@ class _AprobacionPageState extends State<AprobacionPage> {
     lista = await DatabaseReportesAprobacion.getAllReportes();
     listaReportes = lista;
     List<ReporteAprobacionBanda> listaB = [];
-    listaB = await DatabaseReportesAprobacion.getAllReportesBanda();
+    listaB = await DatabaseReportesAprobacion.getAllReportesBandas();
     listaBandas = listaB;
     listaEcuador = await DatabaseEcuador.getAllEcuadorAprobacion();
     setState(() {});
