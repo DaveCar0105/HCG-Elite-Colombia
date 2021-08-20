@@ -13,10 +13,10 @@ class ListaReporteGeneralPage2 extends StatefulWidget {
 class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
   //final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List<CirculoCalidad> reportesLista = new List<CirculoCalidad>();
+  List<CirculoCalidadInformacionGeneral> reportesLista = new List<CirculoCalidadInformacionGeneral>();
   bool loading = true;
   Future fetchAllReportes() async {
-    reportesLista = await DatabaseCirculoCalidad.getAllcirculoCalidad();
+    reportesLista = await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
     setState(() {});
   }
 
@@ -61,14 +61,14 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
                   rows: reportesLista != null
                       ? reportesLista
                           .map<DataRow>((element) => DataRow(cells: [
-                                DataCell(Text(element
+                                DataCell(Text(element.circuloCalidad
                                     .circuloCalidadNumeroReunion
                                     .toString())),
-                                DataCell(Text(element.circuloCalidadRevisados
+                                DataCell(Text(element.circuloCalidad.circuloCalidadRevisados
                                     .toString())),
-                                DataCell(Text(element.circuloCalidadRechazados
+                                DataCell(Text(element.circuloCalidad.circuloCalidadRechazados
                                     .toString())),
-                                DataCell(Text(element
+                                DataCell(Text(element.circuloCalidad
                                     .circuloCalidadPorcentajeNoConforme
                                     .toStringAsFixed(2))),
                                 DataCell(Icon(Icons.visibility), onTap: () {

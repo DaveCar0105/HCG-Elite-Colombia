@@ -33,6 +33,27 @@
         [JsonProperty("temperaturas")]
         public List<ChlEmpaque> Temperaturas { get; set; }
 
+        [JsonProperty("circuloCalidadCausas")]
+        public List<CirculoCalidadCausasReporte> CirculoCalidadCausas { get; set; }
+
+        [JsonProperty("circuloCalidadClientes")]
+        public List<CirculoCalidadClientesReporte> CirculoCalidadClientes { get; set; }
+
+        [JsonProperty("circuloCalidadProductos")]
+        public List<CirculoCalidadProductosReporte> CirculoCalidadProducto { get; set; }
+
+        [JsonProperty("circuloCalidadVariedades")]
+        public List<CirculoCalidadVariedadReporte> CirculoCalidadVariedad { get; set; }
+
+        [JsonProperty("circuloCalidadNumeroMesas")]
+        public List<CirculoCalidadNumeroMesaReporte> CirculoCalidadNumeroMesa { get; set; }
+
+        [JsonProperty("circuloCalidadLineas")]
+        public List<CirculoCalidadLineaReporte> CirculoCalidadLinea { get; set; }
+
+        [JsonProperty("procesoMaritimo")]
+        public List<ProcesoMaritimoReporte> ProcesoMaritimo { get; set; }
+
         public ReporteExcel()
         {
             this.BaseRamos = new List<BaseRamo>();
@@ -43,16 +64,23 @@
             this.ChlEmpaque = new List<ChlEmpaque>();
             this.ActividadesQc = new List<ActividadesQc>();
             this.Temperaturas = new List<ChlEmpaque>();
+            this.CirculoCalidadCausas = new List<CirculoCalidadCausasReporte>();
+            this.CirculoCalidadClientes = new List<CirculoCalidadClientesReporte>();
+            this.CirculoCalidadProducto = new List<CirculoCalidadProductosReporte>();
+            this.CirculoCalidadVariedad = new List<CirculoCalidadVariedadReporte>();
+            this.CirculoCalidadNumeroMesa = new List<CirculoCalidadNumeroMesaReporte>();
+            this.CirculoCalidadLinea = new List<CirculoCalidadLineaReporte>();
+            this.ProcesoMaritimo = new List<ProcesoMaritimoReporte>();
         }
     }
 
     public partial class ActividadesQc
     {
-        /*[JsonProperty("semana")]
+        [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -71,12 +99,12 @@
     }
 
     public partial class BaseCaja
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -125,12 +153,12 @@
     }
 
     public partial class BaseRamo
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -200,12 +228,12 @@
     }
 
     public partial class BaseTotalRamo
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -251,12 +279,12 @@
     }
 
     public partial class ChlEmpaque
-    {/*
+    {
         [JsonProperty("semana")]
         public string Semana { get; set; }
 
         [JsonProperty("mes")]
-        public string Mes { get; set; }*/
+        public string Mes { get; set; }
 
         [JsonProperty("fecha")]
         public string Fecha { get; set; }
@@ -273,4 +301,219 @@
         [JsonProperty("valor", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Valor { get; set; }
     }
+
+    public partial class CirculoCalidadCausasReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public int NumeroReunion { get; set; }
+
+        [JsonProperty("causa")]
+        public string Causa { get; set; }
+
+        [JsonProperty("causaRelacionada")]
+        public string CausaRelacionada { get; set; }
+
+        [JsonProperty("indice")]
+        public int Indice { get; set; }
+
+        [JsonProperty("porDistribucion")]
+        public double PorDistribucion { get; set; }
+    }
+
+    public partial class CirculoCalidadClientesReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public int NumeroReunion { get; set; }
+
+        [JsonProperty("cliente")]
+        public string Cliente { get; set; }
+
+        [JsonProperty("ramosRevisados")]
+        public int RamosRevisados { get; set; }
+
+        [JsonProperty("ramosRechazados")]
+        public int RamosRechazados { get; set; }
+
+        [JsonProperty("porNoConformidad")]
+        public double PorNoConformidad { get; set; }
+    }
+
+    public partial class CirculoCalidadProductosReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public int NumeroReunion { get; set; }
+
+        [JsonProperty("producto")]
+        public string Producto { get; set; }
+
+        [JsonProperty("ramosRevisados")]
+        public int RamosRevisados { get; set; }
+
+        [JsonProperty("ramosRechazados")]
+        public int RamosRechazados { get; set; }
+
+        [JsonProperty("porNoConformidad")]
+        public double PorNoConformidad { get; set; }
+    }
+
+    public partial class CirculoCalidadLineaReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public int NumeroReunion { get; set; }
+
+        [JsonProperty("linea")]
+        public string Linea { get; set; }
+
+        [JsonProperty("incidenciaRamos")]
+        public int RamosRechazados { get; set; }
+
+        [JsonProperty("porcentajeIncidencia")]
+        public double PorNoConformidad { get; set; }
+    }
+
+    public partial class CirculoCalidadNumeroMesaReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public int NumeroReunion { get; set; }
+
+        [JsonProperty("numeroMesa")]
+        public string NumeroMesa { get; set; }
+
+        [JsonProperty("incidenciaRamos")]
+        public int RamosRechazados { get; set; }
+
+        [JsonProperty("porcentajeIncidencia")]
+        public double PorNoConformidad { get; set; }
+    }
+
+    public partial class CirculoCalidadVariedadReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("numeroReunion")]
+        public int NumeroReunion { get; set; }
+
+        [JsonProperty("variedad")]
+        public string Variedad { get; set; }
+
+        [JsonProperty("incidenciaRamos")]
+        public int RamosRechazados { get; set; }
+
+        [JsonProperty("porcentajeIncidencia")]
+        public double PorNoConformidad { get; set; }
+    }
+
+
+    public partial class ProcesoMaritimoReporte
+    {
+        [JsonProperty("semana")]
+        public string Semana { get; set; }
+
+        [JsonProperty("mes")]
+        public string Mes { get; set; }
+
+        [JsonProperty("fecha")]
+        public string Fecha { get; set; }
+
+        [JsonProperty("postCosecha")]
+        public string PostCosecha { get; set; }
+
+        [JsonProperty("codigoQc")]
+        public string CodigoQc { get; set; }
+
+        [JsonProperty("cliente")]
+        public string Cliente { get; set; }
+
+        [JsonProperty("numeroGuia")]
+        public int NumeroGuia { get; set; }
+
+        [JsonProperty("proceso")]
+        public string Proceso { get; set; }
+
+        [JsonProperty("codigoRamosControl")]
+        public string CodigoRamosControl { get; set; }
+
+        [JsonProperty("ramosControl")]
+        public string RamosControl { get; set; }
+
+        [JsonProperty("cumple")]
+        public int Cumple { get; set; }
+
+        [JsonProperty("noCumple")]
+        public int NoCUmple { get; set; }
+
+        [JsonProperty("noAplica")]
+        public int NoAplica { get; set; }
+    }
+
 }

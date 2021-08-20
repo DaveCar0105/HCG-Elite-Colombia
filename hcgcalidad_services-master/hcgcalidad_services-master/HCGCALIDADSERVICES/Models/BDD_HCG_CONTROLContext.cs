@@ -53,11 +53,14 @@ namespace HCGCALIDADSERVICES.Models
         public virtual DbSet<TipoActividad> TipActividad { get; set; }
         public virtual DbSet<TipoCliente> TipCliente { get; set; }
         public virtual DbSet<Usuariocontrol> Usuariocontrol { get; set; }
-
         public virtual DbSet<CirculoCalidad> CirculoCalidad { get; set; }
-        public virtual DbSet<ProblemaCirculoCalidad> ProblemaCirculoCalidad { get; set; }
+        public virtual DbSet<CirculoCalidadProducto> CirculoCalidadProducto { get; set; }
+        public virtual DbSet<CirculoCalidadCliente> CirculoCalidadCliente { get; set; }
+        public virtual DbSet<CirculoCalidadFalencia> CirculoCalidadFalencia { get; set; }
+        public virtual DbSet<CirculoCalidadVariedad> CirculoCalidadVariedad { get; set; }
+        public virtual DbSet<CirculoCalidadNumeroMesa> CirculoCalidadNumeroMesa { get; set; }
+        public virtual DbSet<CirculoCalidadLinea> CirculoCalidadLinea { get; set; }
         public virtual DbSet<ProcesoMaritimo> ProcesoMaritimo { get; set; }
-
         public virtual DbSet<DestinoMaritimo> DestinoMaritimo { get; set; }
 
         // Unable to generate entity type for table 'dbo.NUMERO_ORDEN'. Please see the warning messages.
@@ -1374,25 +1377,6 @@ namespace HCGCALIDADSERVICES.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<ProblemaCirculoCalidad>(entity =>
-            {
-                entity.HasKey(e => e.ProblemaCirculoCalidadId)
-                    .ForSqlServerIsClustered(false);
-
-                entity.ToTable("PROBLEMA_CIRCULO_CALIDAD");
-
-                entity.Property(e => e.ProblemaCirculoCalidadId).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID");
-
-                entity.Property(e => e.ProblemaCirculoCalidadIndicador)
-                    .HasColumnName("PROBLEMA_CIRCULO_CALIDAD_INDICADOR")
-                    .HasMaxLength(250)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProblemaCirculoCalidadCausaRelacional)
-                    .HasColumnName("PROBLEMA_CIRCULO_CALIDAD_CAUSA_RELACIONAL")
-                    .HasMaxLength(350)
-                    .IsUnicode(false);
-            });
 
             modelBuilder.Entity<CirculoCalidad>(entity =>
             {
@@ -1403,127 +1387,260 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.Property(e => e.CirculoCalidadId).HasColumnName("CIRCULO_CALIDAD_ID");
 
-                entity.Property(e => e.RamosRevisados)
-                    .HasColumnName("CIRCULO_CALIDAD_RAMOS_REVISADOS")
+                entity.Property(e => e.CirculoCalidadRevisados)
+                    .HasColumnName("CIRCULO_CALIDAD_RAMOS_REVISADOS");
+
+                entity.Property(e => e.CirculoCalidadRechazados)
+                    .HasColumnName("CIRCULO_CALIDAD_RAMOS_RECHAZADOS");
+
+                entity.Property(e => e.CirculoCalidadNumeroReunion)
+                    .HasColumnName("CIRCULO_CALIDAD_NUMERO_REUNION");
+
+                entity.Property(e => e.CirculoCalidadPorcentajeNoConforme)
+                    .HasColumnName("CIRCULO_CALIDAD_PORCENTAJE_NO_CONFORME");
+
+                entity.Property(e => e.CirculoCalidadComentario)
+                    .HasColumnName("CIRCULO_CALIDAD_COMENTARIOS")
                     .IsUnicode(false);
 
-                entity.Property(e => e.RamosRechazados)
-                    .HasColumnName("CIRCULO_CALIDAD_RAMOS_RECHAZADOS")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ReunionCalidad)
-                    .HasColumnName("CIRCULO_CALIDAD_REUNION_CALIDAD")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProblemaCirculoCalidadId1).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID1");
-
-                entity.HasOne(d => d.ProblemaCirculoCalidad1)
-                    .WithMany(p => p.CirculoCalidad1)
-                    .HasForeignKey(d => d.ProblemaCirculoCalidadId1)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_1");
-
-                entity.Property(e => e.ProblemaCirculoCalidadId2).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID2");
-
-                entity.HasOne(d => d.ProblemaCirculoCalidad2)
-                    .WithMany(p => p.CirculoCalidad2)
-                    .HasForeignKey(d => d.ProblemaCirculoCalidadId2)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_2");
-
-                entity.Property(e => e.ProblemaCirculoCalidadId3).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID3");
-
-                entity.HasOne(d => d.ProblemaCirculoCalidad3)
-                    .WithMany(p => p.CirculoCalidad3)
-                    .HasForeignKey(d => d.ProblemaCirculoCalidadId3)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_3");
-
-                entity.Property(e => e.ProblemaCirculoCalidadId4).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID4");
-
-                entity.HasOne(d => d.ProblemaCirculoCalidad4)
-                    .WithMany(p => p.CirculoCalidad4)
-                    .HasForeignKey(d => d.ProblemaCirculoCalidadId4)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_4");
-
-                entity.Property(e => e.ProblemaCirculoCalidadId5).HasColumnName("PROBLEMA_CIRCULO_CALIDAD_ID5");
-
-                entity.HasOne(d => d.ProblemaCirculoCalidad5)
-                    .WithMany(p => p.CirculoCalidad5)
-                    .HasForeignKey(d => d.ProblemaCirculoCalidadId5)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PROBLEMA_5");
-
-                entity.Property(e => e.ClienteId1).HasColumnName("CLIENTE_ID1");
-
-                entity.HasOne(d => d.Cliente1)
-                    .WithMany(p => p.CirculoCalidad1)
-                    .HasForeignKey(d => d.ClienteId1)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_CLIENTE_1");
-
-                entity.Property(e => e.ClienteId2).HasColumnName("CLIENTE_ID2");
-
-                entity.HasOne(d => d.Cliente2)
-                    .WithMany(p => p.CirculoCalidad2)
-                    .HasForeignKey(d => d.ClienteId2)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_CLIENTE_2");
-
-                entity.Property(e => e.ProductoId1).HasColumnName("PRODUCTO_ID1");
-
-                entity.HasOne(d => d.Producto1)
-                    .WithMany(p => p.Circulocalidad1)
-                    .HasForeignKey(d => d.ProductoId1)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PRODUCTO_1");
-
-                entity.Property(e => e.ProductoId2).HasColumnName("PRODUCTO_ID2");
-
-                entity.HasOne(d => d.Producto2)
-                    .WithMany(p => p.Circulocalidad2)
-                    .HasForeignKey(d => d.ProductoId2)
-                    .HasConstraintName("FK_CIRCULOCA_RELATIONS_PRODUCTO_2");
-
-                entity.Property(e => e.Variedad1)
-                    .HasColumnName("CIRCULO_CALIDAD_VARIEDAD1")
-                    .HasMaxLength(350)
-                    .IsUnicode(false);
-                
-                entity.Property(e => e.Variedad2)
-                    .HasColumnName("CIRCULO_CALIDAD_VARIEDAD2")
-                    .HasMaxLength(350)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CodigoMesa)
-                    .HasColumnName("CIRCULO_CALIDAD_CODIGO_MESA")
-                    .HasMaxLength(64)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Linea)
-                    .HasColumnName("CIRCULO_CALIDAD_LINEA")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Supervisor1)
+                entity.Property(e => e.CirculoCalidadSupervisor)
                     .HasColumnName("CIRCULO_CALIDAD_SUPERVISOR1")
-                    .HasMaxLength(350)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Supervisor2)
+                entity.Property(e => e.CirculoCalidadSupervisor2)
                     .HasColumnName("CIRCULO_CALIDAD_SUPERVISOR2")
-                    .HasMaxLength(350)
                     .IsUnicode(false);
 
-                entity.Property(e => e.EvaluacionSupervisor1)
+                entity.Property(e => e.CirculoCalidadEvaluacionSupervisor)
                     .HasColumnName("CIRCULO_CALIDAD_EVALUACION_SUPERVISOR1")
                     .HasMaxLength(350)
                     .IsUnicode(false);
 
-                entity.Property(e => e.EvaluacionSupervisor2)
+                entity.Property(e => e.CirculoCalidadEvaluacionSupervisor2)
                     .HasColumnName("CIRCULO_CALIDAD_EVALUACION_SUPERVISOR2")
                     .HasMaxLength(350)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Comentarios)
-                    .HasColumnName("CIRCULO_CALIDAD_COMENTARIOS")
+                entity.Property(e => e.PostcosechaId)
+                    .HasColumnName("POSTCOSECHA_ID");
+
+                entity.Property(e => e.CirculoCalidadFecha)
+                    .HasColumnName("CIRCULO_CALIDAD_FECHA")
+                    .HasColumnType("datetime");
+
+                entity.HasOne(d => d.Postcosecha)
+                    .WithMany(p => p.CirculoCalidad)
+                    .HasForeignKey(d => d.PostcosechaId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_RELATIONS_POSTCOSECHA");
+            });
+            
+            modelBuilder.Entity<CirculoCalidadNumeroMesa>(entity =>
+            {
+                entity.HasKey(e => e.CirculoCalidadNumeroMesaId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("CIRCULO_CALIDAD_NUMERO_MESA");
+
+                entity.Property(e => e.CirculoCalidadNumeroMesaId)
+                .HasColumnName("CIRCULO_CALIDAD_NUMERO_MESA_ID");
+
+                entity.Property(e => e.CirculoCalidadNumeroMesaNombre)
+                    .HasColumnName("CIRCULO_CALIDAD_NUMERO_MESA_NOMBRE")
                     .HasMaxLength(350)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Revisados)
+                    .HasColumnName("REVISADOS");
+
+                entity.Property(e => e.Rechazados)
+                    .HasColumnName("RECHAZADOS");
+
+                entity.Property(e => e.Porcentaje)
+                    .HasColumnName("PORCENTAJE");
+
+                entity.Property(e => e.CirculoCalidadId)
+                    .HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.HasOne(d => d.CirculoCalidad)
+                    .WithMany(p => p.CirculoCalidadNumeroMesa)
+                    .HasForeignKey(d => d.CirculoCalidadId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_NUMMESA_RELATIONS_CIRCULO_CALIDAD");
             });
 
+            modelBuilder.Entity<CirculoCalidadLinea>(entity =>
+            {
+                entity.HasKey(e => e.CirculoCalidadLineaId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("CIRCULO_CALIDAD_LINEA");
+
+                entity.Property(e => e.CirculoCalidadLineaId)
+                .HasColumnName("CIRCULO_CALIDAD_LINEA_ID");
+
+                entity.Property(e => e.CirculoCalidadLineaNombre)
+                    .HasColumnName("CIRCULO_CALIDAD_LINEA_NOMBRE")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Revisados)
+                    .HasColumnName("REVISADOS");
+
+                entity.Property(e => e.Rechazados)
+                    .HasColumnName("RECHAZADOS");
+
+                entity.Property(e => e.Porcentaje)
+                    .HasColumnName("PORCENTAJE");
+
+                entity.Property(e => e.CirculoCalidadId)
+                    .HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.HasOne(d => d.CirculoCalidad)
+                    .WithMany(p => p.CirculoCalidadLinea)
+                    .HasForeignKey(d => d.CirculoCalidadId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_LINEA_RELATIONS_CIRCULO_CALIDAD");
+            });
+
+            modelBuilder.Entity<CirculoCalidadVariedad>(entity =>
+            {
+                entity.HasKey(e => e.CirculoCalidadVariedadId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("CIRCULO_CALIDAD_VARIEDAD");
+
+                entity.Property(e => e.CirculoCalidadVariedadId)
+                .HasColumnName("CIRCULO_CALIDAD_VARIEDAD_ID");
+
+                entity.Property(e => e.CirculoCalidadVariedadNombre)
+                    .HasColumnName("CIRCULO_CALIDAD_VARIEDAD_NOMBRE")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Revisados)
+                    .HasColumnName("REVISADOS");
+
+                entity.Property(e => e.Rechazados)
+                    .HasColumnName("RECHAZADOS");
+
+                entity.Property(e => e.Porcentaje)
+                    .HasColumnName("PORCENTAJE");
+
+                entity.Property(e => e.CirculoCalidadId)
+                    .HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.HasOne(d => d.CirculoCalidad)
+                    .WithMany(p => p.CirculoCalidadVariedad)
+                    .HasForeignKey(d => d.CirculoCalidadId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_VARIEDAD_RELATIONS_CIRCULO_CALIDAD");
+            });
+
+            modelBuilder.Entity<CirculoCalidadFalencia>(entity =>
+            {
+                entity.HasKey(e => e.CirculoCalidadFalenciaId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("CIRCULO_CALIDAD_FALENCIA");
+
+                entity.Property(e => e.CirculoCalidadFalenciaId)
+                .HasColumnName("CIRCULO_CALIDAD_FALENCIA_ID");
+
+                entity.Property(e => e.Revisados)
+                    .HasColumnName("REVISADOS");
+
+                entity.Property(e => e.Rechazados)
+                    .HasColumnName("RECHAZADOS");
+
+                entity.Property(e => e.Porcentaje)
+                    .HasColumnName("PORCENTAJE");
+
+                entity.Property(e => e.CirculoCalidadId)
+                    .HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.Property(e => e.FalenciaramosId)
+                    .HasColumnName("FALENCIA_RAMO_ID");
+
+                entity.HasOne(d => d.CirculoCalidad)
+                    .WithMany(p => p.CirculoCalidadFalencia)
+                    .HasForeignKey(d => d.CirculoCalidadId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_FALENCIA_RELATIONS_CIRCULO_CALIDAD");
+
+                entity.HasOne(d => d.Falenciaramo)
+                    .WithMany(p => p.CirculoCalidadFalencia)
+                    .HasForeignKey(d => d.FalenciaramosId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_FALENCIA_RELATIONS_FALENCIA_RAMO");
+            });
+
+            modelBuilder.Entity<CirculoCalidadProducto>(entity =>
+            {
+                entity.HasKey(e => e.CirculoCalidadProductoId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("CIRCULO_CALIDAD_PRODUCTO");
+
+                entity.Property(e => e.CirculoCalidadProductoId)
+                .HasColumnName("CIRCULO_CALIDAD_PRODUCTO_ID");
+
+                entity.Property(e => e.Revisados)
+                    .HasColumnName("REVISADOS");
+
+                entity.Property(e => e.Rechazados)
+                    .HasColumnName("RECHAZADOS");
+
+                entity.Property(e => e.Porcentaje)
+                    .HasColumnName("PORCENTAJE");
+
+                entity.Property(e => e.CirculoCalidadId)
+                    .HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.Property(e => e.ProductoId)
+                    .HasColumnName("PRODUCTO_ID");
+
+                entity.HasOne(d => d.CirculoCalidad)
+                    .WithMany(p => p.CirculoCalidadProducto)
+                    .HasForeignKey(d => d.CirculoCalidadId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_PRODUCTO_RELATIONS_CIRCULO_CALIDAD");
+
+                entity.HasOne(d => d.Producto)
+                    .WithMany(p => p.CirculocalidadProducto)
+                    .HasForeignKey(d => d.ProductoId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_PRODUCTO_RELATIONS_PRODUCTO");
+            });
+
+            modelBuilder.Entity<CirculoCalidadCliente>(entity =>
+            {
+                entity.HasKey(e => e.CirculoCalidadClienteId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("CIRCULO_CALIDAD_CLIENTE");
+
+                entity.Property(e => e.CirculoCalidadClienteId)
+                .HasColumnName("CIRCULO_CALIDAD_CLIENTE_ID");
+
+                entity.Property(e => e.Revisados)
+                    .HasColumnName("REVISADOS");
+
+                entity.Property(e => e.Rechazados)
+                    .HasColumnName("RECHAZADOS");
+
+                entity.Property(e => e.Porcentaje)
+                    .HasColumnName("PORCENTAJE");
+
+                entity.Property(e => e.CirculoCalidadId)
+                    .HasColumnName("CIRCULO_CALIDAD_ID");
+
+                entity.Property(e => e.ClienteId)
+                    .HasColumnName("CLIENTE_ID");
+
+                entity.HasOne(d => d.CirculoCalidad)
+                    .WithMany(p => p.CirculoCalidadCliente)
+                    .HasForeignKey(d => d.CirculoCalidadId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_CLIENTE_RELATIONS_CIRCULO_CALIDAD");
+
+                entity.HasOne(d => d.Cliente)
+                    .WithMany(p => p.CirculoCalidadCliente)
+                    .HasForeignKey(d => d.ClienteId)
+                    .HasConstraintName("FK_CIRCULO_CALIDAD_CLIENTE_RELATIONS_CLIENTE");
+            });
+        
             modelBuilder.Entity<ProcesoMaritimo>(entity =>
             {
                 entity.HasKey(e => e.ProcesoMaritimoId)
@@ -1537,8 +1654,28 @@ namespace HCGCALIDADSERVICES.Models
                     .HasColumnName("USUARIO_CONTROL_ID")
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcesoMaritimoObservaciones)
-                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES")
+                entity.Property(e => e.ProcesoMaritimoObservacionesEmpaque)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_EMPAQUE")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesHidratacion)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_HIDRATACION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesLlenadoContenedor)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_LLENA_CONTENEDOR")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesPalletizado)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_PALLETIZADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesRequerimientosCriticos)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_REQUERIMEINTO_CRITICO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoObservacionesTransferencias)
+                    .HasColumnName("PROCESO_MARITIMO_OBSERVACIONES_TRANSFERENCIAS")
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProcesoMaritimoNumeroGuia)
@@ -1553,7 +1690,7 @@ namespace HCGCALIDADSERVICES.Models
                     .HasColumnName("PROCESO_MARITIMO_REALIZADO_POR")
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcesomoMaritimoAcompanamiento)
+                entity.Property(e => e.ProcesoMaritimoAcompanamiento)
                     .HasColumnName("PROCESO_MARITIMO_ACOMPANAMIENTO")
                     .IsUnicode(false);
 
@@ -1566,7 +1703,7 @@ namespace HCGCALIDADSERVICES.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProcesoMaritimoNivelSolucionTinas)
-                    .HasColumnName("PROCESO_MARITIMO_NIVEL_SOLUCION_TINAS")
+                    .HasColumnName("ROCESO_MARITIMO_NIVEL_SOLUCION_TINAS")
                     .IsUnicode(false);
 
                 entity.Property(e => e.ProcesoMaritimoSolucionHidratacionSinVegetal)

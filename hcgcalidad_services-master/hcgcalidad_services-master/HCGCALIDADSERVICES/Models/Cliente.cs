@@ -14,8 +14,7 @@ namespace HCGCALIDADSERVICES.Models
             Controlempaque = new HashSet<Controlempaque>();
             Controlramo = new HashSet<Controlramo>();
             Temperatura = new HashSet<Temperatura>();
-            CirculoCalidad1 = new HashSet<CirculoCalidad>();
-            CirculoCalidad2 = new HashSet<CirculoCalidad>();
+            CirculoCalidadCliente = new HashSet<CirculoCalidadCliente>();
             ProcesoMaritimo = new HashSet<ProcesoMaritimo>();
         }
 
@@ -35,8 +34,7 @@ namespace HCGCALIDADSERVICES.Models
         public ICollection<Controlramo> Controlramo { get; set; }
         public ICollection<Temperatura> Temperatura { get; set; }
 
-        public ICollection<CirculoCalidad> CirculoCalidad1 { get; set; }
-        public ICollection<CirculoCalidad> CirculoCalidad2 { get; set; }
+        public ICollection<CirculoCalidadCliente> CirculoCalidadCliente { get; set; }
         public ICollection<ProcesoMaritimo> ProcesoMaritimo { get; set; }
     }
 }
