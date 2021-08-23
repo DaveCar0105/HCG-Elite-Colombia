@@ -5,8 +5,10 @@ import 'package:hcgcalidadapp/src/basedatos/database_falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_falencia_reporte_ramos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
+import 'package:hcgcalidadapp/src/modelos/control_banda.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos.dart';
+import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos_banda.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
@@ -32,10 +34,10 @@ class _ProblemasBandaPageState extends State<ProblemasBandaPage> {
   int tipoId=0;
   bool tipoEnable =false;
 
-  List<FalenciaReporteRamos> listaFalenciasReporte = [];
+  List<FalenciaReporteRamosBanda> listaFalenciasReporte = [];
   iniciarCarga(int ramoId) async{
     if(!iniciado){
-      List<FalenciaReporteRamos> falencias = [];
+      List<FalenciaReporteRamosBanda> falencias = [];
       falencias = await DatabaseBanda.getAllFalenciasXBandaId(ramoId);
       setState(() {
         listaFalenciasReporte = falencias;
@@ -72,7 +74,7 @@ class _ProblemasBandaPageState extends State<ProblemasBandaPage> {
               ],
             ),
             onPressed: () async{
-              final ramos1 = ControlRamos(
+              final ramos1 = ControlBanda(
                   ramosHasta: DateTime.now().millisecondsSinceEpoch,
                   controlRamosId: ramos.controlRamosId,
                   ramosAprobado: 1
@@ -170,7 +172,7 @@ class _ProblemasBandaPageState extends State<ProblemasBandaPage> {
     );
   }
 
-  Widget _itemFalencia(FalenciaReporteRamos falencia,Size size) {
+  Widget _itemFalencia(FalenciaReporteRamosBanda falencia,Size size) {
 
     return Container(
       margin: EdgeInsets.all(10),
@@ -268,7 +270,7 @@ class _ProblemasBandaPageState extends State<ProblemasBandaPage> {
     falenciaReporteRamos.falenciasReporteRamosCantidad = 1;
     int id = 0;
     try{
-      id = listaFalenciasReporte.firstWhere((element) => element.falenciaRamosId==falenciaReporteRamos.falenciaRamosId).falenciasReporteRamosId;
+      id = listaFalenciasReporte.firstWhere((element) => element.falenciaBandaId==falenciaReporteRamos.falenciaRamosId).falenciasReporteRamosId;
     }catch(e){
       id = 0;
     }
@@ -282,21 +284,21 @@ class _ProblemasBandaPageState extends State<ProblemasBandaPage> {
     await cargarLista(ramosId);
   }
   cargarLista(int ramoId) async{
-    List<FalenciaReporteRamos> falencias = [];
+    List<FalenciaReporteRamosBanda> falencias = [];
     falencias = await DatabaseBanda.getAllFalenciasXBandaId(ramoId);
     setState(() {
       listaFalenciasReporte = falencias;
     });
   }
 
-  aumentarFalencia(FalenciaReporteRamos falenciaReporteRamos)async {
+  aumentarFalencia(FalenciaReporteRamosBanda falenciaReporteRamos)async {
 
     falenciaReporteRamos.falenciasReporteRamosCantidad++;
     await DatabaseBanda.updateCantidadFalenciaReporteBanda(falenciaReporteRamos);
 
     await cargarLista(falenciaReporteRamos.ramosId);
   }
-  disminuirFalencia(FalenciaReporteRamos falenciaReporteRamos)async {
+  disminuirFalencia(FalenciaReporteRamosBanda falenciaReporteRamos)async {
 
     falenciaReporteRamos.falenciasReporteRamosCantidad--;
     await DatabaseBanda.updateCantidadFalenciaReporteBanda(falenciaReporteRamos);

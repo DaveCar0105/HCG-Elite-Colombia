@@ -953,25 +953,9 @@ class DatabaseReportesAprobacion {
           ''';
     var data9 = await db.rawQuery(sql9);
 
-<<<<<<< HEAD
 //eliminar depsues
-    await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
+    //await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
 
-=======
-    Preferences pref = Preferences();
-    List<ProcesoMaritimo> listaProcesoMaritimo = [];
-    listaProcesoMaritimo =
-        await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
-    try{
-      for (int i = 0; i<listaProcesoMaritimo.length;i++ ){
-        listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
-      }
-      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
-      if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
-        //await circuloCalidadSinc();
-      }
-    }catch(e){}
->>>>>>> develop
     cant.ramos = data[0]['CANTIDAD'];
     cant.empaque = data1[0]['CANTIDAD'];
     cant.procesoEmp = data2[0]['CANTIDAD'];
