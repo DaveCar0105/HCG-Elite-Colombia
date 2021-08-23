@@ -56,8 +56,6 @@ class DatabaseCirculoCalidad {
       circuloCalidadInformacionGeneral.listaCirculoCalidadVariedad = await getCirculoCalidadVariedadByCirculoCalidad(circuloCalidad.circuloCalidadId);
       circuloCalidadInformacionGeneral.listaCirculoCalidadNumeroMesa = await getCirculoCalidadNumeroMesaByCirculoCalidad(circuloCalidad.circuloCalidadId);
       circuloCalidadInformacionGeneral.listaCirculoCalidadLinea = await getCirculoCalidadLineaByCirculoCalidad(circuloCalidad.circuloCalidadId);
-      print(jsonEncode(circuloCalidadInformacionGeneral.listaCirculoCalidadFalencia));
-      print("-------------------------------------------------------------------------------------------------------------------------------");
       circulo.add(circuloCalidadInformacionGeneral);
     }
     return circulo;

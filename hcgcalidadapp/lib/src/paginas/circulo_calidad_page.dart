@@ -638,7 +638,6 @@ class _circuloCalidadPageState extends State<circuloCalidadPage> {
   }
 
   Widget _postcosecha() {
-    print("postcosecha: " + postcosechaEnable.toString());
     return Container(
       width: 250,
       height: 90,

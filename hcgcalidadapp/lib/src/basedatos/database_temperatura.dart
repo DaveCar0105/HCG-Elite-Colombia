@@ -9,7 +9,6 @@ class DatabaseTemperatura {
     final data = await db.rawQuery(sql);
     List<Temperatura> productos = [];
     for (final node in data) {
-      //print(node);
       productos.add(new Temperatura(
           temperaturaId: node[DatabaseCreator.temperaturaId],
           temperaturaUsuarioControlId:
@@ -41,7 +40,6 @@ class DatabaseTemperatura {
     final sql =
         '''INSERT INTO ${DatabaseCreator.temperaturaTable}(${DatabaseCreator.temperaturaUsuarioControlId},${DatabaseCreator.temperaturaExterna},${DatabaseCreator.temperaturaInterna1},${DatabaseCreator.temperaturaInterna2},${DatabaseCreator.temperaturaInterna3},${DatabaseCreator.temperaturaFecha},${DatabaseCreator.postcosechaId},${DatabaseCreator.clienteId})
     VALUES(${temperatura.temperaturaUsuarioControlId},${temperatura.temperaturaExterna},${temperatura.temperaturaInterna1},${temperatura.temperaturaInterna2},${temperatura.temperaturaInterna3},'${temperatura.temperaturaFecha}',${temperatura.postcosechaId},${temperatura.clienteId})''';
-    print(sql);
     return await db.rawInsert(sql);
   }
 }

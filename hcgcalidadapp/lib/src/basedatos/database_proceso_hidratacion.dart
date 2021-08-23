@@ -7,8 +7,6 @@ class DatabaseProcesoHidratacion {
     final data = await db.rawQuery(sql);
     List<ProcesoHidratacion> productos = List();
     for (final node in data) {
-      print(DatabaseCreator.procesoHidratacionPhSolucion);
-      print(node);
       productos.add(new ProcesoHidratacion(
           procesoHidratacionId: node[DatabaseCreator.procesoHidratacionId],
           procesoHidratacionUsuarioControlId:

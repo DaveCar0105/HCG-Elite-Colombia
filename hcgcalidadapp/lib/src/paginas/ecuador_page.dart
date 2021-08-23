@@ -135,7 +135,6 @@ class _EcuadorPageState extends State<EcuadorPage> {
 
     List<TipoCliente> tipoClientes = List();
     tipoClientes = await DatabaseEcuador.getAllTipoCliente();
-    print("tiupo cliente: " + tipoClientes.length.toString());
     tipoClientes.forEach((element) {
       listaTipoCliente.add(AutoComplete(
           id: element.tipoClienteId, nombre: element.tipoClienteNombre));

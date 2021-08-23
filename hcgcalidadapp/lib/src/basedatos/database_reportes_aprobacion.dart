@@ -686,7 +686,6 @@ class DatabaseReportesAprobacion {
           AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} IN (1, 4)
           ''';
     var data = await db.rawQuery(sql);
-    print(jsonEncode(data));
     for (var i = 0; i < data.length; i++) {
       OrdenBanda item = new OrdenBanda();
       int total = 0;
@@ -1069,7 +1068,6 @@ class DatabaseReportesAprobacion {
     if (hidCode >= 200 && hidCode <= 299) {
       await hidratacionSinc();
     }
-    print(jsonEncode(procesoEmpaque));
     for (int pemp = 0; pemp < procesoEmpaque.length; pemp++) {
       listaProcesoEmpaque.add(ProcesoEmpaque(
           procesoEmpaqueAltura: procesoEmpaque[pemp].procesoEmpaqueAltura,
@@ -1242,7 +1240,6 @@ class DatabaseReportesAprobacion {
     } catch (ex) {
       ErrorT error = ErrorT();
       error.errorDetalle = ex.toString();
-      print(ex.toString());
       await DatabaseError.addError(error);
       listaRamo.listaRamo = [];
     }
@@ -1347,7 +1344,6 @@ class DatabaseReportesAprobacion {
     }
     
     ReporteSincronizacionFinalBanda listaBandas = await DatabaseBanda.getAllBandasSincro();
-    //print(jsonEncode(listaBandas.listaRamo));
     List<Control> controlBandasSinc = await SincServices.postReporteBanda(listaBandas);
     if (controlBandasSinc.length > 0) {
       await reporteFinalBandaSinc(controlBandasSinc);

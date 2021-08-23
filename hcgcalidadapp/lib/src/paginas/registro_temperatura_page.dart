@@ -274,7 +274,6 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
           temperaturaFecha: DateTime.now(),
           postcosechaId: postcosechaId,
           clienteId: clienteId);
-      print(jsonEncode(temperatura));
       final temperaturaId =
           await DatabaseTemperatura.addTemperatura(temperatura);
       if (temperaturaId != 0) {

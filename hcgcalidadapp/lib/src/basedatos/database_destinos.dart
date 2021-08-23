@@ -9,8 +9,6 @@ class DatabaseDestino {
     final data = await db.rawQuery(sql);
     List<ProcesoMaritimoDestinos> productos = List();
     for (final node in data) {
-      //print(DatabaseCreator.procesoHidratacionPhSolucion);
-      //print(node);
       productos.add(new ProcesoMaritimoDestinos(
           procesoMaritimoDestinoId:
               node[DatabaseCreator.procesoMaritimoDestinoId],

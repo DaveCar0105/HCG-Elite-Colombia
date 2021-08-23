@@ -99,7 +99,6 @@ class _ListaBandasRamosPageState extends State<ListaBandasRamosPage> {
         subtitle: Text('Numero de Falencias: ${ramoItem.cantidadFalencias} '),
         leading: Icon(Icons.local_florist),
         onTap: () {
-          print("entro");
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -110,7 +109,6 @@ class _ListaBandasRamosPageState extends State<ListaBandasRamosPage> {
                       ramoItem.linea,
                       ramo.controlRamosId,
                       cargarRamos)));
-          print('${ramoItem.ramoId} --------------');
         },
         trailing: IconButton(
           color: Colors.red,

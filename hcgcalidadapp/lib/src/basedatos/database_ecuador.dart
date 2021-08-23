@@ -348,8 +348,6 @@ class DatabaseEcuador {
     ''';
     final data = await db.rawQuery(sql);
     List<TipoActividad> tipos = [];
-    print("------------- LISTA TIPO ACTIVIDAD --------------");
-    print(jsonEncode(tipos));
     for (final node in data) {
       tipos.add(new TipoActividad(
           tipoActividadId: node[DatabaseCreator.tipoActividadId],
@@ -393,8 +391,6 @@ class DatabaseEcuador {
     final sql =
         '''INSERT INTO ${DatabaseCreator.falenciasReporteEcuadorTable}(${DatabaseCreator.falenciaRamosId},${DatabaseCreator.tipoControlId},${DatabaseCreator.falenciasReporteRamosCantidad},${DatabaseCreator.controlRamosId}) 
     VALUES(${falenciaReporteRamos.falenciaRamosId},${falenciaReporteRamos.total},${falenciaReporteRamos.falenciasReporteRamosCantidad},${falenciaReporteRamos.ramosId})''';
-    print(sql);
-
     return await db.rawInsert(sql);
   }
 
@@ -403,8 +399,6 @@ class DatabaseEcuador {
     final sql =
         '''INSERT INTO ${DatabaseCreator.alertaEcuadorTable}(${DatabaseCreator.controlRamosId},${DatabaseCreator.falenciaRamosId},${DatabaseCreator.productoId},${DatabaseCreator.variedadNombre},${DatabaseCreator.tallosMuestra},${DatabaseCreator.tallosAfectados}) 
     VALUES(${alertaEcuador.controlEcuadorId},${alertaEcuador.falenciaRamoId},${alertaEcuador.productoId},'${alertaEcuador.variedadNombre}',${alertaEcuador.tallosMuestra},${alertaEcuador.tallosAfectados})''';
-    print(sql);
-
     return await db.rawInsert(sql);
   }
 
@@ -455,7 +449,6 @@ class DatabaseEcuador {
     AND ${DatabaseCreator.alertaEcuadorTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId}
     AND ${DatabaseCreator.alertaEcuadorTable}.${DatabaseCreator.controlRamosId} = $id''';
     final data = await db.rawQuery(sql);
-    print(data);
     List<AlertaEcuador> falenciaReporteRamos = [];
     for (final node in data) {
       falenciaReporteRamos.add(new AlertaEcuador(

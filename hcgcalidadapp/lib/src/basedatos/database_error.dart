@@ -19,7 +19,6 @@ class DatabaseError {
       final sql =
           '''INSERT INTO ${DatabaseCreator.errorTable}(${DatabaseCreator.errorDetalle}) 
       VALUES ('${errorT.errorDetalle}')''';
-      print(sql);
       return await db.rawInsert(sql);
     } catch (e) {}
     return 0;

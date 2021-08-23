@@ -251,7 +251,6 @@ class DatabaseBanda {
     } catch (ex) {
       ErrorT error = ErrorT();
       error.errorDetalle = ex.toString();
-      print(ex.toString());
       await DatabaseError.addError(error);
       listaFinalBanda.listaRamo = [];
     }

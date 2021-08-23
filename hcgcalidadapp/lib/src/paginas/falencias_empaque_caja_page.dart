@@ -251,9 +251,6 @@ class _FalenciaEmpaqueCajaPageState extends State<FalenciaEmpaqueCajaPage> {
   }
 
   aumentarFalencia(FalenciaReporteEmpaque falenciaReporteEmpaque)async {
-
-    print(falenciaReporteEmpaque.falenciasReporteEmpaqueCantidad);
-    print(falenciaReporteEmpaque.total);
     if(falenciaReporteEmpaque.falenciasReporteEmpaqueCantidad < falenciaReporteEmpaque.total){
       falenciaReporteEmpaque.falenciasReporteEmpaqueCantidad++;
       await DatabaseFalenciaReporteEmpaque.updateCantidadFalenciaReporteEmpaque(falenciaReporteEmpaque);

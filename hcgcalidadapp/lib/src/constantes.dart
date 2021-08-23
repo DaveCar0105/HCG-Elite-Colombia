@@ -3,7 +3,6 @@ class Constantes {
   Constantes() {
     //this.url = "185.254.206.121:8090";
     this.url = "192.168.1.173:44391";
-    print("servidor conectado" + this.url);
   }
 }
 

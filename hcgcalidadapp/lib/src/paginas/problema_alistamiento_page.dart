@@ -39,8 +39,6 @@ class _ProblemasAlistamientoPageState extends State<ProblemasAlistamientoPage> {
   bool prodEnable =false;
 
   iniciarCarga(int ramoId) async{
-    print(ramoId);
-
     if(!iniciado){
       List<FalenciaControlAlistamiento> falencias = [];
       falencias = await DatabaseAlistamiento.getAllFalenciasXBandaId(ramoId);

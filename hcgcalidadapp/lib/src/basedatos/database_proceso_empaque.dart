@@ -8,7 +8,6 @@ class DatabaseProcesoEmpaque{
     final data =  await db.rawQuery(sql);
     List<ProcesoEmpaques> productos = List();
     for(final node in data){
-      print(node);
       productos.add(new ProcesoEmpaques(
         procesoEmpaqueId: node[DatabaseCreator.procesoEmpaqueId],
         procesoEmpaqueUsuarioControlId: node[DatabaseCreator.procesoEmpaqueUsuarioControlId],
