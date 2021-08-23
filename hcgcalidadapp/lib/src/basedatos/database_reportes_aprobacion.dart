@@ -1044,7 +1044,8 @@ class DatabaseReportesAprobacion {
     if (actCode >= 200 && actCode <= 299) {
       await actividadesSinc();
     }
-
+    print('entro hidratacion---------------------------------------------');
+    print(jsonEncode(hidratacion));
     for (int hid = 0; hid < hidratacion.length; hid++) {
       listaHidratacion.add(RegistroHidratacion(
           procesoHidratacionUsuarioControlId:
@@ -1068,6 +1069,7 @@ class DatabaseReportesAprobacion {
     if (hidCode >= 200 && hidCode <= 299) {
       await hidratacionSinc();
     }
+
     for (int pemp = 0; pemp < procesoEmpaque.length; pemp++) {
       listaProcesoEmpaque.add(ProcesoEmpaque(
           procesoEmpaqueAltura: procesoEmpaque[pemp].procesoEmpaqueAltura,
@@ -1268,9 +1270,10 @@ class DatabaseReportesAprobacion {
             listaEmpaques[0][DatabaseCreator.empaqueDerogado];
         itemEmpaque.empaqueMarca =
             listaEmpaques[0][DatabaseCreator.empaqueMarca];
-        itemEmpaque.empaqueTiempo =
-            double.parse(listaEmpaques[0][DatabaseCreator.empaqueHasta]) -
-                double.parse(listaEmpaques[0][DatabaseCreator.empaqueDesde]);
+        itemEmpaque.empaqueTiempo = double.parse(
+                listaEmpaques[0][DatabaseCreator.empaqueHasta].toString()) -
+            double.parse(
+                listaEmpaques[0][DatabaseCreator.empaqueDesde].toString());
         itemEmpaque.empaqueFecha =
             listaEmpaques[0][DatabaseCreator.empaqueFecha];
         itemEmpaque.empaqueTallos =
