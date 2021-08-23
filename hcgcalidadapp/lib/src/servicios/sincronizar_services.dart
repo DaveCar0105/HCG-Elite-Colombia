@@ -38,26 +38,31 @@ class SincServices{
       return lista;
     }
   }
-  static Future<bool> postReporteBanda(var reporte) async{
+  static Future<List<Control>> postReporteBanda(var reporte) async{
     final co = Constantes();
+    List<Control> lista = [];
     Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
     try{
       var url = Uri.http(co.url, '/api/Sincro/banda');
       var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
-
+      var listaRetorno = jsonDecode(respuesta.body);
       if(respuesta.statusCode>=200 && respuesta.statusCode<=299){
-        return true;
+        for(int i=0;i<listaRetorno.length;i++){
+          lista.add(
+              Control.fromJson(listaRetorno[i])
+          );
+        }
       }else{
         ErrorT errorT = new ErrorT();
         errorT.errorDetalle = (respuesta.statusCode.toString() + ' - ' + respuesta.body.toString());
         await DatabaseError.addError(errorT);
-        return false;
       }
+      return lista;
     }catch(ex){
       ErrorT errorT = new ErrorT();
       errorT.errorDetalle = 'Banda: ' + ex.toString();
       await DatabaseError.addError(errorT);
-      return false;
+      return lista;
     }
   }
   static Future<bool> postReporteEcuador(var reporte) async{

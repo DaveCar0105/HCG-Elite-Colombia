@@ -973,6 +973,7 @@ class DatabaseReportesAprobacion {
     ReporteSincronizacionEmpaque listaEmpaque =
         new ReporteSincronizacionEmpaque();
     ReporteSincronizacionRamo listaRamo = new ReporteSincronizacionRamo();
+    ReporteSincronizacionFinalBanda listaFinalBanda = new ReporteSincronizacionFinalBanda();
     List<Actividad> actividades = [];
     List<ProcesoHidratacion> hidratacion = [];
     List<ProcesoEmpaques> procesoEmpaque = [];
@@ -1156,7 +1157,7 @@ class DatabaseReportesAprobacion {
     }
 
     final sql = '''SELECT * 
-          FROM ${DatabaseCreator.controlRamosTable} 
+          FROM ${DatabaseCreator.controlRamosTable}
           WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 2
           ''';
     var listaRamosSQL = await db.rawQuery(sql);
@@ -1169,24 +1170,17 @@ class DatabaseReportesAprobacion {
         itemRamo.controlRamosId = listaRamos[0][DatabaseCreator.controlRamosId];
         itemRamo.ramosNumeroOrden =
             listaRamos[0][DatabaseCreator.ramosNumeroOrden];
-
         itemRamo.clienteId = listaRamos[0][DatabaseCreator.clienteId];
         itemRamo.ramosDerogado = listaRamos[0][DatabaseCreator.ramosDerogado];
-
         itemRamo.ramosMarca = listaRamos[0][DatabaseCreator.ramoMarca];
-
-        print(listaRamos[0][DatabaseCreator.ramosHasta]);
-        print(listaRamos[0][DatabaseCreator.ramosDesde]);
         itemRamo.ramosTiempo = double.parse(
                 listaRamos[0][DatabaseCreator.ramosHasta].toString()) -
             double.parse(listaRamos[0][DatabaseCreator.ramosDesde].toString());
-
         itemRamo.ramosFecha = listaRamos[0][DatabaseCreator.ramosFecha];
         itemRamo.ramosTallos = listaRamos[0][DatabaseCreator.ramosTallos];
         itemRamo.ramosDespachar = listaRamos[0][DatabaseCreator.ramosDespachar];
         itemRamo.ramosElaborados =
             listaRamos[0][DatabaseCreator.ramosElaborados];
-
         itemRamo.ramosTotal = listaRamos[0][DatabaseCreator.ramosTotal];
         itemRamo.productoId = listaRamos[0][DatabaseCreator.productoId];
         itemRamo.postcosechaId = listaRamos[0][DatabaseCreator.postcosechaId];
@@ -1197,9 +1191,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.ramosTable}
           WHERE ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId} = ${itemRamo.controlRamosId}
           ''';
-
         var ramosSQL = await db.rawQuery(sqlRamos);
-
         var ramos = ramosSQL.toList();
         itemRamo.ramos = [];
         while (ramos.length > 0) {
@@ -1210,7 +1202,6 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.falenciasReporteRamosTable} 
           WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${ramo.ramoId}
           ''';
-
           var falenciasSQL = await db.rawQuery(sqlFalencias);
           ramo.falencias = [];
           var falencias = falenciasSQL.toList();
@@ -1230,7 +1221,6 @@ class DatabaseReportesAprobacion {
                   ramoFalencia.falenciaReporteRamoId;
             });
           }
-
           itemRamo.ramos.add(ramo);
           ramos.removeWhere((element) {
             return element[DatabaseCreator.ramosId] == ramo.ramoId;
@@ -1244,7 +1234,6 @@ class DatabaseReportesAprobacion {
           error.errorDetalle = e.toString();
           await DatabaseError.addError(error);
         }
-
         listaRamos.removeWhere((element) {
           return element[DatabaseCreator.controlRamosId] ==
               itemRamo.controlRamosId;
@@ -1356,23 +1345,12 @@ class DatabaseReportesAprobacion {
     if (empaqueCode.length > 0) {
       await reporteEmpaqueSinc(empaqueCode);
     }
-
-    var listaBandas = await DatabaseBanda.getAllBandasSincro();
-    if (await SincServices.postReporteBanda(listaBandas)) {
-      await DatabaseBanda.bandaSincronizadas();
-    }
-    /*
-    var listaAlistamiento = await DatabaseAlistamiento.getAllAlistamientoSincro();
-    if(await SincServices.postReporteAlistamiento(listaAlistamiento)){
-      await DatabaseAlistamiento.alistamientoSincronizados();
-    }
-    var listaBoncheo = await DatabaseBoncheo.getAllBoncheoSincro();
-    if(await SincServices.postReporteBoncheo(listaBoncheo)){
-      await DatabaseBoncheo.boncheoSincronizados();
-    }
-    var listaEcommerce = await DatabaseEcommerce.getAllEcommerceSincro();
-    if(await SincServices.postReporteEcommerce(listaEcommerce)){
-      await DatabaseEcommerce.ecommerceSincronizados();
+    
+    ReporteSincronizacionFinalBanda listaBandas = await DatabaseBanda.getAllBandasSincro();
+    print(jsonEncode(listaBandas.listaRamo));
+    /*List<Control> controlBandasSinc = await SincServices.postReporteBanda(listaBandas);
+    if (controlBandasSinc.length > 0) {
+      await reporteFinalBandaSinc(controlBandasSinc);
     }*/
 
     var listaEcuador = await DatabaseEcuador.getAllEcuadorSincro();
@@ -1506,6 +1484,18 @@ class DatabaseReportesAprobacion {
         SET ${DatabaseCreator.empaqueAprobado} = 3 
         WHERE ${DatabaseCreator.empaqueAprobado} = 2 
         AND ${DatabaseCreator.controlEmpaqueId} = ${list[i].id}
+        ''';
+      await db.rawUpdate(sql);
+    }
+  }
+
+  static reporteFinalBandaSinc(List<Control> list) async {
+    for (int i = 0; i < list.length; i++) {
+      final sql = '''
+        UPDATE ${DatabaseCreator.controlBandaTable} 
+        SET ${DatabaseCreator.ramosAprobado} = 3 
+        WHERE ${DatabaseCreator.ramosAprobado} = 2 
+        AND ${DatabaseCreator.controlRamosId} = ${list[i].id}
         ''';
       await db.rawUpdate(sql);
     }
