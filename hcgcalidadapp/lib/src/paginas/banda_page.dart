@@ -11,7 +11,6 @@ import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/tipoCliente.dart';
 import 'package:hcgcalidadapp/src/modelos/tipo_control.dart';
 import 'package:hcgcalidadapp/src/paginas/lista_banda_ramos_page.dart';
-import 'package:hcgcalidadapp/src/paginas/problemas_banda_page.dart';
 import 'package:hcgcalidadapp/src/providers/TipoClienteProvider.dart';
 import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';

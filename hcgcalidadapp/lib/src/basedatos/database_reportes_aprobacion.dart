@@ -953,25 +953,20 @@ class DatabaseReportesAprobacion {
           ''';
     var data9 = await db.rawQuery(sql9);
 
-<<<<<<< HEAD
-//eliminar depsues
-    await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
-
-=======
     Preferences pref = Preferences();
     List<ProcesoMaritimo> listaProcesoMaritimo = [];
     listaProcesoMaritimo =
         await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
-    try{
-      for (int i = 0; i<listaProcesoMaritimo.length;i++ ){
+    try {
+      for (int i = 0; i < listaProcesoMaritimo.length; i++) {
         listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
       }
-      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
+      int resultCirculoCalidad =
+          await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         //await circuloCalidadSinc();
       }
-    }catch(e){}
->>>>>>> develop
+    } catch (e) {}
     cant.ramos = data[0]['CANTIDAD'];
     cant.empaque = data1[0]['CANTIDAD'];
     cant.procesoEmp = data2[0]['CANTIDAD'];
@@ -1024,26 +1019,27 @@ class DatabaseReportesAprobacion {
 
     Preferences pref = Preferences();
 
-    try{
-      for (int i = 0; i<listaCirculoCalidad.length;i++ ){
+    try {
+      for (int i = 0; i < listaCirculoCalidad.length; i++) {
         //listaCirculoCalidad[i].circuloCalidad.
       }
-      int resultCirculoCalidad = await SincServices.postCirculoCalidad(listaCirculoCalidad);
+      int resultCirculoCalidad =
+          await SincServices.postCirculoCalidad(listaCirculoCalidad);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         await circuloCalidadSinc();
       }
-    }catch(e){}
-    
-    try{
-      for (int i = 0; i<listaProcesoMaritimo.length;i++ ){
+    } catch (e) {}
+
+    try {
+      for (int i = 0; i < listaProcesoMaritimo.length; i++) {
         listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
       }
-      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
+      int resultCirculoCalidad =
+          await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         await procesoMaritimoSinc();
       }
-    }catch(e){}
-
+    } catch (e) {}
 
     for (int act = 0; act < actividades.length; act++) {
       listaActividades.add(Actividade(
@@ -1083,7 +1079,7 @@ class DatabaseReportesAprobacion {
     if (hidCode >= 200 && hidCode <= 299) {
       await hidratacionSinc();
     }
-
+    print(jsonEncode(procesoEmpaque));
     for (int pemp = 0; pemp < procesoEmpaque.length; pemp++) {
       listaProcesoEmpaque.add(ProcesoEmpaque(
           procesoEmpaqueAltura: procesoEmpaque[pemp].procesoEmpaqueAltura,
@@ -1106,11 +1102,12 @@ class DatabaseReportesAprobacion {
           postcosechaId: procesoEmpaque[pemp].postcosechaId,
           usuarioId: pref.userId));
     }
+
     int pemCode = await SincServices.postProcesoEmpaque(listaProcesoEmpaque);
     if (pemCode >= 200 && pemCode <= 299) {
       await procesoEmpaqueSinc();
     }
-    
+
     for (int temp = 0; temp < temperatura.length; temp++) {
       listaTemperatura.add(RegistroTemperatura(
           temperaturaExterna: temperatura[temp].temperaturaExterna,
@@ -1543,22 +1540,29 @@ class DatabaseReportesAprobacion {
   }
 
   static circuloCalidadSinc() async {
-    try{
-      final sqlCircuLOCalidad = 'DELETE FROM ${DatabaseCreator.circuloCalidadTable}';
+    try {
+      final sqlCircuLOCalidad =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadTable}';
       await db.rawDelete(sqlCircuLOCalidad);
-       final sqlCircuLOCalidad1 = 'DELETE FROM ${DatabaseCreator.circuloCalidadClienteTable}';
+      final sqlCircuLOCalidad1 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadClienteTable}';
       await db.rawDelete(sqlCircuLOCalidad1);
-       final sqlCircuLOCalidad2 = 'DELETE FROM ${DatabaseCreator.circuloCalidadProductoTable}';
+      final sqlCircuLOCalidad2 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadProductoTable}';
       await db.rawDelete(sqlCircuLOCalidad2);
-       final sqlCircuLOCalidad3 = 'DELETE FROM ${DatabaseCreator.circuloCalidadFalenciaTable}';
+      final sqlCircuLOCalidad3 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadFalenciaTable}';
       await db.rawDelete(sqlCircuLOCalidad3);
-       final sqlCircuLOCalidad4 = 'DELETE FROM ${DatabaseCreator.circuloCalidadVariedadTable}';
+      final sqlCircuLOCalidad4 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadVariedadTable}';
       await db.rawDelete(sqlCircuLOCalidad4);
-       final sqlCircuLOCalidad5 = 'DELETE FROM ${DatabaseCreator.circuloCalidadLineaTable}';
+      final sqlCircuLOCalidad5 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadLineaTable}';
       await db.rawDelete(sqlCircuLOCalidad5);
-      final sqlCircuLOCalidad6 = 'DELETE FROM ${DatabaseCreator.circuloCalidadNumeroMesaTable}';
+      final sqlCircuLOCalidad6 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadNumeroMesaTable}';
       await db.rawDelete(sqlCircuLOCalidad6);
-    } catch(e){}
+    } catch (e) {}
   }
 
   static hidratacionSinc() async {
