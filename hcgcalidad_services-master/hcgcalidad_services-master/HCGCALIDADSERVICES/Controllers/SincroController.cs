@@ -202,18 +202,29 @@ namespace HCGCALIDADSERVICES.Controllers
                     .Include(b => b.DetalleFirma)
                         .ThenInclude(d => d.Firma)
                     .ToList();
+
                 while (listaBanda.Count > 0)
                 {
                     int listaBandaId = listaBanda[0].ControlBandaId;
-
+                    int ramosFalla = 0;
+                    List<Models.Banda> bandas = new List<Models.Banda>();
                     List<Models.Problemabanda> falBanda = new List<Problemabanda>();
-                    falBanda = _context.Problemabanda
-                        .Where(pb => pb.Banda.ControlBandaId == listaBandaId)
-                        .Include(fe => fe.FalenciaRamo).ThenInclude(fe => fe.MacroFalencia)
-                        .Include(f => f.FalenciaRamo).ThenInclude(fe => fe.CategoriaFalenciaRamo)
-                        .ToList();
 
+                    bandas = _context.Banda.Where(obj => obj.ControlBandaId == listaBandaId).ToList();
 
+                    for (int i = 0; i < bandas.Count; i++){
+                        try
+                        {
+                            List<Models.Problemabanda> falBandaAux = new List<Problemabanda>();
+                            falBandaAux = _context.Problemabanda
+                            .Where(pb => pb.BandaId == bandas[i].BandaId)
+                            .Include(fe => fe.FalenciaRamo).ThenInclude(fe => fe.MacroFalencia)
+                            .Include(f => f.FalenciaRamo).ThenInclude(fe => fe.CategoriaFalenciaRamo)
+                            .ToList();
+                            falBanda.AddRange(falBandaAux);
+                        }
+                        catch(Exception e) { }
+                    }
 
                     BaseRamo itemBaseRamo = new BaseRamo();
                     string[] fecha = transformarFecha(Convert.ToDateTime(listaBanda[0].ControlBandaFecha));
@@ -225,12 +236,10 @@ namespace HCGCALIDADSERVICES.Controllers
                         List<Baseorden> baseOrdenTmp = baseOrdenes.Where(c => c.NumPed == listaBanda[0].ControlBandaNumeroOrden).ToList();
                         if (baseOrdenTmp.Count == 1)
                         {
-
                             itemBaseRamo.Marca = baseOrdenTmp[0].Marca;
                         }
                         else
                         {
-
                             itemBaseRamo.Marca = listaBanda[0].Marca;
                         }
                         itemBaseRamo.Cliente = listaBanda[0].Cliente.ClienteNombre;
