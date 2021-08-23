@@ -1347,11 +1347,11 @@ class DatabaseReportesAprobacion {
     }
     
     ReporteSincronizacionFinalBanda listaBandas = await DatabaseBanda.getAllBandasSincro();
-    print(jsonEncode(listaBandas.listaRamo));
-    /*List<Control> controlBandasSinc = await SincServices.postReporteBanda(listaBandas);
+    //print(jsonEncode(listaBandas.listaRamo));
+    List<Control> controlBandasSinc = await SincServices.postReporteBanda(listaBandas);
     if (controlBandasSinc.length > 0) {
       await reporteFinalBandaSinc(controlBandasSinc);
-    }*/
+    }
 
     var listaEcuador = await DatabaseEcuador.getAllEcuadorSincro();
     if (await SincServices.postReporteEcuador(listaEcuador)) {
