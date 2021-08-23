@@ -63,6 +63,8 @@ namespace HCGCALIDADSERVICES.Models
         public virtual DbSet<ProcesoMaritimo> ProcesoMaritimo { get; set; }
         public virtual DbSet<DestinoMaritimo> DestinoMaritimo { get; set; }
 
+        public virtual DbSet<Banda> Banda { get; set; }
+
         // Unable to generate entity type for table 'dbo.NUMERO_ORDEN'. Please see the warning messages.
         // Unable to generate entity type for table 'dbo.FECHA'. Please see the warning messages.
 
@@ -1086,21 +1088,37 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.Property(e => e.ProblemaBandaId).HasColumnName("PROBLEMA_BANDA_ID");
 
-                entity.Property(e => e.ControlBandaId).HasColumnName("CONTROL_BANDA_ID");
+                entity.Property(e => e.BandaId).HasColumnName("BANDA_ID");
 
                 entity.Property(e => e.FalenciaRamoId).HasColumnName("FALENCIA_RAMO_ID");
 
                 entity.Property(e => e.RamosNoConformes).HasColumnName("RAMOS_NO_CONFORMES");
 
-                entity.HasOne(d => d.ControlBanda)
-                    .WithMany(p => p.Problemabanda)
-                    .HasForeignKey(d => d.ControlBandaId)
-                    .HasConstraintName("FK__PROBLEMAB__CONTR__6D9742D9");
+                entity.HasOne(d => d.Banda)
+                    .WithMany(p => p.Falenciascontrolbanda)
+                    .HasForeignKey(d => d.BandaId)
+                    .HasConstraintName("FK_PROBLEMABANDA_RELATIONS_BANDA");
 
                 entity.HasOne(d => d.FalenciaRamo)
                     .WithMany(p => p.Problemabanda)
                     .HasForeignKey(d => d.FalenciaRamoId)
                     .HasConstraintName("FK__PROBLEMAB__FALEN__6E8B6712");
+            });
+
+            modelBuilder.Entity<Banda>(entity =>
+            {
+                entity.HasKey(e => e.BandaId);
+
+                entity.ToTable("BANDA");
+
+                entity.Property(e => e.BandaId).HasColumnName("BANDA_ID");
+
+                entity.Property(e => e.ControlBandaId).HasColumnName("CONTROL_BANDA_ID");
+
+                entity.HasOne(d => d.ControlBanda)
+                    .WithMany(p => p.Banda)
+                    .HasForeignKey(d => d.ControlBandaId)
+                    .HasConstraintName("FK_BANDA_RELATIONS_CONROL_BANDA");
             });
 
             modelBuilder.Entity<Problemaboncheo>(entity =>

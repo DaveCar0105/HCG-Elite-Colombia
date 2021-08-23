@@ -208,7 +208,7 @@ namespace HCGCALIDADSERVICES.Controllers
 
                     List<Models.Problemabanda> falBanda = new List<Problemabanda>();
                     falBanda = _context.Problemabanda
-                        .Where(pb => pb.ControlBandaId == listaBandaId)
+                        .Where(pb => pb.Banda.ControlBandaId == listaBandaId)
                         .Include(fe => fe.FalenciaRamo).ThenInclude(fe => fe.MacroFalencia)
                         .Include(f => f.FalenciaRamo).ThenInclude(fe => fe.CategoriaFalenciaRamo)
                         .ToList();
@@ -1894,6 +1894,7 @@ namespace HCGCALIDADSERVICES.Controllers
         [HttpPost("banda")]
         public dynamic PostBanda([FromBody] ReporteSincronizacionBanda value)
         {
+            List<Control> controlesGuardados = new List<Control>();
             List<Entidades.Firma> listaFirmas = new List<Entidades.Firma>();
             listaFirmas = value.Firmas;
             int empId = 0;
@@ -1922,7 +1923,7 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("firam" + e.Message.ToString() + e.InnerException.ToString());
+                return BadRequest("firma banda" + e.Message.ToString() + e.InnerException.ToString());
             }
             List<Entidades.DetallesFirma> listaDetalles = new List<DetallesFirma>();
             List<Entidades.DetallesFirma> listaDetallesReporte = new List<DetallesFirma>();
@@ -1950,13 +1951,13 @@ namespace HCGCALIDADSERVICES.Controllers
             catch (Exception e)
             {
 
-                return BadRequest("detfirma" + e.Message.ToString() + e.InnerException.ToString());
+                return BadRequest("Detfirma Banda" + e.Message.ToString() + e.InnerException.ToString());
             }
-            List<Entidades.FinBanda> listaBanda = new List<Entidades.FinBanda>();
-            listaBanda = value.ListaBanda;
+            List<Entidades.FinBanda> listaRamo = new List<Entidades.FinBanda>();
+            listaRamo = value.ListaBanda;
             try
             {
-                empId = listaBanda[0].UsuarioId;
+                empId = listaRamo[0].UsuarioId;
             }
             catch (Exception)
             {
@@ -1964,44 +1965,65 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             try
             {
-                while (listaBanda.Count > 0)
+                while (listaRamo.Count > 0)
                 {
-                    int id = listaBanda[0].ControlBandaId;
-                    Controlbanda item = new Controlbanda();
-                    item.UsuarioControlId = listaBanda[0].UsuarioId;
-                    item.ControlBandaNumeroOrden = listaBanda[0].ControlNumeroOrden;
-                    item.ControlBandaTotal = listaBanda[0].BandaRamos;
-                    item.ControlBandaFecha = listaBanda[0].BandaFecha;
-                    item.ControlBandaAprobado = listaBanda[0].BandaAprobado;
-                    item.ControlBandaTallos = listaBanda[0].BandaTallos;
-                    item.ControlBandaDerogado = listaBanda[0].BandaDerogado;
-                    item.ControlBandaElaborados = listaBanda[0].BandaElaborado;
-                    item.ControlBandaDespachar = listaBanda[0].BandaDespachado;
-                    item.PostcosechaId = listaBanda[0].PostCosechaId;
-                    item.ClienteId = listaBanda[0].ClienteId;
-                    item.ProductoId = listaBanda[0].ProductoId;
-                    item.Marca = listaBanda[0].Marca;
-                    item.TipoControlId = listaBanda[0].TipoId;
-                    item.DetalleFirmaId=listaDetallesReporte.Find(c => c.DetalleFirmaId == listaBanda[0].DetalleFirmaId).FirmaReal;
+                    int controlRamoId = listaRamo[0].ControlBandaId;
+                    Models.Controlbanda item = new Controlbanda();
+                    item.ClienteId = listaRamo[0].ClienteId;
+                    item.ControlBandaNumeroOrden = listaRamo[0].ControlNumeroOrden;
+                    item.ProductoId = listaRamo[0].ProductoId;
+                    item.PostcosechaId = listaRamo[0].PostCosechaId;
+                    item.Marca = listaRamo[0].Marca;
+                    item.ControlBandaDespachar = listaRamo[0].BandaDespachado;
+                    item.ControlBandaTotal = listaRamo[0].BandaRamos;
+                    item.ControlBandaElaborados = listaRamo[0].BandaElaborado;
+                    item.ControlBandaTallos = listaRamo[0].BandaTallos;
+                    item.ControlBandaDerogado = listaRamo[0].BandaDerogado;
+                    item.UsuarioControlId = listaRamo[0].UsuarioId;
+                    item.ControlBandaTiempo = listaRamo[0].RamosTiempo;
+                    item.TipoControlId = listaRamo[0].TipoId;
+                    item.ControlBandaFecha = Convert.ToDateTime(listaRamo[0].BandaFecha);
+                    item.DetalleFirmaId = listaDetallesReporte.Find(c => c.DetalleFirmaId == listaRamo[0].DetalleFirmaId).FirmaReal;
                     _context.Controlbanda.Add(item);
                     _context.SaveChanges();
-                    for (int i = 0; i < listaBanda[0].BandaProblemas.Count; i++)
+
+                    for (int i = 0; i < listaRamo[0].Bandas.Count; i++)
                     {
-                        Problemabanda itemProblema = new Problemabanda();
-                        itemProblema.ControlBandaId = item.ControlBandaId;
-                        itemProblema.FalenciaRamoId = listaBanda[0].BandaProblemas[i].FalenciaRamosId;
-                        itemProblema.RamosNoConformes = listaBanda[0].BandaProblemas[i].FalenciaBandaRamos;
-                        _context.Problemabanda.Add(itemProblema);
+                        Models.Banda ramo = new Models.Banda();
+                        ramo.ControlBandaId = item.ControlBandaId;
+                        _context.Banda.Add(ramo);
                         _context.SaveChanges();
+                        for (int j = 0; j < listaRamo[0].Bandas[i].Falencias.Count; j++)
+                        {
+                            Models.Problemabanda falRamo = new Problemabanda();
+                            falRamo.BandaId = ramo.BandaId;
+                            falRamo.FalenciaRamoId = listaRamo[0].Bandas[i].Falencias[j].FalenciaRamosId;
+                            falRamo.RamosNoConformes = listaRamo[0].Bandas[i].Falencias[j].FalenciaBandaRamos;
+                            _context.Problemabanda.Add(falRamo);
+                            _context.SaveChanges();
+                        }
+
                     }
-                    listaBanda.RemoveAll(b => b.ControlBandaId == id);
+                    Control control = new Control();
+                    control.id = controlRamoId;
+                    controlesGuardados.Add(control);
+                    listaRamo.RemoveAll(cEmpaque =>
+                    cEmpaque.ClienteId == item.ClienteId &&
+                    cEmpaque.ProductoId == item.ProductoId &&
+                    cEmpaque.PostCosechaId == item.PostcosechaId &&
+                    cEmpaque.ControlNumeroOrden.Equals(item.ControlBandaNumeroOrden) &&
+                    cEmpaque.Marca.Equals(item.Marca) &&
+                    cEmpaque.BandaRamos == item.ControlBandaTotal &&
+                    cEmpaque.BandaDespachado == item.ControlBandaDespachar &&
+                    cEmpaque.BandaElaborado == item.ControlBandaElaborados &&
+                    cEmpaque.BandaTallos == item.ControlBandaTallos);
                 }
             }
             catch (Exception e)
             {
-                return BadRequest("banda" + e.Message.ToString() + e.InnerException.ToString());
+                return BadRequest("ramo" + e.Message.ToString() + e.InnerException.ToString());
             }
-            return Ok();
+            return Ok(controlesGuardados);
         }
 
         [HttpPost("ecuador")]
