@@ -59,7 +59,7 @@ class DatabaseReporteGeneral {
         listaProductos.add(productoReporteGeneralDto);
       }
       final sqlProductosEmpaque =
-          '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar}
+          '''SELECT ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.postcosechaId}, ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, SUM(${DatabaseCreator.empaqueRamosRevisar}) As ${DatabaseCreator.empaqueRamosRevisar}
         FROM ${DatabaseCreator.controlEmpaqueTable},${DatabaseCreator.productoTable}
         WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
         AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
@@ -67,6 +67,7 @@ class DatabaseReporteGeneral {
         ''';
       final datasProductosEmpaque = await db.rawQuery(sqlProductosEmpaque);
       for (dynamic elementoQuery in datasProductosEmpaque) {
+        reporteGeneral.postcosechaId = elementoQuery[DatabaseCreator.postcosechaId];
         int indice = listaProductos.lastIndexWhere(
             (element) => element.id == elementoQuery["productoId"]);
         int valorAfectados = 0;
@@ -110,6 +111,65 @@ class DatabaseReporteGeneral {
           listaProductos[indice].totalProductos +=
               elementoQuery[DatabaseCreator.empaqueRamosRevisar];
           if (datasProductosREmp[0] != null) {
+            listaProductos[indice].porcentajeProducto =
+                listaProductos[indice].totalProductos > 0
+                    ? ((listaProductos[indice].cantidad * 100) /
+                        listaProductos[indice].totalProductos)
+                    : 0;
+          }
+        }
+      }
+
+      //--------------------------------------------------
+      final sqlProductosBan =
+          '''SELECT ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.postcosechaId},${DatabaseCreator.controlBandaTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}, 
+        SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
+        FROM ${DatabaseCreator.controlBandaTable},${DatabaseCreator.productoTable}
+        WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.productoId} = ${DatabaseCreator.productoTable}.${DatabaseCreator.productoId}
+        AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+        GROUP BY ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.productoId}, ${DatabaseCreator.productoTable}.${DatabaseCreator.productoNombre}
+      ''';
+      final datasProductosBan = await db.rawQuery(sqlProductosBan);
+      for (dynamic elementoQuery in datasProductosBan) {
+        reporteGeneral.postcosechaId = elementoQuery[DatabaseCreator.postcosechaId];
+        int indice = listaProductos.lastIndexWhere(
+            (element) => element.id == elementoQuery[DatabaseCreator.productoId]);
+        int valorAfectados = 0;
+        final sqlProductosRamosBan = '''SELECT COUNT(*) AS AFECTADOS
+          FROM ${DatabaseCreator.bandaTable}, ${DatabaseCreator.controlBandaTable}
+          WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.productoId} = ${elementoQuery[DatabaseCreator.productoId]}
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId}
+          AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+          ''';
+        final datasProductosRamosBan = await db.rawQuery(sqlProductosRamosBan);
+        for (dynamic afectad in datasProductosRamosBan) {
+          valorAfectados += afectad['AFECTADOS'];
+        }
+        if (indice == -1) {
+          ProductoReporteGeneralDto productoReporteGeneralDto =
+              new ProductoReporteGeneralDto();
+          productoReporteGeneralDto.id = elementoQuery["productoId"];
+          productoReporteGeneralDto.nombreProducto =
+              elementoQuery["productoNombre"];
+          productoReporteGeneralDto.porcentajeProducto = 0;
+          productoReporteGeneralDto.totalProductos =
+              elementoQuery[DatabaseCreator.ramosTotal];
+          if (datasProductosRamosBan.length > 0) {
+            productoReporteGeneralDto.cantidad = valorAfectados;
+            productoReporteGeneralDto.porcentajeProducto =
+                productoReporteGeneralDto.totalProductos > 0
+                    ? ((productoReporteGeneralDto.cantidad * 100) /
+                        productoReporteGeneralDto.totalProductos)
+                    : 0;
+          } else {
+            productoReporteGeneralDto.cantidad = 0;
+          }
+          listaProductos.add(productoReporteGeneralDto);
+        } else {
+          listaProductos[indice].cantidad += valorAfectados;
+          listaProductos[indice].totalProductos +=
+              elementoQuery[DatabaseCreator.empaqueRamosRevisar];
+          if (datasProductosRamosBan[0] != null) {
             listaProductos[indice].porcentajeProducto =
                 listaProductos[indice].totalProductos > 0
                     ? ((listaProductos[indice].cantidad * 100) /
@@ -263,6 +323,82 @@ class DatabaseReporteGeneral {
         listaIdClientesProcesador.add(clienteId);
       }
     }
+    //------------------------Clientes y falencias final de banda ------------------------------//
+    final sqlFinalBanda =
+        '''SELECT ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}, SUM(${DatabaseCreator.ramosTotal}) As ${DatabaseCreator.ramosTotal} , COUNT(*) AS NUMERO 
+    FROM ${DatabaseCreator.controlBandaTable},${DatabaseCreator.clienteTable}
+    WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteId}
+    AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+    GROUP BY ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId}, ${DatabaseCreator.clienteTable}.${DatabaseCreator.clienteNombre}
+    ''';
+    final datosFinalBanda = await db.rawQuery(sqlFinalBanda);
+    for (dynamic elementoQuery in datosFinalBanda) {
+      ClienteReporteGeneralDto clienteReporteGeneralDto =
+          new ClienteReporteGeneralDto();
+      clienteReporteGeneralDto.nombreCliente = elementoQuery[DatabaseCreator.clienteNombre];
+      clienteReporteGeneralDto.cantidad = 0;
+      clienteReporteGeneralDto.porcentajeCliente = 0;
+      clienteReporteGeneralDto.id = elementoQuery[DatabaseCreator.clienteId];
+      clienteReporteGeneralDto.totalClientes = 0;
+      int clienteId = elementoQuery[DatabaseCreator.clienteId];
+      //--------------
+      clienteReporteGeneralDto.totalClientes += elementoQuery[DatabaseCreator.ramosTotal];
+      reporteGeneral.ramosRevisados += elementoQuery[DatabaseCreator.ramosTotal];
+      final sql2 =
+          '''SELECT COUNT(*) AS REPETIDOS, ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}, ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosNombre}
+      FROM ${DatabaseCreator.bandaTable}, ${DatabaseCreator.falenciaBandaTable}, ${DatabaseCreator.falenciaRamosTable},${DatabaseCreator.controlBandaTable}
+      WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.bandaId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.bandaId}
+      AND ${DatabaseCreator.falenciaRamosTable}.${DatabaseCreator.falenciaRamosId} = ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId}
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${elementoQuery[DatabaseCreator.clienteId]}
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+      GROUP BY ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.falenciaRamosId}
+      ORDER BY REPETIDOS DESC
+      ''';
+      var data2 = await db.rawQuery(sql2);
+      for (dynamic falen in data2) {
+        if (listaFalencias
+            .any((element) => element.id == falen['falenciaRamosId'])) {
+          var indice = listaFalencias.indexWhere(
+              (element) => element.id == falen['falenciaRamosId']);
+          listaFalencias[indice].cantidad += falen['REPETIDOS'];
+          reporteGeneral.totalFalencias += falen['REPETIDOS'];
+        } else {
+          FalenciaReporteGeneralDto newFalencia =
+              new FalenciaReporteGeneralDto();
+          newFalencia.cantidad = falen['REPETIDOS'];
+          newFalencia.id = falen['falenciaRamosId'];
+          newFalencia.nombreFalencia = falen['falenciaRamosNombre'];
+          newFalencia.porcentajeFalencia = 0;
+          reporteGeneral.totalFalencias += falen['REPETIDOS'];
+          listaFalencias.add(newFalencia);
+        }
+      }
+      final sql1 = '''SELECT COUNT(*) AS AFECTADOS
+      FROM ${DatabaseCreator.bandaTable}, ${DatabaseCreator.controlBandaTable}
+      WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.clienteId} = ${elementoQuery[DatabaseCreator.clienteId]}
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId}
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+      ''';
+      var data1 = await db.rawQuery(sql1);
+      for (dynamic afectad in data1) {
+        reporteGeneral.ramosNoConformes += afectad['AFECTADOS'];
+        clienteReporteGeneralDto.cantidad += afectad['AFECTADOS'];
+        clienteReporteGeneralDto.porcentajeCliente =
+              clienteReporteGeneralDto.totalClientes > 0
+                  ? ((clienteReporteGeneralDto.cantidad * 100) /
+                      clienteReporteGeneralDto.totalClientes)
+                  : 0;
+      }
+      int indiceClienteId = listaClientes.lastIndexWhere((element) => element.id == clienteId);
+      if (indiceClienteId==-1){
+        listaClientes.add(clienteReporteGeneralDto);
+      } else {
+        listaClientes[indiceClienteId].cantidad += clienteReporteGeneralDto.cantidad;
+        listaClientes[indiceClienteId].totalClientes += clienteReporteGeneralDto.totalClientes;
+      }
+    }
+
     if (reporteGeneral.ramosRevisados > 0) {
       reporteGeneral.porRamosNoConformes =
           ((reporteGeneral.ramosNoConformes * 100) /
@@ -289,6 +425,7 @@ class DatabaseReporteGeneral {
           ? ((linea.cantidad * 100) / reporteGeneral.ramosRevisados)
           : 0;
     }
+
     listaVariedades.sort((a, b) => b.porcentajeVariedad.compareTo(a.porcentajeVariedad));
     listaNumeroMesas.sort((a, b) => b.porcentajeNumeroMesa.compareTo(a.porcentajeNumeroMesa));
     listaLineas.sort((a, b) => b.porcentajeLinea.compareTo(a.porcentajeLinea));
@@ -336,6 +473,33 @@ class DatabaseReporteGeneral {
         WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
         AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
         GROUP BY ${DatabaseCreator.empaqueTable}.${DatabaseCreator.variedad}
+        ''';
+      final rawResult = await db.rawQuery(sentenciaSQL);
+      for(dynamic rawObject in rawResult){
+        try{
+          int indice = listaResultado.lastIndexWhere((element) => element.nombreVariedad == rawObject[DatabaseCreator.variedad]);
+          if (indice == -1 ){
+            VariedadReporteGeneralDto objectResult = new VariedadReporteGeneralDto();
+            objectResult.id = 0;
+            objectResult.nombreVariedad = rawObject[DatabaseCreator.variedad];
+            objectResult.cantidad = rawObject['REPETIDOS'];
+            objectResult.porcentajeVariedad = 0;
+            listaResultado.add(objectResult);
+          } else {
+            listaResultado[indice].cantidad += rawObject['REPETIDOS'];
+          }
+        }catch(e){}
+      }
+    } catch(e){}
+    // Control Final de Banda
+    try{
+      final sentenciaSQL = '''
+        SELECT ${DatabaseCreator.bandaTable}.${DatabaseCreator.variedad},
+        COUNT(*) AS REPETIDOS
+        FROM ${DatabaseCreator.bandaTable}, ${DatabaseCreator.controlBandaTable}
+        WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId}
+        AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+        GROUP BY ${DatabaseCreator.bandaTable}.${DatabaseCreator.variedad}
         ''';
       final rawResult = await db.rawQuery(sentenciaSQL);
       for(dynamic rawObject in rawResult){
@@ -408,6 +572,33 @@ class DatabaseReporteGeneral {
         }catch(e){}
       }
     } catch(e){}
+    // Control Final de Banda
+    try{
+      final sentenciaSQL = '''
+        SELECT ${DatabaseCreator.bandaTable}.${DatabaseCreator.numeroMesa},
+        COUNT(*) AS REPETIDOS
+        FROM ${DatabaseCreator.bandaTable}, ${DatabaseCreator.controlBandaTable}
+        WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId}
+        AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+        GROUP BY ${DatabaseCreator.bandaTable}.${DatabaseCreator.numeroMesa}
+        ''';
+      final rawResult = await db.rawQuery(sentenciaSQL);
+      for(dynamic rawObject in rawResult){
+        try{
+          int indice = listaResultado.lastIndexWhere((element) => element.nombreNumeroMesa == rawObject[DatabaseCreator.numeroMesa]);
+          if (indice == -1 ){
+            NumeroMesaReporteGeneralDto objectResult = new NumeroMesaReporteGeneralDto();
+            objectResult.id = 0;
+            objectResult.nombreNumeroMesa = rawObject[DatabaseCreator.numeroMesa];
+            objectResult.cantidad = rawObject['REPETIDOS'];
+            objectResult.porcentajeNumeroMesa = 0;
+            listaResultado.add(objectResult);
+          } else {
+            listaResultado[indice].cantidad += rawObject['REPETIDOS'];
+          }
+        }catch(e){}
+      }
+    } catch(e){}
     return listaResultado;
   }
 
@@ -444,6 +635,33 @@ class DatabaseReporteGeneral {
         WHERE ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.controlEmpaqueId} = ${DatabaseCreator.empaqueTable}.${DatabaseCreator.controlEmpaqueId}
         AND ${DatabaseCreator.controlEmpaqueTable}.${DatabaseCreator.empaqueAprobado} = 1
         GROUP BY ${DatabaseCreator.empaqueTable}.${DatabaseCreator.linea}
+        ''';
+      final rawResult = await db.rawQuery(sentenciaSQL);
+      for(dynamic rawObject in rawResult){
+        try{
+          int indice = listaResultado.lastIndexWhere((element) => element.nombreLinea == rawObject[DatabaseCreator.linea]);
+          if (indice == -1 ){
+            LineaReporteGeneralDto objectResult = new LineaReporteGeneralDto();
+            objectResult.id = 0;
+            objectResult.nombreLinea = rawObject[DatabaseCreator.linea];
+            objectResult.cantidad = rawObject['REPETIDOS'];
+            objectResult.porcentajeLinea = 0;
+            listaResultado.add(objectResult);
+          } else {
+            listaResultado[indice].cantidad += rawObject['REPETIDOS'];
+          }
+        }catch(e){}
+      }
+    } catch(e){}
+    // Control Final de Banda
+    try{
+      final sentenciaSQL = '''
+        SELECT ${DatabaseCreator.bandaTable}.${DatabaseCreator.linea},
+        COUNT(*) AS REPETIDOS
+        FROM ${DatabaseCreator.bandaTable}, ${DatabaseCreator.controlBandaTable}
+        WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.controlRamosId} = ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId}
+        AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 1
+        GROUP BY ${DatabaseCreator.bandaTable}.${DatabaseCreator.linea}
         ''';
       final rawResult = await db.rawQuery(sentenciaSQL);
       for(dynamic rawObject in rawResult){
