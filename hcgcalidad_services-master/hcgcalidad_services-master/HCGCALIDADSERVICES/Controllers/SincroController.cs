@@ -1406,8 +1406,6 @@ namespace HCGCALIDADSERVICES.Controllers
                     addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoVerificacionEncendidoTermografo, "REQUERIMIENTOS CRITICOS", "Verificacion Encendido Termografo", "6.6");
                     addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFotografiaPalletsEmpresaContenor, "REQUERIMIENTOS CRITICOS", "Fotografia Pallets Empresa Contenor", "6.7");
 
-
-
                 });
 
             } 
@@ -1455,8 +1453,8 @@ namespace HCGCALIDADSERVICES.Controllers
             cal.GetWeekOfYear(fecha, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             lista[0] = fecha.Year.ToString() + cal.GetWeekOfYear(fecha, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday).ToString();
             lista[1] = fecha.ToString("MMMM", new CultureInfo("es-Es")).ToUpper();
-            //lista[2] = fecha.ToString("dd-MMM", new CultureInfo("es-Es"));
-            lista[2] = fecha.ToString("d", new CultureInfo("en-US"));
+            lista[2] = fecha.ToString("dd-MMM", new CultureInfo("es-Es"));
+            //lista[2] = fecha.ToString("d", new CultureInfo("en-US"));
             return lista;
         }
         
