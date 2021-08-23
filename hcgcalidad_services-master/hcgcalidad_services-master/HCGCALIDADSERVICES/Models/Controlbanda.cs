@@ -7,7 +7,7 @@ namespace HCGCALIDADSERVICES.Models
     {
         public Controlbanda()
         {
-            Problemabanda = new HashSet<Problemabanda>();
+            Banda = new HashSet<Banda>();
         }
 
         public int ControlBandaId { get; set; }
@@ -35,6 +35,6 @@ namespace HCGCALIDADSERVICES.Models
         public Producto Producto { get; set; }
         public TipoControl TipoControl { get; set; }
         public Usuariocontrol UsuarioControl { get; set; }
-        public ICollection<Problemabanda> Problemabanda { get; set; }
+        public ICollection<Banda> Banda { get; set; }
     }
 }

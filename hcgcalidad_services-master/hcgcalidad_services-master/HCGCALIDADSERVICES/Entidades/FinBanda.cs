@@ -12,40 +12,25 @@
         public List<Firma> Firmas { get; set; }
         [JsonProperty("detallesFirma")]
         public List<DetallesFirma> DetallesFirma { get; set; }
-        [JsonProperty("listaBanda")]
+        [JsonProperty("listaRamo")]
         public List<FinBanda> ListaBanda { get; set; }
     }
     public partial class FinBanda
     {
-        [JsonProperty("controlBandaId")]
+        [JsonProperty("controlRamosId")]
         public int ControlBandaId { get; set; }
 
-        [JsonProperty("controlNumeroOrden")]
+        [JsonProperty("ramosNumeroOrden")]
         public string ControlNumeroOrden { get; set; }
 
-        [JsonProperty("bandaRamos")]
+        [JsonProperty("ramosTotal")]
         public int BandaRamos { get; set; }
 
-        [JsonProperty("bandaFecha")]
+        [JsonProperty("ramosFecha")]
         public DateTime BandaFecha { get; set; }
 
-        [JsonProperty("bandaAprobado")]
-        public int BandaAprobado { get; set; }
-
-        [JsonProperty("bandaTallos")]
-        public int BandaTallos { get; set; }
-
-        [JsonProperty("bandaDerogado")]
-        public string BandaDerogado { get; set; }
-
-        [JsonProperty("bandaElaborado")]
-        public int BandaElaborado { get; set; }
-
-        [JsonProperty("bandaDespachado")]
-        public int BandaDespachado { get; set; }
-
-        [JsonProperty("postCosechaId")]
-        public int PostCosechaId { get; set; }
+        [JsonProperty("detalleFirmaId")]
+        public int DetalleFirmaId { get; set; }
 
         [JsonProperty("clienteId")]
         public int ClienteId { get; set; }
@@ -56,25 +41,55 @@
         [JsonProperty("usuarioId")]
         public int UsuarioId { get; set; }
 
-        [JsonProperty("marca")]
-        public string Marca { get; set; }
+        [JsonProperty("ramosTallos")]
+        public int BandaTallos { get; set; }
 
-        [JsonProperty("bandaProblemas")]
-        public List<BandaProblema> BandaProblemas { get; set; }
+        [JsonProperty("ramosDespachar")]
+        public int BandaDespachado { get; set; }
+
+        [JsonProperty("ramosElaborados")]
+        public int BandaElaborado { get; set; }
+
+        [JsonProperty("ramosDerogado")]
+        public string BandaDerogado { get; set; }
+
+        [JsonProperty("ramosTiempo")]
+        public double RamosTiempo { get; set; }
+
+        [JsonProperty("postcosechaId")]
+        public int PostCosechaId { get; set; }
+
+        [JsonProperty("ramosMarca")]
+        public string Marca { get; set; }
 
         [JsonProperty("tipoId")]
         public int TipoId { get; set; }
-        [JsonProperty("detalleFirmaId")]
-        public int DetalleFirmaId { get; set; }
+
+        [JsonProperty("bandas")]
+        public List<Banda> Bandas { get; set; }
+
+    }
+
+
+    public partial class Banda
+    {
+        [JsonProperty("controlRamosId")]
+        public int ControlRamosId { get; set; }
+
+        [JsonProperty("bandaId")]
+        public int BandaId { get; set; }
+
+        [JsonProperty("falencias")]
+        public List<BandaProblema> Falencias { get; set; }
     }
 
     public partial class BandaProblema
     {
-        [JsonProperty("falenciaRamosId")]
-        public int FalenciaRamosId { get; set; }
-
         [JsonProperty("falenciaBandaId")]
         public int FalenciaBandaId { get; set; }
+
+        [JsonProperty("falenciaRamoId")]
+        public int FalenciaRamosId { get; set; }
 
         [JsonProperty("falenciaBandaRamos")]
         public int FalenciaBandaRamos { get; set; }
