@@ -957,11 +957,11 @@ namespace HCGCALIDADSERVICES.Models
 
             modelBuilder.Entity<Falenciascontrolramo>(entity =>
             {
-                entity.HasKey(e => e.FalenciaControlRamoId);
+                entity.HasKey(e => e.FalenciasControlRamoId);
 
                 entity.ToTable("FALENCIASCONTROLRAMO");
 
-                entity.Property(e => e.FalenciaControlRamoId).HasColumnName("FALENCIA_CONTROL_RAMO_ID");
+                entity.Property(e => e.FalenciasControlRamoId).HasColumnName("FALENCIA_CONTROL_RAMO_ID");
 
                 entity.Property(e => e.FalenciaControlRamoCantidad).HasColumnName("FALENCIA_CONTROL_RAMO_CANTIDAD");
 

@@ -346,7 +346,7 @@ class DatabaseBanda {
   }
 
   static Future<void> updateCantidadFalenciaReporteBanda(
-      FalenciaReporteRamos falenciaReporteRamos) async {
+      FalenciaReporteRamosBanda falenciaReporteRamos) async {
     final sql = '''UPDATE ${DatabaseCreator.falenciaBandaTable}
     SET ${DatabaseCreator.falenciaBandaRamos} = ${falenciaReporteRamos.falenciasReporteRamosCantidad}
     WHERE ${DatabaseCreator.falenciaBandaId} = ${falenciaReporteRamos.falenciasReporteRamosId}
