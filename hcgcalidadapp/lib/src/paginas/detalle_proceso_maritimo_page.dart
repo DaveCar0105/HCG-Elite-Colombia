@@ -71,33 +71,33 @@ class DetalleRegistroProcesoMaritimoPage extends StatelessWidget {
           return Container();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SincronizarPage()));
-          },
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          color: Colors.green,
-          textColor: Colors.white,
-          child: Container(
-            width: 130,
-            height: 70,
-            child: Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                // Text(
-                //   'FORMULARIOS',
-                //   style: TextStyle(fontSize: 15),
-                // ),
-                Icon(Icons.update)
-              ],
-            ),
-          ),
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: RaisedButton(
+      //     onPressed: () {
+      //       Navigator.push(context,
+      //           MaterialPageRoute(builder: (context) => SincronizarPage()));
+      //     },
+      //     shape:
+      //         RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      //     color: Colors.green,
+      //     textColor: Colors.white,
+      //     child: Container(
+      //       width: 130,
+      //       height: 70,
+      //       child: Row(
+      //         // crossAxisAlignment: CrossAxisAlignment.center,
+      //         // mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //         children: <Widget>[
+      //           // Text(
+      //           //   'FORMULARIOS',
+      //           //   style: TextStyle(fontSize: 15),
+      //           // ),
+      //           Icon(Icons.update)
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
     );
   }
 

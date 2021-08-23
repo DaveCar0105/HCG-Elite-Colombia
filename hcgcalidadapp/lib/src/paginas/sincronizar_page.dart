@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -30,8 +31,8 @@ class _SincronizarPageState extends State<SincronizarPage> {
         cantidad.procesoEmp +
         cantidad.ramos +
         cantidad.empaque +
-        cantidad.banda+
-        cantidad.procesoMaritimos+
+        cantidad.banda +
+        cantidad.procesoMaritimos +
         cantidad.circuloCalidad;
     setState(() {});
   }
@@ -58,8 +59,7 @@ class _SincronizarPageState extends State<SincronizarPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: 
-      Container(
+      child: Container(
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -78,8 +78,10 @@ class _SincronizarPageState extends State<SincronizarPage> {
                 Text("Control Empaque: " + cantidad.empaque.toString()),
                 Text("Control Banda: " + cantidad.banda.toString()),
                 Text("Control Ecuador: " + cantidad.ecuador.toString()),
-                Text("Proceso Maritimos: " + cantidad.procesoMaritimos.toString()),
-                Text("Circulo de Calidad: " + cantidad.circuloCalidad.toString()),
+                Text("Proceso Maritimos: " +
+                    cantidad.procesoMaritimos.toString()),
+                Text("Circulo de Calidad: " +
+                    cantidad.circuloCalidad.toString()),
               ],
             )),
             Container(
