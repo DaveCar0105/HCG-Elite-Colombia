@@ -1462,11 +1462,10 @@ namespace HCGCALIDADSERVICES.Controllers
             cal.GetWeekOfYear(fecha, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             lista[0] = fecha.Year.ToString() + cal.GetWeekOfYear(fecha, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday).ToString();
             lista[1] = fecha.ToString("MMMM", new CultureInfo("es-Es")).ToUpper();
-            lista[2] = fecha.ToString("dd-MMM", new CultureInfo("es-Es"));
-            //lista[2] = fecha.ToString("d", new CultureInfo("en-US"));
+            //lista[2] = fecha.ToString("dd-MMM", new CultureInfo("es-Es"));
+            lista[2] = fecha.ToString("d", new CultureInfo("en-Es"));
             return lista;
         }
-        
         
         [HttpPost("temperatura")]
         public dynamic PostTemperatura([FromBody] List<RegistroTemperatura> value)
@@ -2160,8 +2159,7 @@ namespace HCGCALIDADSERVICES.Controllers
 
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
-        {
-        }
+        {}
         
         [HttpPost("prueba/{value}")]
         public dynamic Prueba(int value)
@@ -2189,7 +2187,6 @@ namespace HCGCALIDADSERVICES.Controllers
         [HttpPost("circuloCalidad")]
         public dynamic PostCirculoCalidad([FromBody] List<CirculoCalidadInformacionGeneral> circuloCalidadInformacionGenerals)
         {
-            string TAG = "SINCRONIZAR";
             try
             {
                 for (int i = 0; i < circuloCalidadInformacionGenerals.Count; i++)
@@ -2292,11 +2289,9 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
             }
         }
-
 
         [HttpPost("procesoMaritimo")]
         public dynamic PostProcesoMaritimo([FromBody] List<ProcesoMaritimo> procesosMaritimos)
@@ -2317,7 +2312,6 @@ namespace HCGCALIDADSERVICES.Controllers
                 return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
             }
         }
-
 
     }
 }
