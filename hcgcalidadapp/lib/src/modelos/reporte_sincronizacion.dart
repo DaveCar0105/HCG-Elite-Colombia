@@ -74,6 +74,41 @@ class ReporteSincronizacionRamo {
       };
 }
 
+ReporteSincronizacionFinalBanda reporteSincronizacionFinalBandaFromJson(String str) =>
+    ReporteSincronizacionFinalBanda.fromJson(json.decode(str));
+
+String reporteSincronizacionFinalBandaToJson(ReporteSincronizacionFinalBanda data) =>
+    json.encode(data.toJson());
+
+class ReporteSincronizacionFinalBanda {
+  ReporteSincronizacionFinalBanda({
+    this.firmas,
+    this.detallesFirma,
+    this.listaRamo,
+  });
+
+  List<Firmas> firmas;
+  List<DetallesFirma> detallesFirma;
+  List<ListaRamoBanda> listaRamo;
+
+  factory ReporteSincronizacionFinalBanda.fromJson(Map<String, dynamic> json) =>
+      ReporteSincronizacionFinalBanda(
+        firmas:
+            List<Firmas>.from(json["firmas"].map((x) => Firmas.fromJson(x))),
+        detallesFirma: List<DetallesFirma>.from(
+            json["detallesFirma"].map((x) => DetallesFirma.fromJson(x))),
+        listaRamo: List<ListaRamoBanda>.from(
+            json["listaRamo"].map((x) => ListaRamoBanda.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "firmas": List<dynamic>.from(firmas.map((x) => x.toJson())),
+        "detallesFirma":
+            List<dynamic>.from(detallesFirma.map((x) => x.toJson())),
+        "listaRamo": List<dynamic>.from(listaRamo.map((x) => x.toJson())),
+      };
+}
+
 class Actividade {
   Actividade({
     this.actividadUsuarioControlId,
@@ -401,6 +436,94 @@ class ListaRamo {
       };
 }
 
+class ListaRamoBanda {
+  ListaRamoBanda({
+    this.controlRamosId,
+    this.ramosNumeroOrden,
+    this.ramosTotal,
+    this.ramosFecha,
+    this.ramosAprobado,
+    this.detalleFirmaId,
+    this.clienteId,
+    this.productoId,
+    this.usuarioId,
+    this.ramosTallos,
+    this.ramosDespachar,
+    this.ramosElaborados,
+    this.ramosDerogado,
+    this.ramosTiempo,
+    this.postcosechaId,
+    this.ramosMarca,
+    this.elite,
+    this.tipoId,
+    this.bandas
+  });
+
+  int controlRamosId;
+  String ramosNumeroOrden;
+  int ramosTotal;
+  String ramosFecha;
+  int ramosAprobado;
+  int detalleFirmaId;
+  int clienteId;
+  int productoId;
+  int usuarioId;
+  int ramosTallos;
+  int ramosDespachar;
+  int ramosElaborados;
+  String ramosDerogado;
+  double ramosTiempo;
+  int postcosechaId;
+  String ramosMarca;
+  int elite;
+  int tipoId;
+  List<BandaSinc> bandas;
+
+  factory ListaRamoBanda.fromJson(Map<String, dynamic> json) => ListaRamoBanda(
+        controlRamosId: json["controlRamosId"],
+        ramosNumeroOrden: json["ramosNumeroOrden"],
+        ramosTotal: json["ramosTotal"],
+        ramosFecha: json["ramosFecha"],
+        ramosAprobado: json["ramosAprobado"],
+        detalleFirmaId: json["detalleFirmaId"],
+        clienteId: json["clienteId"],
+        productoId: json["productoId"],
+        usuarioId: json["usuarioId"],
+        ramosTallos: json["ramosTallos"],
+        ramosDespachar: json["ramosDespachar"],
+        ramosElaborados: json["ramosElaborados"],
+        ramosDerogado: json["ramosDerogado"],
+        ramosTiempo: json["ramosTiempo"].toDouble(),
+        postcosechaId: json["postcosechaId"],
+        ramosMarca: json["ramosMarca"],
+        elite: json["elite"],
+        tipoId: json["tipoId"],
+        bandas: List<BandaSinc>.from(json["ramos"].map((x) => BandaSinc.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "controlRamosId": controlRamosId,
+        "ramosNumeroOrden": ramosNumeroOrden,
+        "ramosTotal": ramosTotal,
+        "ramosFecha": ramosFecha,
+        "ramosAprobado": ramosAprobado,
+        "detalleFirmaId": detalleFirmaId,
+        "clienteId": clienteId,
+        "productoId": productoId,
+        "usuarioId": usuarioId,
+        "ramosTallos": ramosTallos,
+        "ramosDespachar": ramosDespachar,
+        "ramosElaborados": ramosElaborados,
+        "ramosDerogado": ramosDerogado,
+        "ramosTiempo": ramosTiempo,
+        "postcosechaId": postcosechaId,
+        "ramosMarca": ramosMarca,
+        "elite": elite,
+        "tipoId": tipoId,
+        "bandas": List<dynamic>.from(bandas.map((x) => x.toJson())),
+      };
+}
+
 class Ramo {
   Ramo({
     this.controlRamosId,
@@ -426,6 +549,31 @@ class Ramo {
       };
 }
 
+class BandaSinc {
+  BandaSinc({
+    this.controlRamosId,
+    this.bandaId,
+    this.falencias,
+  });
+
+  int controlRamosId;
+  int bandaId;
+  List<BandaFalencia> falencias;
+
+  factory BandaSinc.fromJson(Map<String, dynamic> json) => BandaSinc(
+        controlRamosId: json["controlRamosId"],
+        bandaId: json["bandaId"],
+        falencias: List<BandaFalencia>.from(
+            json["falencias"].map((x) => BandaFalencia.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "controlRamosId": controlRamosId,
+        "bandaId": bandaId,
+        "falencias": List<dynamic>.from(falencias.map((x) => x.toJson())),
+      };
+}
+
 class RamoFalencia {
   RamoFalencia({
     this.falenciaReporteRamoId,
@@ -447,6 +595,30 @@ class RamoFalencia {
         "falenciaReporteRamoId": falenciaReporteRamoId,
         "falenciaRamoId": falenciaRamoId,
         "cantidad": cantidad,
+      };
+}
+
+class BandaFalencia {
+  BandaFalencia({
+    this.falenciaBandaId,
+    this.falenciaRamoId,
+    this.falenciaBandaRamos,
+  });
+
+  int falenciaBandaId;
+  int falenciaRamoId;
+  int falenciaBandaRamos;
+
+  factory BandaFalencia.fromJson(Map<String, dynamic> json) => BandaFalencia(
+        falenciaBandaId: json["falenciaBandaId"],
+        falenciaRamoId: json["falenciaRamoId"],
+        falenciaBandaRamos: json["falenciaBandaRamos"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "falenciaBandaId": falenciaBandaId,
+        "falenciaRamoId": falenciaRamoId,
+        "falenciaBandaRamos": falenciaBandaRamos,
       };
 }
 

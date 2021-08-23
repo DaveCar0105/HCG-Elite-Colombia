@@ -191,7 +191,42 @@ class DatabaseFirma{
       firmaNew.firmaCorreo = firma[DatabaseCreator.firmaCorreo];
       firmas.add(firmaNew);
     }
+    return firmas;
+  }
 
+  static Future<List<Firma>> consultarFirmasFinalBanda() async{
+    final sql =
+    '''
+      SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre} 
+      FROM ${DatabaseCreator.firmaTable}, 
+      ${DatabaseCreator.detalleFirmaTable}, 
+      ${DatabaseCreator.controlBandaTable} 
+      WHERE ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId} = 
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId} 
+      AND ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId} = 
+      ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.detalleFirmaId} 
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 2 
+      GROUP BY ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre}
+    ''';
+    final data = await db.rawQuery(sql);
+    List<Firma> firmas = [];
+    for(var firma in data){
+      Firma firmaNew = new Firma();
+      firmaNew.firmaId = firma[DatabaseCreator.firmaId];
+      firmaNew.firmaCodigo = firma[DatabaseCreator.firmaCodigo];
+      firmaNew.firmaCargo = firma[DatabaseCreator.firmaCargo];
+      firmaNew.firmaNombre = firma[DatabaseCreator.firmaNombre];
+      firmaNew.firmaCorreo = firma[DatabaseCreator.firmaCorreo];
+      firmas.add(firmaNew);
+    }
     return firmas;
   }
 }

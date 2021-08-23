@@ -66,4 +66,32 @@ class DatabaseDetalleFirma{
 
     return detalleFirma;
   }
+
+  static Future<List<DetalleFirma>> consultarDetallesFirmaBanda() async{
+    final sql =
+    '''
+      SELECT ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId},
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaCodigo},
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId} 
+      FROM ${DatabaseCreator.detalleFirmaTable}, 
+      ${DatabaseCreator.controlBandaTable} 
+      WHERE ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId} = 
+      ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.detalleFirmaId} 
+      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 2 
+      GROUP BY ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId},
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaCodigo},
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId}
+    ''';
+
+    final data = await db.rawQuery(sql);
+
+    List<DetalleFirma> detalleFirma = new List<DetalleFirma>();
+
+    detalleFirma = data.map((e) => DetalleFirma(
+        detalleFirmaId: e[DatabaseCreator.detalleFirmaId],
+        detalleFirmaCodigo: e[DatabaseCreator.detalleFirmaCodigo],
+        firmaId: e[DatabaseCreator.firmaId]
+    )).toList();
+    return detalleFirma;
+  }
 }

@@ -15,8 +15,6 @@ import 'package:hcgcalidadapp/src/utilidades/auto_completar.dart';
 import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
 class RegistroTemperaturaPage extends StatefulWidget {
-
-  
   @override
   _RegistroTemperaturaPageState createState() =>
       _RegistroTemperaturaPageState();
@@ -46,7 +44,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
   GlobalKey<ListaBusquedaState> _keyClientes = GlobalKey();
   List<AutoComplete> listaClientes = new List<AutoComplete>();
   String clienteNombre = "";
-  int clienteId=0;
+  int clienteId = 0;
   bool clientesEnable = false;
 
   _RegistroTemperaturaPageState() {
@@ -66,13 +64,12 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
     List<Cliente> clientes = List();
     clientes = await DatabaseCliente.getAllCliente(1);
     clientes.forEach((element) {
-      listaClientes.add(AutoComplete(
-          id: element.clienteId, nombre: element.clienteNombre));
+      listaClientes.add(
+          AutoComplete(id: element.clienteId, nombre: element.clienteNombre));
     });
     setState(() {
       postcosechaEnable = true;
       clientesEnable = true;
-
     });
   }
 
@@ -91,8 +88,9 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
-                  AutoComplete postcosecha = listaPostcosecha.firstWhere((item) {
+                if (value != null && value != "") {
+                  AutoComplete postcosecha =
+                      listaPostcosecha.firstWhere((item) {
                     return item.nombre == value;
                   });
                   postcosechaId = postcosecha.id;
@@ -120,7 +118,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                 fontSize: 15,
               ),
               parentAction: (value) {
-                if(value!= null && value!=""){
+                if (value != null && value != "") {
                   AutoComplete cliente = listaClientes.firstWhere((item) {
                     return item.nombre == value;
                   });
@@ -199,11 +197,11 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     _postcosecha(),
-                    _clientes(),
-                    Divider(),
                     _InputTemperatura(
                         title: 'Temperatura Cuarto Frío',
                         controller: temperaturaExterna),
+                    Divider(),
+                    _clientes(),
                     _InputTemperatura(
                         title: 'Temperatura Caja #1',
                         margin: EdgeInsets.only(top: height * 0.03),
@@ -225,7 +223,8 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
                   children: <Widget>[
                     Expanded(
                       child: RaisedButton.icon(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
                         onPressed: _validarForm,
                         color: Colors.red,
                         textColor: Colors.white,
@@ -275,9 +274,9 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
           temperaturaFecha: DateTime.now(),
           postcosechaId: postcosechaId,
           clienteId: clienteId);
-          print(jsonEncode(temperatura));
+      print(jsonEncode(temperatura));
       final temperaturaId =
-         await DatabaseTemperatura.addTemperatura(temperatura);
+          await DatabaseTemperatura.addTemperatura(temperatura);
       if (temperaturaId != 0) {
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _temperaturaBloc.registroTemperaturaStream();
@@ -286,7 +285,6 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
         temperaturaInterna1.text = '';
         temperaturaInterna2.text = '';
         temperaturaInterna3.text = '';
-        
       } else {
         mostrarSnackbar(
             'No se pudo ingresar a la base de datos', Colors.red, _scaffoldKey);

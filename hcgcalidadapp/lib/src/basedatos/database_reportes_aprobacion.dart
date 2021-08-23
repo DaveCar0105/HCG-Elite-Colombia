@@ -973,6 +973,7 @@ class DatabaseReportesAprobacion {
     ReporteSincronizacionEmpaque listaEmpaque =
         new ReporteSincronizacionEmpaque();
     ReporteSincronizacionRamo listaRamo = new ReporteSincronizacionRamo();
+    ReporteSincronizacionFinalBanda listaFinalBanda = new ReporteSincronizacionFinalBanda();
     List<Actividad> actividades = [];
     List<ProcesoHidratacion> hidratacion = [];
     List<ProcesoEmpaques> procesoEmpaque = [];
@@ -1008,26 +1009,27 @@ class DatabaseReportesAprobacion {
 
     Preferences pref = Preferences();
 
-    try{
-      for (int i = 0; i<listaCirculoCalidad.length;i++ ){
+    try {
+      for (int i = 0; i < listaCirculoCalidad.length; i++) {
         //listaCirculoCalidad[i].circuloCalidad.
       }
-      int resultCirculoCalidad = await SincServices.postCirculoCalidad(listaCirculoCalidad);
+      int resultCirculoCalidad =
+          await SincServices.postCirculoCalidad(listaCirculoCalidad);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         await circuloCalidadSinc();
       }
-    }catch(e){}
-    
-    try{
-      for (int i = 0; i<listaProcesoMaritimo.length;i++ ){
+    } catch (e) {}
+
+    try {
+      for (int i = 0; i < listaProcesoMaritimo.length; i++) {
         listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
       }
-      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
+      int resultCirculoCalidad =
+          await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         await procesoMaritimoSinc();
       }
-    }catch(e){}
-
+    } catch (e) {}
 
     for (int act = 0; act < actividades.length; act++) {
       listaActividades.add(Actividade(
@@ -1067,7 +1069,7 @@ class DatabaseReportesAprobacion {
     if (hidCode >= 200 && hidCode <= 299) {
       await hidratacionSinc();
     }
-
+    print(jsonEncode(procesoEmpaque));
     for (int pemp = 0; pemp < procesoEmpaque.length; pemp++) {
       listaProcesoEmpaque.add(ProcesoEmpaque(
           procesoEmpaqueAltura: procesoEmpaque[pemp].procesoEmpaqueAltura,
@@ -1090,11 +1092,12 @@ class DatabaseReportesAprobacion {
           postcosechaId: procesoEmpaque[pemp].postcosechaId,
           usuarioId: pref.userId));
     }
+
     int pemCode = await SincServices.postProcesoEmpaque(listaProcesoEmpaque);
     if (pemCode >= 200 && pemCode <= 299) {
       await procesoEmpaqueSinc();
     }
-    
+
     for (int temp = 0; temp < temperatura.length; temp++) {
       listaTemperatura.add(RegistroTemperatura(
           temperaturaExterna: temperatura[temp].temperaturaExterna,
@@ -1154,7 +1157,7 @@ class DatabaseReportesAprobacion {
     }
 
     final sql = '''SELECT * 
-          FROM ${DatabaseCreator.controlRamosTable} 
+          FROM ${DatabaseCreator.controlRamosTable}
           WHERE ${DatabaseCreator.controlRamosTable}.${DatabaseCreator.ramosAprobado} = 2
           ''';
     var listaRamosSQL = await db.rawQuery(sql);
@@ -1167,24 +1170,17 @@ class DatabaseReportesAprobacion {
         itemRamo.controlRamosId = listaRamos[0][DatabaseCreator.controlRamosId];
         itemRamo.ramosNumeroOrden =
             listaRamos[0][DatabaseCreator.ramosNumeroOrden];
-
         itemRamo.clienteId = listaRamos[0][DatabaseCreator.clienteId];
         itemRamo.ramosDerogado = listaRamos[0][DatabaseCreator.ramosDerogado];
-
         itemRamo.ramosMarca = listaRamos[0][DatabaseCreator.ramoMarca];
-
-        print(listaRamos[0][DatabaseCreator.ramosHasta]);
-        print(listaRamos[0][DatabaseCreator.ramosDesde]);
         itemRamo.ramosTiempo = double.parse(
                 listaRamos[0][DatabaseCreator.ramosHasta].toString()) -
             double.parse(listaRamos[0][DatabaseCreator.ramosDesde].toString());
-
         itemRamo.ramosFecha = listaRamos[0][DatabaseCreator.ramosFecha];
         itemRamo.ramosTallos = listaRamos[0][DatabaseCreator.ramosTallos];
         itemRamo.ramosDespachar = listaRamos[0][DatabaseCreator.ramosDespachar];
         itemRamo.ramosElaborados =
             listaRamos[0][DatabaseCreator.ramosElaborados];
-
         itemRamo.ramosTotal = listaRamos[0][DatabaseCreator.ramosTotal];
         itemRamo.productoId = listaRamos[0][DatabaseCreator.productoId];
         itemRamo.postcosechaId = listaRamos[0][DatabaseCreator.postcosechaId];
@@ -1195,9 +1191,7 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.ramosTable}
           WHERE ${DatabaseCreator.ramosTable}.${DatabaseCreator.controlRamosId} = ${itemRamo.controlRamosId}
           ''';
-
         var ramosSQL = await db.rawQuery(sqlRamos);
-
         var ramos = ramosSQL.toList();
         itemRamo.ramos = [];
         while (ramos.length > 0) {
@@ -1208,7 +1202,6 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.falenciasReporteRamosTable} 
           WHERE ${DatabaseCreator.falenciasReporteRamosTable}.${DatabaseCreator.ramosId} = ${ramo.ramoId}
           ''';
-
           var falenciasSQL = await db.rawQuery(sqlFalencias);
           ramo.falencias = [];
           var falencias = falenciasSQL.toList();
@@ -1228,7 +1221,6 @@ class DatabaseReportesAprobacion {
                   ramoFalencia.falenciaReporteRamoId;
             });
           }
-
           itemRamo.ramos.add(ramo);
           ramos.removeWhere((element) {
             return element[DatabaseCreator.ramosId] == ramo.ramoId;
@@ -1242,7 +1234,6 @@ class DatabaseReportesAprobacion {
           error.errorDetalle = e.toString();
           await DatabaseError.addError(error);
         }
-
         listaRamos.removeWhere((element) {
           return element[DatabaseCreator.controlRamosId] ==
               itemRamo.controlRamosId;
@@ -1354,23 +1345,12 @@ class DatabaseReportesAprobacion {
     if (empaqueCode.length > 0) {
       await reporteEmpaqueSinc(empaqueCode);
     }
-
-    var listaBandas = await DatabaseBanda.getAllBandasSincro();
-    if (await SincServices.postReporteBanda(listaBandas)) {
-      await DatabaseBanda.bandaSincronizadas();
-    }
-    /*
-    var listaAlistamiento = await DatabaseAlistamiento.getAllAlistamientoSincro();
-    if(await SincServices.postReporteAlistamiento(listaAlistamiento)){
-      await DatabaseAlistamiento.alistamientoSincronizados();
-    }
-    var listaBoncheo = await DatabaseBoncheo.getAllBoncheoSincro();
-    if(await SincServices.postReporteBoncheo(listaBoncheo)){
-      await DatabaseBoncheo.boncheoSincronizados();
-    }
-    var listaEcommerce = await DatabaseEcommerce.getAllEcommerceSincro();
-    if(await SincServices.postReporteEcommerce(listaEcommerce)){
-      await DatabaseEcommerce.ecommerceSincronizados();
+    
+    ReporteSincronizacionFinalBanda listaBandas = await DatabaseBanda.getAllBandasSincro();
+    print(jsonEncode(listaBandas.listaRamo));
+    /*List<Control> controlBandasSinc = await SincServices.postReporteBanda(listaBandas);
+    if (controlBandasSinc.length > 0) {
+      await reporteFinalBandaSinc(controlBandasSinc);
     }*/
 
     var listaEcuador = await DatabaseEcuador.getAllEcuadorSincro();
@@ -1509,6 +1489,18 @@ class DatabaseReportesAprobacion {
     }
   }
 
+  static reporteFinalBandaSinc(List<Control> list) async {
+    for (int i = 0; i < list.length; i++) {
+      final sql = '''
+        UPDATE ${DatabaseCreator.controlBandaTable} 
+        SET ${DatabaseCreator.ramosAprobado} = 3 
+        WHERE ${DatabaseCreator.ramosAprobado} = 2 
+        AND ${DatabaseCreator.controlRamosId} = ${list[i].id}
+        ''';
+      await db.rawUpdate(sql);
+    }
+  }
+
   static reporteRamoSinc(List<Control> list) async {
     for (int i = 0; i < list.length; i++) {
       final sql = '''
@@ -1527,22 +1519,29 @@ class DatabaseReportesAprobacion {
   }
 
   static circuloCalidadSinc() async {
-    try{
-      final sqlCircuLOCalidad = 'DELETE FROM ${DatabaseCreator.circuloCalidadTable}';
+    try {
+      final sqlCircuLOCalidad =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadTable}';
       await db.rawDelete(sqlCircuLOCalidad);
-       final sqlCircuLOCalidad1 = 'DELETE FROM ${DatabaseCreator.circuloCalidadClienteTable}';
+      final sqlCircuLOCalidad1 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadClienteTable}';
       await db.rawDelete(sqlCircuLOCalidad1);
-       final sqlCircuLOCalidad2 = 'DELETE FROM ${DatabaseCreator.circuloCalidadProductoTable}';
+      final sqlCircuLOCalidad2 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadProductoTable}';
       await db.rawDelete(sqlCircuLOCalidad2);
-       final sqlCircuLOCalidad3 = 'DELETE FROM ${DatabaseCreator.circuloCalidadFalenciaTable}';
+      final sqlCircuLOCalidad3 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadFalenciaTable}';
       await db.rawDelete(sqlCircuLOCalidad3);
-       final sqlCircuLOCalidad4 = 'DELETE FROM ${DatabaseCreator.circuloCalidadVariedadTable}';
+      final sqlCircuLOCalidad4 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadVariedadTable}';
       await db.rawDelete(sqlCircuLOCalidad4);
-       final sqlCircuLOCalidad5 = 'DELETE FROM ${DatabaseCreator.circuloCalidadLineaTable}';
+      final sqlCircuLOCalidad5 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadLineaTable}';
       await db.rawDelete(sqlCircuLOCalidad5);
-      final sqlCircuLOCalidad6 = 'DELETE FROM ${DatabaseCreator.circuloCalidadNumeroMesaTable}';
+      final sqlCircuLOCalidad6 =
+          'DELETE FROM ${DatabaseCreator.circuloCalidadNumeroMesaTable}';
       await db.rawDelete(sqlCircuLOCalidad6);
-    } catch(e){}
+    } catch (e) {}
   }
 
   static hidratacionSinc() async {

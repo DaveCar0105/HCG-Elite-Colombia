@@ -1,10 +1,20 @@
+import 'dart:convert';
+
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/banda.dart';
 import 'package:hcgcalidadapp/src/modelos/control_banda.dart';
+import 'package:hcgcalidadapp/src/modelos/detalleFirma.dart';
+import 'package:hcgcalidadapp/src/modelos/error.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos_banda.dart';
+import 'package:hcgcalidadapp/src/modelos/firma.dart';
 import 'package:hcgcalidadapp/src/modelos/ramos.dart';
+import 'package:hcgcalidadapp/src/modelos/reporte_sincronizacion.dart';
 import 'package:hcgcalidadapp/src/preferencias.dart';
+
+import 'database_detalle_firma.dart';
+import 'database_error.dart';
+import 'database_firma.dart';
 
 class DatabaseBanda {
   static Future<List<ControlBanda>> getAllBandas() async {
@@ -151,123 +161,123 @@ class DatabaseBanda {
     return listaBandas;
   }
 
-  static Future<Map<String, dynamic>> getAllBandasSincro() async {
+  static Future<ReporteSincronizacionFinalBanda> getAllBandasSincro() async {
+    ReporteSincronizacionFinalBanda listaFinalBanda = new ReporteSincronizacionFinalBanda();
+    listaFinalBanda.listaRamo = [];
+    listaFinalBanda.firmas = [];
+    listaFinalBanda.detallesFirma = [];
     Preferences pref = Preferences();
-    List<Map<String, dynamic>> listaBandas = [];
     final sql = '''SELECT * 
-    FROM ${DatabaseCreator.controlBandaTable} 
-    WHERE ${DatabaseCreator.ramosAprobado} = 2''';
-    final data = await db.rawQuery(sql);
-
-    for (final node in data) {
-      Map<String, dynamic> item = new Map();
-      final sql1 = '''SELECT * 
-      FROM ${DatabaseCreator.falenciaBandaTable} 
-      WHERE ${DatabaseCreator.controlRamosId} = ${node[DatabaseCreator.controlRamosId]}''';
-      final data1 = await db.rawQuery(sql1);
-      List<Map<String, dynamic>> listaFalencias = [];
-
-      for (final fal in data1) {
-        Map<String, dynamic> itemFal = Map();
-        itemFal = {
-          'falenciaRamosId': fal[DatabaseCreator.falenciaRamosId],
-          'falenciaBandaId': fal[DatabaseCreator.falenciaBandaId],
-          'falenciaBandaRamos': fal[DatabaseCreator.falenciaBandaRamos]
-        };
-
-        listaFalencias.add(itemFal);
+          FROM ${DatabaseCreator.controlBandaTable}
+          WHERE ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 2
+          ''';
+    var listaRamosSQL = await db.rawQuery(sql);
+    try {
+      var listaRamos = listaRamosSQL.toList();
+      while (listaRamos.length > 0) {
+        ListaRamoBanda itemRamo = ListaRamoBanda();
+        itemRamo.controlRamosId = listaRamos[0][DatabaseCreator.controlRamosId];
+        itemRamo.ramosNumeroOrden =
+            listaRamos[0][DatabaseCreator.ramosNumeroOrden];
+        itemRamo.clienteId = listaRamos[0][DatabaseCreator.clienteId];
+        itemRamo.ramosDerogado = listaRamos[0][DatabaseCreator.ramosDerogado];
+        itemRamo.ramosMarca = listaRamos[0][DatabaseCreator.ramoMarca];
+        itemRamo.ramosTiempo = double.parse(
+                listaRamos[0][DatabaseCreator.ramosHasta].toString()) -
+            double.parse(listaRamos[0][DatabaseCreator.ramosDesde].toString());
+        itemRamo.ramosFecha = listaRamos[0][DatabaseCreator.ramosFecha];
+        itemRamo.ramosTallos = listaRamos[0][DatabaseCreator.ramosTallos];
+        itemRamo.ramosDespachar = listaRamos[0][DatabaseCreator.ramosDespachar];
+        itemRamo.ramosElaborados =
+            listaRamos[0][DatabaseCreator.ramosElaborados];
+        itemRamo.ramosTotal = listaRamos[0][DatabaseCreator.ramosTotal];
+        itemRamo.productoId = listaRamos[0][DatabaseCreator.productoId];
+        itemRamo.postcosechaId = listaRamos[0][DatabaseCreator.postcosechaId];
+        itemRamo.detalleFirmaId = listaRamos[0][DatabaseCreator.detalleFirmaId];
+        itemRamo.tipoId = listaRamos[0][DatabaseCreator.tipoControlId];
+        itemRamo.usuarioId = pref.userId;
+        final sqlRamos = '''SELECT *
+          FROM ${DatabaseCreator.bandaTable}
+          WHERE ${DatabaseCreator.bandaTable}.${DatabaseCreator.controlRamosId} = ${itemRamo.controlRamosId}
+          ''';
+        var ramosSQL = await db.rawQuery(sqlRamos);
+        var ramos = ramosSQL.toList();
+        itemRamo.bandas = [];
+        while (ramos.length > 0) {
+          BandaSinc ramo = BandaSinc();
+          ramo.controlRamosId = ramos[0][DatabaseCreator.controlRamosId];
+          ramo.bandaId = ramos[0][DatabaseCreator.bandaId];
+          final sqlFalencias = '''SELECT * 
+          FROM ${DatabaseCreator.falenciaBandaTable} 
+          WHERE ${DatabaseCreator.falenciaBandaTable}.${DatabaseCreator.bandaId} = ${ramo.bandaId}
+          ''';
+          var falenciasSQL = await db.rawQuery(sqlFalencias);
+          ramo.falencias = [];
+          var falencias = falenciasSQL.toList();
+          while (falencias.length > 0) {
+            BandaFalencia ramoFalencia = BandaFalencia();
+            ramoFalencia.falenciaRamoId =
+                falencias[0][DatabaseCreator.falenciaRamosId];
+            ramoFalencia.falenciaBandaId =
+                falencias[0][DatabaseCreator.falenciaBandaId];
+            ramoFalencia.falenciaBandaRamos =
+                falencias[0][DatabaseCreator.falenciaBandaRamos];
+            if (ramoFalencia.falenciaRamoId > 0) {
+              ramo.falencias.add(ramoFalencia);
+            }
+            falencias.removeWhere((element) {
+              return element[DatabaseCreator.falenciaBandaId] ==
+                  ramoFalencia.falenciaBandaId;
+            });
+          }
+          itemRamo.bandas.add(ramo);
+          ramos.removeWhere((element) {
+            return element[DatabaseCreator.bandaId] == ramo.bandaId;
+          });
+        }
+        try {
+          jsonEncode(itemRamo);
+          listaFinalBanda.listaRamo.add(itemRamo);
+        } catch (e) {
+          ErrorT error = ErrorT();
+          error.errorDetalle = e.toString();
+          await DatabaseError.addError(error);
+        }
+        listaRamos.removeWhere((element) {
+          return element[DatabaseCreator.controlRamosId] ==
+              itemRamo.controlRamosId;
+        });
       }
-      item = {
-        'controlBandaId': node[DatabaseCreator.controlRamosId],
-        'controlNumeroOrden': node[DatabaseCreator.ramosNumeroOrden],
-        'bandaRamos': node[DatabaseCreator.ramosTotal],
-        'bandaFecha': node[DatabaseCreator.ramosFecha],
-        'bandaAprobado': node[DatabaseCreator.ramosAprobado],
-        'bandaTallos': node[DatabaseCreator.ramosTallos],
-        'bandaDerogado': node[DatabaseCreator.ramosDerogado],
-        'bandaElaborado': node[DatabaseCreator.ramosElaborados],
-        'bandaDespachado': node[DatabaseCreator.ramosDespachar],
-        'postCosechaId': node[DatabaseCreator.postcosechaId],
-        'clienteId': node[DatabaseCreator.clienteId],
-        'productoId': node[DatabaseCreator.productoId],
-        'usuarioId': pref.userId,
-        'marca': node[DatabaseCreator.ramoMarca],
-        'bandaProblemas': listaFalencias,
-        'tipoId': node[DatabaseCreator.tipoControlId],
-        'detalleFirmaId': node[DatabaseCreator.detalleFirmaId]
-      };
-
-      listaBandas.add(item);
+    } catch (ex) {
+      ErrorT error = ErrorT();
+      error.errorDetalle = ex.toString();
+      print(ex.toString());
+      await DatabaseError.addError(error);
+      listaFinalBanda.listaRamo = [];
     }
-
-    List<Map<String, dynamic>> listaFirma = [];
-    final sql1 = '''
-      SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre} 
-      FROM ${DatabaseCreator.firmaTable}, 
-      ${DatabaseCreator.detalleFirmaTable}, 
-      ${DatabaseCreator.controlBandaTable} 
-      WHERE ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId} = 
-      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId} 
-      AND ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId} = 
-      ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.detalleFirmaId} 
-      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 2 
-      GROUP BY ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
-      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre}
-    ''';
-    final data1 = await db.rawQuery(sql1);
-    for (var firma in data1) {
-      Map<String, dynamic> item = new Map();
-      item = {
-        "firmaId": firma[DatabaseCreator.firmaId],
-        "firmaCodigo": firma[DatabaseCreator.firmaCodigo],
-        "firmaCargo": firma[DatabaseCreator.firmaCargo],
-        "firmaNombre": firma[DatabaseCreator.firmaNombre],
-        "firmaCorreo": firma[DatabaseCreator.firmaCorreo]
-      };
-      listaFirma.add(item);
-    }
-
-    final sql2 = '''
-      SELECT ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId},
-      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaCodigo},
-      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId} 
-      FROM ${DatabaseCreator.detalleFirmaTable}, 
-      ${DatabaseCreator.controlBandaTable} 
-      WHERE ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId} = 
-      ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.detalleFirmaId} 
-      AND ${DatabaseCreator.controlBandaTable}.${DatabaseCreator.ramosAprobado} = 2 
-      GROUP BY ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId},
-      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaCodigo},
-      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId}
-    ''';
-
-    final data2 = await db.rawQuery(sql2);
-
-    List<Map<String, dynamic>> detalleFirma = [];
-
-    for (var detFirma in data2) {
-      Map<String, dynamic> itemDetalle = new Map();
-      itemDetalle = {
-        "detalleFirmaId": detFirma[DatabaseCreator.detalleFirmaId],
-        "detalleFirmaCodigo": detFirma[DatabaseCreator.detalleFirmaCodigo],
-        "firmaId": detFirma[DatabaseCreator.firmaId]
-      };
-      detalleFirma.add(itemDetalle);
-    }
-    Map<String, dynamic> retorno = new Map();
-    retorno = {
-      "firmas": listaFirma,
-      "detallesFirma": detalleFirma,
-      "listaBanda": listaBandas
-    };
-    return retorno;
+    try{
+      List<Firma> firmaRam = await DatabaseFirma.consultarFirmasFinalBanda();
+      for (int firR = 0; firR < firmaRam.length; firR++) {
+        listaFinalBanda.firmas.add(Firmas(
+            firmaCargo: firmaRam[firR].firmaCargo,
+            firmaCodigo: firmaRam[firR].firmaCodigo,
+            firmaCorreo: firmaRam[firR].firmaCorreo,
+            firmaNombre: firmaRam[firR].firmaNombre,
+            firmaId: firmaRam[firR].firmaId,
+            firmaReal: 0));
+      }
+    }catch(e){}
+    try{
+      List<DetalleFirma> detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaBanda();
+      for (int dfr = 0; dfr < detalleFirmasRam.length; dfr++) {
+        listaFinalBanda.detallesFirma.add(DetallesFirma(
+            detalleFirmaId: detalleFirmasRam[dfr].detalleFirmaId,
+            firmaCodigo: detalleFirmasRam[dfr].detalleFirmaCodigo,
+            firmaId: detalleFirmasRam[dfr].firmaId,
+            firmaReal: 0));
+      }
+    }catch(e){}
+    return listaFinalBanda;
   }
 
   static Future<int> addBandas(ControlBanda ramos) async {
