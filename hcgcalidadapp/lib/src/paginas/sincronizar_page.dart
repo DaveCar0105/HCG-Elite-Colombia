@@ -70,18 +70,20 @@ class _SincronizarPageState extends State<SincronizarPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Actividades: " + cantidad.actividades.toString()),
-                Text("Proceso Empaque: " + cantidad.procesoEmp.toString()),
-                Text("Proceso Hidratacion: " + cantidad.procesoHid.toString()),
-                Text("Temperaturas: " + cantidad.temperaturas.toString()),
+                Text("FORMULARIOS DE CONTROL",style: TextStyle(fontWeight: FontWeight.bold)),
                 Text("Control Ramos: " + cantidad.ramos.toString()),
                 Text("Control Empaque: " + cantidad.empaque.toString()),
                 Text("Control Banda: " + cantidad.banda.toString()),
                 Text("Control Ecuador: " + cantidad.ecuador.toString()),
-                Text("Proceso Maritimos: " +
-                    cantidad.procesoMaritimos.toString()),
-                Text("Circulo de Calidad: " +
-                    cantidad.circuloCalidad.toString()),
+                Text("PROCESOS DE CONTROL",style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Proceso Hidratación: " + cantidad.procesoHid.toString()),
+                Text("Proceso Empaque: " + cantidad.procesoEmp.toString()),
+                Text("Proceso Marítimos: " + cantidad.procesoMaritimos.toString()),
+                Text("PROCESOS DE REGISTROS",style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Temperaturas: " + cantidad.temperaturas.toString()),
+                Text("Actividades: " + cantidad.actividades.toString()),
+                Text("PROCESOS DE CALIDAD",style: TextStyle(fontWeight: FontWeight.bold)),
+                Text("Círculo de Calidad: " + cantidad.circuloCalidad.toString()),
               ],
             )),
             Container(

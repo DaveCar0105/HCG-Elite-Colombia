@@ -161,7 +161,7 @@ class _BandaPageState extends State<BandaPage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text('Final banda - pesca'),
+        title: Text('Final Banda - Pesca'),
       ),
       body: Container(
           padding: const EdgeInsets.all(16.0),
@@ -578,7 +578,7 @@ class _BandaPageState extends State<BandaPage> {
                     await showDialog(
                         context: context,
                         builder: (_) => new AlertDialog(
-                              title: Text("Ingresa el número de orden"),
+                              title: Text("Ingrese el número de orden"),
                               content: TextField(
                                 controller: ordenModal,
                                 decoration:

@@ -140,7 +140,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('REGISTRO DE TEMPERATURA'),
+        title: Text('Registro de Temperatura'),
         actions: <Widget>[
           StreamBuilder(
               stream: _temperaturaBloc.registroTemperaturaStream(),
@@ -277,7 +277,7 @@ class _RegistroTemperaturaPageState extends State<RegistroTemperaturaPage> {
       final temperaturaId =
           await DatabaseTemperatura.addTemperatura(temperatura);
       if (temperaturaId != 0) {
-        mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
+        mostrarSnackbar('Registro guardado', Colors.green, _scaffoldKey);
         _temperaturaBloc.registroTemperaturaStream();
         _temperaturaBloc.itemAgregado();
         temperaturaExterna.text = '';

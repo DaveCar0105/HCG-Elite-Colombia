@@ -43,7 +43,7 @@ class _CalculoMuestraPageState extends State<CalculoMuestraPage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text('CALCULO DE MUESTRA'),
+        title: Text('Cálculo de Muestra'),
       ),
       body: Container(
           padding: const EdgeInsets.all(26.0),
@@ -106,8 +106,8 @@ class _CalculoMuestraPageState extends State<CalculoMuestraPage> {
         maxLengthEnforced: true,
         maxLength: 2,
         decoration: InputDecoration(
-          hintText: 'Margen de Error en %',
-          labelText: 'Margen de Error en %',
+          hintText: 'Margen de error en %',
+          labelText: 'Margen de error en %',
         ),
         controller: margenDeError,
         validator: (value) {
@@ -127,7 +127,7 @@ class _CalculoMuestraPageState extends State<CalculoMuestraPage> {
         maxLength: 9,
         decoration: InputDecoration(
           hintText: 'Ramos Totales',
-          labelText: 'ramos totales',
+          labelText: 'Ramos totales',
         ),
         controller: totalRamos,
         validator: (value) {

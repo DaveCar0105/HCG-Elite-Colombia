@@ -42,25 +42,27 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
         child: SingleChildScrollView(
           child: SafeArea(
               child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                //Text('Historial Reportes', style: TextStyle(fontSize: 40)),
+            child: SizedBox(
+              width: double.infinity,
+              child: 
                 DataTable(
-                  dividerThickness: 5,
-                  dataRowHeight: 70,
-                  headingRowHeight: 60,
-                  columnSpacing: 5,
+                  //dividerThickness: 5,
+                  //dataRowHeight: 70,
+                  //headingRowHeight: 60,
+                  //columnSpacing: 2,
+                  columnSpacing: (MediaQuery.of(context).size.width / 10) * 0.1,
+                  dataRowHeight: 80,
                   columns: [
-                    DataColumn(label: Text('Reunion'), numeric: true),
-                    DataColumn(label: Text('Ramos\nRevisados'), numeric: true),
-                    DataColumn(label: Text('Ramos\nRechazados'), numeric: true),
-                    DataColumn(label: Text('%No\nConformidad'), numeric: true),
+                    DataColumn(label: Text('Reunión'), numeric: true),
+                    DataColumn(label: Text('Ramos\nrevisados'), numeric: true),
+                    DataColumn(label: Text('Ramos\nrechazados'), numeric: true),
+                    DataColumn(label: Text('%No\nconformidad'), numeric: true),
                     DataColumn(label: Text('Ver\nreporte'), numeric: true),
                   ],
                   rows: reportesLista != null
                       ? reportesLista
-                          .map<DataRow>((element) => DataRow(cells: [
+                          .map<DataRow>((element) => DataRow(
+                            cells: [
                                 DataCell(Text(element.circuloCalidad
                                     .circuloCalidadNumeroReunion
                                     .toString())),
@@ -84,7 +86,7 @@ class _ListaReporteGeneralPage2State extends State<ListaReporteGeneralPage2> {
                           .toList()
                       : [],
                 )
-              ],
+              ,
             ),
           )),
         ),

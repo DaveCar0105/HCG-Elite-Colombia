@@ -144,7 +144,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        title: Text('Empaque'),
+        title: Text('Proceso Empaque'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -511,7 +511,7 @@ class _EmpaqueElitePageState extends State<EmpaqueElitePage> {
                     await showDialog(
                         context: context,
                         builder: (_) => new AlertDialog(
-                              title: Text("Ingresa el número de orden"),
+                              title: Text("Ingrese el número de orden"),
                               content: TextField(
                                 controller: ordenModal,
                                 decoration:

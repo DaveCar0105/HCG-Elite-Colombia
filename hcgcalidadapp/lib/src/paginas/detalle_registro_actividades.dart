@@ -30,7 +30,7 @@ class DetalleRegistroActividadesPage extends StatelessWidget {
                       ]
                   ),
                   child: ListTile(
-                  title: Text('Descripción: ${data[i].actividadDetalle}\nHora Inicio: ${data[i].actividadHoraInicio}\nHora Fin: ${data[i].actividadHoraFin}\n'),
+                  title: Text('Descripción: ${data[i].actividadDetalle}\nHora inicio: ${data[i].actividadHoraInicio}\nHora finalización: ${data[i].actividadHoraFin}\n'),
                   subtitle: Text('Fecha: ${data[i].actividadFecha.toString().substring(0,19)}'),
                   leading: Text((i+1).toString(),style: TextStyle(fontWeight: FontWeight.bold)),
                 )

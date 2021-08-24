@@ -9,7 +9,7 @@ class DetalleRegistroProcesoMaritimoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DETALLE PROCESO MARITIMO'),
+        title: Text('Detalle Proceso Marítimo'),
       ),
       body: FutureBuilder(
         future: DatabaseProcesoMaritimo.getAllProcesoMaritimo(),
@@ -32,9 +32,9 @@ class DetalleRegistroProcesoMaritimoPage extends StatelessWidget {
                       ]
                   ),
                   child: ListTile(
-                    title: Text('HIDRATACION \n'
-                        '1.1. Nombre de Hidratante, dosis y fecha de elaboración: ${_respuesta(data[i].procesoMaritimoNombreHidratante)}\n'
-                        '1.2. pH soluciones 3.5 a 4.5: ${_respuesta(data[i].procesoMaritimoPhSoluciones)}\n'
+                    title: Text('HIDRATACIÓN \n'
+                        '1.1. Nombre de hidratante, dosis y fecha de elaboración: ${_respuesta(data[i].procesoMaritimoNombreHidratante)}\n'
+                        '1.2. Ph soluciones 3.5 a 4.5: ${_respuesta(data[i].procesoMaritimoPhSoluciones)}\n'
                         '1.3. El nivel de solución en las tinas de hidratación es de 10 cm todas las especies exepto Alstroemeria: ${_respuesta(data[i].procesoMaritimoNivelSolucionTinas)}\n'
                         '1.4. Las soluciones de hidratación están limpias y libres de material vegetal: ${_respuesta(data[i].procesoMaritimoSolucionHidratacionSinVegetal)}\n'
                         '1.5. La temperatura del cuarto frio donde se hidrata la flor esta entre 1 a 3°C: ${_respuesta(data[i].procesoMaritimoTemperaturaCuartoFrio)}\n'
@@ -64,7 +64,7 @@ class DetalleRegistroProcesoMaritimoPage extends StatelessWidget {
                         '5.5. Contenedor lavado y desinfectado libre de malos olores: ${_respuesta(data[i].procesoMaritimoContenedorlavadoDesinfectado)}\n'
                         '5.6. 60 minutos antes de iniciar el cargue sachets de Ethilblock previamente humedecidos con agua potable ubicados dentro de cada caja: ${_respuesta(data[i].procesoMartimoCarguePreviamenteHumedecidos)}\n'
                         '5.7. Realizado el llegando el cierre y sellado de las puertas se realiza a más  tardar 3 minutos después de desconectado el contenedor del muelle de  carga: ${_respuesta(data[i].procesoMaritimoLlegandoCierreSellado)}\n'
-                        '\nREQUERIMIENTOS CRITICOS\n'
+                        '\nREQUERIMIENTOS CRÍTICOS\n'
                         '6.1. Las estibas presenta sello del ICA  de manera visible : ${_respuesta(data[i].procesoMaritimoEstibasSelloICA)}\n'
                         '6.2. Los pallets se enuentran con una adecuada tensión de zunchos: ${_respuesta(data[i].procesoMaritimoPalletsTensionZunchos)}\n'
                         '6.3. Pallet debidamente identificado con etiqueta numeración pallet: ${_respuesta(data[i].procesoMaritimoPalletIdentificadoEtiqueta)}\n'

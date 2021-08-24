@@ -30,11 +30,11 @@ class DetalleRegistroProcesoHidratacionPage extends StatelessWidget {
                       ]
                   ),
                   child: ListTile(
-                    title: Text('Estado Solución: ${_respuesta(data[i].procesoHidratacionEstadoSoluciones)}\n'
-                    'Tiempos de Hidratación: ${_respuesta(data[i].procesoHidratacionTiemposHidratacion)}\n'
-                    'Cantidad Ramos Tinas: ${_respuesta(data[i].procesoHidratacionCantidadRamos)}\n'
-                    'Ph Solución: ${data[i].procesoHidratacionPhSolucion}\n'
-                    'Nivel Solución: ${data[i].procesoHidratacionNivelSolucion}\n'),
+                    title: Text('Estado solución: ${_respuesta(data[i].procesoHidratacionEstadoSoluciones)}\n'
+                    'Tiempos de hidratación: ${_respuesta(data[i].procesoHidratacionTiemposHidratacion)}\n'
+                    'Cantidad ramos tinas: ${_respuesta(data[i].procesoHidratacionCantidadRamos)}\n'
+                    'Ph solución: ${data[i].procesoHidratacionPhSolucion}\n'
+                    'Nivel solución: ${data[i].procesoHidratacionNivelSolucion}\n'),
                     subtitle: Text('Fecha: ${data[i].procesoHidratacionFecha.toString().substring(0,19)}'),              
                     leading: Text((i+1).toString(),style: TextStyle(fontWeight: FontWeight.bold)),
                   ),

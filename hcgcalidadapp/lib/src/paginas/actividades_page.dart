@@ -175,7 +175,7 @@ class _ActividadesPageState extends State<ActividadesPage> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text('REGISTRO DE ACTIVIADES'), actions: <Widget>[
+      appBar: AppBar(title: Text('Registro de Actividades'), actions: <Widget>[
         StreamBuilder(
             stream: _actividadesBloc.registroActividadStream(),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {

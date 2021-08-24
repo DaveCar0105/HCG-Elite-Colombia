@@ -39,7 +39,11 @@ class _DetalleRegistroTemperaturaState
                   ),
                   child: ListTile(
                   title: Text(
-                      'Temperatura Cuarto Frío: ${data[i].temperaturaExterna}, \n ClienteID: ${data[i].clienteId}, \nTemperatura Caja#1: ${data[i].temperaturaInterna1},\n Temperatura Caja#2: ${data[i].temperaturaInterna2},\n Temperatura Caja#3: ${data[i].temperaturaInterna3}\n'),
+                      'Temperatura cuarto frío: ${data[i].temperaturaExterna}, \n'
+                      'Identificador de cliente: ${data[i].clienteId}, \n'
+                      'Temperatura caja #1: ${data[i].temperaturaInterna1},\n'
+                      'Temperatura caja #2: ${data[i].temperaturaInterna2},\n' 
+                      'Temperatura caja #3: ${data[i].temperaturaInterna3}\n'),
                   subtitle: Text(
                       'Fecha: ${data[i].temperaturaFecha.toString().substring(0, 19)}'),
                   leading: Text((i + 1).toString(),style: TextStyle(fontWeight: FontWeight.bold)),

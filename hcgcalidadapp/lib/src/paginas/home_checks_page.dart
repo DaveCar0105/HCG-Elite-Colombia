@@ -9,7 +9,6 @@ class HomeChecksPage extends StatefulWidget {
 }
 
 class _HomeChecksPageState extends State<HomeChecksPage> {
-  bool _switchVal = true;
   bool sinc = false;
   
   @override
@@ -39,7 +38,7 @@ class _HomeChecksPageState extends State<HomeChecksPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'Hidratacion',
+                      'Hidratación',
                       style: TextStyle(fontSize: 15),
                     ),
                     Icon(Icons.fact_check)
@@ -98,7 +97,7 @@ class _HomeChecksPageState extends State<HomeChecksPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'Maritimo',
+                      'Marítimo',
                       style: TextStyle(fontSize: 15),
                     ),
                     Icon(Icons.fact_check)
@@ -106,7 +105,6 @@ class _HomeChecksPageState extends State<HomeChecksPage> {
                 ),
               ),
             ),
-            // text: 'raise botton',
           ),
         ],
       ),

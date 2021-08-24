@@ -53,7 +53,7 @@ class _ProcesoEmpaquePageState extends State<ProcesoEmpaquePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Proceso empaque'),
+        title: Text('Proceso Empaque Check'),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.receipt),
@@ -350,9 +350,6 @@ class _ProcesoEmpaquePageState extends State<ProcesoEmpaquePage> {
         hintSearchText: "Escriba el nombre de Postcosecha",
         icon: Icon(Icons.move_to_inbox),
         width: MediaQuery.of(context).size.width * 0.75,
-        style: TextStyle(
-          fontSize: 11,
-        ),
         parentAction: (value){
           if(value!= null && value!=""){
             AutoComplete postcosecha = listaPostcosecha.firstWhere((item){

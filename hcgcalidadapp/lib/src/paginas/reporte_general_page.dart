@@ -352,7 +352,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                             children: <Widget>[
                               Column(
                                 children: [
-                                  Text('RESUMEN REVISION',
+                                  Text('RESUMEN REVISIÓN',
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline6),
@@ -363,7 +363,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   ? Row(
                                       children: [
                                         Expanded(
-                                            child: Text('RAMOS REVISADOS:',
+                                            child: Text('Ramos revisados:',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1)),
@@ -384,7 +384,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                       children: [
                                         Expanded(
                                             child: Text(
-                                                'RAMOS NO CONFORMES:    ',
+                                                'Ramos no conformes:    ',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1)),
@@ -404,7 +404,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
                                   ? Row(
                                       children: [
                                         Expanded(
-                                            child: Text('%RAMOS NO CONFORMES: ',
+                                            child: Text('Porcentaje ramos no conformes: ',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle1)),

@@ -41,7 +41,7 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Text(
-                      'Hidratacion',
+                      'Hidratación',
                       style: TextStyle(fontSize: 15),
                     ),
                     Icon(Icons.local_florist_outlined)

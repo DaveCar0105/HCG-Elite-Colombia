@@ -169,8 +169,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          hintText: 'Numero guia',
-          labelText: 'Numero guia',
+          hintText: 'Número guía',
+          labelText: 'Número guía',
         ),
         controller: procesoMaritimoNumeroGuiaValue,
       ),
@@ -272,7 +272,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text('PROCESO MARITIMO CHECK'), actions: <Widget>[
+      appBar: AppBar(title: Text('Proceso Marítimo Check'), actions: <Widget>[
         StreamBuilder(
             stream: _procesoMaritimoBloc.registroProcesoMaritimoStream(),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
@@ -329,7 +329,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               _acompanamiento(),
               Divider(),
               Column(children: [
-                Text('HIDRATACION',
+                Text('HIDRATACIÓN',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
               Container(padding: const EdgeInsets.only(bottom: 5)),
@@ -362,7 +362,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   Container(
                     width: width * 0.5,
                     child: Text(
-                        'Nombre de Hidratante, dosis y fecha de elaboración'),
+                        'Nombre de hidratante, dosis y fecha de elaboración'),
                   ),
                   Radio(
                       value: 0,
@@ -390,7 +390,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('pH soluciones 3.5 a 4.5'),
+                    child: Text('Ph soluciones 3.5 a 4.5'),
                   ),
                   Radio(
                       value: 0,
@@ -419,7 +419,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   Container(
                     width: width * 0.5,
                     child: Text(
-                        'El nivel de solución en las tinas de hidratación es de 10 cm todas las especies exepto Alstroemeria'),
+                        'El nivel de solución en las tinas de hidratación es de 10 cm todas las especies excepto alstroemeria'),
                   ),
                   Radio(
                       value: 0,
@@ -475,7 +475,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   Container(
                     width: width * 0.5,
                     child: Text(
-                        'La temperatura del cuarto frio donde se hidrata la flor esta entre 1 a 3°C'),
+                        'La temperatura del cuarto frío donde se hidrata la flor esta entre 1 a 3°C'),
                   ),
                   Radio(
                       value: 0,
@@ -1225,7 +1225,7 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
               _procesoMaritimoObsevacionesllenadoContenedor(),
               Divider(),
               Column(children: [
-                Text('REQUERIMIENTOS CRITICOS',
+                Text('REQUERIMIENTOS CRÍTICOS',
                     style: Theme.of(context).textTheme.subtitle1)
               ]),
               Container(padding: const EdgeInsets.only(bottom: 5)),
@@ -1481,8 +1481,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observacion Hidratacion',
-          labelText: 'Observacion Hidratacion',
+          hintText: 'Observación hidratación',
+          labelText: 'Observación hidratación',
         ),
         controller: procesoMaritimoObsevacionesHidratacionValue,
       ),
@@ -1494,8 +1494,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observacion Empaque',
-          labelText: 'Observacion Empaque',
+          hintText: 'Observación empaque',
+          labelText: 'Observación empaque',
         ),
         controller: procesoMaritimoObservacionesEmpaqueValue,
       ),
@@ -1507,8 +1507,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observacion Transferencia',
-          labelText: 'Observacion Transferencia',
+          hintText: 'Observación transferencia',
+          labelText: 'Observación transferencia',
         ),
         controller: procesoMaritimoObservacionesTransferenciaValue,
       ),
@@ -1520,8 +1520,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observacion Palletizado',
-          labelText: 'Observacion Palletizado',
+          hintText: 'Observación palletizado',
+          labelText: 'Observación palletizado',
         ),
         controller: procesoMaritimoObservacionesPalletizadoValue,
       ),
@@ -1533,8 +1533,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observacion Lleando Contenedor',
-          labelText: 'Observacion Lleando Contenedor',
+          hintText: 'Observación llenado contenedor',
+          labelText: 'Observación llenado contenedor',
         ),
         controller: procesoMaritimoObservacionesLlenadoContenedorValue,
       ),
@@ -1546,8 +1546,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observacion Requerimiento Critico',
-          labelText: 'Observacion Requerimiento Critico',
+          hintText: 'Observación requerimiento crítico',
+          labelText: 'Observación requerimiento crítico',
         ),
         controller: procesoMaritimoObservacionesRequerimientosCriticosValue,
       ),

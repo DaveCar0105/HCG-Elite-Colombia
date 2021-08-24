@@ -531,7 +531,7 @@ class _RamosElitePageState extends State<RamosElitePage> {
                     await showDialog(
                         context: context,
                         builder: (_) => new AlertDialog(
-                              title: Text("Ingresa el número de orden"),
+                              title: Text("Ingrese el número de orden"),
                               content: TextField(
                                 controller: ordenModal,
                                 decoration:

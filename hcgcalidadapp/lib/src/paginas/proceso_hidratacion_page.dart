@@ -56,7 +56,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
         lista: listaPostcosecha,
         hintText: "Post Cosecha",
         valorDefecto: postcosechaNombre,
-        hintSearchText: "Escriba el nombre de Postcosecha",
+        hintSearchText: "Escriba el nombre de postcosecha",
         icon: Icon(Icons.move_to_inbox),
         width: MediaQuery.of(context).size.width * 0.75,
         style: TextStyle(
@@ -174,7 +174,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('Estado de Soluciones'),
+                    child: Text('Estado de soluciones'),
                   ),
                   Radio(
                     value: 0, 
@@ -204,7 +204,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('Tiempos de Hidratación'),
+                    child: Text('Tiempos de hidratación'),
                   ),
                   Radio(
                     value: 0, 
@@ -234,7 +234,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('Cantidad Ramos Tinas'),
+                    child: Text('Cantidad ramos tinas'),
                   ),
                   Radio(
                     value: 0, 
@@ -264,7 +264,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('Ph Solución'),
+                    child: Text('Ph solución'),
                   ),
                   Expanded(
                     child: TextField(
@@ -282,7 +282,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('Nivel Solución'),
+                    child: Text('Nivel solución'),
                   ),
                   Expanded(
                     child: TextField(
@@ -336,7 +336,7 @@ class _ProcesoHidratacionPageState extends State<ProcesoHidratacionPage> {
       );
       int procesoHidratacionId = await DatabaseProcesoHidratacion.addProcesosHidratacion(procesoHidratacion);
       if(procesoHidratacionId != 0){
-        mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
+        mostrarSnackbar('Registro guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
         _procesoHidratacionBloc.registroProcesoHidratacionStream();
         _procesoHidratacionBloc.itemAgregado();

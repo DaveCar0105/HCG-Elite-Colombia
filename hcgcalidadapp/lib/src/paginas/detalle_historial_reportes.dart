@@ -384,7 +384,7 @@ class _DetalleHistorialReporteGeneralPageState
                           children: <Widget>[
                             Column(
                               children: [
-                                Text('RESUMEN REVISION',
+                                Text('RESUMEN REVISIÓN',
                                     style:
                                         Theme.of(context).textTheme.headline6),
                               ],
@@ -394,7 +394,7 @@ class _DetalleHistorialReporteGeneralPageState
                                 ? Row(
                                     children: [
                                       Expanded(
-                                          child: Text('RAMOS REVISADOS:',
+                                          child: Text('Ramos revisados:',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1)),
@@ -414,7 +414,7 @@ class _DetalleHistorialReporteGeneralPageState
                                 ? Row(
                                     children: [
                                       Expanded(
-                                          child: Text('RAMOS NO CONFORMES:    ',
+                                          child: Text('Ramos no conformes:    ',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1)),
@@ -434,7 +434,7 @@ class _DetalleHistorialReporteGeneralPageState
                                 ? Row(
                                     children: [
                                       Expanded(
-                                          child: Text('%RAMOS NO CONFORMES: ',
+                                          child: Text('Porcentaje ramos no conformes: ',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .subtitle1)),
@@ -610,70 +610,89 @@ class _DetalleHistorialReporteGeneralPageState
                             Divider(),
                             Column(
                               children: [
-                                Text('FORMULARIO CÍRCULO CALIDAD',
+                                Text('INFORMACIÓN DEL FORMULARIO',
                                     style:
                                         Theme.of(context).textTheme.headline6)
                               ],
                             ),
                             Divider(),
                             Container(
-                                //margin: EdgeInsets.all(10),
-                                //padding: EdgeInsets.all(15),
                                 child: Form(
                               key: _formCirculoCalidadKey,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  //DataTable( rows: reportesLista.map<DataRow>((element) => DataRow(cells: cells))),
-
-                                  //rows: DataRow(cells: cells),
-                                  Text(
-                                      'Numero de Reunion:\t' +
-                                          data.circuloCalidad.circuloCalidadNumeroReunion
-                                              .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
+                                  Row(
+                                    children: [
+                                      Expanded(child: 
+                                        Text('Número de reunión:', style: Theme.of(context).textTheme.subtitle1)),
+                                      Expanded(child: 
+                                        Text(data.circuloCalidad.circuloCalidadNumeroReunion.toString(),
+                                          style: Theme.of(context).textTheme.subtitle1),
+                                      ),
+                                    ],
+                                  ),
                                   Divider(),
-                                  Text(
-                                      'Nombre Supervisor 1:' +
-                                          data.circuloCalidad.circuloCalidadSupervisor
-                                              .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
+                                  Row(
+                                    children: [
+                                      Expanded(child: 
+                                        Text('Nombre supervisor 1:',style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                      Expanded(child:
+                                        Text(data.circuloCalidad.circuloCalidadSupervisor.toString(),
+                                          style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                    ],
+                                  ),
                                   Divider(),
-                                  Text(
-                                      'Evaluacion Supervisor 1:' +
-                                          data.circuloCalidad.circuloCalidadEvaluacionSupervisor
-                                              .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
+                                  Row(
+                                    children: [
+                                      Expanded(child:
+                                        Text('Evaluación supervisor 1:',style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                      Expanded(child:
+                                        Text(data.circuloCalidad.circuloCalidadEvaluacionSupervisor.toString(),
+                                          style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                    ],
+                                  ),
                                   Divider(),
-                                  Text(
-                                      'Nombre Supervisor 2:' +
-                                          data.circuloCalidad.circuloCalidadSupervisor2
-                                              .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
+                                  Row(
+                                    children: [
+                                      Expanded(child:
+                                        Text('Nombre supervisor 2:',
+                                          style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                      Expanded(child:
+                                        Text(data.circuloCalidad.circuloCalidadSupervisor2.toString(),
+                                          style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                    ],
+                                  ),
                                   Divider(),
-                                  Text(
-                                      'Evaluacion Supervisor 2:' +
-                                          data.circuloCalidad.circuloCalidadEvaluacionSupervisor2
-                                              .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
+                                  Row(
+                                    children: [
+                                      Expanded(child:
+                                        Text('Evaluación supervisor 2:',style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                      Expanded(child:
+                                        Text(data.circuloCalidad.circuloCalidadEvaluacionSupervisor2.toString(),
+                                          style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                    ],
+                                  ),
                                   Divider(),
-                                  Text(
-                                      'Comentario:' +
-                                          data.circuloCalidad.circuloCalidadComentario
-                                              .toString(),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline6),
+                                  Row(
+                                    children: [
+                                      Expanded(child:
+                                        Text('Comentario:',style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                      Expanded(child:
+                                        Text(data.circuloCalidad.circuloCalidadComentario.toString(),
+                                          style: Theme.of(context).textTheme.subtitle1)
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ))
