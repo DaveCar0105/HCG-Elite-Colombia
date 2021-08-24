@@ -1044,8 +1044,6 @@ class DatabaseReportesAprobacion {
     if (actCode >= 200 && actCode <= 299) {
       await actividadesSinc();
     }
-    print('entro hidratacion---------------------------------------------');
-    print(jsonEncode(hidratacion));
     for (int hid = 0; hid < hidratacion.length; hid++) {
       listaHidratacion.add(RegistroHidratacion(
           procesoHidratacionUsuarioControlId:
