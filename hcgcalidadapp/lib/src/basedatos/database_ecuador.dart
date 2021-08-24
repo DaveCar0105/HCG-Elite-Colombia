@@ -324,6 +324,15 @@ class DatabaseEcuador {
     await db.rawInsert(sql);
   }
 
+  static Future<void> updateTipoControl(TipoControl tipoControl) async {
+    final sql = '''UPDATE ${DatabaseCreator.tipoControlTable}
+    SET ${DatabaseCreator.tipoControlNombre} = '${tipoControl.tipoControlNombre}', 
+    ${DatabaseCreator.claseId} = ${tipoControl.claseId}
+    WHERE ${DatabaseCreator.tipoControlId} == ${tipoControl.tipoControlId}
+    ''';
+    await db.rawUpdate(sql);
+  }
+
   static Future<void> addTipoActividad(TipoActividad ramos) async {
     final sql =
         '''INSERT INTO ${DatabaseCreator.tipoActividadTable}(${DatabaseCreator.tipoActividadId},${DatabaseCreator.tipoActividadDescripcion}
@@ -333,6 +342,14 @@ class DatabaseEcuador {
     await db.rawInsert(sql);
   }
 
+  static Future<void> updateTipoActividad(TipoActividad ramos) async {
+    final sql = '''UPDATE ${DatabaseCreator.tipoActividadTable}
+    SET ${DatabaseCreator.tipoActividadDescripcion} = '${ramos.tipoActividadDescripcion}'
+    WHERE ${DatabaseCreator.tipoActividadId} == ${ramos.tipoActividadId}
+    ''';
+    await db.rawUpdate(sql);
+  }
+
   static Future<void> addTipoCliente(TipoCliente ramos) async {
     final sql =
         '''INSERT INTO ${DatabaseCreator.tipoClienteTable}(${DatabaseCreator.tipoClienteId},${DatabaseCreator.tipoClienteNombre}
@@ -340,6 +357,14 @@ class DatabaseEcuador {
     VALUES(${ramos.tipoClienteId},'${ramos.tipoClienteNombre}')
     ''';
     await db.rawInsert(sql);
+  }
+
+  static Future<void> updateTipoCliente(TipoCliente ramos) async {
+    final sql = '''UPDATE ${DatabaseCreator.tipoClienteTable}
+    SET ${DatabaseCreator.tipoClienteNombre} = '${ramos.tipoClienteNombre}'
+    WHERE ${DatabaseCreator.tipoClienteId} == ${ramos.tipoClienteId}
+    ''';
+    await db.rawUpdate(sql);
   }
 
   static Future<List<TipoActividad>> getAllTipoActividad() async {

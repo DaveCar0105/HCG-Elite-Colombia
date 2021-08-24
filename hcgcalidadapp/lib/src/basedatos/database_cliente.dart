@@ -26,7 +26,8 @@ class DatabaseCliente {
 
   static Future<void> updateCliente(Cliente cliente) async {
     final sql = '''UPDATE ${DatabaseCreator.clienteTable}
-    SET ${DatabaseCreator.clienteNombre} = '${cliente.clienteNombre}'
+    SET ${DatabaseCreator.clienteNombre} = '${cliente.clienteNombre}', 
+    ${DatabaseCreator.tipoClienteId} = ${cliente.tipoClienteId}
     WHERE ${DatabaseCreator.clienteId} == ${cliente.clienteId}
     ''';
     await db.rawUpdate(sql);

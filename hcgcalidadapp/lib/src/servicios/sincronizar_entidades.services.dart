@@ -1,4 +1,5 @@
 
+import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/constantes.dart';
 import 'package:hcgcalidadapp/src/modelos/categoria_empaque.dart';
 import 'package:hcgcalidadapp/src/modelos/categoria_ramos.dart';
@@ -175,7 +176,9 @@ class SincronizarEntidadesApp{
           claseId: tipoControl[i]["claseControl"]);
       try {
         await DatabaseEcuador.addTipoControl(tipo);
-      } catch (DatabaseException) {}
+      } catch (DatabaseException) {
+        await DatabaseEcuador.updateTipoControl(tipo);
+      }
     }
 
     var url10 = Uri.http(co.url, '/api/TipoControles/Actividad');
@@ -188,7 +191,9 @@ class SincronizarEntidadesApp{
               ["tipoActividadDescripcion"]);
       try {
         await DatabaseEcuador.addTipoActividad(tipo);
-      } catch (DatabaseException) {}
+      } catch (DatabaseException) {
+        await DatabaseEcuador.updateTipoActividad(tipo);
+      }
     }
 
     var url11 = Uri.http(co.url, '/api/TipoControles/Cliente');
@@ -200,7 +205,9 @@ class SincronizarEntidadesApp{
           tipoClienteNombre: tipoCliente[i]["tipoClienteNombre"]);
       try {
         await DatabaseEcuador.addTipoCliente(tipo);
-      } catch (DatabaseException) {}
+      } catch (DatabaseException) {
+        await DatabaseEcuador.updateTipoCliente(tipo);
+      }
     }
 
     var url12 = Uri.http(co.url, '/api/DestinoMaritimo');
@@ -213,7 +220,7 @@ class SincronizarEntidadesApp{
       try {
         await DatabaseDestino.addProcesoMaritimoDestinos(tipoDestino);
       } catch (DatabaseException) {
-        
+        await DatabaseDestino.updateProcesoMaritimoDestinos(tipoDestino);
       }
     }
   }

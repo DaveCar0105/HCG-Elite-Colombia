@@ -73,7 +73,7 @@ class DatabaseEcommerce {
   static Future<int> updateProblemaEcommerce(
       ProblemaEcommerce problemaEcommerce) async {
     final sql = '''UPDATE ${DatabaseCreator.problemasEcommerceTable} SET 
-        ${DatabaseCreator.problemasEcommerceNombre} = ${problemaEcommerce.nombre},
+        ${DatabaseCreator.problemasEcommerceNombre} = '${problemaEcommerce.nombre}',
         ${DatabaseCreator.problemasEcommerceNumero} = ${problemaEcommerce.numero},
         ${DatabaseCreator.problemasEcommerceTipo} = ${problemaEcommerce.tipo}
     WHERE ${DatabaseCreator.problemasEcommerceId} = ${problemaEcommerce.id}

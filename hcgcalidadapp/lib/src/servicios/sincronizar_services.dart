@@ -16,9 +16,7 @@ class SincServices{
     try{
       var url = Uri.http(co.url, '/api/Sincro/empaque');
       var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
-
       var listaRetorno = jsonDecode(respuesta.body);
-
       if(respuesta.statusCode>=200 && respuesta.statusCode<=299){
         for(int i=0;i<listaRetorno.length;i++){
           lista.add(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_checks_page.dart';
 import 'package:hcgcalidadapp/src/paginas/home_formularios_page.dart';
@@ -16,7 +17,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currenIndexBottomNavigation = 0;
   bool sinc = false;
-  sincornizar() async {
+  sincornizar(BuildContext context) async {
+    final progress = ProgressHUD.of(context);
+    progress?.showWithText('Sincronizando...');
     setState(() {
       sinc = true;
     });
@@ -25,6 +28,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       sinc = false;
     });
+    progress?.dismiss();
   }
 
   final pages = [
@@ -38,7 +42,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ProgressHUD(
+      child: Builder(
+      builder: (context) => 
+      Center(
+      child: Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text('HIGH CONTROL GROUP'),
@@ -46,7 +54,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: () {
-              sincornizar();
+              sincornizar(context);
             },
           )
         ],
@@ -144,36 +152,7 @@ class _HomePageState extends State<HomePage> {
           });
         },
       )
-    );
-  }
-}
-
-class Botones extends StatelessWidget {
-  final Widget child;
-  //final String text;
-  const Botones({
-    @required this.child,
-    // @required this.text,
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              this.child,
-              SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    ),
+      )));
   }
 }

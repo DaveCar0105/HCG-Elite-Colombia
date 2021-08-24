@@ -1,6 +1,5 @@
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/destinos.dart';
-import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
 
 class DatabaseDestino {
   static Future<List<ProcesoMaritimoDestinos>>
@@ -33,4 +32,13 @@ class DatabaseDestino {
     VALUES(${procesoMaritimoDestinos.procesoMaritimoDestinoId},'${procesoMaritimoDestinos.procesoMaritimoDestinoNombre}')''';
     return await db.rawInsert(sql);
   }
+
+  static Future<void> updateProcesoMaritimoDestinos(ProcesoMaritimoDestinos procesoMaritimoDestinos) async {
+    final sql = '''UPDATE ${DatabaseCreator.procesoMaritimoDestinoTable}
+    SET ${DatabaseCreator.procesoMaritimoDestinoNombre} = '${procesoMaritimoDestinos.procesoMaritimoDestinoNombre}'
+    WHERE ${DatabaseCreator.procesoMaritimoDestinoId} == ${procesoMaritimoDestinos.procesoMaritimoDestinoId}
+    ''';
+    await db.rawUpdate(sql);
+  }
+
 }

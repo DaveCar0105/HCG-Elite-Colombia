@@ -31,7 +31,6 @@ class DatabaseProducto {
     ${DatabaseCreator.elite} = ${producto.elite}
     WHERE ${DatabaseCreator.productoId} == ${producto.productoId}
     ''';
-
     await db.rawUpdate(sql);
   }
 }
