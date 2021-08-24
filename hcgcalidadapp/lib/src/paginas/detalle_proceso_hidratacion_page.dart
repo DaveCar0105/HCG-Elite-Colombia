@@ -17,19 +17,31 @@ class DetalleRegistroProcesoHidratacionPage extends StatelessWidget {
             return ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, i){
-                return ListTile(
-                  title: Text('Estado Solución: ${_respuesta(data[i].procesoHidratacionEstadoSoluciones)}\n'
-                  'Tiempos de Hidratación: ${_respuesta(data[i].procesoHidratacionTiemposHidratacion)}\n'
-                  'Cantidad Ramos Tinas: ${_respuesta(data[i].procesoHidratacionCantidadRamos)}\n'
-                  'Ph Solución: ${data[i].procesoHidratacionPhSolucion}\n'
-                  'Nivel Solución: ${data[i].procesoHidratacionNivelSolucion}\n'),
-                  subtitle: Text('Fecha: ${data[i].procesoHidratacionFecha.toString().substring(0,19)}'),              
-                  leading: Text((i+1).toString()),
+                return Container(
+                  margin: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 7
+                        )
+                      ]
+                  ),
+                  child: ListTile(
+                    title: Text('Estado Solución: ${_respuesta(data[i].procesoHidratacionEstadoSoluciones)}\n'
+                    'Tiempos de Hidratación: ${_respuesta(data[i].procesoHidratacionTiemposHidratacion)}\n'
+                    'Cantidad Ramos Tinas: ${_respuesta(data[i].procesoHidratacionCantidadRamos)}\n'
+                    'Ph Solución: ${data[i].procesoHidratacionPhSolucion}\n'
+                    'Nivel Solución: ${data[i].procesoHidratacionNivelSolucion}\n'),
+                    subtitle: Text('Fecha: ${data[i].procesoHidratacionFecha.toString().substring(0,19)}'),              
+                    leading: Text((i+1).toString(),style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
                 );
               }
             );
           }
-
           return Container();
         },
       ),

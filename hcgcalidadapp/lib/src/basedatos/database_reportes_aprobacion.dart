@@ -598,14 +598,14 @@ class DatabaseReportesAprobacion {
       var data2 = await db.rawQuery(sql2);
       try {
         item.empaqueInconformidadCajas =
-            double.parse(data1[0]['CAJAS']) * 100 / totalC;
+            double.parse(data1[0]['CAJAS'].toString()) * 100 / totalC;
       } catch (e) {
         item.empaqueInconformidadCajas = 0;
       }
 
       try {
         item.empaqueInconformidadRamos =
-            double.parse(data2[0]['RAMOS']) * 100 / totalR;
+            double.parse(data2[0]['RAMOS'].toString()) * 100 / totalR;
         item.ramosNoConformes = data2[0]['RAMOS'];
       } catch (e) {
         item.empaqueInconformidadRamos = 0;
@@ -867,7 +867,7 @@ class DatabaseReportesAprobacion {
           ''';
       var data1 = await db.rawQuery(sql1);
       try {
-        item.ramoInconformidad = double.parse(data1[0]['RAMOS']) * 100 / total;
+        item.ramoInconformidad = double.parse(data1[0]['RAMOS'].toString()) * 100 / total;
         item.ramosNoConformes = data1[0]['RAMOS'];
       } catch (e) {
         item.ramoInconformidad = 0;

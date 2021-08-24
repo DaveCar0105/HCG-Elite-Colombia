@@ -17,17 +17,30 @@ class DetalleRegistroProcesoEmpaquePage extends StatelessWidget {
             return ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, i){
-                return ListTile(
-                  title: Text('Altura de pallets: ${_respuesta(data[i].procesoEmpaqueAltura)}\n'
-                  'Cajas Buenas Condiciones: ${_respuesta(data[i].procesoEmpaqueCajas)}\n'
-                  'Sujección Correcta: ${_respuesta(data[i].procesoEmpaqueSujeccion)}\n'
-                  'Movimientos y traslados correctos: ${_respuesta(data[i].procesoEmpaqueMovimientos)}\n'
-                  'Temperatura cuarto frío: ${_respuesta(data[i].procesoEmpaqueTemperaturaCuartoFrio)}\n'
-                  'Temperatura de cajas: ${_respuesta(data[i].procesoEmpaqueTemperaturaCajas)}\n'
-                  'Temperatura de camión: ${_respuesta(data[i].procesoEmpaqueTemperaturaCamion)}\n'
-                  'Apilamiento Adecuado: ${_respuesta(data[i].procesoEmpaqueApilamiento)}\n'),
-                  subtitle: Text('Fecha: ${data[i].procesoEmpaqueFecha.toString().substring(0,19)}'),              
-                  leading: Text((i+1).toString()),
+                return Container(
+                  margin: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 7
+                        )
+                      ]
+                  ),
+                  child: ListTile(
+                    title: Text('Altura de pallets: ${_respuesta(data[i].procesoEmpaqueAltura)}\n'
+                    'Cajas Buenas Condiciones: ${_respuesta(data[i].procesoEmpaqueCajas)}\n'
+                    'Sujección Correcta: ${_respuesta(data[i].procesoEmpaqueSujeccion)}\n'
+                    'Movimientos y traslados correctos: ${_respuesta(data[i].procesoEmpaqueMovimientos)}\n'
+                    'Temperatura cuarto frío: ${_respuesta(data[i].procesoEmpaqueTemperaturaCuartoFrio)}\n'
+                    'Temperatura de cajas: ${_respuesta(data[i].procesoEmpaqueTemperaturaCajas)}\n'
+                    'Temperatura de camión: ${_respuesta(data[i].procesoEmpaqueTemperaturaCamion)}\n'
+                    'Apilamiento Adecuado: ${_respuesta(data[i].procesoEmpaqueApilamiento)}\n'),
+                    subtitle: Text('Fecha: ${data[i].procesoEmpaqueFecha.toString().substring(0,19)}'),              
+                    leading: Text((i+1).toString(),style: TextStyle(fontWeight: FontWeight.bold)),
+                  )
                 );
               }
             );
