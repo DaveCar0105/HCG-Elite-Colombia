@@ -253,7 +253,6 @@ class DatabaseCreator {
       'procesoMaritimoCarguePreviamenteHumedecidos';
   static const procesoMaritimoLlegandoCierreSellado =
       'procesoMaritimoLlegandoCierreSellado';
-
   static const procesoMaritimoEstibasSelloICA =
       'procesoMaritimoEstibasSelloICA';
   static const procesoMaritimoPalletsTensionZunchos =
@@ -268,7 +267,6 @@ class DatabaseCreator {
       'procesoMaritimoVerificacionEncendidoTermografo';
   static const procesoMaritimoFotografiaPalletsEmpresaContenor =
       'procesoMaritimoFotografiaPalletsEmpresaContenor';
-
   static const procesoMaritimoObservacionesHidratacion =
       'procesoMaritimoObservacionessHidratacion';
   static const procesoMaritimoObservacionesEmpaque =
@@ -281,7 +279,6 @@ class DatabaseCreator {
       'procesoMaritimoObservacionesLlenadoContenedor';
   static const procesoMaritimoObservacionesRequerimientosCriticos =
       'procesoMaritimoObservacionesRequerimientosCriticos';
-
   static const procesoMaritimoFecha = 'procesoMaritimoFecha';
 
   // TABLA TEMPERATURA
@@ -362,6 +359,139 @@ class DatabaseCreator {
   static const numeroMesa = 'numeroMesa';
   static const variedad = 'variedad';
   static const linea = 'linea';
+
+  // PROCESO MARITIMO ALISTAMIENTO
+  static const procesoMaritimoAlstroemeriaTable = 'procesoMaritimoAlistamientoTable';
+  static const procesoMaritimoAlstroemeriaId = 'procesoMaritimoAlistamientoId';
+  static const procesoMaritimoAlstroemeriaUsuarioControlId = 'UsuarioControlId';
+  static const procesoMaritimoAlstroemeriaNumeroGuia = 'procesoMaritimoAlistamientoNumeroGuia';
+  static const procesoMaritimoAlstroemeriaDestinoId = 'procesoMaritimoAlistamientoDestinoId';
+  static const procesoMaritimoAlstroemeriaRealizadoPor = 'procesoMaritimoAlistamientoRealizadoPor';
+  static const procesoMaritimoAlstroemeriaAcompanamiento = 'procesoMaritimoAlistamientoAcompanamiento';
+  static const procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad =
+      'procesomoMaritimoAlistamientoRecepcionTemperaturaHumedad';
+  static const procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta =
+      'procesoMaritimoAlistamientoRecepcionLavaDesinfecta';
+  static const procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion =
+      'procesoMaritimoAlistamientoRecepcionSistemaIdentificacion';
+  static const procesoMaritimoAlstroemeriaClasificacionLongitudTallos =
+      'procesoMaritimoAlstroemeriaClasificacionLongitudTallos';
+  static const procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal =
+      'procesoMaritimoAlistamientoClasificacionCapacitacionPersonal';
+  static const procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado =
+      'procesoMaritimoAlistamientoClasificacionCapuchonBiorentado';
+  static const procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood =
+      'procesoMaritimoAlistamientoClasificacionCapuchonFlowerFood';
+  static const procesoMaritimoAlstroemeriaClasificacionLibreMaltrato =
+      'procesoMaritimoAlistamientoClasificacionLibreMaltrato';
+  static const procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso = 
+      'procesoMaritimoAlistamientoClasificacionTallosCumplePeso';
+  static const procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos =
+      'procesoMaritimoAlistamientoClasificacionDespachosMaritimos';
+  static const procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo =
+      'procesoMaritimoAlistamientoClasificacionAseguramientoRamo';
+  static const procesoMaritimoAlstroemeriaTratamientoBaldesTinas =
+      'procesoMaritimoAlistamientoTratamientoBaldesTinas';
+  static const procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion =
+      'procesoMaritimoAlistamientoTratamientoSolucionHidratacion';
+  static const procesoMaritimoAlstroemeriaTratamientoNivelSolucion =
+      'procesoMaritimoAlistamientoTratamientoNivelSolucion';
+  static const procesoMaritimoAlstroemeriaTratamientoCambioSolucion =
+      'procesoMaritimoAlistamientoTratamientoCambioSolucion';
+  static const procesoMaritimoAlstroemeriaTratamientoTiempoSala =
+      'procesoMaritimoAlistamientoTratamientoTiempoSala';
+  static const procesoMaritimoAlstroemeriaHidratacionNumeroRamos =
+      'procesoMaritimoAlistamientoHidratacionNumeroRamos';
+  static const procesoMaritimoAlstroemeriaHidratacionRamosHidratados =
+      'procesoMaritimoAlistamientoHidratacionRamosHidratados';
+  static const procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio =
+      'procesoMaritimoAlistamientoHidratacionTemperaturaCuartoFrio';
+  static const procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado =
+      'procesoMaritimoAlistamientoHidratacionLimpioOrdenado';
+  static const procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion =
+      'procesoMaritimoAlistamientoEmpaqueEmpacadoresCapacitacion';
+  static const procesoMaritimoAlstroemeriaEmpaqueEdadFlor = 'procesoMaritimoAlistamientoEmpaqueEdadFlor';
+  static const procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos =
+      'procesoMaritimoAlistamientoEmpaqueEscurridoRamos';
+  static const procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos =
+      'procesoMaritimoAlistamientoEmpaqueTemperaturaRamos';
+  static const procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento =
+      'procesoMaritimoAlistamientoEmpaqueCajasRequerimiento';
+  static const procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo =
+      'procesoMaritimoAlistamientoEmpaqueCajaDespachoMaritimo';
+  static const procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad =
+      'procesoMaritimoAlistamientoEmpaqueCajasDeformidad';
+  static const procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas =
+      'procesoMaritimoAlistamientoEmpaqueEtiquetasCajas';
+  static const procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue =
+      'procesoMaritimoAlistamientoEmpaqueProductoEmpaqueCargue';
+  static const procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR =
+      'procesoMaritimoAlistamientoEmpaqueTemperaturaHR';
+  static const procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto =
+      'procesoMaritimoAlistamientoEmpaqueAuditoriaProducto';
+  static const procesoMaritimoAlstroemeriaEmpaqueEmpacoHB =
+      'procesoMaritimoAlistamientoEmpaqueEmpacoHB';
+  static const procesoMaritimoAlstroemeriaTransporteTemperauraCajas =
+      'procesoMaritimoAlistamientoTransporteTemperauraCajas';
+  static const procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio =
+      'procesoMaritimoAlistamientoTransporteTemperaturaPromedio';
+  static const procesoMaritimoAlstroemeriaTransporteCamionTransporta =
+      'procesoMaritimoAlistamientoTransporteCamionTransporta';
+  static const procesoMaritimoAlstroemeriaTransporteTemperaturaCamion =
+      'procesoMaritimoAlistamientoTransporteTemperaturaCamion';
+  static const procesoMaritimoAlstroemeriaTransporteBuenaConexion =
+      'procesoMaritimoAlistamientoTransporteBuenaConexion';
+  static const procesoMaritimoAlstroemeriaTransporteThermoking =
+      'procesoMaritimoAlistamientoTransporteThermoking';
+  static const procesoMaritimoAlstroemeriaTransporteCajasApiladas =
+      'procesoMaritimoAlistamientoTransporteCajasApiladas';
+  static const procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado =
+      'procesoMaritimoAlistamientoTransporteAcopioPreenfriado';
+  static const procesoMaritimoAlstromeriaTransporteTemperaturaFurgon =
+      'procesoMaritimoAlistamientoTransporteTemperaturaFurgon';
+  static const procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias =
+  'procesoMaritimoAlistamientoPalletizadoEstibasLimpias';
+  static const procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros =
+  'procesoMaritimoAlistamientoPalletizadoPalletsEsquineros';
+  static const procesoMaritimoAlstroemeriaPalletizadoPalletsAltura =
+  'procesoMaritimoAlistamientoPalletizadoPalletsAltura';
+  static const procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido =
+  'procesoMaritimoAlistamientoPalletizadoTemperaturaDistribuido';
+  static const procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado =
+  'procesoMaritimoAlistamientoPalletizadoPalletIdentificado';
+  static const procesoMaritimoAlstroemeriaContenedorGenset =
+  'procesoMaritimoAlistamientoContenedorGenset';
+  static const procesoMaritimoAlstroemeriaContenedorFechaFabricacion =
+  'procesoMaritimoAlistamientoContenedorFechaFabricacion';
+  static const procesoMaritimoAlstroemeriaContenedorContenedorSeteo =
+  'procesoMaritimoAlistamientoContenedorContenedorSeteo';
+  static const procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado =
+  'procesoMaritimoAlistamientoContenedorContenedorPreenfriado';
+  static const procesoMaritimoAlstroemeriaContenedorContenedorLavado =
+  'procesoMaritimoAlistamientoContenedorContenedorLavado';
+  static const procesoMaritimoAlstroemeriaContenedorSachetsEthiblock =
+  'procesoMaritimoAlistamientoContenedorSachetsEthiblock';
+  static const procesoMaritimoAlstroemeriaContenedorCierreSellado =
+  'procesoMaritimoAlistamientoContenedorCierreSellado';
+  static const procesoMaritimoAlstroemeriaContenedorControlTemperatura =
+  'procesoMaritimoAlistamientoContenedorControlTemperatura';
+  static const procesoMaritimoAlstroemeriaContenedorObservaciones =
+  'procesoMaritimoAlistamientoContenedorObservaciones';
+  static const procesoMaritimoAlstroemeriaPalletizadoObservaciones =
+  'procesoMaritimoAlistamientoPalletizadoObservaciones';
+  static const procesoMaritimoAlstroemeriaTransporteObservaciones =
+  'procesoMaritimoAlistamientoTransporteObservaciones';
+  static const procesoMaritimoAlstroemeriaEmpaqueObservaciones =
+  'procesoMaritimoAlistamientoEmpaqueObservaciones';
+  static const procesoMaritimoAlstroemeriaHidratacionObservaciones =
+  'procesoMaritimoAlistamientoHidratacionObservaciones';
+  static const procesoMaritimoAlstroemeriaTratamientoObservaciones =
+  'procesoMaritimoAlistamientoTratamientoObservaciones';
+  static const procesoMaritimoAlstroemeriaClasificacionObservaciones =
+  'procesoMaritimoAlistamientoClasificacionObservaciones';
+  static const procesoMaritimoAlstromeriaRecepcionObservaciones =
+  'procesoMaritimoAlistamientoRecepcionObservaciones';
+  static const procesoMaritimoAlstroemeriaFecha = 'procesoMaritimoAlistamientoFecha';
 
   //static const procesoMaritimo
 
@@ -955,12 +1085,10 @@ class DatabaseCreator {
         $procesoMaritimoObservacionesPalletizado TEXT,
         $procesoMaritimoObservacionesLlenadoContenedor TEXT,
         $procesoMaritimoObservacionesRequerimientosCriticos TEXT,
-
         $procesoMaritimoFecha DATE,
         $clienteId INTEGER,
         $postcosechaId INTEGER
       )''';
-
     await db.execute(procesoMaritimoSql);
   }
 
@@ -1093,6 +1221,85 @@ class DatabaseCreator {
     await db.execute(procesoCirculoCalidadLineaSql);
   }
 
+  Future<void> createProcesoMaritimoAlstroemeriaTable(Database db) async {
+
+    final procesoMaritimoSql = '''CREATE TABLE $procesoMaritimoAlstroemeriaTable
+      (
+        $procesoMaritimoAlstroemeriaId INTEGER PRIMARY KEY,
+        $procesoMaritimoAlstroemeriaUsuarioControlId INTEGER,
+        $procesoMaritimoAlstroemeriaNumeroGuia INTEGER,
+        $procesoMaritimoAlstroemeriaDestinoId TEXT,
+        $procesoMaritimoAlstroemeriaRealizadoPor TEXT,
+        $procesoMaritimoAlstroemeriaAcompanamiento TEXT,
+        $procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad INTEGER,
+        $procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta INTEGER,
+        $procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionLongitudTallos INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal  INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionLibreMaltrato INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos INTEGER,
+        $procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo INTEGER,
+        $procesoMaritimoAlstroemeriaTratamientoBaldesTinas INTEGER,
+        $procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion INTEGER,
+        $procesoMaritimoAlstroemeriaTratamientoNivelSolucion INTEGER,
+        $procesoMaritimoAlstroemeriaTratamientoCambioSolucion INTEGER,
+        $procesoMaritimoAlstroemeriaTratamientoTiempoSala INTEGER,
+        $procesoMaritimoAlstroemeriaHidratacionNumeroRamos INTEGER,
+        $procesoMaritimoAlstroemeriaHidratacionRamosHidratados INTEGER,
+        $procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio INTEGER,
+        $procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueEdadFlor INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto INTEGER,
+        $procesoMaritimoAlstroemeriaEmpaqueEmpacoHB INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteTemperauraCajas INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteCamionTransporta INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteTemperaturaCamion INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteBuenaConexion INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteThermoking INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteCajasApiladas INTEGER,
+        $procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado INTEGER,
+        $procesoMaritimoAlstromeriaTransporteTemperaturaFurgon INTEGER,
+        $procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias INTEGER,
+        $procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros INTEGER,
+        $procesoMaritimoAlstroemeriaPalletizadoPalletsAltura INTEGER,
+        $procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido INTEGER,
+        $procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorGenset INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorFechaFabricacion INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorContenedorSeteo INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorContenedorLavado INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorSachetsEthiblock INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorCierreSellado INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorControlTemperatura INTEGER,
+        $procesoMaritimoAlstroemeriaContenedorObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaPalletizadoObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaTransporteObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaEmpaqueObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaHidratacionObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaTratamientoObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaClasificacionObservaciones TEXT,
+        $procesoMaritimoAlstromeriaRecepcionObservaciones TEXT,
+        $procesoMaritimoAlstroemeriaFecha DATE,
+        $clienteId INTEGER,
+        $postcosechaId INTEGER
+      )''';
+    await db.execute(procesoMaritimoSql);
+  }
+
   Future<String> getDatabasePath(String dbName) async {
     final databasePath = await getDatabasesPath();
     final path = p.join(databasePath, dbName);
@@ -1151,6 +1358,7 @@ class DatabaseCreator {
     await createCirculoCalidad(db);
     await createProcesoMaritimoTable(db);
     await createProcesoMaritimoDestinoTable(db);
+    await createProcesoMaritimoAlstroemeriaTable(db);
     await MultiplesClientesMaritimoTable(db);
   }
 }

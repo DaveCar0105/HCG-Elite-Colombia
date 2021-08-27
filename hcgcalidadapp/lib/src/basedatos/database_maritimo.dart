@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
-//import 'package:hcgcalidadapp/src/modelos/proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 
 ////EDITAR
@@ -160,26 +157,5 @@ class DatabaseProcesoMaritimo {
      ${procesoMaritimo.clienteId},${procesoMaritimo.postcosechaId},'${procesoMaritimo.procesoMaritimoFecha}',${procesoMaritimo.procesoMaritimoDestinoId}
       )''';
     return await db.rawInsert(sql);
-  }
-
-  static Future<int> addProcesoMaritimoMultiplesClientes(
-      List<procesoMaritimoMultiplesClientes>
-          procesoMaritimoMultiplesClientes1) async {
-    int a = 0;
-    for (procesoMaritimoMultiplesClientes asd
-        in procesoMaritimoMultiplesClientes1) {
-      final sql = '''INSERT INTO ${DatabaseCreator.procesoMaritimoTable}
-    (
-      ${DatabaseCreator.clienteId},${DatabaseCreator.procesoMaritimoId}
-      
-    )
-    VALUES
-    ( 
-      ${asd.procesoMaritimoMultipleId},${asd.procesoMaritimoMultiplesClientesId}
-
-    )''';
-      a = await db.rawInsert(sql);
-    }
-    return a;
   }
 }
