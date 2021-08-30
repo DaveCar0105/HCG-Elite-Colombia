@@ -10,10 +10,12 @@ namespace HCGCALIDADSERVICES.Models
         public DestinoMaritimo()
         {
             ProcesoMaritimo = new HashSet<ProcesoMaritimo>();
+            ProcesoMaritimoAlstroemeria = new HashSet<ProcesoMaritimoAlstroemeria>();
         }
         public int DestinoMaritimoId { get; set; }
         public string DestinoMaritimoNombre { get; set; }
 
         public ICollection<ProcesoMaritimo> ProcesoMaritimo { get; set; }
+        public ICollection<ProcesoMaritimoAlstroemeria> ProcesoMaritimoAlstroemeria { get; set; }
     }
 }

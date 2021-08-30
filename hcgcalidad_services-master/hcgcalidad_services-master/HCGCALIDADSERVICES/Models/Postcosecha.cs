@@ -19,6 +19,7 @@ namespace HCGCALIDADSERVICES.Models
             ProcesoHidratacion = new HashSet<ProcesoHidratacion>();
             Temperatura = new HashSet<Temperatura>();
             ProcesoMaritimo = new HashSet<ProcesoMaritimo>();
+            ProcesoMaritimoAlstroemeria = new HashSet<ProcesoMaritimoAlstroemeria>();
             CirculoCalidad = new HashSet<CirculoCalidad>();
         }
 
@@ -40,6 +41,7 @@ namespace HCGCALIDADSERVICES.Models
         public ICollection<ProcesoHidratacion> ProcesoHidratacion { get; set; }
         public ICollection<Temperatura> Temperatura { get; set; }
         public ICollection<ProcesoMaritimo> ProcesoMaritimo { get; set; }
+        public ICollection<ProcesoMaritimoAlstroemeria> ProcesoMaritimoAlstroemeria { get; set; }
         public ICollection<CirculoCalidad> CirculoCalidad { get; set; }
     }
 }
