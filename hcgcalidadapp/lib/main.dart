@@ -3,6 +3,7 @@ import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/paginas/actividades_page.dart';
 import 'package:hcgcalidadapp/src/paginas/aprobacion_page.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_proceso_empaque.dart';
+import 'package:hcgcalidadapp/src/paginas/detalle_proceso_maritimo_alstro_page.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_proceso_maritimo_page.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_registro_actividades.dart';
 import 'package:hcgcalidadapp/src/paginas/detalle_registro_temperatura_page.dart';
@@ -79,7 +80,7 @@ class MyApp extends StatelessWidget {
           'detalleMaritimo': (BuildContext context) =>
               DetalleRegistroProcesoMaritimoPage(),
           'detalleMaritimoAlstroemeria': (BuildContext context) =>
-              DetalleRegistroProcesoMaritimoPage(),
+              DetalleRegistroProcesoMaritimoAlstroemeriaPage(),
           'actividades': (BuildContext context) => ActividadesPage(),
           'detalleActividades': (BuildContext context) =>
               DetalleRegistroActividadesPage(),

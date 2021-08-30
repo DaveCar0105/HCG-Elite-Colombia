@@ -8,6 +8,7 @@ import 'package:hcgcalidadapp/src/basedatos/database_ecuador.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_error.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_firma.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_maritimo_alstroemeria.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_proceso_empaque.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_proceso_hidratacion.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_temperatura.dart';
@@ -951,6 +952,10 @@ class DatabaseReportesAprobacion {
           FROM ${DatabaseCreator.procesoMaritimoTable}
           ''';
     var data9 = await db.rawQuery(sql9);
+    final sql10 = '''SELECT COUNT(*) AS CANTIDAD
+          FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}
+          ''';
+    var data10 = await db.rawQuery(sql10);
 
 //eliminar depsues
     //await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
@@ -965,6 +970,7 @@ class DatabaseReportesAprobacion {
     cant.ecuador = data7[0]['CANTIDAD'];
     cant.circuloCalidad = data8[0]['CANTIDAD'];
     cant.procesoMaritimos = data9[0]['CANTIDAD'];
+    cant.procesoMaritimosAlstroemeria = data10[0]['CANTIDAD'];
     return cant;
   }
 
@@ -986,6 +992,7 @@ class DatabaseReportesAprobacion {
     List<ProcesoEmpaque> listaProcesoEmpaque = [];
     List<RegistroTemperatura> listaTemperatura = [];
     List<ProcesoMaritimo> listaProcesoMaritimo = [];
+    List<ProcesoMaritimoAlstroemeria> listaProcesoMaritimoAlstromeria = [];
     List<CirculoCalidadInformacionGeneral> listaCirculoCalidad = [];
     actividades = await DatabaseActividad.getAllActividad();
     hidratacion = await DatabaseProcesoHidratacion.getAllProcesosHidratacion();
@@ -995,10 +1002,9 @@ class DatabaseReportesAprobacion {
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
-    listaProcesoMaritimo =
-        await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
-    listaCirculoCalidad =
-        await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
+    listaProcesoMaritimo = await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
+    listaProcesoMaritimoAlstromeria = await DatabaseProcesoMaritimoAlstroemeria.getAllProcesoMaritimoAlstromeria();
+    listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
     listaRamo.detallesFirma = [];
@@ -1027,6 +1033,15 @@ class DatabaseReportesAprobacion {
           await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         await procesoMaritimoSinc();
+      }
+    } catch (e) {}
+    try {
+      for (int i = 0; i < listaProcesoMaritimoAlstromeria.length; i++) {
+        listaProcesoMaritimoAlstromeria[i].procesoMaritimoAlstroemeriaUsuarioControlId = pref.userId;
+      }
+      int resultMaritimoAlstroemeria = await SincServices.postProcesoMaritimoAlstroemeria(listaProcesoMaritimoAlstromeria);
+      if (resultMaritimoAlstroemeria >= 200 && resultMaritimoAlstroemeria <= 299) {
+        await procesoMaritimoALstromeriaSinc();
       }
     } catch (e) {}
 
@@ -1558,6 +1573,11 @@ class DatabaseReportesAprobacion {
 
   static procesoMaritimoSinc() async {
     final sqlA = 'DELETE FROM ${DatabaseCreator.procesoMaritimoTable}';
+    await db.rawDelete(sqlA);
+  }
+
+  static procesoMaritimoALstromeriaSinc() async {
+    final sqlA = 'DELETE FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}';
     await db.rawDelete(sqlA);
   }
 

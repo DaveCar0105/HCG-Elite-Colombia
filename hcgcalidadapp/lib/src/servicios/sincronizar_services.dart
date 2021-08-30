@@ -223,6 +223,32 @@ class SincServices{
     }
   }
 
+  static Future<int> postProcesoMaritimoAlstroemeria(List<ProcesoMaritimoAlstroemeria> reporte) async{
+    final co = Constantes();
+    Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};
+    try{
+      print("voy a tratar");
+      var url = Uri.http(co.url, '/api/Sincro/procesoMaritimoAlstroemeria');
+      var respuesta = await http.post(url,body: jsonEncode(reporte),headers: header);
+      print("voy a tratar 2");
+      if(respuesta.statusCode>=200 && respuesta.statusCode <=299){
+        return respuesta.statusCode;
+      }else{
+        print("voy a tratar 3");
+        ErrorT errorT = new ErrorT();
+        errorT.errorDetalle = (respuesta.statusCode.toString() + ' - ' + respuesta.body.toString());
+        await DatabaseError.addError(errorT);
+        return respuesta.statusCode;
+      }
+    }catch(ex){
+      print("return error");
+      ErrorT errorT = new ErrorT();
+      errorT.errorDetalle = 'Proceso-Maritimo-Alstroemeria: ' + ex.toString();
+      await DatabaseError.addError(errorT);
+      return 0;
+    }
+  }
+
   static Future<int> postActividad(List<Actividade> reporte) async{
     final co = Constantes();
     Map<String, String> header = {'Accept': "application/json",'content-type': "application/json"};

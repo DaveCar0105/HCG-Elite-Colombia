@@ -19,6 +19,7 @@ class Cantidad {
     this.banda,
     this.ecuador,
     this.procesoMaritimos,
+    this.procesoMaritimosAlstroemeria,
     this.circuloCalidad
   });
 
@@ -31,6 +32,7 @@ class Cantidad {
   int banda;
   int ecuador;
   int procesoMaritimos;
+  int procesoMaritimosAlstroemeria;
   int circuloCalidad;
 
   factory Cantidad.fromJson(Map<String, dynamic> json) => Cantidad(
@@ -43,6 +45,7 @@ class Cantidad {
     banda: json["banda"],
     ecuador: json["ecuador"],
     procesoMaritimos: json["procesoMaritimos"],
+    procesoMaritimosAlstroemeria: json["procesoMaritimosAlstroemeria"],
     circuloCalidad: json["circuloCalidad"]
   );
 
@@ -56,6 +59,7 @@ class Cantidad {
     "banda": banda,
     "ecuador": ecuador,
     "procesoMaritimos": procesoMaritimos,
+    "procesoMaritimosAlstroemeria": procesoMaritimosAlstroemeria,
     "circuloCalidad": circuloCalidad
   };
 }

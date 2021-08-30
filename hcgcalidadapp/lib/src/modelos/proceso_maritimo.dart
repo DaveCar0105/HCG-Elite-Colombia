@@ -452,7 +452,7 @@ class ProcesoMaritimoAlstroemeria {
 
   factory ProcesoMaritimoAlstroemeria.fromJson(Map<String, dynamic> json) =>
       ProcesoMaritimoAlstroemeria(
-       procesoMaritimoAlstroemeriaId: json["procesoMaritimoAlstroemeriaId"],
+        procesoMaritimoAlstroemeriaId: json["procesoMaritimoAlstroemeriaId"],
         procesoMaritimoAlstroemeriaUsuarioControlId: json["procesoMaritimoAlstroemeriaUsuarioControlId"],
         procesoMaritimoAlstroemeriaNumeroGuia: json["procesoMaritimoAlstroemeriaNumeroGuia"],
         procesoMaritimoAlstroemeriaDestinoId:
@@ -721,3 +721,4 @@ class ProcesoMaritimoAlstroemeria {
         "procesoMaritimoAlstroemeriaFecha": procesoMaritimoAlstroemeriaFecha.toIso8601String(),
       };
 }
+

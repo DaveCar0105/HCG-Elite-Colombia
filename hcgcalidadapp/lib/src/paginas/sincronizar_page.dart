@@ -33,6 +33,7 @@ class _SincronizarPageState extends State<SincronizarPage> {
         cantidad.empaque +
         cantidad.banda +
         cantidad.procesoMaritimos +
+        cantidad.procesoMaritimosAlstroemeria +
         cantidad.circuloCalidad;
     setState(() {});
   }
@@ -79,6 +80,7 @@ class _SincronizarPageState extends State<SincronizarPage> {
                 Text("Proceso Hidratación: " + cantidad.procesoHid.toString()),
                 Text("Proceso Empaque: " + cantidad.procesoEmp.toString()),
                 Text("Proceso Marítimos: " + cantidad.procesoMaritimos.toString()),
+                Text("Proceso Marítimos Alstroemeria: " + cantidad.procesoMaritimosAlstroemeria.toString()),
                 Text("PROCESOS DE REGISTROS",style: TextStyle(fontWeight: FontWeight.bold)),
                 Text("Temperaturas: " + cantidad.temperaturas.toString()),
                 Text("Actividades: " + cantidad.actividades.toString()),

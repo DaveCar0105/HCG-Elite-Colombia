@@ -6,7 +6,145 @@ class DatabaseProcesoMaritimoAlstroemeria {
   static Future<List<ProcesoMaritimoAlstroemeria>> getAllProcesoMaritimoAlstromeria() async {
     final sql = 'SELECT * FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}';
     final data = await db.rawQuery(sql);
-    List<ProcesoMaritimoAlstroemeria> maritimo = data as List<ProcesoMaritimoAlstroemeria>;
+    List<ProcesoMaritimoAlstroemeria> maritimo = List();
+    for (var json in data){
+      maritimo.add(new ProcesoMaritimoAlstroemeria(
+        procesoMaritimoAlstroemeriaId: json[DatabaseCreator.procesoMaritimoAlstroemeriaId],
+        procesoMaritimoAlstroemeriaUsuarioControlId: json[DatabaseCreator.procesoMaritimoAlstroemeriaUsuarioControlId],
+        procesoMaritimoAlstroemeriaNumeroGuia: json[DatabaseCreator.procesoMaritimoAlstroemeriaNumeroGuia],
+        procesoMaritimoAlstroemeriaDestinoId:
+            int.parse(json[DatabaseCreator.procesoMaritimoAlstroemeriaDestinoId]),
+        procesoMaritimoAlstroemeriaRealizadoPor: json[DatabaseCreator.procesoMaritimoAlstroemeriaRealizadoPor].toString(),
+        procesoMaritimoAlstroemeriaAcompanamiento: json[DatabaseCreator.procesoMaritimoAlstroemeriaAcompanamiento].toString(),
+        procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad],
+        procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta],
+        procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion],
+        procesoMaritimoAlstroemeriaClasificacionLongitudTallos: 
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionLongitudTallos],
+        procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal],
+        procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado],
+        procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood],
+        procesoMaritimoAlstroemeriaClasificacionLibreMaltrato:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionLibreMaltrato],
+        procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso],
+        procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos: 
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos],
+        procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo],
+        procesoMaritimoAlstroemeriaTratamientoBaldesTinas:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTratamientoBaldesTinas],
+        procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion],
+        procesoMaritimoAlstroemeriaTratamientoNivelSolucion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTratamientoNivelSolucion],
+        procesoMaritimoAlstroemeriaTratamientoCambioSolucion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTratamientoCambioSolucion],
+        procesoMaritimoAlstroemeriaTratamientoTiempoSala:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTratamientoTiempoSala],
+        procesoMaritimoAlstroemeriaHidratacionNumeroRamos:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaHidratacionNumeroRamos],
+        procesoMaritimoAlstroemeriaHidratacionRamosHidratados:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaHidratacionRamosHidratados],
+        procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio],
+        procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado],
+        procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion],
+        procesoMaritimoAlstroemeriaEmpaqueEdadFlor:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueEdadFlor],
+        procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos: 
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos],
+        procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos],
+        procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento],
+       procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo],
+        procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad],
+        procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas],
+        procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue],
+        procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR: 
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR],
+        procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto],
+        procesoMaritimoAlstroemeriaEmpaqueEmpacoHB:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueEmpacoHB],
+        procesoMaritimoAlstroemeriaTransporteTemperauraCajas:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteTemperauraCajas],
+        procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio],
+        procesoMaritimoAlstroemeriaTransporteCamionTransporta:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteCamionTransporta],
+        procesoMaritimoAlstroemeriaTransporteTemperaturaCamion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteTemperaturaCamion],
+        procesoMaritimoAlstroemeriaTransporteBuenaConexion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteBuenaConexion],
+        procesoMaritimoAlstroemeriaTransporteThermoking:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteThermoking],
+        procesoMaritimoAlstroemeriaTransporteCajasApiladas:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteCajasApiladas],
+        procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado],
+        procesoMaritimoAlstromeriaTransporteTemperaturaFurgon:
+            json[DatabaseCreator.procesoMaritimoAlstromeriaTransporteTemperaturaFurgon],
+        procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias],
+        procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros],
+        procesoMaritimoAlstroemeriaPalletizadoPalletsAltura:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaPalletizadoPalletsAltura],
+        procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido],
+        procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado],
+        procesoMaritimoAlstroemeriaContenedorGenset:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorGenset],
+        procesoMaritimoAlstroemeriaContenedorFechaFabricacion:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorFechaFabricacion],
+        procesoMaritimoAlstroemeriaContenedorContenedorSeteo:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorContenedorSeteo],
+        procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado],
+        procesoMaritimoAlstroemeriaContenedorContenedorLavado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorContenedorLavado],
+        procesoMaritimoAlstroemeriaContenedorSachetsEthiblock:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorSachetsEthiblock],
+        procesoMaritimoAlstroemeriaContenedorCierreSellado:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorCierreSellado],
+        procesoMaritimoAlstroemeriaContenedorControlTemperatura:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorControlTemperatura],
+        procesoMaritimoAlstroemeriaContenedorObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaContenedorObservaciones],
+        procesoMaritimoAlstroemeriaPalletizadoObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaPalletizadoObservaciones],
+        procesoMaritimoAlstroemeriaTransporteObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTransporteObservaciones],
+        procesoMaritimoAlstroemeriaEmpaqueObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaEmpaqueObservaciones],
+        procesoMaritimoAlstroemeriaHidratacionObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaHidratacionObservaciones],
+        procesoMaritimoAlstroemeriaTratamientoObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaTratamientoObservaciones],
+        procesoMaritimoAlstroemeriaClasificacionObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstroemeriaClasificacionObservaciones],
+        procesoMaritimoAlstromeriaRecepcionObservaciones:
+            json[DatabaseCreator.procesoMaritimoAlstromeriaRecepcionObservaciones],
+        clienteId: json[DatabaseCreator.clienteId],
+        postcosechaId: json[DatabaseCreator.postcosechaId],
+        procesoMaritimoAlstroemeriaFecha:json[DatabaseCreator.procesoMaritimoAlstroemeriaFecha]!=null? DateTime.parse(json[DatabaseCreator.procesoMaritimoAlstroemeriaFecha]) : null,
+      ));
+    }
     return maritimo;
   }
 
@@ -165,4 +303,5 @@ class DatabaseProcesoMaritimoAlstroemeria {
       )''';
     return await db.rawInsert(sql);
   }
+  
 }
