@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_empaque_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_hidratacion_page.dart';
+import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_alstro_page.dart';
 import 'package:hcgcalidadapp/src/paginas/proceso_maritimo_page.dart';
 
 class HomeChecksPage extends StatefulWidget {
@@ -106,6 +107,35 @@ class _HomeChecksPageState extends State<HomeChecksPage> {
               ),
             ),
           ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProcesoMaritimoAlstroemeriaPage()));
+              },
+              child: Container(
+                width: 135,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Marítimo Alstro',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    Icon(Icons.fact_check)
+                  ],
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
