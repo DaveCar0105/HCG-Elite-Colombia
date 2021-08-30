@@ -48,11 +48,9 @@ namespace HCGCALIDADSERVICES.Controllers
         [HttpGet("{user}/{password}")]
         public int GetUsuariocontrol([FromRoute] string user, string password)
         {
-            
-
             var usuariocontrol = _context.Usuariocontrol.ToList().Find(u=>u.UsuarioControlUsuario == user && u.UsuarioControlContrasenia == password);
 
-            return usuariocontrol.UsuarioControlId;
+            return usuariocontrol!=null? usuariocontrol.UsuarioControlId : 0;
         }
         // PUT: api/Usuarios/5
         [HttpPut("{id}")]
