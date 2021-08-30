@@ -40,7 +40,7 @@ class _ReporteGeneralPageState extends State<ReporteGeneralPage> {
   final comentarioTextEditingController = TextEditingController();
   int _supervisor1GroupValue = -1;
   int _supervisor2GroupValue = -1;
-  List<String> evaluacion = ["Bueno", "Regular", "Excelente"];
+  List<String> evaluacion = ["Regular", "Bueno", "Excelente"];
 
   @override
   void initState() {
