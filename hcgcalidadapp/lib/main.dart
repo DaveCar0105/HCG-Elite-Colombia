@@ -78,6 +78,8 @@ class MyApp extends StatelessWidget {
               DetalleRegistroProcesoEmpaquePage(),
           'detalleMaritimo': (BuildContext context) =>
               DetalleRegistroProcesoMaritimoPage(),
+          'detalleMaritimoAlstroemeria': (BuildContext context) =>
+              DetalleRegistroProcesoMaritimoPage(),
           'actividades': (BuildContext context) => ActividadesPage(),
           'detalleActividades': (BuildContext context) =>
               DetalleRegistroActividadesPage(),

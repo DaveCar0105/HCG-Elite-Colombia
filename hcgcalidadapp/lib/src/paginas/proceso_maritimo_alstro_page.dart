@@ -2,10 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_cliente.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_destinos.dart';
-import 'package:hcgcalidadapp/src/basedatos/database_maritimo.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_maritimo_alstroemeria.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
-import 'package:hcgcalidadapp/src/bloc/registro_proceso_maritimo_bloc.dart';
+import 'package:hcgcalidadapp/src/bloc/registro_proceso_maritimo_alstroemeria_bloc.dart';
 import 'package:hcgcalidadapp/src/modelos/autocompletar.dart';
 import 'package:hcgcalidadapp/src/modelos/cliente.dart';
 import 'package:hcgcalidadapp/src/modelos/destinos.dart';
@@ -79,20 +78,24 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
 
+  final procesoMaritimoObsevacionesRecepcionValue =
+      new TextEditingController();
+  final procesoMaritimoObsevacionesClasificacionValue =
+      new TextEditingController();
+  final procesoMaritimoObsevacionesTratamientoValue =
+      new TextEditingController();
   final procesoMaritimoObsevacionesHidratacionValue =
       new TextEditingController();
   final procesoMaritimoObservacionesEmpaqueValue = new TextEditingController();
-  final procesoMaritimoObservacionesTransferenciaValue =
+  final procesoMaritimoObservacionesTransporteValue =
       new TextEditingController();
   final procesoMaritimoObservacionesPalletizadoValue =
       new TextEditingController();
   final procesoMaritimoObservacionesLlenadoContenedorValue =
       new TextEditingController();
-  final procesoMaritimoObservacionesRequerimientosCriticosValue =
-      new TextEditingController();
 
   final appBar = AppBar();
-  final _procesoMaritimoBloc = new RegistroProcesoMaritimoBloc();
+  final _procesoMaritimoBloc = new RegistroProcesoMaritimoAlstroemeriaBloc();
 
   @override
   void initState() {
@@ -294,7 +297,7 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
       key: _scaffoldKey,
       appBar: AppBar(title: Text('Proceso Marítimo Alstroemeria Check'), actions: <Widget>[
         StreamBuilder(
-            stream: _procesoMaritimoBloc.registroProcesoMaritimoStream(),
+            stream: _procesoMaritimoBloc.registroProcesoMaritimoAlstroemeriaStream(),
             builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
               if (snapshot.hasData) {
                 final data = snapshot.data;
@@ -306,7 +309,7 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                         from: 20,
                         child: InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, 'detalleMaritimo');
+                            Navigator.pushNamed(context, 'detalleMaritimoAlstroemeria');
                           },
                           child: Container(
                             width: width * 0.1,
@@ -347,6 +350,563 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
               _numeroGuia(),
               _realizadoPor(),
               _acompanamiento(),
+              Divider(),
+              Column(children: [
+                Text('RECEPCIÓN',
+                    style: Theme.of(context).textTheme.subtitle1)
+              ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: width * 0.5,
+                  ),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
+                ],
+              ),
+              SizedBox(
+                height: height * 0.025,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'El producto a su llegada a la postcosecha es ubicado en un lugar con condiciones de temperatura no mayores a 15ºC y humedad relativa entre 55 a 65%. Se poseen registros.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Se lava y desinfecta la sala acorde a lo programado en el cronograma de Aseo de postcosecha y programa de aspersión. Se cuenta con registros. Visualmente las mesas, gillotinas, pisos, tinas de surtido y mesas de empaque se encuentran limpios.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Se tiene establecido y se esta cumpliendo el sistema de identificacion para garantizar que lo primero que entre a la sala es lo primero que se procese (PEPS ).'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              _procesoMaritimoObsevacionesRecepcion(),
+              Divider(),
+              Column(children: [
+                Text('CLASIFICACIÓN Y BONCHEO',
+                    style: Theme.of(context).textTheme.subtitle1)
+              ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: width * 0.5,
+                  ),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
+                ],
+              ),
+              SizedBox(
+                height: height * 0.025,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Las mesas de clasificación cuentan con guías que permiten definir la longitud de los tallos, el nivel de deshoje y el grado de tolerancia a la torcidez; asi como guías para verificar el calibre de los tallos y balanza para verificar el peso del ramo.  El personal conoce el uso de la herramienta y aplica los requerimientos establecidos por el cliente.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Existen registros de capacitación al personal de clasificación y boncheo y a los empacadores sobre las especificaciones de clasificación, boncheo y empaque de los ramos y cajas para despacho marítimo.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'A cada ramo se le coloca un capuchon biorentado transparente, Si los ramos son de 6 tallos se utiliza capuchón macro perforado de (35 x 10 x 45) y si son de 10 tallos se utiliza capuchón microperforado de (35 x 10 x 50) y no se les coloca papel durante el armado.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Se Asegura el capuchón y el flower food con cinta (para ramos de 6 tallos) o con doble caucho (para ramos de 10 tallos).'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'El producto bonchado se encuentra  libre de maltrato fuerte, deshidratación, decoloración  y cumple con el punto de apertura establecido.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Los tallos cumplen con el peso y los requerimientos establecidos por el cliente.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Los ramos armados para despachos marítimos cumplen con todos los requerimientos de calidad establecidos  y el porcentaje de conformidad del despacho, acorde a la evaluación realizada por el Inspector de calidad. Se encuentra en ( Mínimo 85%)  Registrar Causas.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Se realiza aseguramiento de ramo terminado a mínimo el 50% del despacho, por parte del Jefe de poscosecha, líder de calidad de la sala y supervisor de poscosecha.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              _procesoMaritimoObsevacionesClasificacion(),
+              Divider(),
+              Column(children: [
+                Text('TRATAMIENTO DE HIDRATACIÓN',
+                    style: Theme.of(context).textTheme.subtitle1)
+              ]),
+              Container(padding: const EdgeInsets.only(bottom: 5)),
+              Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: width * 0.5,
+                  ),
+                  Expanded(child: 
+                    Text(
+                      'Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  ),
+                  Expanded(child: 
+                    Text(
+                      'No Cumple:',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold),
+                    )
+                  )
+                ],
+              ),
+              SizedBox(
+                height: height * 0.025,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Los baldes/tinas que se utilizan para el proceso de hidratación, fueron lavados y desinfectados, se encuentran limpios y libres de residuos de material vegetal  y/o suciedad acumulada en fondo y/o paredes de los mismos.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Se está preparando la solución de hidratación con las condiciones de pH del agua origen y las condiciones finales de la solución preparada (pH entre 4,5 a 5,5  medido con pHmétro o 4 – 5 con cinta indicadora marca Merck, ausencia de cloro y concentración de plata).  Registrar información en formato de preparación de soluciones de hidratación poscosecha.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'El nivel de solución en las tinas de hidratación es de 7 cm y en baldes de 3 cm, se garantiza que todos los tallos estén inmersos en la solución.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'Se realiza el cambio de la solución de hidratación máximo 3 días.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: width * 0.5,
+                    child: Text(
+                        'El tiempo en sala de la flor no debe ser mayor a 40 minutos.'),
+                  ),
+                  Radio(
+                      value: 0,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoTiempoSala = value;
+                        });
+                      }),
+                  Spacer(),
+                  Radio(
+                      value: 1,
+                      groupValue: procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+                      onChanged: (value) {
+                        setState(() {
+                          procesoMaritimoAlstroemeriaTratamientoTiempoSala = value;
+                        });
+                      }),
+                ],
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
+              _procesoMaritimoObsevacionesTratamiento(),
               Divider(),
               Column(children: [
                 Text('HIDRATACIÓN',
@@ -1130,7 +1690,7 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                       }),
                 ],
               ),
-              _procesoMaritimoObsevacionesTransferencia(),
+              _procesoMaritimoObsevacionesTransporte(),
               Divider(),
               Column(children: [
                 Text('PALLETIZADO',
@@ -1572,6 +2132,45 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
     );
   }
 
+  Widget _procesoMaritimoObsevacionesRecepcion() {
+    return Container(
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observación recepción',
+          labelText: 'Observación recepción',
+        ),
+        controller: procesoMaritimoObsevacionesRecepcionValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesClasificacion() {
+    return Container(
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observación clasificación y boncheo',
+          labelText: 'Observación clasificación y boncheo',
+        ),
+        controller: procesoMaritimoObsevacionesClasificacionValue,
+      ),
+    );
+  }
+
+  Widget _procesoMaritimoObsevacionesTratamiento() {
+    return Container(
+      child: TextField(
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          hintText: 'Observación tratamiento de hidratación',
+          labelText: 'Observación tratamiento de hidratacaión',
+        ),
+        controller: procesoMaritimoObsevacionesTratamientoValue,
+      ),
+    );
+  }
+
   Widget _procesoMaritimoObsevacionesHidratacion() {
     return Container(
       child: TextField(
@@ -1598,15 +2197,15 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
     );
   }
 
-  Widget _procesoMaritimoObsevacionesTransferencia() {
+  Widget _procesoMaritimoObsevacionesTransporte() {
     return Container(
       child: TextField(
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          hintText: 'Observación transferencia',
-          labelText: 'Observación transferencia',
+          hintText: 'Observación transporte al centro de acopio',
+          labelText: 'Observación transporte al centro de acopio',
         ),
-        controller: procesoMaritimoObservacionesTransferenciaValue,
+        controller: procesoMaritimoObservacionesTransporteValue,
       ),
     );
   }
@@ -1637,19 +2236,6 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
     );
   }
 
-  Widget _procesoMaritimoObsevacionesRequerimientosCriticos() {
-    return Container(
-      child: TextField(
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          hintText: 'Observación requerimiento crítico',
-          labelText: 'Observación requerimiento crítico',
-        ),
-        controller: procesoMaritimoObservacionesRequerimientosCriticosValue,
-      ),
-    );
-  }
-
   _validarForm() async {
     if (
         destinosId >= 0 &&
@@ -1658,74 +2244,78 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
         procesoMaritimoAcompanamientoValue.text != '' &&
         postcosechaId != 0 &&
         clientesId != 0 ) {
+          int numeroGuia;
+          try{
+            numeroGuia = int.parse(procesoMaritimoNumeroGuiaValue.text);
+          } catch(e){}
       ProcesoMaritimoAlstroemeria procesoMaritimo = new ProcesoMaritimoAlstroemeria( 
         procesoMaritimoAlstroemeriaUsuarioControlId: 0,
-        procesoMaritimoAlstroemeriaNumeroGuia : 0,
-        procesoMaritimoAlstroemeriaDestinoId: 1,
-        procesoMaritimoAlstroemeriaRealizadoPor: "",
-        procesoMaritimoAlstroemeriaAcompanamiento: "",
-        procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad : -1,
-        procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta : -1,
-        procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion : -1,
-        procesoMaritimoAlstroemeriaClasificacionLongitudTallos : -1,
-        procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal : -1,
-        procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado : -1,
-        procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood : -1,
-        procesoMaritimoAlstroemeriaClasificacionLibreMaltrato : -1,
-        procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso : -1,
-        procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos : -1,
-        procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo : -1,
-        procesoMaritimoAlstroemeriaTratamientoBaldesTinas : -1,
-        procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion : -1,
-        procesoMaritimoAlstroemeriaTratamientoNivelSolucion : -1,
-        procesoMaritimoAlstroemeriaTratamientoCambioSolucion : -1,
-        procesoMaritimoAlstroemeriaTratamientoTiempoSala : -1,
-        procesoMaritimoAlstroemeriaHidratacionNumeroRamos : -1,
-        procesoMaritimoAlstroemeriaHidratacionRamosHidratados : -1,
-        procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio : -1,
-        procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado : -1,
-        procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion : -1,
-        procesoMaritimoAlstroemeriaEmpaqueEdadFlor : -1,
-        procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos : -1,
-        procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos : -1,
-        procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento : -1,
-        procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo : -1,
-        procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad : -1,
-        procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas : -1,
-        procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue : -1,
-        procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR : -1,
-        procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto : -1,
-        procesoMaritimoAlstroemeriaEmpaqueEmpacoHB : -1,
-        procesoMaritimoAlstroemeriaTransporteTemperauraCajas : -1,
-        procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio : -1,
-        procesoMaritimoAlstroemeriaTransporteCamionTransporta : -1,
-        procesoMaritimoAlstroemeriaTransporteTemperaturaCamion : -1,
-        procesoMaritimoAlstroemeriaTransporteBuenaConexion : -1,
-        procesoMaritimoAlstroemeriaTransporteThermoking : -1,
-        procesoMaritimoAlstroemeriaTransporteCajasApiladas : -1,
-        procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado : -1,
-        procesoMaritimoAlstromeriaTransporteTemperaturaFurgon : -1,
-        procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias : -1,
-        procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros : -1,
-        procesoMaritimoAlstroemeriaPalletizadoPalletsAltura : -1,
-        procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido : -1,
-        procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado : -1,
-        procesoMaritimoAlstroemeriaContenedorGenset : -1,
-        procesoMaritimoAlstroemeriaContenedorFechaFabricacion : -1,
-        procesoMaritimoAlstroemeriaContenedorContenedorSeteo : -1,
-        procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado : -1,
-        procesoMaritimoAlstroemeriaContenedorContenedorLavado : -1,
-        procesoMaritimoAlstroemeriaContenedorSachetsEthiblock : -1,
-        procesoMaritimoAlstroemeriaContenedorCierreSellado : -1,
-        procesoMaritimoAlstroemeriaContenedorControlTemperatura : -1,
-        procesoMaritimoAlstroemeriaContenedorObservaciones : "",
-        procesoMaritimoAlstroemeriaPalletizadoObservaciones : "",
-        procesoMaritimoAlstroemeriaTransporteObservaciones : "",
-        procesoMaritimoAlstroemeriaEmpaqueObservaciones : "",
-        procesoMaritimoAlstroemeriaHidratacionObservaciones : "",
-        procesoMaritimoAlstroemeriaTratamientoObservaciones : "",
-        procesoMaritimoAlstroemeriaClasificacionObservaciones : "",
-        procesoMaritimoAlstromeriaRecepcionObservaciones : "",
+        procesoMaritimoAlstroemeriaNumeroGuia : numeroGuia,
+        procesoMaritimoAlstroemeriaDestinoId: destinosId,
+        procesoMaritimoAlstroemeriaRealizadoPor: procesoMaritimoRealizadoPorValue.text,
+        procesoMaritimoAlstroemeriaAcompanamiento: procesoMaritimoAcompanamientoValue.text,
+        procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad : procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+        procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta : procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+        procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion : procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+        procesoMaritimoAlstroemeriaClasificacionLongitudTallos : procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+        procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal : procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+        procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado : procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+        procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood : procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+        procesoMaritimoAlstroemeriaClasificacionLibreMaltrato : procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+        procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso : procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+        procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos : procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+        procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo : procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+        procesoMaritimoAlstroemeriaTratamientoBaldesTinas : procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+        procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion : procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+        procesoMaritimoAlstroemeriaTratamientoNivelSolucion : procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+        procesoMaritimoAlstroemeriaTratamientoCambioSolucion : procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+        procesoMaritimoAlstroemeriaTratamientoTiempoSala : procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+        procesoMaritimoAlstroemeriaHidratacionNumeroRamos : procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
+        procesoMaritimoAlstroemeriaHidratacionRamosHidratados : procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
+        procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio : procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
+        procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado : procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado,
+        procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion : procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion,
+        procesoMaritimoAlstroemeriaEmpaqueEdadFlor : procesoMaritimoAlstroemeriaEmpaqueEdadFlor,
+        procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos : procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
+        procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos : procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
+        procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento : procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
+        procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo : procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
+        procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad : procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
+        procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas : procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
+        procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue : procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
+        procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR : procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
+        procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto : procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
+        procesoMaritimoAlstroemeriaEmpaqueEmpacoHB : procesoMaritimoAlstroemeriaEmpaqueEmpacoHB,
+        procesoMaritimoAlstroemeriaTransporteTemperauraCajas : procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
+        procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio : procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio,
+        procesoMaritimoAlstroemeriaTransporteCamionTransporta : procesoMaritimoAlstroemeriaTransporteCamionTransporta,
+        procesoMaritimoAlstroemeriaTransporteTemperaturaCamion : procesoMaritimoAlstroemeriaTransporteTemperaturaCamion,
+        procesoMaritimoAlstroemeriaTransporteBuenaConexion : procesoMaritimoAlstroemeriaTransporteBuenaConexion,
+        procesoMaritimoAlstroemeriaTransporteThermoking : procesoMaritimoAlstroemeriaTransporteThermoking,
+        procesoMaritimoAlstroemeriaTransporteCajasApiladas : procesoMaritimoAlstroemeriaTransporteCajasApiladas,
+        procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado : procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado,
+        procesoMaritimoAlstromeriaTransporteTemperaturaFurgon : procesoMaritimoAlstromeriaTransporteTemperaturaFurgon,
+        procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias : procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias,
+        procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros : procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros,
+        procesoMaritimoAlstroemeriaPalletizadoPalletsAltura : procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
+        procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido : procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido,
+        procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado : procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
+        procesoMaritimoAlstroemeriaContenedorGenset : procesoMaritimoAlstroemeriaContenedorGenset,
+        procesoMaritimoAlstroemeriaContenedorFechaFabricacion : procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
+        procesoMaritimoAlstroemeriaContenedorContenedorSeteo : procesoMaritimoAlstroemeriaContenedorContenedorSeteo,
+        procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado : procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
+        procesoMaritimoAlstroemeriaContenedorContenedorLavado : procesoMaritimoAlstroemeriaContenedorContenedorLavado,
+        procesoMaritimoAlstroemeriaContenedorSachetsEthiblock : procesoMaritimoAlstroemeriaContenedorSachetsEthiblock,
+        procesoMaritimoAlstroemeriaContenedorCierreSellado : procesoMaritimoAlstroemeriaContenedorCierreSellado,
+        procesoMaritimoAlstroemeriaContenedorControlTemperatura : procesoMaritimoAlstroemeriaContenedorControlTemperatura,
+        procesoMaritimoAlstroemeriaContenedorObservaciones : procesoMaritimoObservacionesLlenadoContenedorValue.text,
+        procesoMaritimoAlstroemeriaPalletizadoObservaciones : procesoMaritimoObservacionesPalletizadoValue.text,
+        procesoMaritimoAlstroemeriaTransporteObservaciones : procesoMaritimoObservacionesTransporteValue.text,
+        procesoMaritimoAlstroemeriaEmpaqueObservaciones : procesoMaritimoObservacionesEmpaqueValue.text,
+        procesoMaritimoAlstroemeriaHidratacionObservaciones : procesoMaritimoObsevacionesHidratacionValue.text,
+        procesoMaritimoAlstroemeriaTratamientoObservaciones : procesoMaritimoObsevacionesTratamientoValue.text,
+        procesoMaritimoAlstroemeriaClasificacionObservaciones : procesoMaritimoObsevacionesClasificacionValue.text,
+        procesoMaritimoAlstromeriaRecepcionObservaciones : procesoMaritimoObsevacionesRecepcionValue.text,
         procesoMaritimoAlstroemeriaFecha: DateTime.now(),
         postcosechaId: postcosechaId,
         clienteId: clientesId,
@@ -1736,10 +2326,10 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
       if (procesoMaritimoId != 0) {
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
-        _procesoMaritimoBloc.registroProcesoMaritimoStream();
+        _procesoMaritimoBloc.registroProcesoMaritimoAlstroemeriaStream();
         _procesoMaritimoBloc.itemAgregado();
       } else {
-        mostrarSnackbar('No se pudo ingresar en la base de datos', Colors.red,
+        mostrarSnackbar('No se pudo guardar la información', Colors.red,
             _scaffoldKey);
       }
     } else {
@@ -1806,10 +2396,12 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
 
     procesoMaritimoObsevacionesHidratacionValue.text = '';
     procesoMaritimoObservacionesEmpaqueValue.text = '';
-    procesoMaritimoObservacionesTransferenciaValue.text = '';
     procesoMaritimoObservacionesPalletizadoValue.text = '';
     procesoMaritimoObservacionesLlenadoContenedorValue.text = '';
-    procesoMaritimoObservacionesRequerimientosCriticosValue.text = '';
+    procesoMaritimoObsevacionesRecepcionValue.text = '';
+    procesoMaritimoObsevacionesClasificacionValue.text = '';
+    procesoMaritimoObsevacionesTratamientoValue.text = '';
+    procesoMaritimoObservacionesTransporteValue.text = '';
 
     procesoMaritimoNumeroGuiaValue.text = '';
     procesoMaritimoRealizadoPorValue.text = '';
