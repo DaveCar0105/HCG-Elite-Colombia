@@ -1255,170 +1255,256 @@ namespace HCGCALIDADSERVICES.Controllers
                     reporte.ActividadesQc.Add(item);
                 });
 
-                //CIRCULO DE CALIDAD
-                List<Models.CirculoCalidad> listaCirculoCalidad = _context.CirculoCalidad.Where(c => new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) <= fechaHasta)
-                    .Include(a => a.Postcosecha)
-                    .Include(a => a.CirculoCalidadVariedad)
-                    .Include(a => a.CirculoCalidadNumeroMesa)
-                    .Include(a => a.CirculoCalidadLinea)
-                    .Include(a => a.CirculoCalidadCliente).ThenInclude(a=> a.Cliente)
-                    .Include(a => a.CirculoCalidadProducto).ThenInclude(a => a.Producto)
-                    .Include(a => a.CirculoCalidadFalencia).ThenInclude(a => a.Falenciaramo).ThenInclude(a => a.CategoriaFalenciaRamo)
-                    .ToList();
+                addReporteCirculoCalidad(fechaDesde, fechaHasta, reporte);
 
-                listaCirculoCalidad.ForEach(c =>
+                addReporteProcesoMaritimo(fechaDesde, fechaHasta, reporte);
+
+                addReporteProcesoMaritimoAlstroemeria(fechaDesde, fechaHasta, reporte);
+            } 
+            return reporte;
+        }
+
+        private void addReporteCirculoCalidad(DateTime fechaDesde, DateTime fechaHasta, ReporteExcel reporte)
+        {
+            List<Models.CirculoCalidad> listaCirculoCalidad = _context.CirculoCalidad.Where(c => new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.CirculoCalidadFecha.Value.Year, c.CirculoCalidadFecha.Value.Month, c.CirculoCalidadFecha.Value.Day, 0, 0, 0) <= fechaHasta)
+                .Include(a => a.Postcosecha)
+                .Include(a => a.CirculoCalidadVariedad)
+                .Include(a => a.CirculoCalidadNumeroMesa)
+                .Include(a => a.CirculoCalidadLinea)
+                .Include(a => a.CirculoCalidadCliente).ThenInclude(a => a.Cliente)
+                .Include(a => a.CirculoCalidadProducto).ThenInclude(a => a.Producto)
+                .Include(a => a.CirculoCalidadFalencia).ThenInclude(a => a.Falenciaramo).ThenInclude(a => a.CategoriaFalenciaRamo)
+                .ToList();
+
+            listaCirculoCalidad.ForEach(c =>
+            {
+                string[] fecha = transformarFecha(Convert.ToDateTime(c.CirculoCalidadFecha));
+                string semana = fecha[0];
+                string mes = fecha[1];
+                string fechaString = fecha[2];
+                string postCosecha = c.Postcosecha != null ? c.Postcosecha.PostcosechaNombre : "N/E";
+                int numeroReu = c.CirculoCalidadNumeroReunion;
+
+                for (int ind = 0; ind < c.CirculoCalidadFalencia.Count; ind++)
                 {
-                    string[] fecha = transformarFecha(Convert.ToDateTime(c.CirculoCalidadFecha));
-                    string semana = fecha[0];
-                    string mes = fecha[1];
-                    string fechaString = fecha[2];
-                    string postCosecha = c.Postcosecha != null ? c.Postcosecha.PostcosechaNombre : "N/E";
-                    int numeroReu = c.CirculoCalidadNumeroReunion;
+                    CirculoCalidadCausasReporte item = new CirculoCalidadCausasReporte();
+                    item.Semana = semana;
+                    item.Mes = mes;
+                    item.Fecha = fechaString;
+                    item.PostCosecha = postCosecha;
+                    item.NumeroReunion = numeroReu;
+                    item.Causa = c.CirculoCalidadFalencia.ElementAt(ind).Falenciaramo?.CategoriaFalenciaRamo.CategoriaFalenciaRamoNombre;
+                    item.CausaRelacionada = c.CirculoCalidadFalencia.ElementAt(ind).Falenciaramo?.FalenciaRamoNombre;
+                    item.Indice = c.CirculoCalidadFalencia.ElementAt(ind).Rechazados;
+                    item.PorDistribucion = c.CirculoCalidadFalencia.ElementAt(ind).Porcentaje;
+                    reporte.CirculoCalidadCausas.Add(item);
+                }
 
-                    for (int ind = 0; ind < c.CirculoCalidadFalencia.Count; ind++)
-                    {
-                        CirculoCalidadCausasReporte item = new CirculoCalidadCausasReporte();
-                        item.Semana = semana;
-                        item.Mes = mes;
-                        item.Fecha = fechaString;
-                        item.PostCosecha = postCosecha;
-                        item.NumeroReunion = numeroReu;
-                        item.Causa = c.CirculoCalidadFalencia.ElementAt(ind).Falenciaramo?.CategoriaFalenciaRamo.CategoriaFalenciaRamoNombre;
-                        item.CausaRelacionada = c.CirculoCalidadFalencia.ElementAt(ind).Falenciaramo?.FalenciaRamoNombre;
-                        item.Indice = c.CirculoCalidadFalencia.ElementAt(ind).Rechazados;
-                        item.PorDistribucion = c.CirculoCalidadFalencia.ElementAt(ind).Porcentaje;
-                        reporte.CirculoCalidadCausas.Add(item);
-                    }
+                for (int ind = 0; ind < c.CirculoCalidadCliente.Count; ind++)
+                {
+                    CirculoCalidadClientesReporte item = new CirculoCalidadClientesReporte();
+                    item.Semana = semana;
+                    item.Mes = mes;
+                    item.Fecha = fechaString;
+                    item.PostCosecha = postCosecha;
+                    item.NumeroReunion = numeroReu;
+                    item.Cliente = c.CirculoCalidadCliente.ElementAt(ind).Cliente?.ClienteNombre;
+                    item.RamosRevisados = c.CirculoCalidadCliente.ElementAt(ind).Revisados;
+                    item.RamosRechazados = c.CirculoCalidadCliente.ElementAt(ind).Rechazados;
+                    item.PorNoConformidad = c.CirculoCalidadCliente.ElementAt(ind).Porcentaje;
+                    reporte.CirculoCalidadClientes.Add(item);
+                }
 
-                    for (int ind = 0; ind < c.CirculoCalidadCliente.Count; ind++)
-                    {
-                        CirculoCalidadClientesReporte item = new CirculoCalidadClientesReporte();
-                        item.Semana = semana;
-                        item.Mes = mes;
-                        item.Fecha = fechaString;
-                        item.PostCosecha = postCosecha;
-                        item.NumeroReunion = numeroReu;
-                        item.Cliente = c.CirculoCalidadCliente.ElementAt(ind).Cliente?.ClienteNombre;
-                        item.RamosRevisados = c.CirculoCalidadCliente.ElementAt(ind).Revisados;
-                        item.RamosRechazados = c.CirculoCalidadCliente.ElementAt(ind).Rechazados;
-                        item.PorNoConformidad = c.CirculoCalidadCliente.ElementAt(ind).Porcentaje;
-                        reporte.CirculoCalidadClientes.Add(item);
-                    }
+                for (int ind = 0; ind < c.CirculoCalidadProducto.Count; ind++)
+                {
+                    CirculoCalidadProductosReporte item = new CirculoCalidadProductosReporte();
+                    item.Semana = semana;
+                    item.Mes = mes;
+                    item.Fecha = fechaString;
+                    item.PostCosecha = postCosecha;
+                    item.NumeroReunion = numeroReu;
+                    item.Producto = c.CirculoCalidadProducto.ElementAt(ind).Producto?.ProductoNombre;
+                    item.RamosRevisados = c.CirculoCalidadProducto.ElementAt(ind).Revisados;
+                    item.RamosRechazados = c.CirculoCalidadProducto.ElementAt(ind).Rechazados;
+                    item.PorNoConformidad = c.CirculoCalidadProducto.ElementAt(ind).Porcentaje;
+                    reporte.CirculoCalidadProducto.Add(item);
+                }
 
-                    for (int ind = 0; ind < c.CirculoCalidadProducto.Count; ind++)
-                    {
-                        CirculoCalidadProductosReporte item = new CirculoCalidadProductosReporte();
-                        item.Semana = semana;
-                        item.Mes = mes;
-                        item.Fecha = fechaString;
-                        item.PostCosecha = postCosecha;
-                        item.NumeroReunion = numeroReu;
-                        item.Producto = c.CirculoCalidadProducto.ElementAt(ind).Producto?.ProductoNombre;
-                        item.RamosRevisados = c.CirculoCalidadProducto.ElementAt(ind).Revisados;
-                        item.RamosRechazados = c.CirculoCalidadProducto.ElementAt(ind).Rechazados;
-                        item.PorNoConformidad = c.CirculoCalidadProducto.ElementAt(ind).Porcentaje;
-                        reporte.CirculoCalidadProducto.Add(item);
-                    }
+                for (int ind = 0; ind < c.CirculoCalidadVariedad.Count; ind++)
+                {
+                    CirculoCalidadVariedadReporte item = new CirculoCalidadVariedadReporte();
+                    item.Semana = semana;
+                    item.Mes = mes;
+                    item.Fecha = fechaString;
+                    item.PostCosecha = postCosecha;
+                    item.NumeroReunion = numeroReu;
+                    item.Variedad = c.CirculoCalidadVariedad.ElementAt(ind).CirculoCalidadVariedadNombre;
+                    item.RamosRechazados = c.CirculoCalidadVariedad.ElementAt(ind).Rechazados;
+                    item.PorNoConformidad = c.CirculoCalidadVariedad.ElementAt(ind).Porcentaje;
+                    reporte.CirculoCalidadVariedad.Add(item);
+                }
 
-                    for (int ind = 0; ind < c.CirculoCalidadVariedad.Count; ind++)
-                    {
-                        CirculoCalidadVariedadReporte item = new CirculoCalidadVariedadReporte();
-                        item.Semana = semana;
-                        item.Mes = mes;
-                        item.Fecha = fechaString;
-                        item.PostCosecha = postCosecha;
-                        item.NumeroReunion = numeroReu;
-                        item.Variedad = c.CirculoCalidadVariedad.ElementAt(ind).CirculoCalidadVariedadNombre;
-                        item.RamosRechazados = c.CirculoCalidadVariedad.ElementAt(ind).Rechazados;
-                        item.PorNoConformidad = c.CirculoCalidadVariedad.ElementAt(ind).Porcentaje;
-                        reporte.CirculoCalidadVariedad.Add(item);
-                    }
+                for (int ind = 0; ind < c.CirculoCalidadNumeroMesa.Count; ind++)
+                {
+                    CirculoCalidadNumeroMesaReporte item = new CirculoCalidadNumeroMesaReporte();
+                    item.Semana = semana;
+                    item.Mes = mes;
+                    item.Fecha = fechaString;
+                    item.PostCosecha = postCosecha;
+                    item.NumeroReunion = numeroReu;
+                    item.NumeroMesa = c.CirculoCalidadNumeroMesa.ElementAt(ind).CirculoCalidadNumeroMesaNombre;
+                    item.RamosRechazados = c.CirculoCalidadNumeroMesa.ElementAt(ind).Rechazados;
+                    item.PorNoConformidad = c.CirculoCalidadNumeroMesa.ElementAt(ind).Porcentaje;
+                    reporte.CirculoCalidadNumeroMesa.Add(item);
+                }
 
-                    for (int ind = 0; ind < c.CirculoCalidadNumeroMesa.Count; ind++)
-                    {
-                        CirculoCalidadNumeroMesaReporte item = new CirculoCalidadNumeroMesaReporte();
-                        item.Semana = semana;
-                        item.Mes = mes;
-                        item.Fecha = fechaString;
-                        item.PostCosecha = postCosecha;
-                        item.NumeroReunion = numeroReu;
-                        item.NumeroMesa = c.CirculoCalidadNumeroMesa.ElementAt(ind).CirculoCalidadNumeroMesaNombre;
-                        item.RamosRechazados = c.CirculoCalidadNumeroMesa.ElementAt(ind).Rechazados;
-                        item.PorNoConformidad = c.CirculoCalidadNumeroMesa.ElementAt(ind).Porcentaje;
-                        reporte.CirculoCalidadNumeroMesa.Add(item);
-                    }
+                for (int ind = 0; ind < c.CirculoCalidadLinea.Count; ind++)
+                {
+                    CirculoCalidadLineaReporte item = new CirculoCalidadLineaReporte();
+                    item.Semana = semana;
+                    item.Mes = mes;
+                    item.Fecha = fechaString;
+                    item.PostCosecha = postCosecha;
+                    item.NumeroReunion = numeroReu;
+                    item.Linea = c.CirculoCalidadLinea.ElementAt(ind).CirculoCalidadLineaNombre;
+                    item.RamosRechazados = c.CirculoCalidadLinea.ElementAt(ind).Rechazados;
+                    item.PorNoConformidad = c.CirculoCalidadLinea.ElementAt(ind).Porcentaje;
+                    reporte.CirculoCalidadLinea.Add(item);
+                }
+            });
+        }
 
-                    for (int ind = 0; ind < c.CirculoCalidadLinea.Count; ind++)
-                    {
-                        CirculoCalidadLineaReporte item = new CirculoCalidadLineaReporte();
-                        item.Semana = semana;
-                        item.Mes = mes;
-                        item.Fecha = fechaString;
-                        item.PostCosecha = postCosecha;
-                        item.NumeroReunion = numeroReu;
-                        item.Linea = c.CirculoCalidadLinea.ElementAt(ind).CirculoCalidadLineaNombre;
-                        item.RamosRechazados = c.CirculoCalidadLinea.ElementAt(ind).Rechazados;
-                        item.PorNoConformidad = c.CirculoCalidadLinea.ElementAt(ind).Porcentaje;
-                        reporte.CirculoCalidadLinea.Add(item);
-                    }
-                });
-
-                List<Models.ProcesoMaritimo> listaProcesoMaritimo = _context.ProcesoMaritimo.Where(c => new DateTime(c.ProcesoMaritimoFecha.Value.Year, c.ProcesoMaritimoFecha.Value.Month, c.ProcesoMaritimoFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.ProcesoMaritimoFecha.Value.Year, c.ProcesoMaritimoFecha.Value.Month, c.ProcesoMaritimoFecha.Value.Day, 0, 0, 0) <= fechaHasta)
+        private void addReporteProcesoMaritimo(DateTime fechaDesde, DateTime fechaHasta, ReporteExcel reporte)
+        {
+            List<Models.ProcesoMaritimo> listaProcesoMaritimo = _context.ProcesoMaritimo.Where(c => new DateTime(c.ProcesoMaritimoFecha.Value.Year, c.ProcesoMaritimoFecha.Value.Month, c.ProcesoMaritimoFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.ProcesoMaritimoFecha.Value.Year, c.ProcesoMaritimoFecha.Value.Month, c.ProcesoMaritimoFecha.Value.Day, 0, 0, 0) <= fechaHasta)
                     .Include(a => a.Postcosecha)
                     .Include(a => a.Usuariocontrol)
                     .Include(a => a.Cliente)
                     .ToList();
 
-                listaProcesoMaritimo.ForEach(c =>
-                {
-                    string[] fecha = transformarFecha(Convert.ToDateTime(c.ProcesoMaritimoFecha));
-                    string Semana = fecha[0];
-                    string Mes = fecha[1];
-                    string FechaValue = fecha[2];
-                    string Postcosecha = c.Postcosecha.PostcosechaNombre;
-                    string NombreQc = c.Usuariocontrol.UsuarioControlNombre;
-                    string Cliente = c.Cliente.ClienteNombre;
-                    int NumeroGuia = c.ProcesoMaritimoNumeroGuia;
+            listaProcesoMaritimo.ForEach(c =>
+            {
+                string[] fecha = transformarFecha(Convert.ToDateTime(c.ProcesoMaritimoFecha));
+                string Semana = fecha[0];
+                string Mes = fecha[1];
+                string FechaValue = fecha[2];
+                string Postcosecha = c.Postcosecha.PostcosechaNombre;
+                string NombreQc = c.Usuariocontrol.UsuarioControlNombre;
+                string Cliente = c.Cliente.ClienteNombre;
+                int NumeroGuia = c.ProcesoMaritimoNumeroGuia;
 
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPhSoluciones, "HIDRATACION", "Ph Soluciones", "1.2");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNivelSolucionTinas, "HIDRATACION", "Nivel Solucion Tinas", "1.3");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoSolucionHidratacionSinVegetal, "HIDRATACION", "Solucion Hidratacion Sin Vegetal", "1.4");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCuartoFrio, "HIDRATACION", "Temperatura Cuarto Frio", "1.5");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaSolucionesHidratacion, "HIDRATACION", "Temperatura Soluciones Hidratacion", "1.6");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEmpaqueAmbienteTemperatura, "EMPAQUE", "Empaque Ambiente Temperatura", "2.1");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFlorEmpacada, "EMPAQUE", "Flor Empacada", "2.2");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTransportCareEmpaque, "EMPAQUE", "Transport Care Empaque", "2.3");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCajasVisualDeformes, "EMPAQUE", "Cajas Visual Deformes", "2.4");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEtiquetasCajasUbicadas, "EMPAQUE", "Etiquetas Cajas Ubicadas", "2.5");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "TRANSFERENCIA", "Temperatura Cubiculo Camion", "3.1");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCajasTransferencia, "TRANSFERENCIA", "Temperatura Cajas Transferencia", "3.2");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAparenciaCajasTransferencia, "TRANSFERENCIA", "Aparencia Cajas Transferencia", "3.3");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "PELLETIZADO", "Estibas Debidamente Selladas", "4.1");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsEsquinerosCorrectamenteAjustados, "PELLETIZADO", "Pallets Esquineros Correctamente Ajustados", "4.2");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsAlturaContenedor, "PELLETIZADO", "Pallets Altura Contenedor", "4.3");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaPalletContenedor, "PELLETIZADO", "Temperatura Pallet Contenedor", "4.4");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoNumero, "PELLETIZADO", "Pallet Identificado Numero", "4.5");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTomaRegistroTemperaturas, "PELLETIZADO", "Toma Registro Temperaturas", "4.6");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoGenset, "LLENADO CONTENEDOR", "Genset", "5.1");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorEdadFabricacion, "LLENADO CONTENEDOR", "Contenedor Edad Fabricacion", "5.2");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorCumplimientoSeteo, "LLENADO CONTENEDOR", "Contenedor Cumplimiento Seteo", "5.3");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorPreEnfriado, "LLENADO CONTENEDOR", "Contenedor Pre-Enfriado", "5.4");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorlavadoDesinfectado, "LLENADO CONTENEDOR", "Contenedor Lavado Desinfectado", "5.5");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCarguePreviamenteHumedecidos, "LLENADO CONTENEDOR", "Cargue Previamente Humedecidos", "5.6");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoLlegandoCierreSellado, "LLENADO CONTENEDOR", "Llegando Cierre Sellado", "5.7");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEstibasSelloICA, "REQUERIMIENTOS CRITICOS", "Estibas Sello ICA", "6.1");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsTensionZunchos, "REQUERIMIENTOS CRITICOS", "Pallets Tension Zunchos", "6.2");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoEtiqueta, "REQUERIMIENTOS CRITICOS", "Pallet Identificado Etiqueta", "6.3");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoComponentePalletDestinosEtiquetas, "REQUERIMIENTOS CRITICOS", "Componente Pallet Destinos Etiquetas", "6.4");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCamionSelloSeguridadContenedor, "REQUERIMIENTOS CRITICOS", "Camion Sello Seguridad Contenedor", "6.5");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoVerificacionEncendidoTermografo, "REQUERIMIENTOS CRITICOS", "Verificacion Encendido Termografo", "6.6");
-                    addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFotografiaPalletsEmpresaContenor, "REQUERIMIENTOS CRITICOS", "Fotografia Pallets Empresa Contenor", "6.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPhSoluciones, "HIDRATACION", "Ph Soluciones", "1.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNivelSolucionTinas, "HIDRATACION", "Nivel Solucion Tinas", "1.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoSolucionHidratacionSinVegetal, "HIDRATACION", "Solucion Hidratacion Sin Vegetal", "1.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCuartoFrio, "HIDRATACION", "Temperatura Cuarto Frio", "1.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaSolucionesHidratacion, "HIDRATACION", "Temperatura Soluciones Hidratacion", "1.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEmpaqueAmbienteTemperatura, "EMPAQUE", "Empaque Ambiente Temperatura", "2.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFlorEmpacada, "EMPAQUE", "Flor Empacada", "2.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTransportCareEmpaque, "EMPAQUE", "Transport Care Empaque", "2.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCajasVisualDeformes, "EMPAQUE", "Cajas Visual Deformes", "2.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEtiquetasCajasUbicadas, "EMPAQUE", "Etiquetas Cajas Ubicadas", "2.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "TRANSFERENCIA", "Temperatura Cubiculo Camion", "3.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCajasTransferencia, "TRANSFERENCIA", "Temperatura Cajas Transferencia", "3.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAparenciaCajasTransferencia, "TRANSFERENCIA", "Aparencia Cajas Transferencia", "3.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "PELLETIZADO", "Estibas Debidamente Selladas", "4.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsEsquinerosCorrectamenteAjustados, "PELLETIZADO", "Pallets Esquineros Correctamente Ajustados", "4.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsAlturaContenedor, "PELLETIZADO", "Pallets Altura Contenedor", "4.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaPalletContenedor, "PELLETIZADO", "Temperatura Pallet Contenedor", "4.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoNumero, "PELLETIZADO", "Pallet Identificado Numero", "4.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTomaRegistroTemperaturas, "PELLETIZADO", "Toma Registro Temperaturas", "4.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoGenset, "LLENADO CONTENEDOR", "Genset", "5.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorEdadFabricacion, "LLENADO CONTENEDOR", "Contenedor Edad Fabricacion", "5.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorCumplimientoSeteo, "LLENADO CONTENEDOR", "Contenedor Cumplimiento Seteo", "5.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorPreEnfriado, "LLENADO CONTENEDOR", "Contenedor Pre-Enfriado", "5.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorlavadoDesinfectado, "LLENADO CONTENEDOR", "Contenedor Lavado Desinfectado", "5.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCarguePreviamenteHumedecidos, "LLENADO CONTENEDOR", "Cargue Previamente Humedecidos", "5.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoLlegandoCierreSellado, "LLENADO CONTENEDOR", "Llegando Cierre Sellado", "5.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEstibasSelloICA, "REQUERIMIENTOS CRITICOS", "Estibas Sello ICA", "6.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsTensionZunchos, "REQUERIMIENTOS CRITICOS", "Pallets Tension Zunchos", "6.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoEtiqueta, "REQUERIMIENTOS CRITICOS", "Pallet Identificado Etiqueta", "6.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoComponentePalletDestinosEtiquetas, "REQUERIMIENTOS CRITICOS", "Componente Pallet Destinos Etiquetas", "6.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCamionSelloSeguridadContenedor, "REQUERIMIENTOS CRITICOS", "Camion Sello Seguridad Contenedor", "6.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoVerificacionEncendidoTermografo, "REQUERIMIENTOS CRITICOS", "Verificacion Encendido Termografo", "6.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFotografiaPalletsEmpresaContenor, "REQUERIMIENTOS CRITICOS", "Fotografia Pallets Empresa Contenor", "6.7");
 
-                });
+            });
+        }
 
-            } 
-            return reporte;
+        private void addReporteProcesoMaritimoAlstroemeria(DateTime fechaDesde, DateTime fechaHasta, ReporteExcel reporte)
+        {
+            List<Models.ProcesoMaritimoAlstroemeria> listaProcesoMaritimo = _context.ProcesoMaritimoAlstroemeria.Where(c => new DateTime(c.ProcesoMaritimoAlstroemeriaFecha.Value.Year, c.ProcesoMaritimoAlstroemeriaFecha.Value.Month, c.ProcesoMaritimoAlstroemeriaFecha.Value.Day, 0, 0, 0) >= fechaDesde && new DateTime(c.ProcesoMaritimoAlstroemeriaFecha.Value.Year, c.ProcesoMaritimoAlstroemeriaFecha.Value.Month, c.ProcesoMaritimoAlstroemeriaFecha.Value.Day, 0, 0, 0) <= fechaHasta)
+                    .Include(a => a.Postcosecha)
+                    .Include(a => a.Usuariocontrol)
+                    .Include(a => a.Cliente)
+                    .ToList();
+
+            listaProcesoMaritimo.ForEach(c =>
+            {
+                string[] fecha = transformarFecha(Convert.ToDateTime(c.ProcesoMaritimoAlstroemeriaFecha));
+                string Semana = fecha[0];
+                string Mes = fecha[1];
+                string FechaValue = fecha[2];
+                string Postcosecha = c.Postcosecha.PostcosechaNombre;
+                string NombreQc = c.Usuariocontrol.UsuarioControlNombre;
+                string Cliente = c.Cliente.ClienteNombre;
+                int NumeroGuia = c.ProcesoMaritimoAlstroemeriaNumeroGuia;
+
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad, "RECEPCIÓN", "Temperatura Humedad", "1.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionLavaDesinfecta, "RECEPCIÓN", "Lava desinfecta", "1.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion, "RECEPCIÓN", "Sistema identificación", "1.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionLongitudTallos, "CLASIFICACIÓN Y BONCHEO", "Longitud tallos", "2.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal, "CLASIFICACIÓN Y BONCHEO", "Capacitación personal", "2.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado, "CLASIFICACIÓN Y BONCHEO", "Capuchón biorentado", "2.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood, "CLASIFICACIÓN Y BONCHEO", "Capuchón flower food", "2.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionLibreMaltrato, "CLASIFICACIÓN Y BONCHEO", "Libre maltrato", "2.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionTallosCumplePeso, "CLASIFICACIÓN Y BONCHEO", "Tallos cumple peso", "2.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionDespachosMaritimos, "CLASIFICACIÓN Y BONCHEO", "Despachos maritimos", "2.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionAseguramientoRamo, "CLASIFICACIÓN Y BONCHEO", "Aseguramiento ramo", "2.8");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoBaldesTinas, "TRATAMIENTO DE HIDRATACIÓN", "Baldes tinas", "3.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoSolucionHidratacion, "TRATAMIENTO DE HIDRATACIÓN", "Solución hidratación", "3.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoNivelSolucion, "TRATAMIENTO DE HIDRATACIÓN", "Nivel solución", "3.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoCambioSolucion, "TRATAMIENTO DE HIDRATACIÓN", "Cambio solución", "3.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoTiempoSala, "TRATAMIENTO DE HIDRATACIÓN", "Tiempo sala", "3.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionNumeroRamos, "HIDRATACIÓN", "Número ramos", "4.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionRamosHidratados, "HIDRATACIÓN", "Ramos hidratados", "4.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio, "HIDRATACIÓN", "Temperatura cuarto frío", "4.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionLimpioOrdenado, "HIDRATACIÓN", "Limpio ordenado", "4.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion, "EMPAQUE", "Empacadores capacitación", "5.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEdadFlor, "EMPAQUE", "Edad flor", "5.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEscurridoRamos, "EMPAQUE", "Escurrido ramos", "5.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos, "EMPAQUE", "Temperatura ramos", "5.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento, "EMPAQUE", "Cajas requerimiento", "5.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo, "EMPAQUE", "Caja despacho marítimo", "5.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajasDeformidad, "EMPAQUE", "Cajas deformidad", "5.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas, "EMPAQUE", "Etiquetas cajas", "5.8");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue, "EMPAQUE", "Producto empaque cargue", "5.9");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaHR, "EMPAQUE", "Temperatura HR", "5.10");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto, "EMPAQUE", "Auditoría producto", "5.11");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEmpacoHB, "EMPAQUE", "Empaco HB", "5.12");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperauraCajas, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperaura cajas", "6.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperaturaPromedio, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperatura promedio", "6.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteCamionTransporta, "TRANSPORTE AL CENTRO DE ACOPIO", "Camión transporta", "6.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperaturaCamion, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperatura camión", "6.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteBuenaConexion, "TRANSPORTE AL CENTRO DE ACOPIO", "Buena conexión", "6.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteThermoking, "TRANSPORTE AL CENTRO DE ACOPIO", "Thermoking", "6.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteCajasApiladas, "TRANSPORTE AL CENTRO DE ACOPIO", "Cajas apiladas", "6.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteAcopioPreenfriado, "TRANSPORTE AL CENTRO DE ACOPIO", "Acopio preenfriado", "6.8");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstromeriaTransporteTemperaturaFurgon, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperatura furgón", "6.9");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoEstibasLimpias, "PALLETIZADO", "Estibas limpias", "7.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros, "PALLETIZADO", "Pallets esquineros", "7.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletsAltura, "PALLETIZADO", "Pallets altura", "7.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido, "PALLETIZADO", "Temperatura distribuido", "7.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletIdentificado, "PALLETIZADO", "Pallet identificado", "7.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorGenset, "LLENADO CONTENEDOR", "Genset", "8.1");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorFechaFabricacion, "LLENADO CONTENEDOR", "Fecha fabricación", "8.2");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorSeteo, "LLENADO CONTENEDOR", "Contenedor seteo", "8.3");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorPreenfriado, "LLENADO CONTENEDOR", "Contenedor preenfriado", "8.4");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorLavado, "LLENADO CONTENEDOR", "Contenedor lavado", "8.5");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorSachetsEthiblock, "LLENADO CONTENEDOR", "Sachets Ethiblock", "8.6");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorCierreSellado, "LLENADO CONTENEDOR", "Cierre sellado", "8.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorControlTemperatura, "LLENADO CONTENEDOR", "Control temperatura", "8.8");
+            });
         }
 
         private void addProcesoMaritimo(string Semana, string Mes, string FechaValue, string Postcosecha, string NombreQc, string Cliente, int NumeroGuia, ReporteExcel reporte, int valorProceso, string proceso, string textoProceso, string indiceProceso)
@@ -1722,6 +1808,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     {
                         Models.Empaque empaque = new Models.Empaque();
                         empaque.ControlEmpaqueId = item.ControlEmpaqueId;
+                        empaque.NumeroMesa = listaEmpaque[0].Empaques[i].NumeroMesa;
+                        empaque.Variedad = listaEmpaque[0].Empaques[i].Variedad;
+                        empaque.Linea = listaEmpaque[0].Empaques[i].Linea;
                         _context.Empaque.Add(empaque);
                         _context.SaveChanges();
                         for (int j = 0; j < listaEmpaque[0].Empaques[i].Falencias.Count; j++)
@@ -1861,6 +1950,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     {
                         Models.Ramo ramo = new Models.Ramo();
                         ramo.ControlRamoId = item.ControlRamoId;
+                        ramo.NumeroMesa = listaRamo[0].Ramos[i].NumeroMesa;
+                        ramo.Variedad = listaRamo[0].Ramos[i].Variedad;
+                        ramo.Linea = listaRamo[0].Ramos[i].Linea;
                         _context.Ramo.Add(ramo);
                         _context.SaveChanges();
                         for (int j = 0; j < listaRamo[0].Ramos[i].Falencias.Count; j++)
@@ -1997,6 +2089,9 @@ namespace HCGCALIDADSERVICES.Controllers
                     {
                         Models.Banda ramo = new Models.Banda();
                         ramo.ControlBandaId = item.ControlBandaId;
+                        ramo.NumeroMesa = listaRamo[0].Bandas[i].NumeroMesa;
+                        ramo.Variedad = listaRamo[0].Bandas[i].Variedad;
+                        ramo.Linea = listaRamo[0].Bandas[i].Linea;
                         _context.Banda.Add(ramo);
                         _context.SaveChanges();
                         for (int j = 0; j < listaRamo[0].Bandas[i].Falencias.Count; j++)
@@ -2303,6 +2398,26 @@ namespace HCGCALIDADSERVICES.Controllers
                     Models.ProcesoMaritimo NewProcesoMaritimo = procesosMaritimos[i];
                     NewProcesoMaritimo.ProcesoMaritimoId = null;
                     _context.ProcesoMaritimo.Add(NewProcesoMaritimo);
+                    _context.SaveChanges();
+                }
+                return Ok(1);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
+            }
+        }
+
+        [HttpPost("procesoMaritimoAlstroemeria")]
+        public dynamic PostProcesoMaritimoAlstroemeria([FromBody] List<ProcesoMaritimoAlstroemeria> procesosMaritimos)
+        {
+            try
+            {
+                for (int i = 0; i < procesosMaritimos.Count; i++)
+                {
+                    Models.ProcesoMaritimoAlstroemeria NewProcesoMaritimo = procesosMaritimos[i];
+                    NewProcesoMaritimo.ProcesoMaritimoAlstroemeriaId = null;
+                    _context.ProcesoMaritimoAlstroemeria.Add(NewProcesoMaritimo);
                     _context.SaveChanges();
                 }
                 return Ok(1);

@@ -152,6 +152,15 @@
         [JsonProperty("empaqueId")]
         public int EmpaqueId { get; set; }
 
+        [JsonProperty("numeroMesa")]
+        public string NumeroMesa { get; set; }
+
+        [JsonProperty("variedad")]
+        public string Variedad { get; set; }
+
+        [JsonProperty("linea")]
+        public string Linea { get; set; }
+
         [JsonProperty("falencias")]
         public List<EmpaqueFalencia> Falencias { get; set; }
     }
@@ -227,6 +236,15 @@
 
         [JsonProperty("ramoId")]
         public int RamoId { get; set; }
+
+        [JsonProperty("numeroMesa")]
+        public string NumeroMesa { get; set; }
+
+        [JsonProperty("variedad")]
+        public string Variedad { get; set; }
+
+        [JsonProperty("linea")]
+        public string Linea { get; set; }
 
         [JsonProperty("falencias")]
         public List<RamoFalencia> Falencias { get; set; }
