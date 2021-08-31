@@ -47,6 +47,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
   bool falenciaEnable = false;
   bool floatingEnable = false;
   bool estaticFormEnable = true;
+  bool banderaVisableForm = true;
   List<FalenciaReporteEmpaque> listaFalenciasReporte = List();
   int empaqueId;
   int controlEmpaqueId;
@@ -76,7 +77,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
       ),
       body: Scrollbar(
           child: Column(children: [
-        Container(
+        banderaVisableForm?Container(
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(15),
           child: Form(
@@ -156,8 +157,9 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                     ),
                   ),
                 ],
-              )),
-        ),
+              )
+          ),
+        ): Container(),
         Divider(),
         Expanded(
           child: ListView.builder(
@@ -357,6 +359,14 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
         lineaTextEditingController.text = lineaGetValue;
         estaticFormEnable = false;
         floatingEnable = true;
+      }
+      if (tipo == 1){
+        floatingEnable = true;
+        numeroMesaTextEditingController.text = "N/A en empaque";
+        variedadTextEditingController.text = "N/A en empaque";
+        lineaTextEditingController.text = "N/A en empaque";
+        estaticFormEnable = false;
+        banderaVisableForm = false;
       }
     });
   }
