@@ -7,12 +7,12 @@ namespace HCGCALIDADSERVICES.Models
 {
     public class ProcesoMaritimoAlstroemeria
     {
-        public int? ProcesoMaritimoId { get; set; }
-        public int? ProcesoMaritimoUsuarioControlId { get; set; }
-        public int ProcesoMaritimoNumeroGuia { get; set; }
-        public int? ProcesoMaritimoDestinoId { get; set; }
-        public string ProcesoMaritimoRealizadoPor { get; set; }
-        public string ProcesoMaritimoAcompanamiento { get; set; }
+        public int? ProcesoMaritimoAlstroemeriaId { get; set; }
+        public int? ProcesoMaritimoAlstroemeriaUsuarioControlId { get; set; }
+        public int ProcesoMaritimoAlstroemeriaNumeroGuia { get; set; }
+        public int? ProcesoMaritimoAlstroemeriaDestinoId { get; set; }
+        public string ProcesoMaritimoAlstroemeriaRealizadoPor { get; set; }
+        public string ProcesoMaritimoAlstroemeriaAcompanamiento { get; set; }
         public int ProcesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad { get; set; }
         public int ProcesoMaritimoAlstroemeriaRecepcionLavaDesinfecta { get; set; }
         public int ProcesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion { get; set; }

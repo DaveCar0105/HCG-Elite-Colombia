@@ -61,6 +61,7 @@ namespace HCGCALIDADSERVICES.Models
         public virtual DbSet<CirculoCalidadNumeroMesa> CirculoCalidadNumeroMesa { get; set; }
         public virtual DbSet<CirculoCalidadLinea> CirculoCalidadLinea { get; set; }
         public virtual DbSet<ProcesoMaritimo> ProcesoMaritimo { get; set; }
+        public virtual DbSet<ProcesoMaritimoAlstroemeria> ProcesoMaritimoAlstroemeria { get; set; }
         public virtual DbSet<DestinoMaritimo> DestinoMaritimo { get; set; }
 
         public virtual DbSet<Banda> Banda { get; set; }
@@ -824,6 +825,21 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.Property(e => e.EmpaqueId).HasColumnName("EMPAQUE_ID");
 
+                entity.Property(e => e.NumeroMesa)
+                    .HasColumnName("NUMERO_MESA")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Variedad)
+                    .HasColumnName("VARIEDAD")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Linea)
+                    .HasColumnName("LINEA")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ControlEmpaqueId).HasColumnName("CONTROL_EMPAQUE_ID");
 
                 entity.HasOne(d => d.ControlEmpaque)
@@ -1113,6 +1129,21 @@ namespace HCGCALIDADSERVICES.Models
 
                 entity.Property(e => e.BandaId).HasColumnName("BANDA_ID");
 
+                entity.Property(e => e.NumeroMesa)
+                    .HasColumnName("NUMERO_MESA")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Variedad)
+                    .HasColumnName("VARIEDAD")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Linea)
+                    .HasColumnName("LINEA")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ControlBandaId).HasColumnName("CONTROL_BANDA_ID");
 
                 entity.HasOne(d => d.ControlBanda)
@@ -1290,6 +1321,21 @@ namespace HCGCALIDADSERVICES.Models
                 entity.ToTable("RAMO");
 
                 entity.Property(e => e.RamoId).HasColumnName("RAMO_ID");
+
+                entity.Property(e => e.NumeroMesa)
+                    .HasColumnName("NUMERO_MESA")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Variedad)
+                    .HasColumnName("VARIEDAD")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Linea)
+                    .HasColumnName("LINEA")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ControlRamoId).HasColumnName("CONTROL_RAMO_ID");
 
@@ -1893,6 +1939,318 @@ namespace HCGCALIDADSERVICES.Models
                 entity.Property(e => e.DestinoMaritimoNombre)
                     .HasColumnName("DestinoMaritimoNombre")
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<ProcesoMaritimoAlstroemeria>(entity =>
+            {
+                entity.HasKey(e => e.ProcesoMaritimoAlstroemeriaId)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("PROCESO_MARITIMO_ALSTRO");
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaId)
+                .HasColumnName("PROCESO_MARITIMO_ALSTRO_ID");
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaUsuarioControlId)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_USUARIO_CONTROL_ID")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaNumeroGuia)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_NUMERO_GUIA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaDestinoId)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_DESTINO_MARITIMO_ID")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaRealizadoPor)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_REALIZADO_POR")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaAcompanamiento)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_ACOMPANAMIENTO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_RECEPCION_TEMPERATURA_HUMEDAD")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaRecepcionLavaDesinfecta)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_RECEPCION_LAVA_DESINFECTADA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_RECEPCION_SISTEMA_IDENTIFICACION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionLongitudTallos)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_LONGITUD_TALLOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_CAPACITACION_PERSONAL")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_CAPUCHON_BIORENTADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_CAPUCHON_FLOWER_FOOD")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionLibreMaltrato)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_LIBRE_MALTRATO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionTallosCumplePeso)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_TALLOS_CUMPLE_PESO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionDespachosMaritimos)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_DESPACHOS_MARITIMOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionAseguramientoRamo)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_ASEGURAMIENTO_RAMO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTratamientoBaldesTinas)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRATAMIENTO_BALDES_TINAS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTratamientoSolucionHidratacion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRATAMIENTO_SOLUCION_HIDRATACION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTratamientoNivelSolucion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRATAMIENTO_NIVEL_SOLUCION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTratamientoCambioSolucion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRATMIENTO_CAMBIO_SOLUCION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTratamientoTiempoSala)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRATAMIENTO_TIEMPO_SALA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaHidratacionNumeroRamos)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_HIDRATACION_NUMERO_RAMOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaHidratacionRamosHidratados)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_HIDRATACION_RAMOS_HIDRATADOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_HIDRATACION_TEMPERATURA_CUARTO_FRIO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaHidratacionLimpioOrdenado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_HIDRATACION_LIMPIO_ORDENADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_EMPACADORES_CAPACITACION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueEdadFlor)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_EDAD_FLOR")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueEscurridoRamos)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_ESCURRIDO_RAMOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_TEMPERATURA_RAMOS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_CAJAS_REQUERIMIENTO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_CAJA_DESPACHO_MARITIMO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueCajasDeformidad)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_CAJAS_DEFORMIDAD")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_ETIQUETAS_CAJAS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_PRODUCTO_EMPAQUE_CARGUE")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaHR)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_TEMPERATURA_HR")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_AUDITORIA_PRODUCTO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueEmpacoHB)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_EMPACO_HB")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteTemperauraCajas)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_TEMPERATURA_CAJAS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteTemperaturaPromedio)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_TEMPERATURA_PROMEDIO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteCamionTransporta)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_CAMION_TRANSPORTA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteTemperaturaCamion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_TEMPERATURA_CAMION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteBuenaConexion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_BUENA_CONEXION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteThermoking)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_THERMOKING")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteCajasApiladas)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_CAJAS_APILADAS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteAcopioPreenfriado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_ACOPIO_PREENFRIADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstromeriaTransporteTemperaturaFurgon)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_TEMPERATURA_FURGON")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaPalletizadoEstibasLimpias)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_PALLETIZADO_ESTIBAS_LIMPIAS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_PALLETIZADO_PALLETS_ESQUINEROS")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaPalletizadoPalletsAltura)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_PALLETIZADO_PALLETS_ALTURA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_PALLETIZADO_TEMPERATURA_DISTRIBUIDO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaPalletizadoPalletIdentificado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_PALLETIZADO_PALLET_IDENTIFICADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorGenset)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_GENSET")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorFechaFabricacion)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_FECHA_FABRICACION")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorContenedorSeteo)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_CONTENEDOR_SETEO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorContenedorPreenfriado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_CONTENEDOR_PREENFRIADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorContenedorLavado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_CONTENEDOR_LAVADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorSachetsEthiblock)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_SACHETS_ETHIBLOCK")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorCierreSellado)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_CIERRE_SELLADO")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorControlTemperatura)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_CONTROL_TEMPERATURA")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaContenedorObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CONTENEDOR_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaPalletizadoObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_PALLETIZADO_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTransporteObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRANSPORTE_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaEmpaqueObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_EMPAQUE_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaHidratacionObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_HIDRATACION_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaTratamientoObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_TRATAMIENTO_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaClasificacionObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_CLASIFICACION_OBSERVACIONES")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProcesoMaritimoAlstromeriaRecepcionObservaciones)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_RECEPCION_OBSERVACIONES")
+                    .IsUnicode(false);
+
+
+                entity.Property(e => e.ProcesoMaritimoAlstroemeriaFecha)
+                    .HasColumnName("PROCESO_MARITIMO_ALSTRO_FECHA")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.ClienteId)
+                    .HasColumnName("CLIENTE_ID")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PostcosechaId)
+                    .HasColumnName("POSTCOSECHA_ID")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Cliente)
+                    .WithMany(p => p.ProcesoMaritimoAlstroemeria)
+                    .HasForeignKey(d => d.ClienteId)
+                    .HasConstraintName("FK_MARITIMO_ALSTRO_RELATIONS_CLIENTE");
+
+                entity.HasOne(d => d.Postcosecha)
+                    .WithMany(p => p.ProcesoMaritimoAlstroemeria)
+                    .HasForeignKey(d => d.PostcosechaId)
+                    .HasConstraintName("FK_MARITIMO_ALSTRO_RELATIONS_POSTCOSECHA");
+
+                entity.HasOne(d => d.Usuariocontrol)
+                    .WithMany(p => p.ProcesoMaritimoAlstroemeria)
+                    .HasForeignKey(d => d.ProcesoMaritimoAlstroemeriaUsuarioControlId)
+                    .HasConstraintName("FK_MARITIMO_ALSTRO_RELATIONS_USUARIOCONTROLLER");
+
+                entity.HasOne(d => d.DestinoMaritimo)
+                    .WithMany(p => p.ProcesoMaritimoAlstroemeria)
+                    .HasForeignKey(d => d.ProcesoMaritimoAlstroemeriaDestinoId)
+                    .HasConstraintName("FK_MARITIMO_ALSTRO_RELATIONS_DESTINO");
             });
         }
     }

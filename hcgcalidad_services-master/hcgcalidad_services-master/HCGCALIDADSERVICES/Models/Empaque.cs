@@ -11,6 +11,10 @@ namespace HCGCALIDADSERVICES.Models
         }
 
         public int EmpaqueId { get; set; }
+
+        public string NumeroMesa { get; set; }
+        public string Variedad { get; set; }
+        public string Linea { get; set; }
         public int ControlEmpaqueId { get; set; }
 
         public Controlempaque ControlEmpaque { get; set; }

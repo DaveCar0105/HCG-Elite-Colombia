@@ -79,6 +79,15 @@
         [JsonProperty("bandaId")]
         public int BandaId { get; set; }
 
+        [JsonProperty("numeroMesa")]
+        public string NumeroMesa { get; set; }
+
+        [JsonProperty("variedad")]
+        public string Variedad { get; set; }
+
+        [JsonProperty("linea")]
+        public string Linea { get; set; }
+
         [JsonProperty("falencias")]
         public List<BandaProblema> Falencias { get; set; }
     }
