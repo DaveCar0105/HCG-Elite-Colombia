@@ -206,6 +206,9 @@ class DatabaseBanda {
         while (ramos.length > 0) {
           BandaSinc ramo = BandaSinc();
           ramo.controlRamosId = ramos[0][DatabaseCreator.controlRamosId];
+          ramo.numeroMesa = ramos[0][DatabaseCreator.numeroMesa];
+          ramo.variedad = ramos[0][DatabaseCreator.variedad];
+          ramo.linea = ramos[0][DatabaseCreator.linea];
           ramo.bandaId = ramos[0][DatabaseCreator.bandaId];
           final sqlFalencias = '''SELECT * 
           FROM ${DatabaseCreator.falenciaBandaTable} 

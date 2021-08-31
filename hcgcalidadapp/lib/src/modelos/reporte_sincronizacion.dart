@@ -306,16 +306,25 @@ class Empaque {
   Empaque({
     this.controlEmpaqueId,
     this.empaqueId,
+    this.numeroMesa,
+    this.variedad,
+    this.linea,
     this.falencias,
   });
 
   int controlEmpaqueId;
   int empaqueId;
+  String numeroMesa;
+  String variedad;
+  String linea;
   List<EmpaqueFalencia> falencias;
 
   factory Empaque.fromJson(Map<String, dynamic> json) => Empaque(
         controlEmpaqueId: json["controlEmpaqueId"],
         empaqueId: json["empaqueId"],
+        numeroMesa: json["numeroMesa"],
+        variedad: json["variedad"],
+        linea: json["linea"],
         falencias: List<EmpaqueFalencia>.from(
             json["falencias"].map((x) => EmpaqueFalencia.fromJson(x))),
       );
@@ -323,6 +332,9 @@ class Empaque {
   Map<String, dynamic> toJson() => {
         "controlEmpaqueId": controlEmpaqueId,
         "empaqueId": empaqueId,
+        "numeroMesa": numeroMesa,
+        "variedad": variedad,
+        "linea": linea,
         "falencias": List<dynamic>.from(falencias.map((x) => x.toJson())),
       };
 }
@@ -528,16 +540,25 @@ class Ramo {
   Ramo({
     this.controlRamosId,
     this.ramoId,
+    this.numeroMesa,
+    this.variedad,
+    this.linea,
     this.falencias,
   });
 
   int controlRamosId;
   int ramoId;
+  String numeroMesa;
+  String variedad;
+  String linea;
   List<RamoFalencia> falencias;
 
   factory Ramo.fromJson(Map<String, dynamic> json) => Ramo(
         controlRamosId: json["controlRamosId"],
         ramoId: json["ramoId"],
+        numeroMesa: json["numeroMesa"],
+        variedad: json["variedad"],
+        linea: json["linea"],
         falencias: List<RamoFalencia>.from(
             json["falencias"].map((x) => RamoFalencia.fromJson(x))),
       );
@@ -545,6 +566,9 @@ class Ramo {
   Map<String, dynamic> toJson() => {
         "controlRamosId": controlRamosId,
         "ramoId": ramoId,
+        "numeroMesa": numeroMesa,
+        "variedad": variedad,
+        "linea": linea,
         "falencias": List<dynamic>.from(falencias.map((x) => x.toJson())),
       };
 }
@@ -553,16 +577,25 @@ class BandaSinc {
   BandaSinc({
     this.controlRamosId,
     this.bandaId,
+    this.numeroMesa,
+    this.variedad,
+    this.linea,
     this.falencias,
   });
 
   int controlRamosId;
   int bandaId;
+  String numeroMesa;
+  String variedad;
+  String linea;
   List<BandaFalencia> falencias;
 
   factory BandaSinc.fromJson(Map<String, dynamic> json) => BandaSinc(
         controlRamosId: json["controlRamosId"],
         bandaId: json["bandaId"],
+        numeroMesa: json["numeroMesa"],
+        variedad: json["variedad"],
+        linea: json["linea"],
         falencias: List<BandaFalencia>.from(
             json["falencias"].map((x) => BandaFalencia.fromJson(x))),
       );
@@ -570,6 +603,9 @@ class BandaSinc {
   Map<String, dynamic> toJson() => {
         "controlRamosId": controlRamosId,
         "bandaId": bandaId,
+        "numeroMesa": numeroMesa,
+        "variedad": variedad,
+        "linea": linea,
         "falencias": List<dynamic>.from(falencias.map((x) => x.toJson())),
       };
 }

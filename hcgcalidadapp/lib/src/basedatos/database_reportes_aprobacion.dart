@@ -1210,6 +1210,9 @@ class DatabaseReportesAprobacion {
         while (ramos.length > 0) {
           Ramo ramo = Ramo();
           ramo.controlRamosId = ramos[0][DatabaseCreator.controlRamosId];
+          ramo.numeroMesa = ramos[0][DatabaseCreator.numeroMesa];
+          ramo.variedad = ramos[0][DatabaseCreator.variedad];
+          ramo.linea = ramos[0][DatabaseCreator.linea];
           ramo.ramoId = ramos[0][DatabaseCreator.ramosId];
           final sqlFalencias = '''SELECT * 
           FROM ${DatabaseCreator.falenciasReporteRamosTable} 
@@ -1258,7 +1261,6 @@ class DatabaseReportesAprobacion {
       await DatabaseError.addError(error);
       listaRamo.listaRamo = [];
     }
-
     List<Control> ramoCode = await SincServices.postReportesRamo(listaRamo);
     if (ramoCode.length > 0) {
       await reporteRamoSinc(ramoCode);
@@ -1312,8 +1314,10 @@ class DatabaseReportesAprobacion {
         itemEmpaque.empaques = [];
         while (empaques.length > 0) {
           Empaque empaque = Empaque();
-          empaque.controlEmpaqueId =
-              empaques[0][DatabaseCreator.controlEmpaqueId];
+          empaque.controlEmpaqueId = empaques[0][DatabaseCreator.controlEmpaqueId];
+          empaque.numeroMesa = empaques[0][DatabaseCreator.numeroMesa];
+          empaque.variedad = empaques[0][DatabaseCreator.variedad];
+          empaque.linea = empaques[0][DatabaseCreator.linea];
           empaque.empaqueId = empaques[0][DatabaseCreator.empaqueId];
           final sqlFalencias = '''SELECT * 
           FROM ${DatabaseCreator.falenciasReporteEmpaqueTable} 
