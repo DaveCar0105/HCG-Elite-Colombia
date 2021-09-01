@@ -840,6 +840,11 @@ namespace HCGCALIDADSERVICES.Models
                     .HasMaxLength(350)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CodigoEmpacador)
+                    .HasColumnName("CODIGO_EMPACADOR")
+                    .HasMaxLength(350)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ControlEmpaqueId).HasColumnName("CONTROL_EMPAQUE_ID");
 
                 entity.HasOne(d => d.ControlEmpaque)
@@ -1906,6 +1911,15 @@ namespace HCGCALIDADSERVICES.Models
                     .HasColumnName("POSTCOSECHA_ID")
                     .IsUnicode(false);
 
+                entity.Property(e => e.DetalleFirmaId)
+                    .HasColumnName("DETALLE_FIRMA_ID")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DetalleFirma)
+                    .WithMany(p => p.ProcesoMaritimos)
+                    .HasForeignKey(d => d.DetalleFirmaId)
+                    .HasConstraintName("FK_MARITIMO_RELATIONS_DETALLE_FIRMA");
+
                 entity.HasOne(d => d.Cliente)
                     .WithMany(p => p.ProcesoMaritimo)
                     .HasForeignKey(d => d.ClienteId)
@@ -2231,6 +2245,15 @@ namespace HCGCALIDADSERVICES.Models
                 entity.Property(e => e.PostcosechaId)
                     .HasColumnName("POSTCOSECHA_ID")
                     .IsUnicode(false);
+
+                entity.Property(e => e.DetalleFirmaId)
+                    .HasColumnName("DETALLE_FIRMA_ID")
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.DetalleFirma)
+                    .WithMany(p => p.ProcesoMaritimoAlstroemerias)
+                    .HasForeignKey(d => d.DetalleFirmaId)
+                    .HasConstraintName("FK_MARITIMO_ALSTRO_RELATIONS_DETALLE_FIRMA");
 
                 entity.HasOne(d => d.Cliente)
                     .WithMany(p => p.ProcesoMaritimoAlstroemeria)

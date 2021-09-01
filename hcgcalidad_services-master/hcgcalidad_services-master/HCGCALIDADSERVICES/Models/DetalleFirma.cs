@@ -14,6 +14,8 @@ namespace HCGCALIDADSERVICES.Models
             Controlecuador = new HashSet<Controlecuador>();
             Controlempaque = new HashSet<Controlempaque>();
             Controlramo = new HashSet<Controlramo>();
+            ProcesoMaritimos = new HashSet<ProcesoMaritimo>();
+            ProcesoMaritimoAlstroemerias = new HashSet<ProcesoMaritimoAlstroemeria>();
         }
 
         public int DetalleFirmaId { get; set; }
@@ -28,5 +30,7 @@ namespace HCGCALIDADSERVICES.Models
         public ICollection<Controlecuador> Controlecuador { get; set; }
         public ICollection<Controlempaque> Controlempaque { get; set; }
         public ICollection<Controlramo> Controlramo { get; set; }
+        public ICollection<ProcesoMaritimo> ProcesoMaritimos { get; set; }
+        public ICollection<ProcesoMaritimoAlstroemeria> ProcesoMaritimoAlstroemerias { get; set; }
     }
 }

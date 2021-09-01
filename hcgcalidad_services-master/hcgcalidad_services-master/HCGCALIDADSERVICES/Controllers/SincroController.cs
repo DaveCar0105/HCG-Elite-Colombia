@@ -1392,41 +1392,42 @@ namespace HCGCALIDADSERVICES.Controllers
                 string NombreQc = c.Usuariocontrol.UsuarioControlNombre;
                 string Cliente = c.Cliente.ClienteNombre;
                 int NumeroGuia = c.ProcesoMaritimoNumeroGuia;
+                string tipoMaritimo = "Normal";
 
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre Hidratante", "1.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPhSoluciones, "HIDRATACION", "Ph Soluciones", "1.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNivelSolucionTinas, "HIDRATACION", "Nivel Solucion Tinas", "1.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoSolucionHidratacionSinVegetal, "HIDRATACION", "Solucion Hidratacion Sin Vegetal", "1.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCuartoFrio, "HIDRATACION", "Temperatura Cuarto Frio", "1.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaSolucionesHidratacion, "HIDRATACION", "Temperatura Soluciones Hidratacion", "1.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEmpaqueAmbienteTemperatura, "EMPAQUE", "Empaque Ambiente Temperatura", "2.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFlorEmpacada, "EMPAQUE", "Flor Empacada", "2.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTransportCareEmpaque, "EMPAQUE", "Transport Care Empaque", "2.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCajasVisualDeformes, "EMPAQUE", "Cajas Visual Deformes", "2.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEtiquetasCajasUbicadas, "EMPAQUE", "Etiquetas Cajas Ubicadas", "2.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "TRANSFERENCIA", "Temperatura Cubiculo Camion", "3.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCajasTransferencia, "TRANSFERENCIA", "Temperatura Cajas Transferencia", "3.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAparenciaCajasTransferencia, "TRANSFERENCIA", "Aparencia Cajas Transferencia", "3.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "PELLETIZADO", "Estibas Debidamente Selladas", "4.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsEsquinerosCorrectamenteAjustados, "PELLETIZADO", "Pallets Esquineros Correctamente Ajustados", "4.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsAlturaContenedor, "PELLETIZADO", "Pallets Altura Contenedor", "4.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaPalletContenedor, "PELLETIZADO", "Temperatura Pallet Contenedor", "4.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoNumero, "PELLETIZADO", "Pallet Identificado Numero", "4.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTomaRegistroTemperaturas, "PELLETIZADO", "Toma Registro Temperaturas", "4.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoGenset, "LLENADO CONTENEDOR", "Genset", "5.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorEdadFabricacion, "LLENADO CONTENEDOR", "Contenedor Edad Fabricacion", "5.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorCumplimientoSeteo, "LLENADO CONTENEDOR", "Contenedor Cumplimiento Seteo", "5.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorPreEnfriado, "LLENADO CONTENEDOR", "Contenedor Pre-Enfriado", "5.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorlavadoDesinfectado, "LLENADO CONTENEDOR", "Contenedor Lavado Desinfectado", "5.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCarguePreviamenteHumedecidos, "LLENADO CONTENEDOR", "Cargue Previamente Humedecidos", "5.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoLlegandoCierreSellado, "LLENADO CONTENEDOR", "Llegando Cierre Sellado", "5.7");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEstibasSelloICA, "REQUERIMIENTOS CRITICOS", "Estibas Sello ICA", "6.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsTensionZunchos, "REQUERIMIENTOS CRITICOS", "Pallets Tension Zunchos", "6.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoEtiqueta, "REQUERIMIENTOS CRITICOS", "Pallet Identificado Etiqueta", "6.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoComponentePalletDestinosEtiquetas, "REQUERIMIENTOS CRITICOS", "Componente Pallet Destinos Etiquetas", "6.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCamionSelloSeguridadContenedor, "REQUERIMIENTOS CRITICOS", "Camion Sello Seguridad Contenedor", "6.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoVerificacionEncendidoTermografo, "REQUERIMIENTOS CRITICOS", "Verificacion Encendido Termografo", "6.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFotografiaPalletsEmpresaContenor, "REQUERIMIENTOS CRITICOS", "Fotografia Pallets Empresa Contenor", "6.7");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNombreHidratante, "HIDRATACION", "Nombre de Hidratante, dosis y fecha de elaboración.", "1.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPhSoluciones, "HIDRATACION", "pH soluciones 3.5 a 4.5", "1.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoNivelSolucionTinas, "HIDRATACION", "El nivel de solución en las tinas de hidratación es de 10 cm todas las especies exepto Alstroemeria.", "1.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoSolucionHidratacionSinVegetal, "HIDRATACION", "Las soluciones de hidratación están limpias y libres de material vegetal.", "1.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCuartoFrio, "HIDRATACION", "La temperatura del cuarto frÍo donde se hidrata la flor esta entre 1 a 3°C.", "1.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaSolucionesHidratacion, "HIDRATACION", "La temperatura de las soluciones de hidratación es menor a los 6°C.", "1.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEmpaqueAmbienteTemperatura, "EMPAQUE", "El empaque es realizado en un ambiente con una temperatura que oscile entre 1º y 3ºC.", "2.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFlorEmpacada, "EMPAQUE", "La flor a ser empacada tiene una rotación máxima de 4 dias.", "2.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTransportCareEmpaque, "EMPAQUE", "Se coloca en todas las cajas TransportCare en el empaque, verificando su posición y cantidad de láminas por caja.", "2.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCajasVisualDeformes, "EMPAQUE", "Las cajas visualmente no están deformes, tienen una adecuada resistencia y están correctamente zunchadas.", "2.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEtiquetasCajasUbicadas, "EMPAQUE", "Etiquetas de cajas ubicadas correctamente evitando sean tapadas con  esquineros de pallet.", "2.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "TRANSFERENCIA", "La temperatura cubículo camión transferencia entre 1ºC.", "3.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCajasTransferencia, "TRANSFERENCIA", "La temperatura de  cajas de transferencia están entre 1° a 3 C.", "3.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAparenciaCajasTransferencia, "TRANSFERENCIA", "La apariencia de las cajas de transferencia estan en buen estado, no mojadas, correctamente marcadas, no deformes.", "3.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaCubiculoCamion, "PELLETIZADO", "Las estibas de madera están debidamente selladas, limpias, en buen estado,  correctamente armadas y del tamaño adecuado.", "4.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsEsquinerosCorrectamenteAjustados, "PELLETIZADO", "Pallet's con esquineros con altura que coincide, resistentes y  correctamente ajustados con 4 zunchos transversales y 4 zunchos  verticales.", "4.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsAlturaContenedor, "PELLETIZADO", "Pallet's con altura no mayor a 2.35m? Los pallet's no deben sobrepasar  la línea roja del contenedor.", "4.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTemperaturaPalletContenedor, "PELLETIZADO", "4 registradores de temperatura distribuidos proporcionalmente en los  pallet del contenedor? Cajas debidamente identificadas.", "4.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoNumero, "PELLETIZADO", "Cada pallet identificado con el número de pallet, ciudad de destino y  número de piezas.", "4.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoTomaRegistroTemperaturas, "PELLETIZADO", "Toma y registro de temperaturas tomadas en mínimo 2 cajas de cada  pallet.", "4.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoGenset, "LLENADO CONTENEDOR", "Genset (generador de energía del contenedor) con autonomía para 60  horas?", "5.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorEdadFabricacion, "LLENADO CONTENEDOR", "Contenedor con edad de fabricación no mayor a 5 años (empaquetadura  y cierres de puerta en buen estado y libre de cualquier objeto extraño al  interior.", "5.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorCumplimientoSeteo, "LLENADO CONTENEDOR", "Contenedor cumpliendo el siguiente seteo: temperatura 0.5ºC, Defrost  o descongelamiento por demanda, Humedad relativa: OFF, Ventilación:  5%, desagues cerrados.", "5.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorPreEnfriado, "LLENADO CONTENEDOR", "Contenedor preenfriado durante 120 minutos garantizando temperatura  de retorno máxima de 1.5ºC.", "5.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoContenedorlavadoDesinfectado, "LLENADO CONTENEDOR", "Contenedor lavado y desinfectado libre de malos olores.", "5.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCarguePreviamenteHumedecidos, "LLENADO CONTENEDOR", "60 minutos antes de iniciar el cargue sachet's de Ethilblock previamente  humedecidos con agua potable ubicados dentro de cada caja.", "5.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoLlegandoCierreSellado, "LLENADO CONTENEDOR", "Realizado el llegando el cierre y sellado de las puertas se realiza a más  tardar 3 minutos después de desconectado el contenedor del muelle de carga.", "5.7", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoEstibasSelloICA, "REQUERIMIENTOS CRITICOS", "Las estibas presenta sello del ICA  de manera visible.", "6.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletsTensionZunchos, "REQUERIMIENTOS CRITICOS", "Esquineros y laterales de pallets bien colocados formando una esctructura adecuada y con buen ajuste de zunchos.", "6.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoPalletIdentificadoEtiqueta, "REQUERIMIENTOS CRITICOS", "Pallet debidamente identificado con etiqueta numeración pallet.", "6.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoComponentePalletDestinosEtiquetas, "REQUERIMIENTOS CRITICOS", "Componente de pallet se encuentra sin mezcla de destinos y etiquetas.", "6.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoCamionSelloSeguridadContenedor, "REQUERIMIENTOS CRITICOS", "El camión se encuentra con sello de seguridad de contenedor.", "6.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoVerificacionEncendidoTermografo, "REQUERIMIENTOS CRITICOS", "Verificación de encendido adecuado de termógrafo, respaldo etiqueta, código.", "6.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoFotografiaPalletsEmpresaContenor, "REQUERIMIENTOS CRITICOS", "Fotografías de cargue pallets de la empresa cuando es contenedor compartido.", "6.7", tipoMaritimo);
 
             });
         }
@@ -1449,65 +1450,66 @@ namespace HCGCALIDADSERVICES.Controllers
                 string NombreQc = c.Usuariocontrol.UsuarioControlNombre;
                 string Cliente = c.Cliente.ClienteNombre;
                 int NumeroGuia = c.ProcesoMaritimoAlstroemeriaNumeroGuia;
+                string tipoMaritimo = "Alstroemeria";
 
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad, "RECEPCIÓN", "Temperatura Humedad", "1.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionLavaDesinfecta, "RECEPCIÓN", "Lava desinfecta", "1.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion, "RECEPCIÓN", "Sistema identificación", "1.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionLongitudTallos, "CLASIFICACIÓN Y BONCHEO", "Longitud tallos", "2.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal, "CLASIFICACIÓN Y BONCHEO", "Capacitación personal", "2.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado, "CLASIFICACIÓN Y BONCHEO", "Capuchón biorentado", "2.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood, "CLASIFICACIÓN Y BONCHEO", "Capuchón flower food", "2.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionLibreMaltrato, "CLASIFICACIÓN Y BONCHEO", "Libre maltrato", "2.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionTallosCumplePeso, "CLASIFICACIÓN Y BONCHEO", "Tallos cumple peso", "2.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionDespachosMaritimos, "CLASIFICACIÓN Y BONCHEO", "Despachos maritimos", "2.7");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionAseguramientoRamo, "CLASIFICACIÓN Y BONCHEO", "Aseguramiento ramo", "2.8");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoBaldesTinas, "TRATAMIENTO DE HIDRATACIÓN", "Baldes tinas", "3.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoSolucionHidratacion, "TRATAMIENTO DE HIDRATACIÓN", "Solución hidratación", "3.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoNivelSolucion, "TRATAMIENTO DE HIDRATACIÓN", "Nivel solución", "3.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoCambioSolucion, "TRATAMIENTO DE HIDRATACIÓN", "Cambio solución", "3.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoTiempoSala, "TRATAMIENTO DE HIDRATACIÓN", "Tiempo sala", "3.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionNumeroRamos, "HIDRATACIÓN", "Número ramos", "4.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionRamosHidratados, "HIDRATACIÓN", "Ramos hidratados", "4.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio, "HIDRATACIÓN", "Temperatura cuarto frío", "4.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionLimpioOrdenado, "HIDRATACIÓN", "Limpio ordenado", "4.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion, "EMPAQUE", "Empacadores capacitación", "5.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEdadFlor, "EMPAQUE", "Edad flor", "5.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEscurridoRamos, "EMPAQUE", "Escurrido ramos", "5.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos, "EMPAQUE", "Temperatura ramos", "5.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento, "EMPAQUE", "Cajas requerimiento", "5.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo, "EMPAQUE", "Caja despacho marítimo", "5.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajasDeformidad, "EMPAQUE", "Cajas deformidad", "5.7");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas, "EMPAQUE", "Etiquetas cajas", "5.8");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue, "EMPAQUE", "Producto empaque cargue", "5.9");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaHR, "EMPAQUE", "Temperatura HR", "5.10");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto, "EMPAQUE", "Auditoría producto", "5.11");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEmpacoHB, "EMPAQUE", "Empaco HB", "5.12");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperauraCajas, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperaura cajas", "6.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperaturaPromedio, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperatura promedio", "6.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteCamionTransporta, "TRANSPORTE AL CENTRO DE ACOPIO", "Camión transporta", "6.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperaturaCamion, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperatura camión", "6.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteBuenaConexion, "TRANSPORTE AL CENTRO DE ACOPIO", "Buena conexión", "6.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteThermoking, "TRANSPORTE AL CENTRO DE ACOPIO", "Thermoking", "6.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteCajasApiladas, "TRANSPORTE AL CENTRO DE ACOPIO", "Cajas apiladas", "6.7");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteAcopioPreenfriado, "TRANSPORTE AL CENTRO DE ACOPIO", "Acopio preenfriado", "6.8");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstromeriaTransporteTemperaturaFurgon, "TRANSPORTE AL CENTRO DE ACOPIO", "Temperatura furgón", "6.9");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoEstibasLimpias, "PALLETIZADO", "Estibas limpias", "7.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros, "PALLETIZADO", "Pallets esquineros", "7.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletsAltura, "PALLETIZADO", "Pallets altura", "7.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido, "PALLETIZADO", "Temperatura distribuido", "7.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletIdentificado, "PALLETIZADO", "Pallet identificado", "7.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorGenset, "LLENADO CONTENEDOR", "Genset", "8.1");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorFechaFabricacion, "LLENADO CONTENEDOR", "Fecha fabricación", "8.2");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorSeteo, "LLENADO CONTENEDOR", "Contenedor seteo", "8.3");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorPreenfriado, "LLENADO CONTENEDOR", "Contenedor preenfriado", "8.4");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorLavado, "LLENADO CONTENEDOR", "Contenedor lavado", "8.5");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorSachetsEthiblock, "LLENADO CONTENEDOR", "Sachets Ethiblock", "8.6");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorCierreSellado, "LLENADO CONTENEDOR", "Cierre sellado", "8.7");
-                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorControlTemperatura, "LLENADO CONTENEDOR", "Control temperatura", "8.8");
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad, "RECEPCIÓN", "El producto a su llegada a la postcosecha es ubicado en un lugar con condiciones de temperatura no mayores a 15ºC y humedad relativa entre 55 a 65%. Se poseen registros.", "1.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionLavaDesinfecta, "RECEPCIÓN", "Se lava y desinfecta la sala acorde a lo programado en el cronograma de Aseo de postcosecha y programa de aspersión. Se cuenta con registros. Visualmente las mesas, gillotinas, pisos, tinas de surtido y mesas de empaque se encuentran limpios.", "1.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion, "RECEPCIÓN", "Se tiene establecido y se esta cumpliendo el sistema de identificacion para garantizar que lo primero que entre a la sala es lo primero que se procese (PEPS).", "1.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionLongitudTallos, "CLASIFICACIÓN Y BONCHEO", "Las mesas de clasificación cuentan con guías que permiten definir la longitud de los tallos, el nivel de deshoje y el grado de tolerancia a la torcidez; asi como guías para verificar el calibre de los tallos y balanza para verificar el peso del ramo.  El personal conoce el uso de la herramienta y aplica los requerimientos establecidos por el cliente.", "2.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal, "CLASIFICACIÓN Y BONCHEO", "Existen registros de capacitación al personal de clasificación y boncheo y a los empacadores sobre las especificaciones de clasificación, boncheo y empaque de los ramos y cajas para despacho marítimo.", "2.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado, "CLASIFICACIÓN Y BONCHEO", "A cada ramo se le coloca un capuchon biorentado transparente, Si los ramos son de 6 tallos se utiliza capuchón macro perforado de(35 x 10 x 45) y si son de 10 tallos se utiliza capuchón microperforado de(35 x 10 x 50) y no se les coloca papel durante el armado.", "2.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood, "CLASIFICACIÓN Y BONCHEO", "Se Asegura el capuchón y el flower food con cinta (para ramos de 6 tallos) o con doble caucho (para ramos de 10 tallos).", "2.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionLibreMaltrato, "CLASIFICACIÓN Y BONCHEO", "El producto bonchado se encuentra  libre de maltrato fuerte, deshidratación, decoloración  y cumple con el punto de apertura establecido.", "2.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionTallosCumplePeso, "CLASIFICACIÓN Y BONCHEO", "Los tallos cumplen con el peso y los requerimientos establecidos por el cliente.", "2.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionDespachosMaritimos, "CLASIFICACIÓN Y BONCHEO", "Los ramos armados para despachos marítimos cumplen con todos los requerimientos de calidad establecidos  y el porcentaje de conformidad del despacho, acorde a la evaluación realizada por el Inspector de calidad. Se encuentra en ( Mínimo 85%)  Registrar Causas.", "2.7", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaClasificacionAseguramientoRamo, "CLASIFICACIÓN Y BONCHEO", "Se realiza aseguramiento de ramo terminado a mínimo el 50% del despacho, por parte del Jefe de poscosecha, líder de calidad de la sala y supervisor de poscosecha.", "2.8", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoBaldesTinas, "TRATAMIENTO DE HIDRATACIÓN", "Los baldes/tinas que se utilizan para el proceso de hidratación, fueron lavados y desinfectados, se encuentran limpios y libres de residuos de material vegetal  y/o suciedad acumulada en fondo y/o paredes de los mismos.", "3.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoSolucionHidratacion, "TRATAMIENTO DE HIDRATACIÓN", "Se está preparando la solución de hidratación con las condiciones de pH del agua origen y las condiciones finales de la solución preparada (pH entre 4,5 a 5,5  medido con pHmétro o 4 – 5 con cinta indicadora marca Merck, ausencia de cloro y concentración de plata).  Registrar información en formato de preparación de soluciones de hidratación poscosecha.", "3.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoNivelSolucion, "TRATAMIENTO DE HIDRATACIÓN", "El nivel de solución en las tinas de hidratación es de 7 cm y en baldes de 3 cm, se garantiza que todos los tallos estén inmersos en la solución.", "3.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoCambioSolucion, "TRATAMIENTO DE HIDRATACIÓN", "Se realiza el cambio de la solución de hidratación máximo 3 días.", "3.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTratamientoTiempoSala, "TRATAMIENTO DE HIDRATACIÓN", "El tiempo en sala de la flor no debe ser mayor a 40 minutos.", "3.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionNumeroRamos, "HIDRATACIÓN", "Cumple con el número de ramos máximos permitidos por tina de hidratación ( 30 ramos de 5 tallos, 25 ramos de 6 tallos, 20 ramos de 10 tallos, 15 ramos de 12 tallos, 9 ramos de 18 tallos).", "4.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionRamosHidratados, "HIDRATACIÓN", "Los ramos son hidratados por 4 horas a temperatura ambiente en solución STS y luego en cuarto frío mínimo 12 horas en esa misma solución.", "4.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio, "HIDRATACIÓN", "La temperatura de cuarto frío de hidratación oscila entre 0.5 ºC y 1.5 ºC y una humedad relativa de 80% a 85%. Se llevan registros.", "4.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaHidratacionLimpioOrdenado, "HIDRATACIÓN", "El cuarto frío de hidratación se encuentra limpio y ordenado. Se lava y desinfecta acorde a lo programado en el cronograma de aseo y desinfección de poscosecha.", "4.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion, "EMPAQUE", "Los empacadores recibieron capacitación en el requerimiento de empaque de las cajas marítimas. Existen registros de capacitación.", "5.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEdadFlor, "EMPAQUE", "La edad de la flor utilizada para el empaque de las cajas marítimas es de acuerdo al cliente.", "5.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEscurridoRamos, "EMPAQUE", "Se realiza escurrido a los ramos antes de ser empacados.", "5.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos, "EMPAQUE", "Se revisó la temperatura de los ramos antes de ser empacados y estos se encontraban en máximo 2 °C.", "5.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento, "EMPAQUE", "Las cajas empacadas cumplen con los requerimientos establecidos: uso de cajas especiales para marítimo, uso de láminas de transport care en la base y la parte superior de la caja previamente activadas con agua, distribución de los ramos y zunchado acorde a lo establecido.", "5.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo, "EMPAQUE", "Se ubicó dentro de 1 de las cajas del despacho marítimo 1 registrador de temperatura que permita ver el comportamiento de la temperatura durante el transporte al centro de acopio.Caja debidamente indentificada ? ", "5.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueCajasDeformidad, "EMPAQUE", "Las cajas se encuentran sin deformidad, visualmente resistentes, correctamente zunchadas.", "5.7", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas, "EMPAQUE", "Las etiquetas de cajas se encuentran ubicadas correctamente evitando sean tapadas con esquineros de pallet?", "5.8", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue, "EMPAQUE", "El producto empacado listo para el cargue se encuentra en estibas que coinciden con el tamaño de las cajas.", "5.9", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueTemperaturaHR, "EMPAQUE", "El cuarto frío de empaque y el de despachos  se encuentra a una temperatura de 0.5 a 2 °C y una HR de 80 a 85%. Se controlan y llevan registros.", "5.10", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto, "EMPAQUE", "Se realiza auditoría de producto terminado a mínimo 1 caja del despacho marítimo por parte del jefe de sala, líder de calidad y supervisor de sala.", "5.11", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaEmpaqueEmpacoHB, "EMPAQUE", "Se empaco 1 HB  con ramos tomados al azar y que hayan seguido todo el  proceso del marítimo y se envió al  Dpto de calidad para evaluacion de viaje simulado y de vida en florero.", "5.12", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperauraCajas, "TRANSPORTE AL CENTRO DE ACOPIO", "Se tomaron temperaturas al 20% de las cajas del despacho y se dejó evidencia en el formato de Control de Temperaturas de Despacho. Se llevan registros.", "6.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperaturaPromedio, "TRANSPORTE AL CENTRO DE ACOPIO", "La temperatura promedio de las cajas de despacho fue menor a 2 °C. En caso contrario se pasaron las cajas a precooler.", "6.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteCamionTransporta, "TRANSPORTE AL CENTRO DE ACOPIO", "El camión que transporta las cajas al centro de acopio fue previamente lavado y desinfectado con Timsen (2 g/lt). Hay registros que lo evidencien.", "6.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteTemperaturaCamion, "TRANSPORTE AL CENTRO DE ACOPIO", "Se mide y registra la temperatura del camión al abrir la puerta.", "6.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteBuenaConexion, "TRANSPORTE AL CENTRO DE ACOPIO", "El cargue de las cajas se realizó garantizando una buena conexión de la puerta del camión y el cuarto frío.", "6.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteThermoking, "TRANSPORTE AL CENTRO DE ACOPIO", "Durante el  cargue y descargue el camion que realiza el transporte de la carga se mantuvo encendido el thermoking.", "6.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteCajasApiladas, "TRANSPORTE AL CENTRO DE ACOPIO", "Las cajas en el camión fueron apiladas una sobre otra sin cubrir la salida de aire frío del difusor del furgón y se dejó un espacio libre de 20 a 30 cm entre la línea de salida de aire del difusor y la última caja.", "6.7", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaTransporteAcopioPreenfriado, "TRANSPORTE AL CENTRO DE ACOPIO", "El camión utilizado para el transporte de las cajas al centro de acopio fue preenfriado dos horas antes de iniciar el cargue y lleva un termómetro de máximos y mínimos.", "6.8", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstromeriaTransporteTemperaturaFurgon, "TRANSPORTE AL CENTRO DE ACOPIO", "La temperatura del furgon en el momento del cargue era de máximo 1.5°C (verificar esta información con el termómetro de aguja o laser) y el thermoking del camión se graduó a una temperatura de 0.5 °C a 1.5 °C.", "6.9", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoEstibasLimpias, "PALLETIZADO", "Las estibas que se usan para palletizar estan debidamente limpias, en buen estado, correctamente armadas y del tamaño adecuado.", "7.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros, "PALLETIZADO", "Los pallet's poseen esquineros con altura que coincide, resistentes y correctamente ajustados con 4 zunchos transversales y 4 verticales.", "7.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletsAltura, "PALLETIZADO", "Los pallets tienen una altura máxima de 2,35 m. y  no sobrepasan la línea roja del contenedor.", "7.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido, "PALLETIZADO", "Se colocan 5 registradores de temperatura distribuidos proporcionalmente en los pallet del contenedor y las cajas se encuentran debidamente identificadas.", "7.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaPalletizadoPalletIdentificado, "PALLETIZADO", "Cada pallet se encuentra identificado con el número de pallet, ciudad de destino y número de piezas.", "7.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorGenset, "LLENADO CONTENEDOR", "El Genset (generador de energía del contenedor) tiene autonomía para 60 horas.", "8.1", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorFechaFabricacion, "LLENADO CONTENEDOR", "El contenedor tiene una fecha de fabricación no mayor a 5 años.", "8.2", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorSeteo, "LLENADO CONTENEDOR", "El contenedor cumple el siguiente seteo: temperatura 0.5ºC, defrost o descongelamiento por demanda, Humedad relativa: OFF, ventilación: 5 %, desagües cerrados.", "8.3", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorPreenfriado, "LLENADO CONTENEDOR", "El contenedor preenfriado durante 120 minutos garantizando temperatura de retorno máxima de 1.5ºC / para despachos consolidados el retorno del contenedor debe ser inferior a 2.5ºC.", "8.4", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorContenedorLavado, "LLENADO CONTENEDOR", "El contenedor se encuentra lavado, desinfectado y libre de malos olores.", "8.5", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorSachetsEthiblock, "LLENADO CONTENEDOR", "60 minutos antes de iniciar el cargue se ubicaron sachet's de Ethilblock previamente humedecidos con agua potable dentro de cada caja de acuerdo al procedmiento.", "8.6", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorCierreSellado, "LLENADO CONTENEDOR", "El cierre y sellado de las puertas se realiza a más tardar 3 minutos después de desconectado el contenedor del muelle de carga.", "8.7", tipoMaritimo);
+                addProcesoMaritimo(Semana, Mes, FechaValue, Postcosecha, NombreQc, Cliente, NumeroGuia, reporte, c.ProcesoMaritimoAlstroemeriaContenedorControlTemperatura, "LLENADO CONTENEDOR", "Antes del cargue de las cajas al contenedor de exportación se le realiza un control de la temperatura interna de las cajas al 20% de las cajas a ser despachadas (3 cajas por pallet). Se deja registro en el formato de distribución de pallet´s.", "8.8", tipoMaritimo);
             });
         }
 
-        private void addProcesoMaritimo(string Semana, string Mes, string FechaValue, string Postcosecha, string NombreQc, string Cliente, int NumeroGuia, ReporteExcel reporte, int valorProceso, string proceso, string textoProceso, string indiceProceso)
+        private void addProcesoMaritimo(string Semana, string Mes, string FechaValue, string Postcosecha, string NombreQc, string Cliente, int NumeroGuia, ReporteExcel reporte, int valorProceso, string proceso, string textoProceso, string indiceProceso, string tipoMaritimo)
         {
             ProcesoMaritimoReporte procesoMaritimoNuevo = new ProcesoMaritimoReporte();
             procesoMaritimoNuevo.Semana = Semana;
@@ -1523,6 +1525,7 @@ namespace HCGCALIDADSERVICES.Controllers
             procesoMaritimoNuevo.Cumple = 0;
             procesoMaritimoNuevo.NoCUmple = 0;
             procesoMaritimoNuevo.NoAplica = 0;
+            procesoMaritimoNuevo.tipoMaritimo = tipoMaritimo;
             switch (valorProceso)
             {
                 case 0:
@@ -1811,6 +1814,7 @@ namespace HCGCALIDADSERVICES.Controllers
                         empaque.NumeroMesa = listaEmpaque[0].Empaques[i].NumeroMesa;
                         empaque.Variedad = listaEmpaque[0].Empaques[i].Variedad;
                         empaque.Linea = listaEmpaque[0].Empaques[i].Linea;
+                        empaque.CodigoEmpacador = listaEmpaque[0].Empaques[i].CodigoEmpacador;
                         _context.Empaque.Add(empaque);
                         _context.SaveChanges();
                         for (int j = 0; j < listaEmpaque[0].Empaques[i].Falencias.Count; j++)
@@ -2048,7 +2052,6 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             catch (Exception e)
             {
-
                 return BadRequest("Detfirma Banda" + e.Message.ToString() + e.InnerException.ToString());
             }
             List<Entidades.FinBanda> listaRamo = new List<Entidades.FinBanda>();
@@ -2389,14 +2392,73 @@ namespace HCGCALIDADSERVICES.Controllers
         }
 
         [HttpPost("procesoMaritimo")]
-        public dynamic PostProcesoMaritimo([FromBody] List<ProcesoMaritimo> procesosMaritimos)
+        public dynamic PostProcesoMaritimo([FromBody] ReporteSincronizacionProcesoMaritimo reporteSincronizacionProcesoMaritimo)
         {
+            List<Entidades.Firma> listaFirmas = new List<Entidades.Firma>();
+            listaFirmas = reporteSincronizacionProcesoMaritimo.Firmas;
+            int empId = 0;
             try
             {
+                for (int i = 0; i < listaFirmas.Count; i++)
+                {
+                    List<Models.Firma> firmaExiste = new List<Models.Firma>();
+                    firmaExiste = _context.Firma.Where(c => c.FirmaNombre.CompareTo(listaFirmas[i].FirmaNombre) == 0).ToList();
+                    if (firmaExiste.Count > 0)
+                    {
+                        listaFirmas[i].FirmaReal = firmaExiste[0].FirmaId;
+                    }
+                    else
+                    {
+                        Models.Firma item = new Models.Firma();
+                        item.FirmaNombre = listaFirmas[i].FirmaNombre;
+                        item.FirmaCorreo = listaFirmas[i].FirmaCorreo;
+                        item.FirmaCodigo = listaFirmas[i].FirmaCodigo;
+                        item.FirmaCargo = listaFirmas[i].FirmaCargo;
+                        _context.Firma.Add(item);
+                        _context.SaveChanges();
+                        listaFirmas[i].FirmaReal = item.FirmaId;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("firma MaritimoAlstro" + e.Message.ToString() + e.InnerException.ToString());
+            }
+            List<Entidades.DetallesFirma> listaDetalles = new List<DetallesFirma>();
+            List<Entidades.DetallesFirma> listaDetallesReporte = new List<DetallesFirma>();
+            listaDetalles = reporteSincronizacionProcesoMaritimo.DetallesFirma;
+            try
+            {
+                while (listaFirmas.Count > 0)
+                {
+                    int firmaId = listaFirmas[0].FirmaId;
+                    List<Entidades.DetallesFirma> tmpDetalles = new List<DetallesFirma>();
+                    tmpDetalles = listaDetalles.Where(d => d.FirmaId == firmaId).ToList();
+                    for (int i = 0; i < tmpDetalles.Count; i++)
+                    {
+                        Models.DetalleFirma item = new DetalleFirma();
+                        item.FirmaId = listaFirmas[0].FirmaReal;
+                        item.DetalleFirmaCodigo = tmpDetalles[i].FirmaCodigo;
+                        _context.DetalleFirma.Add(item);
+                        _context.SaveChanges();
+                        tmpDetalles[i].FirmaReal = item.DetalleFirmaId;
+                    }
+                    listaDetallesReporte.AddRange(tmpDetalles);
+                    listaFirmas.RemoveAll(l => l.FirmaId == firmaId);
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Detfirma MariAlstro" + e.Message.ToString() + e.InnerException.ToString());
+            }
+            try
+            {
+                List<ProcesoMaritimo> procesosMaritimos = reporteSincronizacionProcesoMaritimo.ProcesoMaritimos;
                 for (int i = 0; i < procesosMaritimos.Count; i++)
                 {
                     Models.ProcesoMaritimo NewProcesoMaritimo = procesosMaritimos[i];
                     NewProcesoMaritimo.ProcesoMaritimoId = null;
+                    NewProcesoMaritimo.DetalleFirmaId = listaDetallesReporte.Find(c => c.DetalleFirmaId == procesosMaritimos[i].DetalleFirmaId)?.FirmaReal;
                     _context.ProcesoMaritimo.Add(NewProcesoMaritimo);
                     _context.SaveChanges();
                 }
@@ -2404,19 +2466,78 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
+                return BadRequest("procesoMaritimo" + e.Message.ToString() + e.Source.ToString());
             }
         }
 
         [HttpPost("procesoMaritimoAlstroemeria")]
-        public dynamic PostProcesoMaritimoAlstroemeria([FromBody] List<ProcesoMaritimoAlstroemeria> procesosMaritimos)
+        public dynamic PostProcesoMaritimoAlstroemeria([FromBody] ReporteSincronizacionProcesoMaritimoAlstroemeria reporteSincronizacionProcesoMaritimoAlstroemeria)
         {
+            List<Entidades.Firma> listaFirmas = new List<Entidades.Firma>();
+            listaFirmas = reporteSincronizacionProcesoMaritimoAlstroemeria.Firmas;
+            int empId = 0;
             try
             {
+                for (int i = 0; i < listaFirmas.Count; i++)
+                {
+                    List<Models.Firma> firmaExiste = new List<Models.Firma>();
+                    firmaExiste = _context.Firma.Where(c => c.FirmaNombre.CompareTo(listaFirmas[i].FirmaNombre) == 0).ToList();
+                    if (firmaExiste.Count > 0)
+                    {
+                        listaFirmas[i].FirmaReal = firmaExiste[0].FirmaId;
+                    }
+                    else
+                    {
+                        Models.Firma item = new Models.Firma();
+                        item.FirmaNombre = listaFirmas[i].FirmaNombre;
+                        item.FirmaCorreo = listaFirmas[i].FirmaCorreo;
+                        item.FirmaCodigo = listaFirmas[i].FirmaCodigo;
+                        item.FirmaCargo = listaFirmas[i].FirmaCargo;
+                        _context.Firma.Add(item);
+                        _context.SaveChanges();
+                        listaFirmas[i].FirmaReal = item.FirmaId;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("firma MaritimoAlstro" + e.Message.ToString() + e.InnerException.ToString());
+            }
+            List<Entidades.DetallesFirma> listaDetalles = new List<DetallesFirma>();
+            List<Entidades.DetallesFirma> listaDetallesReporte = new List<DetallesFirma>();
+            listaDetalles = reporteSincronizacionProcesoMaritimoAlstroemeria.DetallesFirma;
+            try
+            {
+                while (listaFirmas.Count > 0)
+                {
+                    int firmaId = listaFirmas[0].FirmaId;
+                    List<Entidades.DetallesFirma> tmpDetalles = new List<DetallesFirma>();
+                    tmpDetalles = listaDetalles.Where(d => d.FirmaId == firmaId).ToList();
+                    for (int i = 0; i < tmpDetalles.Count; i++)
+                    {
+                        Models.DetalleFirma item = new DetalleFirma();
+                        item.FirmaId = listaFirmas[0].FirmaReal;
+                        item.DetalleFirmaCodigo = tmpDetalles[i].FirmaCodigo;
+                        _context.DetalleFirma.Add(item);
+                        _context.SaveChanges();
+                        tmpDetalles[i].FirmaReal = item.DetalleFirmaId;
+                    }
+                    listaDetallesReporte.AddRange(tmpDetalles);
+                    listaFirmas.RemoveAll(l => l.FirmaId == firmaId);
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Detfirma MariAlstro" + e.Message.ToString() + e.InnerException.ToString());
+            }
+            try
+            {
+                List<ProcesoMaritimoAlstroemeria> procesosMaritimos = reporteSincronizacionProcesoMaritimoAlstroemeria.ProcesoMaritimoAlstroemerias;
                 for (int i = 0; i < procesosMaritimos.Count; i++)
                 {
                     Models.ProcesoMaritimoAlstroemeria NewProcesoMaritimo = procesosMaritimos[i];
                     NewProcesoMaritimo.ProcesoMaritimoAlstroemeriaId = null;
+                    NewProcesoMaritimo.DetalleFirmaId  = listaDetallesReporte.Find(c => c.DetalleFirmaId == procesosMaritimos[i].DetalleFirmaId)?.FirmaReal;
                     _context.ProcesoMaritimoAlstroemeria.Add(NewProcesoMaritimo);
                     _context.SaveChanges();
                 }
@@ -2424,7 +2545,7 @@ namespace HCGCALIDADSERVICES.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest("temp" + e.Message.ToString() + e.Source.ToString());
+                return BadRequest("procesoMaritimoALstr" + e.Message.ToString() + e.Source.ToString());
             }
         }
 

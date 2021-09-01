@@ -58,9 +58,9 @@ namespace HCGCALIDADSERVICES.Models
         public DateTime? ProcesoMaritimoFecha { get; set; }
         public int ClienteId { get; set; }
         public int PostcosechaId { get; set; }
-
+        public int? DetalleFirmaId { get; set; }
         public Cliente Cliente { get; set; }
-        
+        public DetalleFirma DetalleFirma { get; set; }
         public Postcosecha Postcosecha { get; set; }
         public Usuariocontrol Usuariocontrol { get; set; }
         public DestinoMaritimo DestinoMaritimo { get; set; }

@@ -518,6 +518,9 @@
 
         [JsonProperty("noAplica")]
         public int NoAplica { get; set; }
+
+        [JsonProperty("tipoMaritimo")]
+        public string tipoMaritimo { get; set; }
     }
 
 }

@@ -103,4 +103,24 @@
         [JsonProperty("falenciaBandaRamos")]
         public int FalenciaBandaRamos { get; set; }
     }
+
+    public partial class ReporteSincronizacionProcesoMaritimo
+    {
+        [JsonProperty("firmas")]
+        public List<Firma> Firmas { get; set; }
+        [JsonProperty("detallesFirma")]
+        public List<DetallesFirma> DetallesFirma { get; set; }
+        [JsonProperty("procesoMaritimo")]
+        public List<Models.ProcesoMaritimo> ProcesoMaritimos { get; set; }
+    }
+
+    public partial class ReporteSincronizacionProcesoMaritimoAlstroemeria
+    {
+        [JsonProperty("firmas")]
+        public List<Firma> Firmas { get; set; }
+        [JsonProperty("detallesFirma")]
+        public List<DetallesFirma> DetallesFirma { get; set; }
+        [JsonProperty("procesoMaritimoAlstro")]
+        public List<Models.ProcesoMaritimoAlstroemeria> ProcesoMaritimoAlstroemerias { get; set; }
+    }
 }

@@ -158,6 +158,9 @@
         [JsonProperty("variedad")]
         public string Variedad { get; set; }
 
+        [JsonProperty("codigoEmpacador")]
+        public string CodigoEmpacador { get; set; }
+
         [JsonProperty("linea")]
         public string Linea { get; set; }
 
