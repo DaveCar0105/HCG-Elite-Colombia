@@ -64,6 +64,7 @@ class _ListaEmpaquePageState extends State<ListaEmpaquePage> {
                                               "",
                                               "",
                                               "",
+                                              "",
                                               empaque.controlEmpaqueId,
                                               0,
                                               cargarEmpaques)));
@@ -81,6 +82,7 @@ class _ListaEmpaquePageState extends State<ListaEmpaquePage> {
                                       builder: (BuildContext context) =>
                                           FalenciasPorCaja(
                                               0,
+                                              "",
                                               "",
                                               "",
                                               "",
@@ -155,6 +157,7 @@ class _ListaEmpaquePageState extends State<ListaEmpaquePage> {
                       empaqueItem.numeroMesa,
                       empaqueItem.variedad,
                       empaqueItem.linea,
+                      empaqueItem.codigoEmpacador,
                       empaque.controlEmpaqueId,
                       tipoId,
                       cargarEmpaques)));

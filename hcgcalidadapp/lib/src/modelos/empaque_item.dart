@@ -12,7 +12,8 @@ class Empaque {
       this.tipo,
       this.numeroMesa,
       this.variedad,
-      this.linea});
+      this.linea,
+      this.codigoEmpacador});
 
   int controlEmpaqueId;
   int empaqueId;
@@ -21,6 +22,7 @@ class Empaque {
   String numeroMesa;
   String variedad;
   String linea;
+  String codigoEmpacador;
 
   factory Empaque.fromJson(Map<String, dynamic> json) => Empaque(
       controlEmpaqueId: json["controlEmpaqueId"],
@@ -29,7 +31,8 @@ class Empaque {
       tipo: json["tipo"],
       numeroMesa: json["numeroMesa"],
       variedad: json["variedad"],
-      linea: json["linea"]);
+      linea: json["linea"],
+      codigoEmpacador: json["codigoEmpacador"]);
 
   Map<String, dynamic> toJson() => {
         "controlEmpaqueId": controlEmpaqueId,
@@ -38,6 +41,7 @@ class Empaque {
         "tipo": tipo,
         "numeroMesa": numeroMesa,
         "variedad": variedad,
-        "linea": linea
+        "linea": linea,
+        "codigoEmpacador": codigoEmpacador
       };
 }

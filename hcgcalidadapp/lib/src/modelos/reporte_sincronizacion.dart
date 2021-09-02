@@ -74,10 +74,12 @@ class ReporteSincronizacionRamo {
       };
 }
 
-ReporteSincronizacionFinalBanda reporteSincronizacionFinalBandaFromJson(String str) =>
+ReporteSincronizacionFinalBanda reporteSincronizacionFinalBandaFromJson(
+        String str) =>
     ReporteSincronizacionFinalBanda.fromJson(json.decode(str));
 
-String reporteSincronizacionFinalBandaToJson(ReporteSincronizacionFinalBanda data) =>
+String reporteSincronizacionFinalBandaToJson(
+        ReporteSincronizacionFinalBanda data) =>
     json.encode(data.toJson());
 
 class ReporteSincronizacionFinalBanda {
@@ -303,20 +305,21 @@ class ListaEmpaque {
 }
 
 class Empaque {
-  Empaque({
-    this.controlEmpaqueId,
-    this.empaqueId,
-    this.numeroMesa,
-    this.variedad,
-    this.linea,
-    this.falencias,
-  });
+  Empaque(
+      {this.controlEmpaqueId,
+      this.empaqueId,
+      this.numeroMesa,
+      this.variedad,
+      this.linea,
+      this.falencias,
+      this.codigoEmpacador});
 
   int controlEmpaqueId;
   int empaqueId;
   String numeroMesa;
   String variedad;
   String linea;
+  String codigoEmpacador;
   List<EmpaqueFalencia> falencias;
 
   factory Empaque.fromJson(Map<String, dynamic> json) => Empaque(
@@ -325,6 +328,7 @@ class Empaque {
         numeroMesa: json["numeroMesa"],
         variedad: json["variedad"],
         linea: json["linea"],
+        codigoEmpacador: json["codigoEmpacador"],
         falencias: List<EmpaqueFalencia>.from(
             json["falencias"].map((x) => EmpaqueFalencia.fromJson(x))),
       );
@@ -335,6 +339,7 @@ class Empaque {
         "numeroMesa": numeroMesa,
         "variedad": variedad,
         "linea": linea,
+        "codigoEmpacador": codigoEmpacador,
         "falencias": List<dynamic>.from(falencias.map((x) => x.toJson())),
       };
 }
@@ -449,27 +454,26 @@ class ListaRamo {
 }
 
 class ListaRamoBanda {
-  ListaRamoBanda({
-    this.controlRamosId,
-    this.ramosNumeroOrden,
-    this.ramosTotal,
-    this.ramosFecha,
-    this.ramosAprobado,
-    this.detalleFirmaId,
-    this.clienteId,
-    this.productoId,
-    this.usuarioId,
-    this.ramosTallos,
-    this.ramosDespachar,
-    this.ramosElaborados,
-    this.ramosDerogado,
-    this.ramosTiempo,
-    this.postcosechaId,
-    this.ramosMarca,
-    this.elite,
-    this.tipoId,
-    this.bandas
-  });
+  ListaRamoBanda(
+      {this.controlRamosId,
+      this.ramosNumeroOrden,
+      this.ramosTotal,
+      this.ramosFecha,
+      this.ramosAprobado,
+      this.detalleFirmaId,
+      this.clienteId,
+      this.productoId,
+      this.usuarioId,
+      this.ramosTallos,
+      this.ramosDespachar,
+      this.ramosElaborados,
+      this.ramosDerogado,
+      this.ramosTiempo,
+      this.postcosechaId,
+      this.ramosMarca,
+      this.elite,
+      this.tipoId,
+      this.bandas});
 
   int controlRamosId;
   String ramosNumeroOrden;
@@ -510,7 +514,8 @@ class ListaRamoBanda {
         ramosMarca: json["ramosMarca"],
         elite: json["elite"],
         tipoId: json["tipoId"],
-        bandas: List<BandaSinc>.from(json["ramos"].map((x) => BandaSinc.fromJson(x))),
+        bandas: List<BandaSinc>.from(
+            json["ramos"].map((x) => BandaSinc.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

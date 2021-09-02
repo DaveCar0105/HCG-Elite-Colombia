@@ -16,12 +16,14 @@ class FalenciasPorCaja extends StatefulWidget {
   String numeroMesaGetValue;
   String variedadGetValue;
   String lineaGetValue;
+  String codigoEmpacadorGetValue;
   final ValueChanged<String> actualizarLista;
   FalenciasPorCaja(
       this.empaqueId,
       this.numeroMesaGetValue,
       this.variedadGetValue,
       this.lineaGetValue,
+      this.codigoEmpacadorGetValue,
       this.controlEmpaqueId,
       this.tipo,
       this.actualizarLista);
@@ -31,6 +33,7 @@ class FalenciasPorCaja extends StatefulWidget {
       this.numeroMesaGetValue,
       this.variedadGetValue,
       this.lineaGetValue,
+      this.codigoEmpacadorGetValue,
       this.controlEmpaqueId,
       this.tipo);
 }
@@ -39,6 +42,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
   final numeroMesaTextEditingController = TextEditingController();
   final variedadTextEditingController = TextEditingController();
   final lineaTextEditingController = TextEditingController();
+  final codigoEmpacadorTextEditingController = TextEditingController();
   GlobalKey<ListaBusquedaState> _keyFalencias = GlobalKey();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static List<AutoComplete> listaFalencias = new List<AutoComplete>();
@@ -55,12 +59,14 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
   String numeroMesaGetValue;
   String variedadGetValue;
   String lineaGetValue;
+  String codigoEmpacador;
 
   _FalenciasPorCajaState(
       this.empaqueId,
       this.numeroMesaGetValue,
       this.variedadGetValue,
       this.lineaGetValue,
+      this.codigoEmpacador,
       this.controlEmpaqueId,
       this.tipo) {
     cargarLista(this.empaqueId, this.numeroMesaGetValue, this.variedadGetValue,
@@ -77,60 +83,78 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
       ),
       body: Scrollbar(
           child: Column(children: [
-        banderaVisableForm?Container(
+        Container(
           margin: EdgeInsets.all(10),
           padding: EdgeInsets.all(15),
           child: Form(
               key: _formKey,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
+                  banderaVisableForm
+                      ? Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Número de mesa",
+                                    hintText: 'Ingrese el # mesa',
+                                    enabled: estaticFormEnable),
+                                controller: numeroMesaTextEditingController,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Llene este campo";
+                                  }
+                                },
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    labelText: "Línea",
+                                    hintText: 'Ingrese el #línea',
+                                    enabled: estaticFormEnable),
+                                controller: lineaTextEditingController,
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return "Llene este campo";
+                                  }
+                                },
+                              ),
+                            )
+                          ],
+                        )
+                      : Container(),
+                  banderaVisableForm
+                      ? TextFormField(
                           decoration: InputDecoration(
-                              labelText: "Número de mesa",
-                              hintText: 'Ingrese el # mesa',
+                              labelText: "Variedad",
+                              hintText: 'Ingrese la variedad',
                               enabled: estaticFormEnable),
-                          controller: numeroMesaTextEditingController,
+                          controller: variedadTextEditingController,
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Llene este campo";
                             }
                           },
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                      ),
-                      Expanded(
-                        child: TextFormField(
+                        )
+                      : Container(),
+                  banderaVisableForm == false
+                      ? TextFormField(
                           decoration: InputDecoration(
-                              labelText: "Línea",
-                              hintText: 'Ingrese el #línea',
+                              labelText: "Código empacador",
+                              hintText: 'Ingrese el codigo del empacador',
                               enabled: estaticFormEnable),
-                          controller: lineaTextEditingController,
+                          controller: codigoEmpacadorTextEditingController,
                           validator: (value) {
                             if (value.isEmpty) {
                               return "Llene este campo";
                             }
                           },
-                        ),
-                      )
-                    ],
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Variedad",
-                        hintText: 'Ingrese la variedad',
-                        enabled: estaticFormEnable),
-                    controller: variedadTextEditingController,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return "Llene este campo";
-                      }
-                    },
-                  ),
+                        )
+                      : Container(),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: RaisedButton(
@@ -151,15 +175,17 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[Text('Guardar '), Icon(Icons.save)],
+                          children: <Widget>[
+                            Text('Guardar '),
+                            Icon(Icons.save)
+                          ],
                         ),
                       ),
                     ),
                   ),
                 ],
-              )
-          ),
-        ): Container(),
+              )),
+        ),
         Divider(),
         Expanded(
           child: ListView.builder(
@@ -168,88 +194,91 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
                   _itemFalencia(listaFalenciasReporte[index], size)),
         )
       ])),
-      floatingActionButton: floatingEnable?FloatingActionButton(
-        onPressed: () async {
-          listaFalencias = [];
-          List<FalenciaEmpaque> falenciaEmpaques = List();
-          String valor = 'C';
-          if (this.tipo == 0) {
-            valor = 'R';
-          }
-          falenciaEmpaques =
-              await DatabaseFalenciaEmpaque.getAllFalenciaEmpaque(valor);
-          falenciaEmpaques.forEach((element) {
-            listaFalencias.add(AutoComplete(
-                id: element.falenciaEmpaqueId,
-                nombre: element.falenciaEmpaqueNombre));
-          });
-          setState(() {
-            falenciaEnable = true;
-          });
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => Dialog(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: Container(
-                      width: double.infinity,
-                      height: 200,
-                      padding: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Column(
-                        children: <Widget>[
-                          Text(
-                            'Nueva Falencia',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          falenciaEnable
-                              ? ListaBusqueda(
-                                  key: _keyFalencias,
-                                  lista: listaFalencias,
-                                  hintText: "Falencias",
-                                  valorDefecto: falenciaNombre,
-                                  hintSearchText:
-                                      "Escriba el nombre de la falencia",
-                                  icon: Icon(Icons.bug_report),
-                                  width: w - 160,
-                                  style: TextStyle(fontSize: 14),
-                                  parentAction: (value) {
-                                    AutoComplete falencia =
-                                        listaFalencias.firstWhere((item) {
-                                      return item.nombre == value;
-                                    });
-                                    falenciaId = falencia.id;
-                                  },
-                                )
-                              : Container(
-                                  child: CircularProgressIndicator(),
+      floatingActionButton: floatingEnable
+          ? FloatingActionButton(
+              onPressed: () async {
+                listaFalencias = [];
+                List<FalenciaEmpaque> falenciaEmpaques = List();
+                String valor = 'C';
+                if (this.tipo == 0) {
+                  valor = 'R';
+                }
+                falenciaEmpaques =
+                    await DatabaseFalenciaEmpaque.getAllFalenciaEmpaque(valor);
+                falenciaEmpaques.forEach((element) {
+                  listaFalencias.add(AutoComplete(
+                      id: element.falenciaEmpaqueId,
+                      nombre: element.falenciaEmpaqueNombre));
+                });
+                setState(() {
+                  falenciaEnable = true;
+                });
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          child: Container(
+                            width: double.infinity,
+                            height: 200,
+                            padding: EdgeInsets.all(15),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                              children: <Widget>[
+                                Text(
+                                  'Nueva Falencia',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                          Expanded(child: Container()),
-                          RaisedButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            color: Colors.red,
-                            textColor: Colors.white,
-                            onPressed: () async {
-                              await agregarFalencia();
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 40,
-                              child: Text('Agregar'),
+                                falenciaEnable
+                                    ? ListaBusqueda(
+                                        key: _keyFalencias,
+                                        lista: listaFalencias,
+                                        hintText: "Falencias",
+                                        valorDefecto: falenciaNombre,
+                                        hintSearchText:
+                                            "Escriba el nombre de la falencia",
+                                        icon: Icon(Icons.bug_report),
+                                        width: w - 160,
+                                        style: TextStyle(fontSize: 14),
+                                        parentAction: (value) {
+                                          AutoComplete falencia =
+                                              listaFalencias.firstWhere((item) {
+                                            return item.nombre == value;
+                                          });
+                                          falenciaId = falencia.id;
+                                        },
+                                      )
+                                    : Container(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                Expanded(child: Container()),
+                                RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  color: Colors.red,
+                                  textColor: Colors.white,
+                                  onPressed: () async {
+                                    await agregarFalencia();
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 40,
+                                    child: Text('Agregar'),
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ));
-        },
-        child: Icon(Icons.add),
-      ): Container(),
+                          ),
+                        ));
+              },
+              child: Icon(Icons.add),
+            )
+          : Container(),
       persistentFooterButtons: <Widget>[
         Container(
           height: 35,
@@ -334,6 +363,7 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
         empaqueAdd.numeroMesa = numeroMesaTextEditingController.text;
         empaqueAdd.variedad = variedadTextEditingController.text;
         empaqueAdd.linea = lineaTextEditingController.text;
+        empaqueAdd.codigoEmpacador = codigoEmpacadorTextEditingController.text;
         this.empaqueId =
             await DatabaseEmpaque.addEmpaque(this.controlEmpaqueId, empaqueAdd);
       }
@@ -357,16 +387,17 @@ class _FalenciasPorCajaState extends State<FalenciasPorCaja> {
         numeroMesaTextEditingController.text = numeroMesaGetValue;
         variedadTextEditingController.text = variedadGetValue;
         lineaTextEditingController.text = lineaGetValue;
+        codigoEmpacadorTextEditingController.text = lineaGetValue;
         estaticFormEnable = false;
         floatingEnable = true;
       }
-      if (tipo == 1){
-        floatingEnable = true;
+      if (tipo == 1) {
         numeroMesaTextEditingController.text = "N/A en empaque";
         variedadTextEditingController.text = "N/A en empaque";
         lineaTextEditingController.text = "N/A en empaque";
-        estaticFormEnable = false;
         banderaVisableForm = false;
+      } else {
+        codigoEmpacadorTextEditingController.text = "N/A en empaque";
       }
     });
   }

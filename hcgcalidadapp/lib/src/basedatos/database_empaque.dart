@@ -56,8 +56,8 @@ class DatabaseEmpaque {
   static Future<int> addEmpaque(int controlEmpaqueId, Empaque empaque) async {
     final sql = '''INSERT INTO ${DatabaseCreator.empaqueTable} 
     (${DatabaseCreator.controlEmpaqueId},
-    ${DatabaseCreator.variedad},${DatabaseCreator.numeroMesa},${DatabaseCreator.linea})
-    VALUES(${controlEmpaqueId},'${empaque.variedad}','${empaque.numeroMesa}','${empaque.linea}')''';
+    ${DatabaseCreator.variedad},${DatabaseCreator.numeroMesa},${DatabaseCreator.linea},${DatabaseCreator.codigoEmpacador})
+    VALUES(${controlEmpaqueId},'${empaque.variedad}','${empaque.numeroMesa}','${empaque.linea}','${empaque.codigoEmpacador}')''';
     return await db.rawInsert(sql);
   }
 
@@ -82,6 +82,7 @@ class DatabaseEmpaque {
           numeroMesa: node[DatabaseCreator.numeroMesa],
           variedad: node[DatabaseCreator.variedad],
           linea: node[DatabaseCreator.linea],
+          codigoEmpacador: node[DatabaseCreator.codigoEmpacador],
           tipo: data2[0][DatabaseCreator.falenciaEmpaqueNombre]
               .toString()
               .substring(0, 1)));

@@ -868,7 +868,8 @@ class DatabaseReportesAprobacion {
           ''';
       var data1 = await db.rawQuery(sql1);
       try {
-        item.ramoInconformidad = double.parse(data1[0]['RAMOS'].toString()) * 100 / total;
+        item.ramoInconformidad =
+            double.parse(data1[0]['RAMOS'].toString()) * 100 / total;
         item.ramosNoConformes = data1[0]['RAMOS'];
       } catch (e) {
         item.ramoInconformidad = 0;
@@ -978,7 +979,8 @@ class DatabaseReportesAprobacion {
     ReporteSincronizacionEmpaque listaEmpaque =
         new ReporteSincronizacionEmpaque();
     ReporteSincronizacionRamo listaRamo = new ReporteSincronizacionRamo();
-    ReporteSincronizacionFinalBanda listaFinalBanda = new ReporteSincronizacionFinalBanda();
+    ReporteSincronizacionFinalBanda listaFinalBanda =
+        new ReporteSincronizacionFinalBanda();
     List<Actividad> actividades = [];
     List<ProcesoHidratacion> hidratacion = [];
     List<ProcesoEmpaques> procesoEmpaque = [];
@@ -1002,9 +1004,12 @@ class DatabaseReportesAprobacion {
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
-    listaProcesoMaritimo = await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
-    listaProcesoMaritimoAlstromeria = await DatabaseProcesoMaritimoAlstroemeria.getAllProcesoMaritimoAlstromeria();
-    listaCirculoCalidad = await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
+    listaProcesoMaritimo =
+        await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
+    listaProcesoMaritimoAlstromeria = await DatabaseProcesoMaritimoAlstroemeria
+        .getAllProcesoMaritimoAlstromeria();
+    listaCirculoCalidad =
+        await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
     listaRamo.firmas = [];
     listaRamo.listaRamo = [];
     listaRamo.detallesFirma = [];
@@ -1037,10 +1042,14 @@ class DatabaseReportesAprobacion {
     } catch (e) {}
     try {
       for (int i = 0; i < listaProcesoMaritimoAlstromeria.length; i++) {
-        listaProcesoMaritimoAlstromeria[i].procesoMaritimoAlstroemeriaUsuarioControlId = pref.userId;
+        listaProcesoMaritimoAlstromeria[i]
+            .procesoMaritimoAlstroemeriaUsuarioControlId = pref.userId;
       }
-      int resultMaritimoAlstroemeria = await SincServices.postProcesoMaritimoAlstroemeria(listaProcesoMaritimoAlstromeria);
-      if (resultMaritimoAlstroemeria >= 200 && resultMaritimoAlstroemeria <= 299) {
+      int resultMaritimoAlstroemeria =
+          await SincServices.postProcesoMaritimoAlstroemeria(
+              listaProcesoMaritimoAlstromeria);
+      if (resultMaritimoAlstroemeria >= 200 &&
+          resultMaritimoAlstroemeria <= 299) {
         await procesoMaritimoALstromeriaSinc();
       }
     } catch (e) {}
@@ -1314,10 +1323,13 @@ class DatabaseReportesAprobacion {
         itemEmpaque.empaques = [];
         while (empaques.length > 0) {
           Empaque empaque = Empaque();
-          empaque.controlEmpaqueId = empaques[0][DatabaseCreator.controlEmpaqueId];
+          empaque.controlEmpaqueId =
+              empaques[0][DatabaseCreator.controlEmpaqueId];
           empaque.numeroMesa = empaques[0][DatabaseCreator.numeroMesa];
           empaque.variedad = empaques[0][DatabaseCreator.variedad];
           empaque.linea = empaques[0][DatabaseCreator.linea];
+          empaque.codigoEmpacador =
+              empaques[0][DatabaseCreator.codigoEmpacador];
           empaque.empaqueId = empaques[0][DatabaseCreator.empaqueId];
           final sqlFalencias = '''SELECT * 
           FROM ${DatabaseCreator.falenciasReporteEmpaqueTable} 
@@ -1362,9 +1374,11 @@ class DatabaseReportesAprobacion {
     if (empaqueCode.length > 0) {
       await reporteEmpaqueSinc(empaqueCode);
     }
-    
-    ReporteSincronizacionFinalBanda listaBandas = await DatabaseBanda.getAllBandasSincro();
-    List<Control> controlBandasSinc = await SincServices.postReporteBanda(listaBandas);
+
+    ReporteSincronizacionFinalBanda listaBandas =
+        await DatabaseBanda.getAllBandasSincro();
+    List<Control> controlBandasSinc =
+        await SincServices.postReporteBanda(listaBandas);
     if (controlBandasSinc.length > 0) {
       await reporteFinalBandaSinc(controlBandasSinc);
     }
@@ -1581,7 +1595,8 @@ class DatabaseReportesAprobacion {
   }
 
   static procesoMaritimoALstromeriaSinc() async {
-    final sqlA = 'DELETE FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}';
+    final sqlA =
+        'DELETE FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}';
     await db.rawDelete(sqlA);
   }
 
