@@ -280,6 +280,7 @@ class DatabaseCreator {
   static const procesoMaritimoObservacionesRequerimientosCriticos =
       'procesoMaritimoObservacionesRequerimientosCriticos';
   static const procesoMaritimoFecha = 'procesoMaritimoFecha';
+  static const procesoMaritimoEstado = 'procesoMaritimoEstado';
 
   // TABLA TEMPERATURA
   static const temperaturaTable = 'temperatura';
@@ -500,6 +501,8 @@ class DatabaseCreator {
       'procesoMaritimoAlistamientoRecepcionObservaciones';
   static const procesoMaritimoAlstroemeriaFecha =
       'procesoMaritimoAlistamientoFecha';
+  static const procesoMaritimoAlstroemeriaEstado =
+      'procesoMaritimoAlistamientoEstado';
 
   //static const procesoMaritimo
 
@@ -1053,6 +1056,7 @@ class DatabaseCreator {
         $procesoMaritimoDestinoId TEXT,
         $procesoMaritimoRealizadoPor TEXT,
         $procesomoMaritimoAcompanamiento TEXT,
+        $procesoMaritimoEstado INTEGER,
         $procesoMaritimoNombreHidratante INTEGER,
         $procesoMaritimoPhSoluciones INTEGER,
         $procesoMaritimoNivelSolucionTinas INTEGER,
@@ -1096,7 +1100,8 @@ class DatabaseCreator {
         $procesoMaritimoObservacionesRequerimientosCriticos TEXT,
         $procesoMaritimoFecha DATE,
         $clienteId INTEGER,
-        $postcosechaId INTEGER
+        $postcosechaId INTEGER,
+        $detalleFirmaId INTEGER
       )''';
     await db.execute(procesoMaritimoSql);
   }
@@ -1239,6 +1244,7 @@ class DatabaseCreator {
         $procesoMaritimoAlstroemeriaDestinoId TEXT,
         $procesoMaritimoAlstroemeriaRealizadoPor TEXT,
         $procesoMaritimoAlstroemeriaAcompanamiento TEXT,
+        $procesoMaritimoAlstroemeriaEstado INTEGER,
         $procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad INTEGER,
         $procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta INTEGER,
         $procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion INTEGER,
@@ -1303,7 +1309,8 @@ class DatabaseCreator {
         $procesoMaritimoAlstromeriaRecepcionObservaciones TEXT,
         $procesoMaritimoAlstroemeriaFecha DATE,
         $clienteId INTEGER,
-        $postcosechaId INTEGER
+        $postcosechaId INTEGER,
+        $detalleFirmaId INTEGER
       )''';
     await db.execute(procesoMaritimoSql);
   }

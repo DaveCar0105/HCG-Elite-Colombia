@@ -1,15 +1,14 @@
-
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
 import 'package:hcgcalidadapp/src/modelos/firma.dart';
 
-class DatabaseFirma{
-
+class DatabaseFirma {
   static Future<int> addFirma(Firma firma) async {
     final sql =
-    '''INSERT INTO ${DatabaseCreator.firmaTable}(${DatabaseCreator.firmaId},${DatabaseCreator.firmaCodigo},${DatabaseCreator.firmaNombre},${DatabaseCreator.firmaCargo},${DatabaseCreator.firmaCorreo}) 
+        '''INSERT INTO ${DatabaseCreator.firmaTable}(${DatabaseCreator.firmaId},${DatabaseCreator.firmaCodigo},${DatabaseCreator.firmaNombre},${DatabaseCreator.firmaCargo},${DatabaseCreator.firmaCorreo}) 
     VALUES(${firma.firmaId},'${firma.firmaCodigo}','${firma.firmaNombre}','${firma.firmaCargo}','${firma.firmaCorreo}')''';
     return await db.rawInsert(sql);
   }
+
   static Future<int> updateFirma(Firma firma) async {
     final sql = '''UPDATE ${DatabaseCreator.firmaTable}
     SET ${DatabaseCreator.firmaNombre} = '${firma.firmaNombre}',
@@ -22,90 +21,95 @@ class DatabaseFirma{
     await db.rawUpdate(sql);
   }
 
-  static firmarReportes(int detalleFirmaId)async {
-    final sql =
-    '''UPDATE ${DatabaseCreator.controlRamosTable}
+  static firmarReportes(int detalleFirmaId) async {
+    final sql = '''UPDATE ${DatabaseCreator.controlRamosTable}
     SET ${DatabaseCreator.ramosAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
     WHERE ${DatabaseCreator.ramosAprobado} IN (1, 4)
     ''';
     await db.rawUpdate(sql);
-    final sqlE =
-    '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
+    final sqlE = '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
     SET ${DatabaseCreator.empaqueAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
     WHERE ${DatabaseCreator.empaqueAprobado} IN (1, 4)
     ''';
     await db.rawUpdate(sqlE);
-    final sqlB =
-    '''UPDATE ${DatabaseCreator.controlBandaTable}
+    final sqlB = '''UPDATE ${DatabaseCreator.controlBandaTable}
     SET ${DatabaseCreator.ramosAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
     WHERE ${DatabaseCreator.ramosAprobado} IN (1, 4)
     ''';
     await db.rawUpdate(sqlB);
-    final sqlA =
-    '''UPDATE ${DatabaseCreator.controlEcuadorTable}
+    //////
+    final sqlPM = '''UPDATE ${DatabaseCreator.procesoMaritimoTable}
+    SET ${DatabaseCreator.procesoMaritimoEstado} = 2,
+    ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
+    WHERE ${DatabaseCreator.procesoMaritimoEstado} = 1
+    ''';
+    await db.rawUpdate(sqlPM);
+    final sqlPMA = '''UPDATE ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}
+    SET ${DatabaseCreator.procesoMaritimoAlstroemeriaEstado} = 2,
+    ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
+    WHERE ${DatabaseCreator.procesoMaritimoAlstroemeriaEstado} = 1
+    ''';
+    await db.rawUpdate(sqlPMA);
+    //////
+    final sqlA = '''UPDATE ${DatabaseCreator.controlEcuadorTable}
     SET ${DatabaseCreator.ramosAprobado} = 2,
     ${DatabaseCreator.detalleFirmaId} = $detalleFirmaId
     WHERE ${DatabaseCreator.ramosAprobado} = 1
     ''';
     await db.rawUpdate(sqlA);
   }
-  
-  static borrarReportesRamos(int reporteId)async {
-    final sql =
-    '''UPDATE ${DatabaseCreator.controlRamosTable}
+
+  static borrarReportesRamos(int reporteId) async {
+    final sql = '''UPDATE ${DatabaseCreator.controlRamosTable}
     SET ${DatabaseCreator.ramosAprobado} = 10
     WHERE ${DatabaseCreator.controlRamosId} = $reporteId
     ''';
     await db.rawUpdate(sql);
   }
 
-  static borrarReportesBanda(int reporteId)async {
-    final sql =
-    '''UPDATE ${DatabaseCreator.controlBandaTable}
+  static borrarReportesBanda(int reporteId) async {
+    final sql = '''UPDATE ${DatabaseCreator.controlBandaTable}
     SET ${DatabaseCreator.ramosAprobado} = 10
     WHERE ${DatabaseCreator.controlRamosId} = $reporteId
     ''';
     await db.rawUpdate(sql);
   }
 
-  static borrarReportesEmpaque(int reporteId)async {
-
-    final sqlE =
-    '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
+  static borrarReportesEmpaque(int reporteId) async {
+    final sqlE = '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
     SET ${DatabaseCreator.empaqueAprobado} = 10
     WHERE ${DatabaseCreator.controlEmpaqueId} = $reporteId
     ''';
     await db.rawUpdate(sqlE);
   }
-  static reintReportesRamos(int reporteId)async {
-    final sql =
-    '''UPDATE ${DatabaseCreator.controlRamosTable}
+
+  static reintReportesRamos(int reporteId) async {
+    final sql = '''UPDATE ${DatabaseCreator.controlRamosTable}
     SET ${DatabaseCreator.ramosAprobado} = 2
     WHERE ${DatabaseCreator.controlRamosId} = $reporteId
     ''';
     await db.rawUpdate(sql);
   }
-  static reintReportesEmpaque(int reporteId)async {
 
-    final sqlE =
-    '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
+  static reintReportesEmpaque(int reporteId) async {
+    final sqlE = '''UPDATE ${DatabaseCreator.controlEmpaqueTable}
     SET ${DatabaseCreator.empaqueAprobado} = 2
     WHERE ${DatabaseCreator.controlEmpaqueId} = $reporteId
     ''';
     await db.rawUpdate(sqlE);
   }
-  static Future<List<Firma>> consultarFirmas() async{
-    final sql =
-    '''
+
+  static Future<List<Firma>> consultarFirmas() async {
+    final sql = '''
       SELECT *
       FROM ${DatabaseCreator.firmaTable}
     ''';
     final data = await db.rawQuery(sql);
     List<Firma> firmas = new List<Firma>();
-    for(var firma in data){
+    for (var firma in data) {
       Firma firmaNew = new Firma();
 
       firmaNew.firmaId = firma[DatabaseCreator.firmaId];
@@ -118,9 +122,9 @@ class DatabaseFirma{
 
     return firmas;
   }
-  static Future<List<Firma>> consultarFirmasEmpaque() async{
-    final sql = 
-    '''
+
+  static Future<List<Firma>> consultarFirmasEmpaque() async {
+    final sql = '''
       SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
@@ -143,7 +147,7 @@ class DatabaseFirma{
 
     final data = await db.rawQuery(sql);
     List<Firma> firmas = new List<Firma>();
-    for(var firma in data){
+    for (var firma in data) {
       Firma firmaNew = new Firma();
 
       firmaNew.firmaId = firma[DatabaseCreator.firmaId];
@@ -157,9 +161,8 @@ class DatabaseFirma{
     return firmas;
   }
 
-  static Future<List<Firma>> consultarFirmasRamo() async{
-    final sql =
-    '''
+  static Future<List<Firma>> consultarFirmasRamo() async {
+    final sql = '''
       SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
@@ -181,7 +184,7 @@ class DatabaseFirma{
     ''';
     final data = await db.rawQuery(sql);
     List<Firma> firmas = [];
-    for(var firma in data){
+    for (var firma in data) {
       Firma firmaNew = new Firma();
 
       firmaNew.firmaId = firma[DatabaseCreator.firmaId];
@@ -194,9 +197,8 @@ class DatabaseFirma{
     return firmas;
   }
 
-  static Future<List<Firma>> consultarFirmasFinalBanda() async{
-    final sql =
-    '''
+  static Future<List<Firma>> consultarFirmasFinalBanda() async {
+    final sql = '''
       SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
@@ -218,7 +220,7 @@ class DatabaseFirma{
     ''';
     final data = await db.rawQuery(sql);
     List<Firma> firmas = [];
-    for(var firma in data){
+    for (var firma in data) {
       Firma firmaNew = new Firma();
       firmaNew.firmaId = firma[DatabaseCreator.firmaId];
       firmaNew.firmaCodigo = firma[DatabaseCreator.firmaCodigo];

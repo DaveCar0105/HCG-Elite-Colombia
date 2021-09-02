@@ -15,10 +15,12 @@ import 'package:hcgcalidadapp/src/utilidades/snackBar.dart';
 
 class ProcesoMaritimoAlstroemeriaPage extends StatefulWidget {
   @override
-  _ProcesoMaritimoAlstroemeriaPageState createState() => _ProcesoMaritimoAlstroemeriaPageState();
+  _ProcesoMaritimoAlstroemeriaPageState createState() =>
+      _ProcesoMaritimoAlstroemeriaPageState();
 }
 
-class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroemeriaPage> {
+class _ProcesoMaritimoAlstroemeriaPageState
+    extends State<ProcesoMaritimoAlstroemeriaPage> {
   int procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad = -1;
   int procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta = -1;
   int procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion = -1;
@@ -78,8 +80,9 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
 
-  final procesoMaritimoObsevacionesRecepcionValue =
-      new TextEditingController();
+  final int ESTADO_PROCESO_MARITIMO = 1;
+
+  final procesoMaritimoObsevacionesRecepcionValue = new TextEditingController();
   final procesoMaritimoObsevacionesClasificacionValue =
       new TextEditingController();
   final procesoMaritimoObsevacionesTratamientoValue =
@@ -295,46 +298,50 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(title: Text('Proceso Marítimo Alstroemeria Check'), actions: <Widget>[
-        StreamBuilder(
-            stream: _procesoMaritimoBloc.registroProcesoMaritimoAlstroemeriaStream(),
-            builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-              if (snapshot.hasData) {
-                final data = snapshot.data;
-                return data == 0
-                    ? Container()
-                    : Bounce(
-                        controller: (controller) =>
-                            _procesoMaritimoBloc.bounceController = controller,
-                        from: 20,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, 'detalleMaritimoAlstroemeria');
-                          },
-                          child: Container(
-                            width: width * 0.1,
-                            child: Stack(
-                              children: <Widget>[
-                                Align(
-                                    alignment: Alignment.center,
-                                    child: Icon(Icons.brightness_1,
-                                        color: Colors.white)),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    snapshot.data.toString(),
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                )
-                              ],
+      appBar: AppBar(
+          title: Text('Proceso Marítimo Alstroemeria Check'),
+          actions: <Widget>[
+            StreamBuilder(
+                stream: _procesoMaritimoBloc
+                    .registroProcesoMaritimoAlstroemeriaStream(),
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  if (snapshot.hasData) {
+                    final data = snapshot.data;
+                    return data == 0
+                        ? Container()
+                        : Bounce(
+                            controller: (controller) => _procesoMaritimoBloc
+                                .bounceController = controller,
+                            from: 20,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, 'detalleMaritimoAlstroemeria');
+                              },
+                              child: Container(
+                                width: width * 0.1,
+                                child: Stack(
+                                  children: <Widget>[
+                                    Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(Icons.brightness_1,
+                                            color: Colors.white)),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        snapshot.data.toString(),
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-              }
-              return Container();
-            })
-      ]),
+                          );
+                  }
+                  return Container();
+                })
+          ]),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(
@@ -352,8 +359,7 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
               _acompanamiento(),
               Divider(),
               Column(children: [
-                Text('RECEPCIÓN',
-                    style: Theme.of(context).textTheme.subtitle1)
+                Text('RECEPCIÓN', style: Theme.of(context).textTheme.subtitle1)
               ]),
               Container(padding: const EdgeInsets.only(bottom: 5)),
               Row(
@@ -361,20 +367,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -389,19 +391,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad = value;
+                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad = value;
+                          procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad =
+                              value;
                         });
                       }),
                 ],
@@ -418,19 +424,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta = value;
+                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta = value;
+                          procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta =
+                              value;
                         });
                       }),
                 ],
@@ -447,19 +457,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion = value;
+                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion = value;
+                          procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion =
+                              value;
                         });
                       }),
                 ],
@@ -479,20 +493,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -507,19 +517,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos = value;
+                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos = value;
+                          procesoMaritimoAlstroemeriaClasificacionLongitudTallos =
+                              value;
                         });
                       }),
                 ],
@@ -536,19 +550,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal = value;
+                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal = value;
+                          procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal =
+                              value;
                         });
                       }),
                 ],
@@ -565,19 +583,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado = value;
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado = value;
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado =
+                              value;
                         });
                       }),
                 ],
@@ -594,19 +616,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood = value;
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood = value;
+                          procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood =
+                              value;
                         });
                       }),
                 ],
@@ -623,19 +649,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato = value;
+                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato = value;
+                          procesoMaritimoAlstroemeriaClasificacionLibreMaltrato =
+                              value;
                         });
                       }),
                 ],
@@ -652,19 +682,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso = value;
+                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso = value;
+                          procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso =
+                              value;
                         });
                       }),
                 ],
@@ -681,19 +715,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos = value;
+                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos = value;
+                          procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos =
+                              value;
                         });
                       }),
                 ],
@@ -710,19 +748,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo = value;
+                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo = value;
+                          procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo =
+                              value;
                         });
                       }),
                 ],
@@ -742,20 +784,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -770,19 +808,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas = value;
+                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas = value;
+                          procesoMaritimoAlstroemeriaTratamientoBaldesTinas =
+                              value;
                         });
                       }),
                 ],
@@ -799,19 +841,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion = value;
+                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion = value;
+                          procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion =
+                              value;
                         });
                       }),
                 ],
@@ -828,19 +874,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion = value;
+                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion = value;
+                          procesoMaritimoAlstroemeriaTratamientoNivelSolucion =
+                              value;
                         });
                       }),
                 ],
@@ -857,19 +907,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion = value;
+                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion = value;
+                          procesoMaritimoAlstroemeriaTratamientoCambioSolucion =
+                              value;
                         });
                       }),
                 ],
@@ -886,19 +940,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoTiempoSala,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoTiempoSala = value;
+                          procesoMaritimoAlstroemeriaTratamientoTiempoSala =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTratamientoTiempoSala,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTratamientoTiempoSala = value;
+                          procesoMaritimoAlstroemeriaTratamientoTiempoSala =
+                              value;
                         });
                       }),
                 ],
@@ -918,20 +976,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -946,19 +1000,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaHidratacionNumeroRamos = value;
+                          procesoMaritimoAlstroemeriaHidratacionNumeroRamos =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaHidratacionNumeroRamos = value;
+                          procesoMaritimoAlstroemeriaHidratacionNumeroRamos =
+                              value;
                         });
                       }),
                 ],
@@ -970,23 +1028,28 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                 children: <Widget>[
                   Container(
                     width: width * 0.5,
-                    child: Text('Los ramos son hidratados por 4 horas a temperatura ambiente en solución STS y luego en cuarto frío mínimo 12 horas en esa misma solución.'),
+                    child: Text(
+                        'Los ramos son hidratados por 4 horas a temperatura ambiente en solución STS y luego en cuarto frío mínimo 12 horas en esa misma solución.'),
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaHidratacionRamosHidratados = value;
+                          procesoMaritimoAlstroemeriaHidratacionRamosHidratados =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaHidratacionRamosHidratados = value;
+                          procesoMaritimoAlstroemeriaHidratacionRamosHidratados =
+                              value;
                         });
                       }),
                 ],
@@ -1003,19 +1066,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio = value;
+                          procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio = value;
+                          procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio =
+                              value;
                         });
                       }),
                 ],
@@ -1061,20 +1128,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -1145,19 +1208,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos = value;
+                          procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos = value;
+                          procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos =
+                              value;
                         });
                       }),
                 ],
@@ -1171,19 +1238,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos = value;
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos = value;
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos =
+                              value;
                         });
                       }),
                 ],
@@ -1197,19 +1268,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento = value;
+                          procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento = value;
+                          procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento =
+                              value;
                         });
                       }),
                 ],
@@ -1223,19 +1298,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo = value;
+                          procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo = value;
+                          procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo =
+                              value;
                         });
                       }),
                 ],
@@ -1249,19 +1328,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad = value;
+                          procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad = value;
+                          procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad =
+                              value;
                         });
                       }),
                 ],
@@ -1275,19 +1358,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas = value;
+                          procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas = value;
+                          procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas =
+                              value;
                         });
                       }),
                 ],
@@ -1301,19 +1388,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue = value;
+                          procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue = value;
+                          procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue =
+                              value;
                         });
                       }),
                 ],
@@ -1327,19 +1418,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR = value;
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR = value;
+                          procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR =
+                              value;
                         });
                       }),
                 ],
@@ -1353,19 +1448,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto = value;
+                          procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto = value;
+                          procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto =
+                              value;
                         });
                       }),
                 ],
@@ -1408,20 +1507,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -1433,19 +1528,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTransporteTemperauraCajas = value;
+                          procesoMaritimoAlstroemeriaTransporteTemperauraCajas =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaTransporteTemperauraCajas = value;
+                          procesoMaritimoAlstroemeriaTransporteTemperauraCajas =
+                              value;
                         });
                       }),
                 ],
@@ -1702,20 +1801,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -1787,19 +1882,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaPalletizadoPalletsAltura = value;
+                          procesoMaritimoAlstroemeriaPalletizadoPalletsAltura =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaPalletizadoPalletsAltura = value;
+                          procesoMaritimoAlstroemeriaPalletizadoPalletsAltura =
+                              value;
                         });
                       }),
                 ],
@@ -1843,19 +1942,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado = value;
+                          procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado = value;
+                          procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado =
+                              value;
                         });
                       }),
                 ],
@@ -1872,20 +1975,16 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -1923,19 +2022,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorFechaFabricacion = value;
+                          procesoMaritimoAlstroemeriaContenedorFechaFabricacion =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorFechaFabricacion = value;
+                          procesoMaritimoAlstroemeriaContenedorFechaFabricacion =
+                              value;
                         });
                       }),
                 ],
@@ -1979,19 +2082,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado = value;
+                          procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado = value;
+                          procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado =
+                              value;
                         });
                       }),
                 ],
@@ -2065,19 +2172,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorCierreSellado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorCierreSellado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorCierreSellado = value;
+                          procesoMaritimoAlstroemeriaContenedorCierreSellado =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorCierreSellado,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorCierreSellado,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorCierreSellado = value;
+                          procesoMaritimoAlstroemeriaContenedorCierreSellado =
+                              value;
                         });
                       }),
                 ],
@@ -2091,19 +2202,23 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
                   ),
                   Radio(
                       value: 0,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorControlTemperatura,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorControlTemperatura,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorControlTemperatura = value;
+                          procesoMaritimoAlstroemeriaContenedorControlTemperatura =
+                              value;
                         });
                       }),
                   Spacer(),
                   Radio(
                       value: 1,
-                      groupValue: procesoMaritimoAlstroemeriaContenedorControlTemperatura,
+                      groupValue:
+                          procesoMaritimoAlstroemeriaContenedorControlTemperatura,
                       onChanged: (value) {
                         setState(() {
-                          procesoMaritimoAlstroemeriaContenedorControlTemperatura = value;
+                          procesoMaritimoAlstroemeriaContenedorControlTemperatura =
+                              value;
                         });
                       }),
                 ],
@@ -2237,100 +2352,164 @@ class _ProcesoMaritimoAlstroemeriaPageState extends State<ProcesoMaritimoAlstroe
   }
 
   _validarForm() async {
-    if (
-        destinosId >= 0 &&
+    if (destinosId >= 0 &&
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
         postcosechaId != 0 &&
-        clientesId != 0 ) {
-          int numeroGuia;
-          try{
-            numeroGuia = int.parse(procesoMaritimoNumeroGuiaValue.text);
-          } catch(e){}
-      ProcesoMaritimoAlstroemeria procesoMaritimo = new ProcesoMaritimoAlstroemeria( 
-        procesoMaritimoAlstroemeriaUsuarioControlId: 0,
-        procesoMaritimoAlstroemeriaNumeroGuia : numeroGuia,
-        procesoMaritimoAlstroemeriaDestinoId: destinosId,
-        procesoMaritimoAlstroemeriaRealizadoPor: procesoMaritimoRealizadoPorValue.text,
-        procesoMaritimoAlstroemeriaAcompanamiento: procesoMaritimoAcompanamientoValue.text,
-        procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad : procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
-        procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta : procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
-        procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion : procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
-        procesoMaritimoAlstroemeriaClasificacionLongitudTallos : procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
-        procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal : procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
-        procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado : procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
-        procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood : procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
-        procesoMaritimoAlstroemeriaClasificacionLibreMaltrato : procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
-        procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso : procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
-        procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos : procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
-        procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo : procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
-        procesoMaritimoAlstroemeriaTratamientoBaldesTinas : procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
-        procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion : procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
-        procesoMaritimoAlstroemeriaTratamientoNivelSolucion : procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
-        procesoMaritimoAlstroemeriaTratamientoCambioSolucion : procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
-        procesoMaritimoAlstroemeriaTratamientoTiempoSala : procesoMaritimoAlstroemeriaTratamientoTiempoSala,
-        procesoMaritimoAlstroemeriaHidratacionNumeroRamos : procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
-        procesoMaritimoAlstroemeriaHidratacionRamosHidratados : procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
-        procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio : procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
-        procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado : procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado,
-        procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion : procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion,
-        procesoMaritimoAlstroemeriaEmpaqueEdadFlor : procesoMaritimoAlstroemeriaEmpaqueEdadFlor,
-        procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos : procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
-        procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos : procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
-        procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento : procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
-        procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo : procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
-        procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad : procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
-        procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas : procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
-        procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue : procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
-        procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR : procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
-        procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto : procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
-        procesoMaritimoAlstroemeriaEmpaqueEmpacoHB : procesoMaritimoAlstroemeriaEmpaqueEmpacoHB,
-        procesoMaritimoAlstroemeriaTransporteTemperauraCajas : procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
-        procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio : procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio,
-        procesoMaritimoAlstroemeriaTransporteCamionTransporta : procesoMaritimoAlstroemeriaTransporteCamionTransporta,
-        procesoMaritimoAlstroemeriaTransporteTemperaturaCamion : procesoMaritimoAlstroemeriaTransporteTemperaturaCamion,
-        procesoMaritimoAlstroemeriaTransporteBuenaConexion : procesoMaritimoAlstroemeriaTransporteBuenaConexion,
-        procesoMaritimoAlstroemeriaTransporteThermoking : procesoMaritimoAlstroemeriaTransporteThermoking,
-        procesoMaritimoAlstroemeriaTransporteCajasApiladas : procesoMaritimoAlstroemeriaTransporteCajasApiladas,
-        procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado : procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado,
-        procesoMaritimoAlstromeriaTransporteTemperaturaFurgon : procesoMaritimoAlstromeriaTransporteTemperaturaFurgon,
-        procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias : procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias,
-        procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros : procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros,
-        procesoMaritimoAlstroemeriaPalletizadoPalletsAltura : procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
-        procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido : procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido,
-        procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado : procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
-        procesoMaritimoAlstroemeriaContenedorGenset : procesoMaritimoAlstroemeriaContenedorGenset,
-        procesoMaritimoAlstroemeriaContenedorFechaFabricacion : procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
-        procesoMaritimoAlstroemeriaContenedorContenedorSeteo : procesoMaritimoAlstroemeriaContenedorContenedorSeteo,
-        procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado : procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
-        procesoMaritimoAlstroemeriaContenedorContenedorLavado : procesoMaritimoAlstroemeriaContenedorContenedorLavado,
-        procesoMaritimoAlstroemeriaContenedorSachetsEthiblock : procesoMaritimoAlstroemeriaContenedorSachetsEthiblock,
-        procesoMaritimoAlstroemeriaContenedorCierreSellado : procesoMaritimoAlstroemeriaContenedorCierreSellado,
-        procesoMaritimoAlstroemeriaContenedorControlTemperatura : procesoMaritimoAlstroemeriaContenedorControlTemperatura,
-        procesoMaritimoAlstroemeriaContenedorObservaciones : procesoMaritimoObservacionesLlenadoContenedorValue.text,
-        procesoMaritimoAlstroemeriaPalletizadoObservaciones : procesoMaritimoObservacionesPalletizadoValue.text,
-        procesoMaritimoAlstroemeriaTransporteObservaciones : procesoMaritimoObservacionesTransporteValue.text,
-        procesoMaritimoAlstroemeriaEmpaqueObservaciones : procesoMaritimoObservacionesEmpaqueValue.text,
-        procesoMaritimoAlstroemeriaHidratacionObservaciones : procesoMaritimoObsevacionesHidratacionValue.text,
-        procesoMaritimoAlstroemeriaTratamientoObservaciones : procesoMaritimoObsevacionesTratamientoValue.text,
-        procesoMaritimoAlstroemeriaClasificacionObservaciones : procesoMaritimoObsevacionesClasificacionValue.text,
-        procesoMaritimoAlstromeriaRecepcionObservaciones : procesoMaritimoObsevacionesRecepcionValue.text,
-        procesoMaritimoAlstroemeriaFecha: DateTime.now(),
-        postcosechaId: postcosechaId,
-        clienteId: clientesId,
-      );
+        clientesId != 0) {
+      int numeroGuia;
+      try {
+        numeroGuia = int.parse(procesoMaritimoNumeroGuiaValue.text);
+      } catch (e) {}
+      ProcesoMaritimoAlstroemeria procesoMaritimo =
+          new ProcesoMaritimoAlstroemeria(
+              procesoMaritimoAlstroemeriaUsuarioControlId: 0,
+              procesoMaritimoAlstroemeriaNumeroGuia: numeroGuia,
+              procesoMaritimoAlstroemeriaDestinoId: destinosId,
+              procesoMaritimoAlstroemeriaRealizadoPor:
+                  procesoMaritimoRealizadoPorValue.text,
+              procesoMaritimoAlstroemeriaAcompanamiento:
+                  procesoMaritimoAcompanamientoValue.text,
+              procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad:
+                  procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+              procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta:
+                  procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+              procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion:
+                  procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+              procesoMaritimoAlstroemeriaClasificacionLongitudTallos:
+                  procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+              procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal:
+                  procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+              procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado:
+                  procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+              procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood:
+                  procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+              procesoMaritimoAlstroemeriaClasificacionLibreMaltrato:
+                  procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+              procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso:
+                  procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+              procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos:
+                  procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+              procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo:
+                  procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+              procesoMaritimoAlstroemeriaTratamientoBaldesTinas:
+                  procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+              procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion:
+                  procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+              procesoMaritimoAlstroemeriaTratamientoNivelSolucion:
+                  procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+              procesoMaritimoAlstroemeriaTratamientoCambioSolucion:
+                  procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+              procesoMaritimoAlstroemeriaTratamientoTiempoSala:
+                  procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+              procesoMaritimoAlstroemeriaHidratacionNumeroRamos:
+                  procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
+              procesoMaritimoAlstroemeriaHidratacionRamosHidratados:
+                  procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
+              procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio:
+                  procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
+              procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado:
+                  procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado,
+              procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion:
+                  procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion,
+              procesoMaritimoAlstroemeriaEmpaqueEdadFlor:
+                  procesoMaritimoAlstroemeriaEmpaqueEdadFlor,
+              procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos:
+                  procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
+              procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos:
+                  procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
+              procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento:
+                  procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
+              procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo:
+                  procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
+              procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad:
+                  procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
+              procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas:
+                  procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
+              procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue:
+                  procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
+              procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR:
+                  procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
+              procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto:
+                  procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
+              procesoMaritimoAlstroemeriaEmpaqueEmpacoHB:
+                  procesoMaritimoAlstroemeriaEmpaqueEmpacoHB,
+              procesoMaritimoAlstroemeriaTransporteTemperauraCajas:
+                  procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
+              procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio:
+                  procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio,
+              procesoMaritimoAlstroemeriaTransporteCamionTransporta:
+                  procesoMaritimoAlstroemeriaTransporteCamionTransporta,
+              procesoMaritimoAlstroemeriaTransporteTemperaturaCamion:
+                  procesoMaritimoAlstroemeriaTransporteTemperaturaCamion,
+              procesoMaritimoAlstroemeriaTransporteBuenaConexion:
+                  procesoMaritimoAlstroemeriaTransporteBuenaConexion,
+              procesoMaritimoAlstroemeriaTransporteThermoking:
+                  procesoMaritimoAlstroemeriaTransporteThermoking,
+              procesoMaritimoAlstroemeriaTransporteCajasApiladas:
+                  procesoMaritimoAlstroemeriaTransporteCajasApiladas,
+              procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado:
+                  procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado,
+              procesoMaritimoAlstromeriaTransporteTemperaturaFurgon:
+                  procesoMaritimoAlstromeriaTransporteTemperaturaFurgon,
+              procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias:
+                  procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias,
+              procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros:
+                  procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros,
+              procesoMaritimoAlstroemeriaPalletizadoPalletsAltura:
+                  procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
+              procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido:
+                  procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido,
+              procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado:
+                  procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
+              procesoMaritimoAlstroemeriaContenedorGenset:
+                  procesoMaritimoAlstroemeriaContenedorGenset,
+              procesoMaritimoAlstroemeriaContenedorFechaFabricacion:
+                  procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
+              procesoMaritimoAlstroemeriaContenedorContenedorSeteo:
+                  procesoMaritimoAlstroemeriaContenedorContenedorSeteo,
+              procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado:
+                  procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
+              procesoMaritimoAlstroemeriaContenedorContenedorLavado:
+                  procesoMaritimoAlstroemeriaContenedorContenedorLavado,
+              procesoMaritimoAlstroemeriaContenedorSachetsEthiblock:
+                  procesoMaritimoAlstroemeriaContenedorSachetsEthiblock,
+              procesoMaritimoAlstroemeriaContenedorCierreSellado:
+                  procesoMaritimoAlstroemeriaContenedorCierreSellado,
+              procesoMaritimoAlstroemeriaContenedorControlTemperatura:
+                  procesoMaritimoAlstroemeriaContenedorControlTemperatura,
+              procesoMaritimoAlstroemeriaContenedorObservaciones:
+                  procesoMaritimoObservacionesLlenadoContenedorValue.text,
+              procesoMaritimoAlstroemeriaPalletizadoObservaciones:
+                  procesoMaritimoObservacionesPalletizadoValue.text,
+              procesoMaritimoAlstroemeriaTransporteObservaciones:
+                  procesoMaritimoObservacionesTransporteValue.text,
+              procesoMaritimoAlstroemeriaEmpaqueObservaciones:
+                  procesoMaritimoObservacionesEmpaqueValue.text,
+              procesoMaritimoAlstroemeriaHidratacionObservaciones:
+                  procesoMaritimoObsevacionesHidratacionValue.text,
+              procesoMaritimoAlstroemeriaTratamientoObservaciones:
+                  procesoMaritimoObsevacionesTratamientoValue.text,
+              procesoMaritimoAlstroemeriaClasificacionObservaciones:
+                  procesoMaritimoObsevacionesClasificacionValue.text,
+              procesoMaritimoAlstromeriaRecepcionObservaciones:
+                  procesoMaritimoObsevacionesRecepcionValue.text,
+              procesoMaritimoAlstroemeriaFecha: DateTime.now(),
+              postcosechaId: postcosechaId,
+              clienteId: clientesId,
+              procesoMaritimoAlstroemeriaEstado: ESTADO_PROCESO_MARITIMO);
 
-      int procesoMaritimoId =
-          await DatabaseProcesoMaritimoAlstroemeria.addProcesoMaritimoAlstroemeria(procesoMaritimo);
+      int procesoMaritimoId = await DatabaseProcesoMaritimoAlstroemeria
+          .addProcesoMaritimoAlstroemeria(procesoMaritimo);
       if (procesoMaritimoId != 0) {
         mostrarSnackbar('Registro Guardado', Colors.green, _scaffoldKey);
         _limpiarForm();
         _procesoMaritimoBloc.registroProcesoMaritimoAlstroemeriaStream();
         _procesoMaritimoBloc.itemAgregado();
       } else {
-        mostrarSnackbar('No se pudo guardar la información', Colors.red,
-            _scaffoldKey);
+        mostrarSnackbar(
+            'No se pudo guardar la información', Colors.red, _scaffoldKey);
       }
     } else {
       mostrarSnackbar(

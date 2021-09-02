@@ -59,6 +59,8 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   final procesoMaritimoRealizadoPorValue = new TextEditingController();
   final procesoMaritimoAcompanamientoValue = new TextEditingController();
 
+  final int ESTADO_PROCESO_MARITIMO = 1;
+
   final procesoMaritimoObsevacionesHidratacionValue =
       new TextEditingController();
   final procesoMaritimoObservacionesEmpaqueValue = new TextEditingController();
@@ -338,20 +340,16 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -537,20 +535,16 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               SizedBox(
@@ -702,20 +696,16 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -816,20 +806,16 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -1012,20 +998,16 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -1234,20 +1216,16 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
                   SizedBox(
                     width: width * 0.5,
                   ),
-                  Expanded(child: 
-                    Text(
-                      'Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  ),
-                  Expanded(child: 
-                    Text(
-                      'No Cumple:',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold),
-                    )
-                  )
+                  Expanded(
+                      child: Text(
+                    'Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  Expanded(
+                      child: Text(
+                    'No Cumple:',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ))
                 ],
               ),
               Row(
@@ -1555,99 +1533,99 @@ class _ProcesoMaritimoPageState extends State<ProcesoMaritimoPage> {
   }
 
   _validarForm() async {
-    if (
-        destinosId >= 0 &&
+    if (destinosId >= 0 &&
         procesoMaritimoNumeroGuiaValue.text != '' &&
         procesoMaritimoRealizadoPorValue.text != '' &&
         procesoMaritimoAcompanamientoValue.text != '' &&
         postcosechaId != 0 &&
-        clientesId != 0 ) {
+        clientesId != 0) {
       ProcesoMaritimo procesoMaritimo = new ProcesoMaritimo(
-        procesoMaritimoUsuarioControlId: 1,
-        procesoMaritimoNumeroGuia:
-            int.parse(procesoMaritimoNumeroGuiaValue.text),
-        procesoMaritimoDestinoId: destinosId,
-        procesoMaritimoRealizadoPor: procesoMaritimoRealizadoPorValue.text,
-        procesoMaritimoAcompanamiento: procesoMaritimoAcompanamientoValue.text,
-        procesoMaritimoNombreHidratante: procesoMaritimoNombreHidratanteValue,
-        procesoMaritimoPhSoluciones: procesoMaritimoPhSolucionesvalue,
-        procesoMaritimoNivelSolucionTinas:
-            procesoMaritimoNivelSolucionTinasValue,
-        procesoMaritimoSolucionHidratacionSinVegetal:
-            procesoMaritimoSolucionHidratacionSinVegetalValue,
-        procesoMaritimoTemperaturaCuartoFrio:
-            procesoMaritimoTemperaturaCuartoFrioValue,
-        procesoMaritimoTemperaturaSolucionesHidratacion:
-            procesoMaritimoTemperaturaSolucionesHidratacionValue,
-        procesoMaritimoEmpaqueAmbienteTemperatura:
-            procesoMaritimoEmpaqueAmbienteTemperaturaValue,
-        procesoMaritimoFlorEmpacada: procesoMaritimoFlorEmpacadaValue,
-        procesoMaritimoTransportCareEmpaque:
-            procesoMaritimoTransportCareEmpaquevalue,
-        procesoMaritimoCajasVisualDeformes:
-            procesoMaritimoCajasVisualDeformesValue,
-        procesoMaritimoEtiquetasCajasUbicadas:
-            procesoMaritimoEtiquetasCajasUbicadasValue,
-        procesoMaritimoTemperaturaCubiculoCamion:
-            procesoMaritimoTemperaturaCubiculoCamionValue,
-        procesoMaritimoTemperaturaCajasTransferencia:
-            procesoMaritimoTemperaturaCajasTransferenciaValue,
-        procesoMaritimoAparenciaCajasTransferencia:
-            procesoMaritimoAparenciaCajasTransferenciaValue,
-        procesoMaritimoEstibasDebidamenteSelladas:
-            procesoMaritimoEstibasDebidamenteSelladasValue,
-        procesoMaritimoPalletsEsquinerosCorrectamenteAjustados:
-            procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue,
-        procesoMaritimoPalletsAlturaContenedor:
-            procesoMaritimoPalletsAlturaContenedorValue,
-        procesoMaritimoTemperaturaPalletContenedor:
-            procesoMaritimoTemperaturaPalletContenedorValue,
-        procesoMaritimoPalletIdentificadoNumero:
-            procesoMaritimoPalletIdentificadoNumeroValue,
-        procesoMaritimoTomaRegistroTemperaturas:
-            procesoMaritimoTomaRegistroTemperaturasValue,
-        procesoMaritimoGenset: procesoMaritimoGensetValue,
-        procesoMaritimoContenedorEdadFabricacion:
-            procesoMaritimoContenedorEdadFabricacionValue,
-        procesoMaritimoContenedorCumplimientoSeteo:
-            procesoMaritimoContenedorCumplimientoSeteoValue,
-        procesoMaritimoContenedorPreEnfriado:
-            procesoMaritimoContenedorPreEnfriadoValue,
-        procesoMaritimoContenedorlavadoDesinfectado:
-            procesoMaritimoContenedorlavadoDesinfectadoValue,
-        procesoMartimoCarguePreviamenteHumedecidos:
-            procesoMartimoCarguePreviamenteHumedecidosValue,
-        procesoMaritimoLlegandoCierreSellado:
-            procesoMaritimoLlegandoCierreSelladoValue,
-        procesoMaritimoEstibasSelloICA: procesoMaritimoEstibasSelloICAValue,
-        procesoMaritimoPalletsTensionZunchos:
-            procesoMaritimoPalletsTensionZunchosvalue,
-        procesoMaritimoPalletIdentificadoEtiqueta:
-            procesoMaritimoPalletIdentificadoEtiquetaValue,
-        procesoMaritimoComponentePalletDestinosEtiquetas:
-            procesoMaritimoComponentePalletDestinosEtiquetasValue,
-        procesoMaritimoCamionSelloSeguridadContenedor:
-            procesoMaritimoCamionSelloSeguridadContenedorValue,
-        procesoMaritimoVerificacionEncendidoTermografo:
-            procesoMaritimoVerificacionEncendidoTermografoValue,
-        procesoMaritimoFotografiaPalletsEmpresaContenor:
-            procesoMaritimoFotografiaPalletsEmpresaContenorValue,
-        procesoMaritimoObservacionesHidratacion:
-            procesoMaritimoObsevacionesHidratacionValue.text,
-        procesoMaritimoObservacionesEmpaque:
-            procesoMaritimoObservacionesEmpaqueValue.text,
-        procesoMaritimoObservacionesTransferencias:
-            procesoMaritimoObservacionesTransferenciaValue.text,
-        procesoMaritimoObservacionesPalletizado:
-            procesoMaritimoObservacionesPalletizadoValue.text,
-        procesoMaritimoObservacionesLlenadoContenedor:
-            procesoMaritimoObservacionesLlenadoContenedorValue.text,
-        procesoMaritimoObservacionesRequerimientosCriticos:
-            procesoMaritimoObservacionesRequerimientosCriticosValue.text,
-        procesoMaritimoFecha: DateTime.now(),
-        postcosechaId: postcosechaId,
-        clienteId: clientesId,
-      );
+          procesoMaritimoUsuarioControlId: 1,
+          procesoMaritimoNumeroGuia:
+              int.parse(procesoMaritimoNumeroGuiaValue.text),
+          procesoMaritimoDestinoId: destinosId,
+          procesoMaritimoRealizadoPor: procesoMaritimoRealizadoPorValue.text,
+          procesoMaritimoAcompanamiento:
+              procesoMaritimoAcompanamientoValue.text,
+          procesoMaritimoNombreHidratante: procesoMaritimoNombreHidratanteValue,
+          procesoMaritimoPhSoluciones: procesoMaritimoPhSolucionesvalue,
+          procesoMaritimoNivelSolucionTinas:
+              procesoMaritimoNivelSolucionTinasValue,
+          procesoMaritimoSolucionHidratacionSinVegetal:
+              procesoMaritimoSolucionHidratacionSinVegetalValue,
+          procesoMaritimoTemperaturaCuartoFrio:
+              procesoMaritimoTemperaturaCuartoFrioValue,
+          procesoMaritimoTemperaturaSolucionesHidratacion:
+              procesoMaritimoTemperaturaSolucionesHidratacionValue,
+          procesoMaritimoEmpaqueAmbienteTemperatura:
+              procesoMaritimoEmpaqueAmbienteTemperaturaValue,
+          procesoMaritimoFlorEmpacada: procesoMaritimoFlorEmpacadaValue,
+          procesoMaritimoTransportCareEmpaque:
+              procesoMaritimoTransportCareEmpaquevalue,
+          procesoMaritimoCajasVisualDeformes:
+              procesoMaritimoCajasVisualDeformesValue,
+          procesoMaritimoEtiquetasCajasUbicadas:
+              procesoMaritimoEtiquetasCajasUbicadasValue,
+          procesoMaritimoTemperaturaCubiculoCamion:
+              procesoMaritimoTemperaturaCubiculoCamionValue,
+          procesoMaritimoTemperaturaCajasTransferencia:
+              procesoMaritimoTemperaturaCajasTransferenciaValue,
+          procesoMaritimoAparenciaCajasTransferencia:
+              procesoMaritimoAparenciaCajasTransferenciaValue,
+          procesoMaritimoEstibasDebidamenteSelladas:
+              procesoMaritimoEstibasDebidamenteSelladasValue,
+          procesoMaritimoPalletsEsquinerosCorrectamenteAjustados:
+              procesoMaritimoPalletsEsquinerosCorrectamenteAjustadosValue,
+          procesoMaritimoPalletsAlturaContenedor:
+              procesoMaritimoPalletsAlturaContenedorValue,
+          procesoMaritimoTemperaturaPalletContenedor:
+              procesoMaritimoTemperaturaPalletContenedorValue,
+          procesoMaritimoPalletIdentificadoNumero:
+              procesoMaritimoPalletIdentificadoNumeroValue,
+          procesoMaritimoTomaRegistroTemperaturas:
+              procesoMaritimoTomaRegistroTemperaturasValue,
+          procesoMaritimoGenset: procesoMaritimoGensetValue,
+          procesoMaritimoContenedorEdadFabricacion:
+              procesoMaritimoContenedorEdadFabricacionValue,
+          procesoMaritimoContenedorCumplimientoSeteo:
+              procesoMaritimoContenedorCumplimientoSeteoValue,
+          procesoMaritimoContenedorPreEnfriado:
+              procesoMaritimoContenedorPreEnfriadoValue,
+          procesoMaritimoContenedorlavadoDesinfectado:
+              procesoMaritimoContenedorlavadoDesinfectadoValue,
+          procesoMartimoCarguePreviamenteHumedecidos:
+              procesoMartimoCarguePreviamenteHumedecidosValue,
+          procesoMaritimoLlegandoCierreSellado:
+              procesoMaritimoLlegandoCierreSelladoValue,
+          procesoMaritimoEstibasSelloICA: procesoMaritimoEstibasSelloICAValue,
+          procesoMaritimoPalletsTensionZunchos:
+              procesoMaritimoPalletsTensionZunchosvalue,
+          procesoMaritimoPalletIdentificadoEtiqueta:
+              procesoMaritimoPalletIdentificadoEtiquetaValue,
+          procesoMaritimoComponentePalletDestinosEtiquetas:
+              procesoMaritimoComponentePalletDestinosEtiquetasValue,
+          procesoMaritimoCamionSelloSeguridadContenedor:
+              procesoMaritimoCamionSelloSeguridadContenedorValue,
+          procesoMaritimoVerificacionEncendidoTermografo:
+              procesoMaritimoVerificacionEncendidoTermografoValue,
+          procesoMaritimoFotografiaPalletsEmpresaContenor:
+              procesoMaritimoFotografiaPalletsEmpresaContenorValue,
+          procesoMaritimoObservacionesHidratacion:
+              procesoMaritimoObsevacionesHidratacionValue.text,
+          procesoMaritimoObservacionesEmpaque:
+              procesoMaritimoObservacionesEmpaqueValue.text,
+          procesoMaritimoObservacionesTransferencias:
+              procesoMaritimoObservacionesTransferenciaValue.text,
+          procesoMaritimoObservacionesPalletizado:
+              procesoMaritimoObservacionesPalletizadoValue.text,
+          procesoMaritimoObservacionesLlenadoContenedor:
+              procesoMaritimoObservacionesLlenadoContenedorValue.text,
+          procesoMaritimoObservacionesRequerimientosCriticos:
+              procesoMaritimoObservacionesRequerimientosCriticosValue.text,
+          procesoMaritimoFecha: DateTime.now(),
+          postcosechaId: postcosechaId,
+          clienteId: clientesId,
+          procesoMaritimoEstado: ESTADO_PROCESO_MARITIMO);
 
       int procesoMaritimoId =
           await DatabaseProcesoMaritimo.addProcesoMaritimo(procesoMaritimo);

@@ -3,8 +3,117 @@ import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
 
 ////EDITAR
 class DatabaseProcesoMaritimo {
-  static Future<List<ProcesoMaritimo>> getAllProcesoMaritimo() async {
-    final sql = 'SELECT * FROM ${DatabaseCreator.procesoMaritimoTable}';
+  static Future<List<ProcesoMaritimo>>
+      getAllProcesoMaritimoSincronizacion() async {
+    final sql =
+        'SELECT * FROM ${DatabaseCreator.procesoMaritimoTable} WHERE ${DatabaseCreator.procesoMaritimoEstado}=2';
+    final data = await db.rawQuery(sql);
+    List<ProcesoMaritimo> maritimo = List();
+    for (var node in data) {
+      maritimo.add(new ProcesoMaritimo(
+        procesoMaritimoId: node[DatabaseCreator.procesoMaritimoId],
+        procesoMaritimoUsuarioControlId:
+            node[DatabaseCreator.procesoMaritimoUsuarioControlId],
+        procesoMaritimoNumeroGuia:
+            node[DatabaseCreator.procesoMaritimoNumeroGuia],
+        procesoMaritimoDestinoId:
+            int.parse(node[DatabaseCreator.procesoMaritimoDestinoId]),
+        procesoMaritimoRealizadoPor:
+            node[DatabaseCreator.procesoMaritimoRealizadoPor],
+        procesoMaritimoAcompanamiento:
+            node[DatabaseCreator.procesomoMaritimoAcompanamiento],
+        procesoMaritimoNombreHidratante:
+            node[DatabaseCreator.procesoMaritimoNombreHidratante],
+        procesoMaritimoPhSoluciones:
+            node[DatabaseCreator.procesoMaritimoPhSoluciones],
+        procesoMaritimoNivelSolucionTinas:
+            node[DatabaseCreator.procesoMaritimoNivelSolucionTinas],
+        procesoMaritimoSolucionHidratacionSinVegetal:
+            node[DatabaseCreator.procesoMaritimoSolucionHidratacionSinVegetal],
+        procesoMaritimoTemperaturaCuartoFrio:
+            node[DatabaseCreator.procesoMaritimoTemperaturaCuartoFrio],
+        procesoMaritimoTemperaturaSolucionesHidratacion: node[
+            DatabaseCreator.procesoMaritimoTemperaturaSolucionesHidratacion],
+        procesoMaritimoEmpaqueAmbienteTemperatura:
+            node[DatabaseCreator.procesoMaritimoEmpaqueAmbienteTemperatura],
+        procesoMaritimoFlorEmpacada:
+            node[DatabaseCreator.procesoMaritimoFlorEmpacada],
+        procesoMaritimoTransportCareEmpaque:
+            node[DatabaseCreator.procesoMaritimoTransportCareEmpaque],
+        procesoMaritimoCajasVisualDeformes:
+            node[DatabaseCreator.procesoMaritimoCajasVisualDeformes],
+        procesoMaritimoEtiquetasCajasUbicadas:
+            node[DatabaseCreator.procesoMaritimoEtiquetasCajasUbicadas],
+        procesoMaritimoTemperaturaCubiculoCamion:
+            node[DatabaseCreator.procesoMaritimoTemperaturaCubiculoCamion],
+        procesoMaritimoTemperaturaCajasTransferencia:
+            node[DatabaseCreator.procesoMaritimoTemperaturaCajasTransferencia],
+        procesoMaritimoAparenciaCajasTransferencia:
+            node[DatabaseCreator.procesoMaritimoAparenciaCajasTransferencia],
+        procesoMaritimoEstibasDebidamenteSelladas:
+            node[DatabaseCreator.procesoMaritimoEstibasDebidamenteSelladas],
+        procesoMaritimoPalletsEsquinerosCorrectamenteAjustados: node[
+            DatabaseCreator
+                .procesoMaritimoPalletsEsquinerosCorrectamenteAjustados],
+        procesoMaritimoPalletsAlturaContenedor:
+            node[DatabaseCreator.procesoMaritimoPalletsAlturaContenedor],
+        procesoMaritimoTemperaturaPalletContenedor:
+            node[DatabaseCreator.procesoMaritimoTemperaturaPalletContenedor],
+        procesoMaritimoPalletIdentificadoNumero:
+            node[DatabaseCreator.procesoMaritimoPalletIdentificadoNumero],
+        procesoMaritimoTomaRegistroTemperaturas:
+            node[DatabaseCreator.procesoMaritimoTomaRegistroTemperaturas],
+        procesoMaritimoGenset: node[DatabaseCreator.procesoMaritimoGenset],
+        procesoMaritimoContenedorEdadFabricacion:
+            node[DatabaseCreator.procesoMaritimoContenedorEdadFabricacion],
+        procesoMaritimoContenedorCumplimientoSeteo:
+            node[DatabaseCreator.procesoMaritimoContenedorCumplimientoSeteo],
+        procesoMaritimoContenedorPreEnfriado:
+            node[DatabaseCreator.procesoMaritimoContenedorPreEnfriado],
+        procesoMaritimoContenedorlavadoDesinfectado:
+            node[DatabaseCreator.procesoMaritimoContenedorlavadoDesinfectado],
+        procesoMartimoCarguePreviamenteHumedecidos:
+            node[DatabaseCreator.procesoMaritimoCarguePreviamenteHumedecidos],
+        procesoMaritimoLlegandoCierreSellado:
+            node[DatabaseCreator.procesoMaritimoLlegandoCierreSellado],
+        procesoMaritimoEstibasSelloICA:
+            node[DatabaseCreator.procesoMaritimoEstibasSelloICA],
+        procesoMaritimoPalletsTensionZunchos:
+            node[DatabaseCreator.procesoMaritimoPalletsTensionZunchos],
+        procesoMaritimoPalletIdentificadoEtiqueta:
+            node[DatabaseCreator.procesoMaritimoPalletIdentificadoEtiqueta],
+        procesoMaritimoComponentePalletDestinosEtiquetas: node[
+            DatabaseCreator.procesoMaritimoComponentePalletDestinosEtiquetas],
+        procesoMaritimoCamionSelloSeguridadContenedor:
+            node[DatabaseCreator.procesoMaritimoCamionSelloSeguridadContenedor],
+        procesoMaritimoVerificacionEncendidoTermografo: node[
+            DatabaseCreator.procesoMaritimoVerificacionEncendidoTermografo],
+        procesoMaritimoFotografiaPalletsEmpresaContenor: node[
+            DatabaseCreator.procesoMaritimoFotografiaPalletsEmpresaContenor],
+        clienteId: node[DatabaseCreator.clienteId],
+        postcosechaId: node[DatabaseCreator.postcosechaId],
+        procesoMaritimoObservacionesHidratacion:
+            node[DatabaseCreator.procesoMaritimoObservacionesHidratacion],
+        procesoMaritimoObservacionesEmpaque:
+            node[DatabaseCreator.procesoMaritimoObservacionesEmpaque],
+        procesoMaritimoObservacionesTransferencias:
+            node[DatabaseCreator.procesoMaritimoObservacionesTransferencias],
+        procesoMaritimoObservacionesPalletizado:
+            node[DatabaseCreator.procesoMaritimoObservacionesPalletizado],
+        procesoMaritimoObservacionesLlenadoContenedor:
+            node[DatabaseCreator.procesoMaritimoObservacionesLlenadoContenedor],
+        procesoMaritimoObservacionesRequerimientosCriticos: node[
+            DatabaseCreator.procesoMaritimoObservacionesRequerimientosCriticos],
+        procesoMaritimoFecha:
+            DateTime.parse(node[DatabaseCreator.procesoMaritimoFecha]),
+      ));
+    }
+    return maritimo;
+  }
+
+  static Future<List<ProcesoMaritimo>> getAllProcesoMaritimoAprobacion() async {
+    final sql =
+        'SELECT * FROM ${DatabaseCreator.procesoMaritimoTable} WHERE ${DatabaseCreator.procesoMaritimoEstado}=1';
     final data = await db.rawQuery(sql);
     List<ProcesoMaritimo> maritimo = List();
     for (var node in data) {
@@ -111,7 +220,7 @@ class DatabaseProcesoMaritimo {
 
   static Future<int> getCountProcesoMaritimo() async {
     final sql =
-        'SELECT COUNT(*) AS CANTIDAD FROM ${DatabaseCreator.procesoMaritimoTable}';
+        'SELECT COUNT(*) AS CANTIDAD FROM ${DatabaseCreator.procesoMaritimoTable} WHERE ${DatabaseCreator.procesoMaritimoEstado}=1';
     final data = await db.rawQuery(sql);
 
     return data.isNotEmpty ? data.first['CANTIDAD'] : 0;
@@ -135,7 +244,7 @@ class DatabaseProcesoMaritimo {
      ${DatabaseCreator.procesoMaritimoEstibasSelloICA},${DatabaseCreator.procesoMaritimoPalletsTensionZunchos},${DatabaseCreator.procesoMaritimoPalletIdentificadoEtiqueta},${DatabaseCreator.procesoMaritimoComponentePalletDestinosEtiquetas},${DatabaseCreator.procesoMaritimoCamionSelloSeguridadContenedor},${DatabaseCreator.procesoMaritimoVerificacionEncendidoTermografo},${DatabaseCreator.procesoMaritimoFotografiaPalletsEmpresaContenor},
      ${DatabaseCreator.procesoMaritimoObservacionesHidratacion},${DatabaseCreator.procesoMaritimoObservacionesEmpaque},${DatabaseCreator.procesoMaritimoObservacionesTransferencias},${DatabaseCreator.procesoMaritimoObservacionesPalletizado},${DatabaseCreator.procesoMaritimoObservacionesLlenadoContenedor},
      ${DatabaseCreator.procesoMaritimoObservacionesRequerimientosCriticos},
-     ${DatabaseCreator.clienteId},${DatabaseCreator.postcosechaId},${DatabaseCreator.procesoMaritimoFecha},${DatabaseCreator.procesoMaritimoDestinoId}
+     ${DatabaseCreator.clienteId},${DatabaseCreator.postcosechaId},${DatabaseCreator.procesoMaritimoFecha},${DatabaseCreator.procesoMaritimoDestinoId},${DatabaseCreator.procesoMaritimoEstado}
      )
     VALUES
     (${procesoMaritimo.procesoMaritimoUsuarioControlId},${procesoMaritimo.procesoMaritimoNumeroGuia},
@@ -154,8 +263,16 @@ class DatabaseProcesoMaritimo {
      ${procesoMaritimo.procesoMaritimoEstibasSelloICA},${procesoMaritimo.procesoMaritimoPalletsTensionZunchos},${procesoMaritimo.procesoMaritimoPalletIdentificadoEtiqueta},${procesoMaritimo.procesoMaritimoComponentePalletDestinosEtiquetas},${procesoMaritimo.procesoMaritimoCamionSelloSeguridadContenedor},${procesoMaritimo.procesoMaritimoVerificacionEncendidoTermografo},${procesoMaritimo.procesoMaritimoFotografiaPalletsEmpresaContenor},
     '${procesoMaritimo.procesoMaritimoObservacionesHidratacion}','${procesoMaritimo.procesoMaritimoObservacionesEmpaque}','${procesoMaritimo.procesoMaritimoObservacionesTransferencias}','${procesoMaritimo.procesoMaritimoObservacionesPalletizado}','${procesoMaritimo.procesoMaritimoObservacionesLlenadoContenedor}',
     '${procesoMaritimo.procesoMaritimoObservacionesRequerimientosCriticos}',
-     ${procesoMaritimo.clienteId},${procesoMaritimo.postcosechaId},'${procesoMaritimo.procesoMaritimoFecha}',${procesoMaritimo.procesoMaritimoDestinoId}
+     ${procesoMaritimo.clienteId},${procesoMaritimo.postcosechaId},'${procesoMaritimo.procesoMaritimoFecha}',${procesoMaritimo.procesoMaritimoDestinoId}, ${procesoMaritimo.procesoMaritimoEstado}
       )''';
     return await db.rawInsert(sql);
+  }
+
+  static Future<void> deleteProcesoMaritimo(int id) async {
+    final sql = '''UPDATE ${DatabaseCreator.procesoMaritimoTable}
+    SET ${DatabaseCreator.procesoMaritimoEstado} = 10
+    WHERE ${DatabaseCreator.procesoMaritimoId} = $id
+    ''';
+    await db.rawInsert(sql);
   }
 }

@@ -950,11 +950,13 @@ class DatabaseReportesAprobacion {
           ''';
     var data8 = await db.rawQuery(sql8);
     final sql9 = '''SELECT COUNT(*) AS CANTIDAD
-          FROM ${DatabaseCreator.procesoMaritimoTable}
+          FROM ${DatabaseCreator.procesoMaritimoTable} 
+          WHERE ${DatabaseCreator.procesoMaritimoTable}.${DatabaseCreator.procesoMaritimoEstado} = 2
           ''';
     var data9 = await db.rawQuery(sql9);
     final sql10 = '''SELECT COUNT(*) AS CANTIDAD
-          FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}
+          FROM ${DatabaseCreator.procesoMaritimoAlstroemeriaTable} 
+          WHERE ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}.${DatabaseCreator.procesoMaritimoAlstroemeriaEstado} = 2
           ''';
     var data10 = await db.rawQuery(sql10);
 
@@ -1005,9 +1007,9 @@ class DatabaseReportesAprobacion {
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
     listaProcesoMaritimo =
-        await DatabaseProcesoMaritimo.getAllProcesoMaritimo();
+        await DatabaseProcesoMaritimo.getAllProcesoMaritimoSincronizacion();
     listaProcesoMaritimoAlstromeria = await DatabaseProcesoMaritimoAlstroemeria
-        .getAllProcesoMaritimoAlstromeria();
+        .getAllProcesoMaritimoAlstromeriaSincronizacion();
     listaCirculoCalidad =
         await DatabaseCirculoCalidad.getAllcirculoCalidadBySincronizar();
     listaRamo.firmas = [];

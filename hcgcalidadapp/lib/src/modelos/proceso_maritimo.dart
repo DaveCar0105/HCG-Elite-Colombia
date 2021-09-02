@@ -14,6 +14,7 @@ class ProcesoMaritimo {
       this.procesoMaritimoDestinoId,
       this.procesoMaritimoRealizadoPor,
       this.procesoMaritimoAcompanamiento,
+      this.procesoMaritimoEstado,
       this.procesoMaritimoNombreHidratante,
       this.procesoMaritimoPhSoluciones,
       this.procesoMaritimoNivelSolucionTinas,
@@ -48,7 +49,6 @@ class ProcesoMaritimo {
       this.procesoMaritimoCamionSelloSeguridadContenedor,
       this.procesoMaritimoVerificacionEncendidoTermografo,
       this.procesoMaritimoFotografiaPalletsEmpresaContenor,
-      
       this.procesoMaritimoObservacionesHidratacion,
       this.procesoMaritimoObservacionesEmpaque,
       this.procesoMaritimoObservacionesPalletizado,
@@ -57,7 +57,8 @@ class ProcesoMaritimo {
       this.procesoMaritimoObservacionesRequerimientosCriticos,
       this.procesoMaritimoFecha,
       this.clienteId,
-      this.postcosechaId});
+      this.postcosechaId,
+      this.detalleFirmaId});
 
   int procesoMaritimoId;
   int procesoMaritimoUsuarioControlId;
@@ -65,6 +66,7 @@ class ProcesoMaritimo {
   int procesoMaritimoDestinoId;
   String procesoMaritimoRealizadoPor;
   String procesoMaritimoAcompanamiento;
+  int procesoMaritimoEstado;
   int procesoMaritimoNombreHidratante;
   int procesoMaritimoPhSoluciones;
   int procesoMaritimoNivelSolucionTinas;
@@ -92,7 +94,6 @@ class ProcesoMaritimo {
   int procesoMaritimoContenedorlavadoDesinfectado;
   int procesoMartimoCarguePreviamenteHumedecidos;
   int procesoMaritimoLlegandoCierreSellado;
-
   int procesoMaritimoEstibasSelloICA;
   int procesoMaritimoPalletsTensionZunchos;
   int procesoMaritimoPalletIdentificadoEtiqueta;
@@ -100,17 +101,16 @@ class ProcesoMaritimo {
   int procesoMaritimoCamionSelloSeguridadContenedor;
   int procesoMaritimoVerificacionEncendidoTermografo;
   int procesoMaritimoFotografiaPalletsEmpresaContenor;
-
   String procesoMaritimoObservacionesHidratacion;
   String procesoMaritimoObservacionesEmpaque;
   String procesoMaritimoObservacionesTransferencias;
   String procesoMaritimoObservacionesPalletizado;
   String procesoMaritimoObservacionesLlenadoContenedor;
   String procesoMaritimoObservacionesRequerimientosCriticos;
-
   int clienteId;
   DateTime procesoMaritimoFecha;
   int postcosechaId;
+  int detalleFirmaId;
 
   factory ProcesoMaritimo.fromJson(Map<String, dynamic> json) =>
       ProcesoMaritimo(
@@ -126,9 +126,9 @@ class ProcesoMaritimo {
             json["procesoMaritimoRealizadoPor"].toString(),
         procesoMaritimoAcompanamiento:
             json["procesoMaritimoAcompanamiento"].toString(),
+        procesoMaritimoEstado: json["procesoMaritimoEstado"],
         procesoMaritimoNombreHidratante:
             json["procesoMaritimoNombreHidratante"],
-
         procesoMaritimoPhSoluciones: json["procesoMaritimoPhSoluciones"],
         procesoMaritimoNivelSolucionTinas:
             json["procesoMaritimoNivelSolucionTinas"],
@@ -191,7 +191,6 @@ class ProcesoMaritimo {
             json["procesoMaritimoVerificacionEncendidoTermografo"],
         procesoMaritimoFotografiaPalletsEmpresaContenor:
             json["procesoMaritimoFotografiaPalletsEmpresaContenor"],
-
         procesoMaritimoObservacionesHidratacion:
             json["procesoMaritimoObservacionesHidratacion"],
         procesoMaritimoObservacionesEmpaque:
@@ -204,8 +203,8 @@ class ProcesoMaritimo {
             json["procesoMaritimoObservacionesLlenadoContenedor"],
         procesoMaritimoObservacionesRequerimientosCriticos:
             json["procesoMaritimoObservacionesRequerimientosCriticos"],
-
         procesoMaritimoFecha: DateTime.parse(json["procesoMaritimoFecha"]),
+        detalleFirmaId: json["detalleFirmaId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -215,6 +214,7 @@ class ProcesoMaritimo {
         "procesoMaritimoDestinoId": procesoMaritimoDestinoId,
         "procesoMaritimoRealizadoPor": procesoMaritimoRealizadoPor,
         "procesoMaritimoAcompanamiento": procesoMaritimoAcompanamiento,
+        "procesoMaritimoEstado": procesoMaritimoEstado,
         "procesoMaritimoNombreHidratante": procesoMaritimoNombreHidratante,
         "procesoMaritimoPhSoluciones": procesoMaritimoPhSoluciones,
         "procesoMaritimoNivelSolucionTinas": procesoMaritimoNivelSolucionTinas,
@@ -292,6 +292,7 @@ class ProcesoMaritimo {
         "clienteId": clienteId,
         "postcosechaId": postcosechaId,
         "procesoMaritimoFecha": procesoMaritimoFecha.toIso8601String(),
+        "detalleFirmaId": detalleFirmaId,
       };
 }
 
@@ -303,79 +304,80 @@ String procesoMaritimoAlstroemeriaToJson(ProcesoMaritimoAlstroemeria data) =>
     json.encode(data.toJson());
 
 class ProcesoMaritimoAlstroemeria {
-  ProcesoMaritimoAlstroemeria({
-  this.procesoMaritimoAlstroemeriaId, 
-  this.procesoMaritimoAlstroemeriaUsuarioControlId, 
-  this.procesoMaritimoAlstroemeriaNumeroGuia, 
-  this.procesoMaritimoAlstroemeriaDestinoId, 
-  this.procesoMaritimoAlstroemeriaRealizadoPor, 
-  this.procesoMaritimoAlstroemeriaAcompanamiento, 
-  this.procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad, 
-  this.procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta, 
-  this.procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion, 
-  this.procesoMaritimoAlstroemeriaClasificacionLongitudTallos, 
-  this.procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal, 
-  this.procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado, 
-  this.procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood, 
-  this.procesoMaritimoAlstroemeriaClasificacionLibreMaltrato, 
-  this.procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso, 
-  this.procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos, 
-  this.procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo, 
-  this.procesoMaritimoAlstroemeriaTratamientoBaldesTinas, 
-  this.procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion, 
-  this.procesoMaritimoAlstroemeriaTratamientoNivelSolucion, 
-  this.procesoMaritimoAlstroemeriaTratamientoCambioSolucion, 
-  this.procesoMaritimoAlstroemeriaTratamientoTiempoSala, 
-  this.procesoMaritimoAlstroemeriaHidratacionNumeroRamos, 
-  this.procesoMaritimoAlstroemeriaHidratacionRamosHidratados, 
-  this.procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio, 
-  this.procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado, 
-  this.procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion, 
-  this.procesoMaritimoAlstroemeriaEmpaqueEdadFlor, 
-  this.procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos, 
-  this.procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos, 
-  this.procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento, 
-  this.procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo, 
-  this.procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad, 
-  this.procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas, 
-  this.procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue, 
-  this.procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR, 
-  this.procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto, 
-  this.procesoMaritimoAlstroemeriaEmpaqueEmpacoHB, 
-  this.procesoMaritimoAlstroemeriaTransporteTemperauraCajas, 
-  this.procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio, 
-  this.procesoMaritimoAlstroemeriaTransporteCamionTransporta, 
-  this.procesoMaritimoAlstroemeriaTransporteTemperaturaCamion, 
-  this.procesoMaritimoAlstroemeriaTransporteBuenaConexion, 
-  this.procesoMaritimoAlstroemeriaTransporteThermoking, 
-  this.procesoMaritimoAlstroemeriaTransporteCajasApiladas, 
-  this.procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado, 
-  this.procesoMaritimoAlstromeriaTransporteTemperaturaFurgon, 
-  this.procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias, 
-  this.procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros, 
-  this.procesoMaritimoAlstroemeriaPalletizadoPalletsAltura, 
-  this.procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido, 
-  this.procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado, 
-  this.procesoMaritimoAlstroemeriaContenedorGenset, 
-  this.procesoMaritimoAlstroemeriaContenedorFechaFabricacion, 
-  this.procesoMaritimoAlstroemeriaContenedorContenedorSeteo, 
-  this.procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado, 
-  this.procesoMaritimoAlstroemeriaContenedorContenedorLavado, 
-  this.procesoMaritimoAlstroemeriaContenedorSachetsEthiblock, 
-  this.procesoMaritimoAlstroemeriaContenedorCierreSellado, 
-  this.procesoMaritimoAlstroemeriaContenedorControlTemperatura, 
-  this.procesoMaritimoAlstroemeriaContenedorObservaciones, 
-  this.procesoMaritimoAlstroemeriaPalletizadoObservaciones, 
-  this.procesoMaritimoAlstroemeriaTransporteObservaciones, 
-  this.procesoMaritimoAlstroemeriaEmpaqueObservaciones, 
-  this.procesoMaritimoAlstroemeriaHidratacionObservaciones, 
-  this.procesoMaritimoAlstroemeriaTratamientoObservaciones, 
-  this.procesoMaritimoAlstroemeriaClasificacionObservaciones, 
-  this.procesoMaritimoAlstromeriaRecepcionObservaciones, 
-  this.clienteId, 
-  this.procesoMaritimoAlstroemeriaFecha, 
-  this.postcosechaId
-  });
+  ProcesoMaritimoAlstroemeria(
+      {this.procesoMaritimoAlstroemeriaId,
+      this.procesoMaritimoAlstroemeriaUsuarioControlId,
+      this.procesoMaritimoAlstroemeriaNumeroGuia,
+      this.procesoMaritimoAlstroemeriaDestinoId,
+      this.procesoMaritimoAlstroemeriaRealizadoPor,
+      this.procesoMaritimoAlstroemeriaAcompanamiento,
+      this.procesoMaritimoAlstroemeriaEstado,
+      this.procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+      this.procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+      this.procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+      this.procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
+      this.procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal,
+      this.procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
+      this.procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
+      this.procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
+      this.procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
+      this.procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos,
+      this.procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo,
+      this.procesoMaritimoAlstroemeriaTratamientoBaldesTinas,
+      this.procesoMaritimoAlstroemeriaTratamientoSolucionHidratacion,
+      this.procesoMaritimoAlstroemeriaTratamientoNivelSolucion,
+      this.procesoMaritimoAlstroemeriaTratamientoCambioSolucion,
+      this.procesoMaritimoAlstroemeriaTratamientoTiempoSala,
+      this.procesoMaritimoAlstroemeriaHidratacionNumeroRamos,
+      this.procesoMaritimoAlstroemeriaHidratacionRamosHidratados,
+      this.procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
+      this.procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado,
+      this.procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion,
+      this.procesoMaritimoAlstroemeriaEmpaqueEdadFlor,
+      this.procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos,
+      this.procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos,
+      this.procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento,
+      this.procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
+      this.procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
+      this.procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
+      this.procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
+      this.procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR,
+      this.procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto,
+      this.procesoMaritimoAlstroemeriaEmpaqueEmpacoHB,
+      this.procesoMaritimoAlstroemeriaTransporteTemperauraCajas,
+      this.procesoMaritimoAlstroemeriaTransporteTemperaturaPromedio,
+      this.procesoMaritimoAlstroemeriaTransporteCamionTransporta,
+      this.procesoMaritimoAlstroemeriaTransporteTemperaturaCamion,
+      this.procesoMaritimoAlstroemeriaTransporteBuenaConexion,
+      this.procesoMaritimoAlstroemeriaTransporteThermoking,
+      this.procesoMaritimoAlstroemeriaTransporteCajasApiladas,
+      this.procesoMaritimoAlstroemeriaTransporteAcopioPreenfriado,
+      this.procesoMaritimoAlstromeriaTransporteTemperaturaFurgon,
+      this.procesoMaritimoAlstroemeriaPalletizadoEstibasLimpias,
+      this.procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros,
+      this.procesoMaritimoAlstroemeriaPalletizadoPalletsAltura,
+      this.procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido,
+      this.procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado,
+      this.procesoMaritimoAlstroemeriaContenedorGenset,
+      this.procesoMaritimoAlstroemeriaContenedorFechaFabricacion,
+      this.procesoMaritimoAlstroemeriaContenedorContenedorSeteo,
+      this.procesoMaritimoAlstroemeriaContenedorContenedorPreenfriado,
+      this.procesoMaritimoAlstroemeriaContenedorContenedorLavado,
+      this.procesoMaritimoAlstroemeriaContenedorSachetsEthiblock,
+      this.procesoMaritimoAlstroemeriaContenedorCierreSellado,
+      this.procesoMaritimoAlstroemeriaContenedorControlTemperatura,
+      this.procesoMaritimoAlstroemeriaContenedorObservaciones,
+      this.procesoMaritimoAlstroemeriaPalletizadoObservaciones,
+      this.procesoMaritimoAlstroemeriaTransporteObservaciones,
+      this.procesoMaritimoAlstroemeriaEmpaqueObservaciones,
+      this.procesoMaritimoAlstroemeriaHidratacionObservaciones,
+      this.procesoMaritimoAlstroemeriaTratamientoObservaciones,
+      this.procesoMaritimoAlstroemeriaClasificacionObservaciones,
+      this.procesoMaritimoAlstromeriaRecepcionObservaciones,
+      this.clienteId,
+      this.procesoMaritimoAlstroemeriaFecha,
+      this.postcosechaId,
+      this.detalleFirmaId});
 
   int procesoMaritimoAlstroemeriaId;
   int procesoMaritimoAlstroemeriaUsuarioControlId;
@@ -383,6 +385,7 @@ class ProcesoMaritimoAlstroemeria {
   int procesoMaritimoAlstroemeriaDestinoId;
   String procesoMaritimoAlstroemeriaRealizadoPor;
   String procesoMaritimoAlstroemeriaAcompanamiento;
+  int procesoMaritimoAlstroemeriaEstado;
   int procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad;
   int procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta;
   int procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion;
@@ -445,30 +448,36 @@ class ProcesoMaritimoAlstroemeria {
   String procesoMaritimoAlstroemeriaTratamientoObservaciones;
   String procesoMaritimoAlstroemeriaClasificacionObservaciones;
   String procesoMaritimoAlstromeriaRecepcionObservaciones;
-
   int clienteId;
   DateTime procesoMaritimoAlstroemeriaFecha;
   int postcosechaId;
+  int detalleFirmaId;
 
   factory ProcesoMaritimoAlstroemeria.fromJson(Map<String, dynamic> json) =>
       ProcesoMaritimoAlstroemeria(
         procesoMaritimoAlstroemeriaId: json["procesoMaritimoAlstroemeriaId"],
-        procesoMaritimoAlstroemeriaUsuarioControlId: json["procesoMaritimoAlstroemeriaUsuarioControlId"],
-        procesoMaritimoAlstroemeriaNumeroGuia: json["procesoMaritimoAlstroemeriaNumeroGuia"],
+        procesoMaritimoAlstroemeriaUsuarioControlId:
+            json["procesoMaritimoAlstroemeriaUsuarioControlId"],
+        procesoMaritimoAlstroemeriaNumeroGuia:
+            json["procesoMaritimoAlstroemeriaNumeroGuia"],
         procesoMaritimoAlstroemeriaDestinoId:
             json["procesoMaritimoAlstroemeriaDestinoId"],
-        procesoMaritimoAlstroemeriaRealizadoPor: json["procesoMaritimoAlstroemeriaRealizadoPor"].toString(),
-        procesoMaritimoAlstroemeriaAcompanamiento: json["procesoMaritimoAlstroemeriaAcompanamiento"].toString(),
+        procesoMaritimoAlstroemeriaRealizadoPor:
+            json["procesoMaritimoAlstroemeriaRealizadoPor"].toString(),
+        procesoMaritimoAlstroemeriaAcompanamiento:
+            json["procesoMaritimoAlstroemeriaAcompanamiento"].toString(),
+        procesoMaritimoAlstroemeriaEstado:
+            json["procesoMaritimoAlstroemeriaEstado"],
         procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad:
             json["procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad"],
         procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta:
             json["procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta"],
         procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion:
             json["procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion"],
-        procesoMaritimoAlstroemeriaClasificacionLongitudTallos: 
+        procesoMaritimoAlstroemeriaClasificacionLongitudTallos:
             json["procesoMaritimoAlstroemeriaClasificacionLongitudTallos"],
-        procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal:
-            json["procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal"],
+        procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal: json[
+            "procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal"],
         procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado:
             json["procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado"],
         procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood:
@@ -477,7 +486,7 @@ class ProcesoMaritimoAlstroemeria {
             json["procesoMaritimoAlstroemeriaClasificacionLibreMaltrato"],
         procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso:
             json["procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso"],
-        procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos: 
+        procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos:
             json["procesoMaritimoAlstroemeriaClasificacionDespachosMaritimos"],
         procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo:
             json["procesoMaritimoAlstroemeriaClasificacionAseguramientoRamo"],
@@ -503,13 +512,13 @@ class ProcesoMaritimoAlstroemeria {
             json["procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion"],
         procesoMaritimoAlstroemeriaEmpaqueEdadFlor:
             json["procesoMaritimoAlstroemeriaEmpaqueEdadFlor"],
-        procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos: 
+        procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos:
             json["procesoMaritimoAlstroemeriaEmpaqueEscurridoRamos"],
         procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos:
             json["procesoMaritimoAlstroemeriaEmpaqueTemperaturaRamos"],
         procesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento:
             json["pprocesoMaritimoAlstroemeriaEmpaqueCajasRequerimiento"],
-       procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo:
+        procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo:
             json["procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo"],
         procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad:
             json["procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad"],
@@ -517,7 +526,7 @@ class ProcesoMaritimoAlstroemeria {
             json["procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas"],
         procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue:
             json["procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue"],
-        procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR: 
+        procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR:
             json["procesoMaritimoAlstroemeriaEmpaqueTemperaturaHR"],
         procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto:
             json["procesoMaritimoAlstroemeriaEmpaqueAuditoriaProducto"],
@@ -547,8 +556,8 @@ class ProcesoMaritimoAlstroemeria {
             json["procesoMaritimoAlstroemeriaPalletizadoPalletsEsquineros"],
         procesoMaritimoAlstroemeriaPalletizadoPalletsAltura:
             json["procesoMaritimoAlstroemeriaPalletizadoPalletsAltura"],
-        procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido:
-            json["procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido"],
+        procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido: json[
+            "procesoMaritimoAlstroemeriaPalletizadoTemperaturaDistribuido"],
         procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado:
             json["procesoMaritimoAlstroemeriaPalletizadoPalletIdentificado"],
         procesoMaritimoAlstroemeriaContenedorGenset:
@@ -585,19 +594,30 @@ class ProcesoMaritimoAlstroemeria {
             json["procesoMaritimoAlstromeriaRecepcionObservaciones"],
         clienteId: json["clienteId"],
         postcosechaId: json["postcosechaId"],
-        procesoMaritimoAlstroemeriaFecha: DateTime.parse(json["procesoMaritimoAlstroemeriaFecha"]),
+        procesoMaritimoAlstroemeriaFecha:
+            DateTime.parse(json["procesoMaritimoAlstroemeriaFecha"]),
+        detalleFirmaId: json["detalleFirmaId"],
       );
 
   Map<String, dynamic> toJson() => {
         "procesoMaritimoAlstroemeriaId": procesoMaritimoAlstroemeriaId,
-        "procesoMaritimoAlstroemeriaUsuarioControlId": procesoMaritimoAlstroemeriaUsuarioControlId,
-        "procesoMaritimoAlstroemeriaNumeroGuia": procesoMaritimoAlstroemeriaNumeroGuia,
-        "procesoMaritimoAlstroemeriaDestinoId": procesoMaritimoAlstroemeriaDestinoId,
-        "procesoMaritimoAlstroemeriaRealizadoPor": procesoMaritimoAlstroemeriaRealizadoPor,
-        "procesoMaritimoAlstroemeriaAcompanamiento": procesoMaritimoAlstroemeriaAcompanamiento,
-        "procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad": procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
-        "procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta": procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
-        "procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion": procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
+        "procesoMaritimoAlstroemeriaUsuarioControlId":
+            procesoMaritimoAlstroemeriaUsuarioControlId,
+        "procesoMaritimoAlstroemeriaNumeroGuia":
+            procesoMaritimoAlstroemeriaNumeroGuia,
+        "procesoMaritimoAlstroemeriaDestinoId":
+            procesoMaritimoAlstroemeriaDestinoId,
+        "procesoMaritimoAlstroemeriaRealizadoPor":
+            procesoMaritimoAlstroemeriaRealizadoPor,
+        "procesoMaritimoAlstroemeriaAcompanamiento":
+            procesoMaritimoAlstroemeriaAcompanamiento,
+        "procesoMaritimoAlstroemeriaEstado": procesoMaritimoAlstroemeriaEstado,
+        "procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad":
+            procesoMaritimoAlstroemeriaRecepcionTemperaturaHumedad,
+        "procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta":
+            procesoMaritimoAlstroemeriaRecepcionLavaDesinfecta,
+        "procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion":
+            procesoMaritimoAlstroemeriaRecepcionSistemaIdentificacion,
         "procesoMaritimoAlstroemeriaClasificacionLongitudTallos":
             procesoMaritimoAlstroemeriaClasificacionLongitudTallos,
         "procesoMaritimoAlstroemeriaClasificacionCapacitacionPersonal":
@@ -606,7 +626,7 @@ class ProcesoMaritimoAlstroemeria {
             procesoMaritimoAlstroemeriaClasificacionCapuchonBiorentado,
         "procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood":
             procesoMaritimoAlstroemeriaClasificacionCapuchonFlowerFood,
-        "procesoMaritimoAlstroemeriaClasificacionLibreMaltrato": 
+        "procesoMaritimoAlstroemeriaClasificacionLibreMaltrato":
             procesoMaritimoAlstroemeriaClasificacionLibreMaltrato,
         "procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso":
             procesoMaritimoAlstroemeriaClasificacionTallosCumplePeso,
@@ -632,7 +652,7 @@ class ProcesoMaritimoAlstroemeria {
             procesoMaritimoAlstroemeriaHidratacionTemperaturaCuartoFrio,
         "procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado":
             procesoMaritimoAlstroemeriaHidratacionLimpioOrdenado,
-        "procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion": 
+        "procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion":
             procesoMaritimoAlstroemeriaEmpaqueEmpacadoresCapacitacion,
         "procesoMaritimoAlstroemeriaEmpaqueEdadFlor":
             procesoMaritimoAlstroemeriaEmpaqueEdadFlor,
@@ -646,7 +666,7 @@ class ProcesoMaritimoAlstroemeria {
             procesoMaritimoAlstroemeriaEmpaqueCajaDespachoMaritimo,
         "procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad":
             procesoMaritimoAlstroemeriaEmpaqueCajasDeformidad,
-        "procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas": 
+        "procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas":
             procesoMaritimoAlstroemeriaEmpaqueEtiquetasCajas,
         "procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue":
             procesoMaritimoAlstroemeriaEmpaqueProductoEmpaqueCargue,
@@ -718,7 +738,8 @@ class ProcesoMaritimoAlstroemeria {
             procesoMaritimoAlstromeriaRecepcionObservaciones,
         "clienteId": clienteId,
         "postcosechaId": postcosechaId,
-        "procesoMaritimoAlstroemeriaFecha": procesoMaritimoAlstroemeriaFecha.toIso8601String(),
+        "procesoMaritimoAlstroemeriaFecha":
+            procesoMaritimoAlstroemeriaFecha.toIso8601String(),
+        "detalleFirmaId": detalleFirmaId,
       };
 }
-
