@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:hcgcalidadapp/src/modelos/proceso_maritimo.dart';
+
 ReporteSincronizacionEmpaque reporteSincronizacionFromJson(String str) =>
     ReporteSincronizacionEmpaque.fromJson(json.decode(str));
 
@@ -108,6 +110,86 @@ class ReporteSincronizacionFinalBanda {
         "detallesFirma":
             List<dynamic>.from(detallesFirma.map((x) => x.toJson())),
         "listaRamo": List<dynamic>.from(listaRamo.map((x) => x.toJson())),
+      };
+}
+
+ReporteSincronizacionProcesoMaritimo
+    reporteSincronizacionProcesoMaritimoFromJson(String str) =>
+        ReporteSincronizacionProcesoMaritimo.fromJson(json.decode(str));
+
+String reporteSincronizacionProcesoMaritimoToJson(
+        ReporteSincronizacionProcesoMaritimo data) =>
+    json.encode(data.toJson());
+
+class ReporteSincronizacionProcesoMaritimo {
+  ReporteSincronizacionProcesoMaritimo({
+    this.firmas,
+    this.detallesFirma,
+    this.procesoMaritimo,
+  });
+
+  List<Firmas> firmas;
+  List<DetallesFirma> detallesFirma;
+  List<ProcesoMaritimo> procesoMaritimo;
+
+  factory ReporteSincronizacionProcesoMaritimo.fromJson(
+          Map<String, dynamic> json) =>
+      ReporteSincronizacionProcesoMaritimo(
+        firmas:
+            List<Firmas>.from(json["firmas"].map((x) => Firmas.fromJson(x))),
+        detallesFirma: List<DetallesFirma>.from(
+            json["detallesFirma"].map((x) => DetallesFirma.fromJson(x))),
+        procesoMaritimo: List<ProcesoMaritimo>.from(
+            json["procesoMaritimo"].map((x) => ProcesoMaritimo.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "firmas": List<dynamic>.from(firmas.map((x) => x.toJson())),
+        "detallesFirma":
+            List<dynamic>.from(detallesFirma.map((x) => x.toJson())),
+        "procesoMaritimo":
+            List<dynamic>.from(procesoMaritimo.map((x) => x.toJson())),
+      };
+}
+
+ReporteSincronizacionProcesoMaritimoAlstroemeria
+    reporteSincronizacionProcesoMaritimoAlstroemeriaFromJson(String str) =>
+        ReporteSincronizacionProcesoMaritimoAlstroemeria.fromJson(
+            json.decode(str));
+
+String reporteSincronizacionProcesoMaritimoAlstroemeriaToJson(
+        ReporteSincronizacionProcesoMaritimoAlstroemeria data) =>
+    json.encode(data.toJson());
+
+class ReporteSincronizacionProcesoMaritimoAlstroemeria {
+  ReporteSincronizacionProcesoMaritimoAlstroemeria({
+    this.firmas,
+    this.detallesFirma,
+    this.procesoMaritimoAlstro,
+  });
+
+  List<Firmas> firmas;
+  List<DetallesFirma> detallesFirma;
+  List<ProcesoMaritimoAlstroemeria> procesoMaritimoAlstro;
+
+  factory ReporteSincronizacionProcesoMaritimoAlstroemeria.fromJson(
+          Map<String, dynamic> json) =>
+      ReporteSincronizacionProcesoMaritimoAlstroemeria(
+        firmas:
+            List<Firmas>.from(json["firmas"].map((x) => Firmas.fromJson(x))),
+        detallesFirma: List<DetallesFirma>.from(
+            json["detallesFirma"].map((x) => DetallesFirma.fromJson(x))),
+        procesoMaritimoAlstro: List<ProcesoMaritimoAlstroemeria>.from(
+            json["procesoMaritimoAlstro"]
+                .map((x) => ProcesoMaritimoAlstroemeria.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "firmas": List<dynamic>.from(firmas.map((x) => x.toJson())),
+        "detallesFirma":
+            List<dynamic>.from(detallesFirma.map((x) => x.toJson())),
+        "procesoMaritimoAlstro":
+            List<dynamic>.from(procesoMaritimoAlstro.map((x) => x.toJson())),
       };
 }
 

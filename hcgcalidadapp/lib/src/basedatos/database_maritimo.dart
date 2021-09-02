@@ -106,6 +106,7 @@ class DatabaseProcesoMaritimo {
             DatabaseCreator.procesoMaritimoObservacionesRequerimientosCriticos],
         procesoMaritimoFecha:
             DateTime.parse(node[DatabaseCreator.procesoMaritimoFecha]),
+        detalleFirmaId: node[DatabaseCreator.detalleFirmaId],
       ));
     }
     return maritimo;

@@ -983,14 +983,23 @@ class DatabaseReportesAprobacion {
     ReporteSincronizacionRamo listaRamo = new ReporteSincronizacionRamo();
     ReporteSincronizacionFinalBanda listaFinalBanda =
         new ReporteSincronizacionFinalBanda();
+    ReporteSincronizacionProcesoMaritimo reporteSincronizacionProcesoMaritimo =
+        new ReporteSincronizacionProcesoMaritimo();
+    ReporteSincronizacionProcesoMaritimoAlstroemeria
+        reporteSincronizacionProcesoMaritimoAlstroemeria =
+        new ReporteSincronizacionProcesoMaritimoAlstroemeria();
     List<Actividad> actividades = [];
     List<ProcesoHidratacion> hidratacion = [];
     List<ProcesoEmpaques> procesoEmpaque = [];
     List<Temperatura> temperatura = [];
     List<Firma> firmaEmp = [];
     List<Firma> firmaRam = [];
+    List<Firma> firmaProcesMariti = [];
+    List<Firma> firmaProcesMaritiAlstro = [];
     List<DetalleFirma> detalleFirmasEmp = [];
     List<DetalleFirma> detalleFirmasRam = [];
+    List<DetalleFirma> detalleFirmasProcesMariti = [];
+    List<DetalleFirma> detalleFirmasMaritiAlstro = [];
     List<Actividade> listaActividades = [];
     List<RegistroHidratacion> listaHidratacion = [];
     List<ProcesoEmpaque> listaProcesoEmpaque = [];
@@ -1004,8 +1013,15 @@ class DatabaseReportesAprobacion {
     temperatura = await DatabaseTemperatura.getAllTemperaturas();
     firmaEmp = await DatabaseFirma.consultarFirmasEmpaque();
     firmaRam = await DatabaseFirma.consultarFirmasRamo();
+    firmaProcesMariti = await DatabaseFirma.consultarFirmasProcesoMaritimo();
+    firmaProcesMaritiAlstro =
+        await DatabaseFirma.consultarFirmasProcesoMaritimoAlstroemeria();
     detalleFirmasEmp = await DatabaseDetalleFirma.consultarDetallesFirmaEmp();
     detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaRam();
+    detalleFirmasProcesMariti =
+        await DatabaseDetalleFirma.consultarDetallesFirmaProcesoMaritimo();
+    detalleFirmasMaritiAlstro = await DatabaseDetalleFirma
+        .consultarDetallesFirmaProcesoMaritimoAlstroemeria();
     listaProcesoMaritimo =
         await DatabaseProcesoMaritimo.getAllProcesoMaritimoSincronizacion();
     listaProcesoMaritimoAlstromeria = await DatabaseProcesoMaritimoAlstroemeria
@@ -1018,6 +1034,12 @@ class DatabaseReportesAprobacion {
     listaEmpaque.firmas = [];
     listaEmpaque.detallesFirma = [];
     listaEmpaque.listaEmpaque = [];
+    reporteSincronizacionProcesoMaritimo.firmas = [];
+    reporteSincronizacionProcesoMaritimo.detallesFirma = [];
+    reporteSincronizacionProcesoMaritimo.procesoMaritimo = [];
+    reporteSincronizacionProcesoMaritimoAlstroemeria.firmas = [];
+    reporteSincronizacionProcesoMaritimoAlstroemeria.detallesFirma = [];
+    reporteSincronizacionProcesoMaritimoAlstroemeria.procesoMaritimoAlstro = [];
 
     Preferences pref = Preferences();
 
@@ -1031,15 +1053,54 @@ class DatabaseReportesAprobacion {
         await circuloCalidadSinc();
       }
     } catch (e) {}
-
+    // procesos maritimos //////////////////////
+    try {
+      for (int firE = 0; firE < firmaProcesMariti.length; firE++) {
+        reporteSincronizacionProcesoMaritimo.firmas.add(Firmas(
+            firmaCargo: firmaProcesMariti[firE].firmaCargo,
+            firmaCodigo: firmaProcesMariti[firE].firmaCodigo,
+            firmaCorreo: firmaProcesMariti[firE].firmaCorreo,
+            firmaNombre: firmaProcesMariti[firE].firmaNombre,
+            firmaId: firmaProcesMariti[firE].firmaId,
+            firmaReal: 0));
+      }
+      for (int dfe = 0; dfe < detalleFirmasProcesMariti.length; dfe++) {
+        reporteSincronizacionProcesoMaritimo.detallesFirma.add(DetallesFirma(
+            detalleFirmaId: detalleFirmasProcesMariti[dfe].detalleFirmaId,
+            firmaCodigo: detalleFirmasProcesMariti[dfe].detalleFirmaCodigo,
+            firmaId: detalleFirmasProcesMariti[dfe].firmaId,
+            firmaReal: 0));
+      }
+    } catch (e) {}
     try {
       for (int i = 0; i < listaProcesoMaritimo.length; i++) {
         listaProcesoMaritimo[i].procesoMaritimoUsuarioControlId = pref.userId;
       }
-      int resultCirculoCalidad =
-          await SincServices.postProcesoMaritimo(listaProcesoMaritimo);
+      reporteSincronizacionProcesoMaritimo.procesoMaritimo
+          .addAll(listaProcesoMaritimo);
+      int resultCirculoCalidad = await SincServices.postProcesoMaritimo(
+          reporteSincronizacionProcesoMaritimo);
       if (resultCirculoCalidad >= 200 && resultCirculoCalidad <= 299) {
         await procesoMaritimoSinc();
+      }
+    } catch (e) {}
+    try {
+      for (int firE = 0; firE < firmaProcesMaritiAlstro.length; firE++) {
+        reporteSincronizacionProcesoMaritimoAlstroemeria.firmas.add(Firmas(
+            firmaCargo: firmaProcesMaritiAlstro[firE].firmaCargo,
+            firmaCodigo: firmaProcesMaritiAlstro[firE].firmaCodigo,
+            firmaCorreo: firmaProcesMaritiAlstro[firE].firmaCorreo,
+            firmaNombre: firmaProcesMaritiAlstro[firE].firmaNombre,
+            firmaId: firmaProcesMaritiAlstro[firE].firmaId,
+            firmaReal: 0));
+      }
+      for (int dfe = 0; dfe < detalleFirmasMaritiAlstro.length; dfe++) {
+        reporteSincronizacionProcesoMaritimoAlstroemeria.detallesFirma.add(
+            DetallesFirma(
+                detalleFirmaId: detalleFirmasMaritiAlstro[dfe].detalleFirmaId,
+                firmaCodigo: detalleFirmasMaritiAlstro[dfe].detalleFirmaCodigo,
+                firmaId: detalleFirmasMaritiAlstro[dfe].firmaId,
+                firmaReal: 0));
       }
     } catch (e) {}
     try {
@@ -1047,15 +1108,17 @@ class DatabaseReportesAprobacion {
         listaProcesoMaritimoAlstromeria[i]
             .procesoMaritimoAlstroemeriaUsuarioControlId = pref.userId;
       }
+      reporteSincronizacionProcesoMaritimoAlstroemeria.procesoMaritimoAlstro
+          .addAll(listaProcesoMaritimoAlstromeria);
       int resultMaritimoAlstroemeria =
           await SincServices.postProcesoMaritimoAlstroemeria(
-              listaProcesoMaritimoAlstromeria);
+              reporteSincronizacionProcesoMaritimoAlstroemeria);
       if (resultMaritimoAlstroemeria >= 200 &&
           resultMaritimoAlstroemeria <= 299) {
         await procesoMaritimoALstromeriaSinc();
       }
     } catch (e) {}
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
     for (int act = 0; act < actividades.length; act++) {
       listaActividades.add(Actividade(
           actividadDetalle: actividades[act].actividadDetalle,

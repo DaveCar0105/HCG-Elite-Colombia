@@ -144,12 +144,10 @@ class DatabaseFirma {
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
       ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre}
     ''';
-
     final data = await db.rawQuery(sql);
     List<Firma> firmas = new List<Firma>();
     for (var firma in data) {
       Firma firmaNew = new Firma();
-
       firmaNew.firmaId = firma[DatabaseCreator.firmaId];
       firmaNew.firmaCodigo = firma[DatabaseCreator.firmaCodigo];
       firmaNew.firmaCargo = firma[DatabaseCreator.firmaCargo];
@@ -157,7 +155,6 @@ class DatabaseFirma {
       firmaNew.firmaCorreo = firma[DatabaseCreator.firmaCorreo];
       firmas.add(firmaNew);
     }
-
     return firmas;
   }
 
@@ -187,6 +184,77 @@ class DatabaseFirma {
     for (var firma in data) {
       Firma firmaNew = new Firma();
 
+      firmaNew.firmaId = firma[DatabaseCreator.firmaId];
+      firmaNew.firmaCodigo = firma[DatabaseCreator.firmaCodigo];
+      firmaNew.firmaCargo = firma[DatabaseCreator.firmaCargo];
+      firmaNew.firmaNombre = firma[DatabaseCreator.firmaNombre];
+      firmaNew.firmaCorreo = firma[DatabaseCreator.firmaCorreo];
+      firmas.add(firmaNew);
+    }
+    return firmas;
+  }
+
+  static Future<List<Firma>> consultarFirmasProcesoMaritimo() async {
+    final sql = '''
+      SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre} 
+      FROM ${DatabaseCreator.firmaTable}, 
+      ${DatabaseCreator.detalleFirmaTable}, 
+      ${DatabaseCreator.procesoMaritimoTable} 
+      WHERE ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId} = 
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId} 
+      AND ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId} = 
+      ${DatabaseCreator.procesoMaritimoTable}.${DatabaseCreator.detalleFirmaId} 
+      AND ${DatabaseCreator.procesoMaritimoTable}.${DatabaseCreator.procesoMaritimoEstado} = 2 
+      GROUP BY ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre}
+    ''';
+    final data = await db.rawQuery(sql);
+    List<Firma> firmas = [];
+    for (var firma in data) {
+      Firma firmaNew = new Firma();
+      firmaNew.firmaId = firma[DatabaseCreator.firmaId];
+      firmaNew.firmaCodigo = firma[DatabaseCreator.firmaCodigo];
+      firmaNew.firmaCargo = firma[DatabaseCreator.firmaCargo];
+      firmaNew.firmaNombre = firma[DatabaseCreator.firmaNombre];
+      firmaNew.firmaCorreo = firma[DatabaseCreator.firmaCorreo];
+      firmas.add(firmaNew);
+    }
+    return firmas;
+  }
+
+  static Future<List<Firma>>
+      consultarFirmasProcesoMaritimoAlstroemeria() async {
+    final sql = '''
+      SELECT ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre} 
+      FROM ${DatabaseCreator.firmaTable}, 
+      ${DatabaseCreator.detalleFirmaTable}, 
+      ${DatabaseCreator.procesoMaritimoAlstroemeriaTable} 
+      WHERE ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId} = 
+      ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.firmaId} 
+      AND ${DatabaseCreator.detalleFirmaTable}.${DatabaseCreator.detalleFirmaId} = 
+      ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}.${DatabaseCreator.detalleFirmaId} 
+      AND ${DatabaseCreator.procesoMaritimoAlstroemeriaTable}.${DatabaseCreator.procesoMaritimoAlstroemeriaEstado} = 2 
+      GROUP BY ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaId},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCodigo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCorreo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaCargo},
+      ${DatabaseCreator.firmaTable}.${DatabaseCreator.firmaNombre}
+    ''';
+    final data = await db.rawQuery(sql);
+    List<Firma> firmas = [];
+    for (var firma in data) {
+      Firma firmaNew = new Firma();
       firmaNew.firmaId = firma[DatabaseCreator.firmaId];
       firmaNew.firmaCodigo = firma[DatabaseCreator.firmaCodigo];
       firmaNew.firmaCargo = firma[DatabaseCreator.firmaCargo];

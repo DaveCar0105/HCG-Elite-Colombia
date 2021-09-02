@@ -198,6 +198,7 @@ class DatabaseProcesoMaritimoAlstroemeria {
                 ? DateTime.parse(
                     json[DatabaseCreator.procesoMaritimoAlstroemeriaFecha])
                 : null,
+        detalleFirmaId: json[DatabaseCreator.detalleFirmaId],
       ));
     }
     return maritimo;
