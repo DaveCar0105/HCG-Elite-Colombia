@@ -8,7 +8,6 @@ import 'package:hcgcalidadapp/src/modelos/error.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/falencia_reporte_ramos_banda.dart';
 import 'package:hcgcalidadapp/src/modelos/firma.dart';
-import 'package:hcgcalidadapp/src/modelos/ramos.dart';
 import 'package:hcgcalidadapp/src/modelos/reporte_sincronizacion.dart';
 import 'package:hcgcalidadapp/src/preferencias.dart';
 
@@ -162,7 +161,8 @@ class DatabaseBanda {
   }
 
   static Future<ReporteSincronizacionFinalBanda> getAllBandasSincro() async {
-    ReporteSincronizacionFinalBanda listaFinalBanda = new ReporteSincronizacionFinalBanda();
+    ReporteSincronizacionFinalBanda listaFinalBanda =
+        new ReporteSincronizacionFinalBanda();
     listaFinalBanda.listaRamo = [];
     listaFinalBanda.firmas = [];
     listaFinalBanda.detallesFirma = [];
@@ -257,7 +257,7 @@ class DatabaseBanda {
       await DatabaseError.addError(error);
       listaFinalBanda.listaRamo = [];
     }
-    try{
+    try {
       List<Firma> firmaRam = await DatabaseFirma.consultarFirmasFinalBanda();
       for (int firR = 0; firR < firmaRam.length; firR++) {
         listaFinalBanda.firmas.add(Firmas(
@@ -268,9 +268,10 @@ class DatabaseBanda {
             firmaId: firmaRam[firR].firmaId,
             firmaReal: 0));
       }
-    }catch(e){}
-    try{
-      List<DetalleFirma> detalleFirmasRam = await DatabaseDetalleFirma.consultarDetallesFirmaBanda();
+    } catch (e) {}
+    try {
+      List<DetalleFirma> detalleFirmasRam =
+          await DatabaseDetalleFirma.consultarDetallesFirmaBanda();
       for (int dfr = 0; dfr < detalleFirmasRam.length; dfr++) {
         listaFinalBanda.detallesFirma.add(DetallesFirma(
             detalleFirmaId: detalleFirmasRam[dfr].detalleFirmaId,
@@ -278,7 +279,7 @@ class DatabaseBanda {
             firmaId: detalleFirmasRam[dfr].firmaId,
             firmaReal: 0));
       }
-    }catch(e){}
+    } catch (e) {}
     return listaFinalBanda;
   }
 

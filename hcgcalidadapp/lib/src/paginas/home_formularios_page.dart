@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hcgcalidadapp/src/paginas/banda_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ecuador_page.dart';
 import 'package:hcgcalidadapp/src/paginas/empaque_elite_page.dart';
+import 'package:hcgcalidadapp/src/paginas/formularios/destinoEcommerce/control_destinoEcommerce_page.dart';
 import 'package:hcgcalidadapp/src/paginas/ramos_elite_page.dart';
 
 class HomeFormulariosPage extends StatefulWidget {
@@ -12,7 +13,7 @@ class HomeFormulariosPage extends StatefulWidget {
 class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
   bool _switchVal = true;
   bool sinc = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,6 +136,45 @@ class _HomeFormulariosPageState extends State<HomeFormulariosPage> {
                       style: TextStyle(fontSize: 15),
                     ),
                     Icon(Icons.flag)
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Botones(
+            child: RaisedButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              color: Colors.red,
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ControlDestinoEcommercePage(this._switchVal, 10)));
+              },
+              child: Container(
+                width: 120,
+                height: 70,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Destino',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        Text(
+                          'E-commerce',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                      ],
+                    ),
+                    Icon(Icons.local_shipping)
                   ],
                 ),
               ),

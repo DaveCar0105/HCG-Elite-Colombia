@@ -1,5 +1,5 @@
-
 import 'package:hcgcalidadapp/src/basedatos/database_creator.dart';
+import 'package:hcgcalidadapp/src/basedatos/database_variedad.dart';
 import 'package:hcgcalidadapp/src/constantes.dart';
 import 'package:hcgcalidadapp/src/modelos/categoria_empaque.dart';
 import 'package:hcgcalidadapp/src/modelos/categoria_ramos.dart';
@@ -25,27 +25,32 @@ import 'package:hcgcalidadapp/src/basedatos/database_falencia_ramos.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_firma.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_postcosecha.dart';
 import 'package:hcgcalidadapp/src/basedatos/database_producto.dart';
+import 'package:hcgcalidadapp/src/modelos/variedad.dto.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class SincronizarEntidadesApp{
-
+class SincronizarEntidadesApp {
   Future<void> sincronizarentidadesApp() async {
     Constantes co = Constantes();
-    var url = Uri.http(co.url, '/api/Productos');
-    final dataProductos = await http.get(url);
-    var productos = json.decode(dataProductos.body);
-    for (int i = 0; i < productos.length; i++) {
-      var producto = Producto(
-          productoId: productos[i]["productoId"],
-          productoNombre: productos[i]["productoNombre"],
-          elite: productos[i]["elite"]);
-      try {
-        await DatabaseProducto.addProducto(producto);
-      } catch (DatabaseException) {
-        await DatabaseProducto.updateProducto(producto);
+    try {
+      var url = Uri.http(co.url, '/api/Productos');
+      final dataProductos = await http.get(url);
+      var productos = json.decode(dataProductos.body);
+      for (int i = 0; i < productos.length; i++) {
+        var producto = Producto(
+            productoId: productos[i]["productoId"],
+            productoNombre: productos[i]["productoNombre"],
+            elite: productos[i]["elite"]);
+        try {
+          await DatabaseProducto.addProducto(producto);
+        } catch (DatabaseException) {
+          await DatabaseProducto.updateProducto(producto);
+        }
       }
+    } catch (e) {
+      print("error " + e.toString());
     }
+
     var url1 = Uri.http(co.url, '/api/Clientes');
     final responseCliente = await http.get(url1);
     var clientes = json.decode(responseCliente.body);
@@ -223,6 +228,23 @@ class SincronizarEntidadesApp{
         await DatabaseDestino.updateProcesoMaritimoDestinos(tipoDestino);
       }
     }
+
+    await _sincronizarEntityVariedad(co);
   }
 
+  Future<void> _sincronizarEntityVariedad(Constantes constant) async {
+    var url = Uri.http(constant.url, '/api/Variedad');
+    final response = await http.get(url);
+    var variedad = json.decode(response.body);
+    for (int i = 0; i < variedad.length; i++) {
+      var newVariedad = VariedadDto(
+          variedadId: variedad[i][DatabaseCreator.variedadId],
+          variedadNombre: variedad[i][DatabaseCreator.variedadNombre]);
+      try {
+        await DatabaseVariedad.addVariedad(newVariedad);
+      } catch (DatabaseException) {
+        await DatabaseVariedad.updateVariedad(newVariedad);
+      }
+    }
+  }
 }

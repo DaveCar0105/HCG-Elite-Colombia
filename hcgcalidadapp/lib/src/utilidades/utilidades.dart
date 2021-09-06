@@ -1,14 +1,24 @@
-class Utilidades{
-
-  bool isNumberEntero(String valor){
-    if(valor.contains('.') || valor.contains(',')){
+class Utilidades {
+  bool isNumberEntero(String valor) {
+    try {
+      if (valor.contains('.') || valor.contains(',')) {
+        return false;
+      }
+      if (int.parse(valor) > 0) {
+        return true;
+      }
+    } catch (e) {
       return false;
     }
-    if(int.parse(valor)>0){
-      return true;
-    }
-
     return false;
+  }
 
+  bool isNumberDecimal(String valor) {
+    try {
+      double value = double.parse(valor);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

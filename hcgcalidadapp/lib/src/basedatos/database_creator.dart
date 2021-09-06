@@ -504,7 +504,93 @@ class DatabaseCreator {
   static const procesoMaritimoAlstroemeriaEstado =
       'procesoMaritimoAlistamientoEstado';
 
+  // VARIABLE TABLA VARIEDAD
+  static const variedadTable = 'variedad';
+  static const variedadId = 'variedadId';
+  static const variedadTableNombre = 'variedadNombre';
+
+  // VARIABLES TABLA CONTROL DESTINO ECOMMERCE
+  static const controlDestinoEcommerceTable = 'controlDestinoEcommerce';
+  static const controlDestinoEcommerceId = 'controlDestinoEcommerceId';
+  static const controlDestinoEcommerceFecha = 'controlDestinoEcommerceFecha';
+  static const controlDestinoEcommerceRevisar =
+      'controlDestinoEcommerceRevisar';
+  static const controlDestinoEcommerceDesde = 'controlDestinoEcommerceDesde';
+  static const controlDestinoEcommerceHasta = 'controlDestinoEcommerceHasta';
+  static const controlDestinoEcommerceAprobado =
+      'controlDestinoEcommerceAprobado';
+  static const controlDestinoEcommerceTallos = 'controlDestinoEcommerceTallos';
+  static const controlDestinoEcommerceDespachar =
+      'controlDestinoEcommerceDespachar';
+  static const controlDestinoEcommerceCorte1 = 'controlDestinoEcommerceCorte1';
+  static const controlDestinoEcommerceCorte2 = 'controlDestinoEcommerceCorte2';
+  static const controlDestinoEcommerceCorte3 = 'controlDestinoEcommerceCorte3';
+  static const controlDestinoEcommerceAccionesTomadas =
+      'controlDestinoEcommerceAccionesTomadas';
+
+  static const destinoEcommerceTable = 'destinoEcommerce';
+  static const destinoEcommerceId = 'destinoEcommerceId';
+
+  static const falenciasControlDestinoEcommerceTable =
+      'falenciasControlDestinoEcommerce';
+  static const falenciasControlDestinoEcommerceId =
+      'falenciasControlDestinoEcommerceId';
+  static const falenciasControlDestinoEcommerceCantidad =
+      'falenciasControlDestinoEcommerceCantidad';
+
   //static const procesoMaritimo
+
+  Future<void> createVariedadTable(Database db) async {
+    final variedadSql = '''CREATE TABLE $variedadTable
+    (
+      $variedadId INTEGER PRIMARY KEY,
+      $variedadTableNombre TEXT
+    )''';
+    await db.execute(variedadSql);
+  }
+
+  Future<void> createDestinoEcommerceTable(Database db) async {
+    final controlDestinoEcommerceSql =
+        '''CREATE TABLE $controlDestinoEcommerceTable
+    (
+      $controlDestinoEcommerceId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $detalleFirmaId INTEGER,
+      $productoId INTEGER,
+      $usuarioId INTEGER,
+      $controlDestinoEcommerceFecha DATE,
+      $controlDestinoEcommerceRevisar INTEGER,
+      $controlDestinoEcommerceAprobado INTEGER,
+      $controlDestinoEcommerceTallos INTEGER,
+      $controlDestinoEcommerceDespachar INTEGER,
+      $controlDestinoEcommerceCorte1 FLOAT,
+      $controlDestinoEcommerceCorte2 FLOAT,
+      $controlDestinoEcommerceCorte3 FLOAT,
+      $postcosechaId INTEGER,
+      $variedadId INTEGER,
+      $controlDestinoEcommerceAccionesTomadas TEXT,
+      $controlDestinoEcommerceDesde INTEGER,
+      $controlDestinoEcommerceHasta INTEGER,
+      $clienteId INTEGER
+    )''';
+    await db.execute(controlDestinoEcommerceSql);
+
+    final destinoEcommerceSql = '''CREATE TABLE $destinoEcommerceTable
+    (
+      $destinoEcommerceId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $controlDestinoEcommerceId INTEGER
+    )''';
+    await db.execute(destinoEcommerceSql);
+
+    final falenciaControlEcommerceSql =
+        '''CREATE TABLE $falenciasControlDestinoEcommerceTable
+    (
+      $falenciasControlDestinoEcommerceId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $destinoEcommerceId INTEGER,
+      $falenciaRamosId INTEGER,
+      $falenciasControlDestinoEcommerceCantidad INTEGER
+    )''';
+    await db.execute(falenciaControlEcommerceSql);
+  }
 
   Future<void> createControlRamosTable(Database db) async {
     final ramosSql = '''CREATE TABLE $controlRamosTable
@@ -1375,5 +1461,7 @@ class DatabaseCreator {
     await createProcesoMaritimoDestinoTable(db);
     await createProcesoMaritimoAlstroemeriaTable(db);
     await MultiplesClientesMaritimoTable(db);
+    await createDestinoEcommerceTable(db);
+    await createVariedadTable(db);
   }
 }

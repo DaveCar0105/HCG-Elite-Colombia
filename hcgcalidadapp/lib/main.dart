@@ -38,7 +38,8 @@ void main() async {
     sinc = false;
   }
   if (sinc == false) {
-    SincronizarEntidadesApp sincronizarEntidadesApp  = new SincronizarEntidadesApp();
+    SincronizarEntidadesApp sincronizarEntidadesApp =
+        new SincronizarEntidadesApp();
     await sincronizarEntidadesApp.sincronizarentidadesApp();
     pref.fechaIns = DateTime.now().toIso8601String();
     pref.sinc = true;
@@ -51,44 +52,43 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => TipoClienteProvide())
-      ],
-      child: MaterialApp(
-        title: 'HCG CONTROL APP',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.red, primaryColor: Colors.red),
-        //darkTheme: ThemeData.dark(),
-        initialRoute: pref.userId > 0 ? 'home' : 'login',
-        routes: {
-          'login': (BuildContext context) => LoginPage(),
-          'home': (BuildContext context) => HomePage(),
-          'falenciasRamos': (BuildContext context) => FalenciasRamosPage(),
-          'aprobacion': (BuildContext context) => AprobacionPage(),
-          'listaFirma': (BuildContext context) => ListaFirmasPage(),
-          'firma': (BuildContext context) => FirmaPage(),
-          'sincronizar': (BuildContext context) => SincronizarPage(),
-          'hidratacion': (BuildContext context) => ProcesoHidratacionPage(),
-          'detalleHidratacion': (BuildContext context) =>
-              DetalleRegistroProcesoHidratacionPage(),
-          'temperatura': (BuildContext context) => RegistroTemperaturaPage(),
-          'detalleTemperatura': (BuildContext context) =>
-              DetalleRegistroTemperaturaPage(),
-          'empaque': (BuildContext context) => ProcesoEmpaquePage(),
-          'detalleEmpaque': (BuildContext context) =>
-              DetalleRegistroProcesoEmpaquePage(),
-          'detalleMaritimo': (BuildContext context) =>
-              DetalleRegistroProcesoMaritimoPage(),
-          'detalleMaritimoAlstroemeria': (BuildContext context) =>
-              DetalleRegistroProcesoMaritimoAlstroemeriaPage(),
-          'actividades': (BuildContext context) => ActividadesPage(),
-          'detalleActividades': (BuildContext context) =>
-              DetalleRegistroActividadesPage(),
-          'errores': (BuildContext context) => ErroresPage(),
-          'listaReportes': (BuildContext context) => ListaReportes(),
-          'listaHistorial': (BuildContext context) => ListaReporteDetalle()
-        },
-      )
-    );
+        providers: [
+          ChangeNotifierProvider(create: (context) => TipoClienteProvide())
+        ],
+        child: MaterialApp(
+          title: 'HCG CONTROL APP',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(primarySwatch: Colors.red, primaryColor: Colors.red),
+          //darkTheme: ThemeData.dark(),
+          initialRoute: pref.userId > 0 ? 'home' : 'login',
+          routes: {
+            'login': (BuildContext context) => LoginPage(),
+            'home': (BuildContext context) => HomePage(),
+            'falenciasRamos': (BuildContext context) => FalenciasRamosPage(),
+            'aprobacion': (BuildContext context) => AprobacionPage(),
+            'listaFirma': (BuildContext context) => ListaFirmasPage(),
+            'firma': (BuildContext context) => FirmaPage(),
+            'sincronizar': (BuildContext context) => SincronizarPage(),
+            'hidratacion': (BuildContext context) => ProcesoHidratacionPage(),
+            'detalleHidratacion': (BuildContext context) =>
+                DetalleRegistroProcesoHidratacionPage(),
+            'temperatura': (BuildContext context) => RegistroTemperaturaPage(),
+            'detalleTemperatura': (BuildContext context) =>
+                DetalleRegistroTemperaturaPage(),
+            'empaque': (BuildContext context) => ProcesoEmpaquePage(),
+            'detalleEmpaque': (BuildContext context) =>
+                DetalleRegistroProcesoEmpaquePage(),
+            'detalleMaritimo': (BuildContext context) =>
+                DetalleRegistroProcesoMaritimoPage(),
+            'detalleMaritimoAlstroemeria': (BuildContext context) =>
+                DetalleRegistroProcesoMaritimoAlstroemeriaPage(),
+            'actividades': (BuildContext context) => ActividadesPage(),
+            'detalleActividades': (BuildContext context) =>
+                DetalleRegistroActividadesPage(),
+            'errores': (BuildContext context) => ErroresPage(),
+            'listaReportes': (BuildContext context) => ListaReportes(),
+            'listaHistorial': (BuildContext context) => ListaReporteDetalle()
+          },
+        ));
   }
 }
